@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
         UI,
         Die,
     }
+
     public int timeScale = 1;
+    private GameState gameState = GameManager.GameState.Playing;
+    public GameState gamestate => gameState;
 
     public static GameManager instance = null;
 
@@ -29,13 +32,17 @@ public class GameManager : MonoBehaviour
 
     public void ChangeState(GameState state)
     {
-        //if(state == GameState.UI)
-        //{
-        //    timeScale = 0;
-        //}
-        //else if()
-        //{
-        //
-        //}
+        if (state == gameState) return;
+
+        gameState = state;
+        Debug.Log(gameState);
+        if(gameState == GameState.UI)
+        {
+            timeScale = 0;
+        }
+        else if(gameState == GameState.Die)
+        {
+            timeScale = 0;
+        }
     }
 }

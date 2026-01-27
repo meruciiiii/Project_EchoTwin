@@ -2,16 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneChangeManager : MonoBehaviour
 {
     public enum SceneType
     {
         Title,
-        Lobby,
         Game,
-        Ending,
     }
+
+    private SceneType currentScene = SceneType.Title;
+    public SceneType CurrentScene => currentScene;
 
     public static SceneChangeManager instance = null;
 
@@ -29,6 +31,9 @@ public class SceneChangeManager : MonoBehaviour
 
     public void SceneChange(SceneType name)
     {
+        if (name == currentScene) return;
 
+        currentScene = name;
+        SceneManager.LoadScene((int)name);
     }
 }

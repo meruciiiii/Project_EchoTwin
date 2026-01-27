@@ -3,26 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[CreateAssetMenu(menuName = "Data/Weapon Data")]
-public class WeaponData : ScriptableObject
+public class WeaponRow
 {
-    [Header("ID")]
-    public int id;
-    public string weaponName;
+    public int ID;
+    public string name;
     public string identity;
     public string type;
-
-    [Header("Stats")]
     public float baseDamage;
     public float attackSpeed;
     public float attackRange;
     public float knockback;
-
-    [Header("Echo")]
     public float echoDMGRatio;
     public string echoDescription;
-
-    [Header("Image")]
-    public Sprite icon;
+    public string iconPath;
 }

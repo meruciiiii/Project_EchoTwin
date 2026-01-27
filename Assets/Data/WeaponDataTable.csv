@@ -1,0 +1,6 @@
+ID,WeaponName,Identity,WeaponType,BaseDamage,AttackSpeed,AttackRange,Knockback,EchoDamageRatio,EchoDescription,IconPath
+0,억눌린 자의 검,억눌린 자,Melee,10,1,2.5,2,0.5,일반적인 베기 잔향,Icons/Sword_0
+1,파괴자의 망치,파괴자,Melee,25,2.2,3,8,0.3,강력한 내리치기 잔향,Icons/Hammer_0
+2,편집증의 단검,편집증,Melee,5,0.4,1.5,1,0.4,연속 베기 잔향,Icons/Dagger_0
+3,희생의 창,고결한 희생,Melee,15,1.5,4.5,3,0.6,직선 찌르기 잔향,Icons/Spear_0
+4,광기의 도끼,광기,Melee,20,1.8,3.5,4,0.4,회전 베기 잔향,Icons/Axe_0
