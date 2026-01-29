@@ -14,18 +14,20 @@ public static class WeaponImporter
     private const string csvPath = "Assets/Data/WeaponDataTable.csv";
     private const string outputPath = "Assets/Data/Weapon";
 
-    //[MenuItem("Tools/Sync Enemy CSV From Google Sheet")]
-    //public static void SyncAndImport()
-    //{
-    //    string url = "https://docs.google.com/spreadsheets/d/XXXX/export?format=csv";
-    //    string localPath = "Assets/Data/EnemyDataTable.csv";
-    //
-    //    ConnectGoogle.DownloaCSV(url, localPath);
-    //
-    //    Import();
-    //}
+    [MenuItem("Tools/Sync Weapon CSV From Google Sheet")]
+    public static void SyncAndImport()
+    {
+        //파일->공유->다른사용자와 공유->링크가 있는 사용자
+        //웹에 게시(csv) 후 주소 복사
+        string url = "https://docs.google.com/spreadsheets/d/XXXX/export?format=csv";
+        string localPath = "Assets/Data/EnemyDataTable.csv";
+    
+        ConnectGoogle.DownloaCSV(url, localPath);
+    
+        Import();
+    }
 
-    [MenuItem("Tools/Import Weapon CSV")]
+    //[MenuItem("Tools/Import Weapon CSV")]
     public static void Import()
     {
         string[][] table = CSVReader.Read(csvPath);

@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private PlayerMovement Player;
+    private ItemPickup pickup;
 
     private Vector2 moveValue;
     public Vector2 MoveValue => moveValue;
@@ -69,5 +70,17 @@ public class InputManager : MonoBehaviour
     public void Event_MousPos(InputAction.CallbackContext context)
     {
         mousePos = context.ReadValue<Vector2>();
+    }
+
+    public void Event_GetItem(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed)
+        {
+            pickup.GetNewWeapon();
+        }
+        else if(context.phase == InputActionPhase.Canceled)
+        {
+
+        }
     }
 }

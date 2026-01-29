@@ -34,11 +34,22 @@ public class Spear : WeaponAbstract
         return totalDamage;
     }
 
-    public override void Attack()
+    public override void Attack(AttackContext context)
     {
         if (!canAttack()) return;
 
         checkAttackTime();
+
+        Collider[] targets = getTargetInRange();
+
+        foreach (Collider target in targets)
+        {
+            if (!target.CompareTag("Enemy")) continue;
+
+            context.hitTargets.Add(target);
+            //target stat 에 getdamage만큼 데미지
+        }
+
     }
 
     public override void ChargingAttack()
@@ -46,8 +57,20 @@ public class Spear : WeaponAbstract
 
     }
 
-    public override void OnEcho()
+    public override void OnEcho(AttackContext context)
     {
+        //mainWeapon 공격시 기본공격과 같은 위치에 공격. 다만 사거리는 조금 더 길 예정
 
+        GameObject player = stats.gameObject;
+        float player_XSize = player.GetComponent<CapsuleCollider>().radius;
+
+        Vector3 forward = player.transform.forward;
+        Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange);
+
+        Vector3 targetPos = new Vector3(player_XSize * 0.25f, 1f, weaponData.attackRange);
+
+        Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
+
+        //hits 에게 데미지
     }
 }

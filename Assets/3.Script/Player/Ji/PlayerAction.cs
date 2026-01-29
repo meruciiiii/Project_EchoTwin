@@ -6,26 +6,51 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour
 {
     private PlayerEquipment Equipment;
-    private PlayerStats Stats;
+    private IWeaponCommand command;
+    private AttackContext context;
+
 
     private void Awake()
     {
-        TryGetComponent(out Equipment);
-        TryGetComponent(out Stats);
+        Equipment = new PlayerEquipment();
+        context = new AttackContext();
     }
 
-    public void Attack()
+    public void OnAttack()
+    {
+        command?.execute();
+    }
+
+    public void OnChargingAttack()
     {
 
     }
 
-    public void ChargingAttack()
+    public void OnCurse()
     {
 
     }
 
-    public void Curse()
-    {
 
+
+    public void OnWeaponAcquire(WeaponAbstract newWeapon)
+    {
+        Equipment.EquipWeapon(newWeapon);
+        RebuildAttackCmd();
+    }
+
+    private void RebuildAttackCmd()
+    {
+        AttackCommand mainAttack = new AttackCommand(Equipment.MainWeapon, context);
+
+        if(Equipment.SubWeapon == null)
+        {
+            command = mainAttack;
+        }
+        else
+        {
+            OnEchoCommand subEcho = new OnEchoCommand(Equipment.SubWeapon, context);
+            command = new ComboAttackCommand(mainAttack, subEcho, this);
+        }
     }
 }

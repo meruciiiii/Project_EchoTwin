@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 436992069}
   - component: {fileID: 436992068}
   - component: {fileID: 436992067}
+  - component: {fileID: 436992075}
+  - component: {fileID: 436992076}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -244,12 +246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b2d07f09069cc4faa9d58b006388bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  playerHP: 6
-  playerDMG: 1
-  moveSpeed: 10
-  dashLength: 1
-  dashSpeed: 1
-  dashDelay: 1
 --- !u!54 &436992070
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -371,6 +367,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &436992075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436992066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a5e784ac5e87b34291aa69cce9609a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  maxHP: 6
+  playerDMG: 1
+  moveSpeed: 10
+  dashLength: 1
+  dashSpeed: 1
+  dashDelay: 1
+--- !u!114 &436992076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436992066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6ce47c191268144970d8671b420eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAction
 --- !u!1 &1014739614
 GameObject:
   m_ObjectHideFlags: 0

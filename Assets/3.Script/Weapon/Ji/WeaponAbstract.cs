@@ -9,6 +9,22 @@ public abstract class WeaponAbstract : MonoBehaviour
     [SerializeField] protected CharacterData characterData;
 
     protected float lastAttackTime;
+    protected int resonanceCount;
+
+    public  void SetResonance(int count)
+    {
+        resonanceCount = count;
+    }
+
+    public bool canEcho()
+    {
+        return resonanceCount > 0;
+    }
+
+    public void ConsumeResonance()
+    {
+        resonanceCount--;
+    }
 
     protected bool canAttack()
     {
@@ -25,9 +41,9 @@ public abstract class WeaponAbstract : MonoBehaviour
         return weaponData.baseDamage + characterData.valuePerLv;
     }
 
-    public abstract void Attack();
+    public abstract void Attack(AttackContext context);
 
     public abstract void ChargingAttack();
 
-    public abstract void OnEcho();
+    public abstract void OnEcho(AttackContext context);
 }

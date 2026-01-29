@@ -3,27 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEquipment : MonoBehaviour
+public class PlayerEquipment
 {
-    [Header("Weapon & Magic")]
-    [Space(5f)]
-    [SerializeField] private WeaponData weapon;
-    [SerializeField] private CurseData magic;
+    public WeaponAbstract MainWeapon { get; private set; }
+    public WeaponAbstract SubWeapon { get; private set; }
 
-    private bool isMain = false;
-    private bool isSub = false;
-
-    private void OnTriggerEnter(Collider other)
+    public void EquipWeapon(WeaponAbstract newWeapon)
     {
-        if (CompareTag("Equipment"))
+        if(MainWeapon == null)
         {
-            //pick UI popup
+            MainWeapon = newWeapon;
+            MainWeapon.gameObject.SetActive(true);
+        }
+        else if(SubWeapon == null)
+        {
+            SubWeapon = MainWeapon;
+            //SubWeapon.SetResonance(SubWeapon.GetComponent<WeaponData>().echoAmount);
+            SubWeapon.gameObject.SetActive(false);
+
+            MainWeapon = newWeapon;
+            MainWeapon.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameObject.Destroy(SubWeapon.gameObject);
+            SubWeapon = MainWeapon;
+            SubWeapon.gameObject.SetActive(false);
+
+            MainWeapon = newWeapon;
+            MainWeapon.gameObject.SetActive(true);
         }
     }
-
-    private void getEquipment(GameObject target)//UI에서 상호작용 키 눌렀을 때 실행되는 method
-    {
-
-    }
-
 }
