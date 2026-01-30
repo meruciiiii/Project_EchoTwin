@@ -889,6 +889,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lava
       objectReference: {fileID: 0}
+    - target: {fileID: 4783480012558480846, guid: a8946af62d189a344a473b6130b0eb06, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2854,12 +2858,24 @@ PrefabInstance:
       value: FX_Fog
       objectReference: {fileID: 0}
     - target: {fileID: 8091677623062082376, guid: 5c1fcd5b39d17b24b8e02a9756f03c77, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3624
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091677623062082376, guid: 5c1fcd5b39d17b24b8e02a9756f03c77, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6812
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091677623062082376, guid: 5c1fcd5b39d17b24b8e02a9756f03c77, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3624
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091677623062082376, guid: 5c1fcd5b39d17b24b8e02a9756f03c77, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.2913847
       objectReference: {fileID: 0}
     - target: {fileID: 8091677623062082376, guid: 5c1fcd5b39d17b24b8e02a9756f03c77, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0803795
+      value: -1.27
       objectReference: {fileID: 0}
     - target: {fileID: 8091677623062082376, guid: 5c1fcd5b39d17b24b8e02a9756f03c77, type: 3}
       propertyPath: m_LocalPosition.z
