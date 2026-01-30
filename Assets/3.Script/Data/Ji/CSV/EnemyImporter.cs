@@ -19,7 +19,7 @@ public class EnemyImporter
     {
         //파일->공유->다른사용자와 공유->링크가 있는 사용자
         //웹에 게시(csv) 후 주소 복사
-        string url = "https://docs.google.com/spreadsheets/d/XXXX/export?format=csv";
+        string url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCOFUo881ztQ7xKLKM40k5Iknve3HbzmoJyxDXw7pxoeeqJzU0Ws0gU2YMCQM2pNfcfS2vbg8UBjQW/pub?gid=0&single=true&output=csv";
         string localPath = "Assets/Data/EnemyDataTable.csv";
     
         ConnectGoogle.DownloaCSV(url, localPath);

@@ -7,6 +7,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 {
     [SerializeField] protected WeaponData weaponData;
     [SerializeField] protected CharacterData characterData;
+    [SerializeField] protected PlayerStats stats;
 
     protected float lastAttackTime;
     protected int resonanceCount;
@@ -38,7 +39,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected float calcDamage()
     {
-        return weaponData.baseDamage + characterData.valuePerLv;
+        return weaponData.baseDamage + characterData.valuePerLv + stats.PlayerDMG;
     }
 
     public abstract void Attack(AttackContext context);

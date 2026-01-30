@@ -5,13 +5,6 @@ using UnityEngine;
 
 public class Sword : WeaponAbstract
 {
-    private PlayerStats stats;
-
-    private void Awake()
-    {
-        stats = GetComponentInParent<PlayerStats>();
-    }
-
     private Collider[] getTargetInRange()
     {
         GameObject player = stats.gameObject;

@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 436992067}
   - component: {fileID: 436992075}
   - component: {fileID: 436992076}
+  - component: {fileID: 436992077}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -186,7 +187,19 @@ MonoBehaviour:
     m_ActionId: e35a5abb-90e2-4532-998c-697d5fad9b03
     m_ActionName: 'New action map/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 436992068}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: Event_Dash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 97b0b4fe-5176-49bd-9b41-1d43440d9603
     m_ActionName: 'New action map/Dash[/Keyboard/space]'
   - m_PersistentCalls:
@@ -217,6 +230,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 22aabb21-9a92-46a1-aad9-563754ad62fe
     m_ActionName: 'New action map/MousePos[/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c23504c7-d800-4d70-bc51-ed1de396f2ef
+    m_ActionName: 'New action map/GetItem[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: New action map
@@ -382,9 +399,13 @@ MonoBehaviour:
   maxHP: 6
   playerDMG: 1
   moveSpeed: 10
-  dashLength: 1
-  dashSpeed: 1
+  dashLength: 10
+  dashSpeed: 4
   dashDelay: 1
+  isDash: 0
+  flashAmount: 3
+  flashDuration: 2
+  timeBetweenAttack: 0.5
 --- !u!114 &436992076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +418,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6ce47c191268144970d8671b420eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAction
+--- !u!114 &436992077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436992066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5eb11b794797e4cbba69e4201c560c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashEffect
 --- !u!1 &1014739614
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class Dagger : WeaponAbstract
 {
-    private PlayerStats stats;
-
-    private void Awake()
-    {
-        stats = GetComponentInParent<PlayerStats>();
-    }
+    [SerializeField] GameObject daggerPrefab;
 
     private Collider[] getTargetInRange()
     {
@@ -60,15 +55,13 @@ public class Dagger : WeaponAbstract
     public override void OnEcho(AttackContext context)
     {
         //mainWeapon 에 닿은 적들에게 칼이 날라가 데미지를 입힘
+
+        Vector3 spawnPos = stats.gameObject.transform.position;//+ 뒤쪽 랜덤으로 -> 플레이어 근처 어딘가에 스폰
+
         foreach (Collider target in context.hitTargets)
         {
-            
-            //target 에게 단검 날라가 데미지 주기
+            GameObject dagger = Instantiate(daggerPrefab, spawnPos, Quaternion.identity);
+            dagger.GetComponent<ThrowDagger>().Init(target.transform);
         }
-    }
-
-    private void spawnDagger()
-    {
-
     }
 }

@@ -1,5 +1,4 @@
-ID,MonsterName,Tier,MaxHP,Damage,MoveSpeed,DetectRange,AttackRange,Cooldown,DropExp,DropGold,PrefabPath
-100,그림자 하운드,Easy,30,5,4,10,1.5,1.5,10,5,Enemies/Hound
-101,왜곡된 감시자,Normal,60,12,2.5,12,5,2,25,15,Enemies/Watcher
-102,비탄의 거인,Elite,200,25,1.5,15,3,3.5,100,50,Enemies/Giant
-999,첫 번째 트라우마,Boss,1500,40,3,50,6,1,1000,500,Enemies/Boss_1
+ID,UpgradeName,TargetStat,MaxLevel,BaseCost,CostMultiplier,ValuePerLevel,Description
+0,강철 피부,MaxHP,10,100,1.5,20,최대 체력을 증가시킵니다.
+1,날카로운 의지,BaseDamage,10,150,1.6,5,기본 공격력을 증가시킵니다.
+2,가벼운 발걸음,MoveSpeed,5,200,1.8,0.5,이동 속도를 증가시킵니다.

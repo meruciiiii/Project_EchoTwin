@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private InputManager Input;
     private Rigidbody rb;
 
-    private bool isDash = false;
-
     private Vector3 mousePos;
 
     private void Awake()
@@ -36,23 +34,23 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator Dash()
     {
-        isDash = true;
-        Vector2 dashPos = Input.MoveValue * stats.DashLength;
-        Vector3 destPos = new Vector3(transform.position.x + dashPos.x, 0, transform.position.z + dashPos.y);
-
+        stats.isDash = true;
+        Vector2 dashPos = Input.MoveValue.normalized * stats.DashLength;
+        Vector3 destPos = new Vector3(transform.position.x + dashPos.x, transform.position.y, transform.position.z + dashPos.y);
+        Vector3 startPos = transform.position;
         float timer = 0;
         while (timer < 1f)
         {
             timer += stats.DashSpeed* Time.deltaTime;
 
-            transform.position = Vector3.Lerp(transform.position, destPos, timer);
+            transform.position = Vector3.Lerp(startPos, destPos, timer);
 
             yield return null;
         }
         transform.position = destPos;
 
+        stats.isDash = false;
         yield return new WaitForSeconds(stats.DashDelay);
-        isDash = false;
     }
 
     private void FocusOnMouse()

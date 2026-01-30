@@ -3,21 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(FlashEffect))]
 public class PlayerAction : MonoBehaviour
 {
     private PlayerEquipment Equipment;
     private IWeaponCommand command;
     private AttackContext context;
-
+    private PlayerStats stats;
+    private FlashEffect effect;
 
     private void Awake()
     {
         Equipment = new PlayerEquipment();
         context = new AttackContext();
+        TryGetComponent(out stats);
+        TryGetComponent(out effect);
     }
 
     public void OnAttack()
     {
+        if (stats.isDash) return;
         command?.execute();
     }
 
@@ -31,7 +37,17 @@ public class PlayerAction : MonoBehaviour
 
     }
 
+    public void takeDamage(int damage)
+    {
+        stats.takeDamage(damage);
 
+        effect.Flash(stats.FlashAmount,stats.FlashDuration);
+
+        if(stats.isDead)
+        {
+            GameManager.instance.ChangeState(GameManager.GameState.Die);
+        }
+    }
 
     public void OnWeaponAcquire(WeaponAbstract newWeapon)
     {

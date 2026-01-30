@@ -29,7 +29,7 @@ public class ComboAttackCommand : IWeaponCommand
 
     private IEnumerator SubAttack_co()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(coroutineRunner.GetComponent<PlayerStats>().TimeBetweenAttack);
 
         sub?.execute();
     }
