@@ -1,32 +1,31 @@
 using UnityEngine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed = 8f;
-    public float decelerationRate = 10f; // 미끄러지는 거리
+    public float decelerationRate = 10f;
 
     private Rigidbody rb;
     private Vector3 movementInput;
     private Vector3 currentVelocity;
     private Animator animator;
 
-    // 추가: 캐릭터의 원래 크기를 저장할 변수
-    private Vector3 initialScale;
+    // 추가: 이미지 반전을 위해 SpriteRenderer를 가져옵니다.
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
 
-        // [중요] 시작할 때 현재 에디터에 설정된 캐릭터의 크기를 딱 저장해둡니다.
-        initialScale = transform.localScale;
+        // 캐릭터 본인 또는 자식 오브젝트에 있는 SpriteRenderer를 찾습니다.
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         // 3D 환경에서 캐릭터가 넘어지지 않게 회전 고정
-        // [수정] X, Y, Z 모든 회전을 물리 엔진으로부터 보호합니다.
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        // [통과 방지 팁] Rigidbody의 충돌 감지 모드를 연속(Continuous)으로 설정
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
     }
 
     void Update()
@@ -35,17 +34,18 @@ public class PlayerMove : MonoBehaviour
         movementInput.z = Input.GetAxisRaw("Vertical");
         movementInput.Normalize();
 
-        // 방향 전환 로직: 기억해둔 initialScale을 활용합니다.
+        // [방향 전환 로직 변경] Scale 대신 FlipX 사용
         if (movementInput.x < 0)
         {
-            // 왼쪽 이동: X값만 원래 크기 그대로 (정방향)
-            transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
+            // 왼쪽 이동: 이미지를 왼쪽으로 반전 (이미지가 원래 오른쪽을 본다면 true)
+            if (spriteRenderer != null) spriteRenderer.flipX = false;
         }
         else if (movementInput.x > 0)
         {
-            // 오른쪽 이동: X값에만 마이너스(-)를 붙여서 반전
-            transform.localScale = new Vector3(-initialScale.x, initialScale.y, initialScale.z);
+            // 오른쪽 이동: 이미지 반전 해제
+            if (spriteRenderer != null) spriteRenderer.flipX = true;
         }
+        // *참고: 이미지가 원래 왼쪽을 보고 있다면 true/false를 반대로 적어주세요.
 
         bool isMoving = movementInput.magnitude > 0;
         if (animator != null)
@@ -62,7 +62,6 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            // Vector3.MoveTowards를 사용하여 관성 구현
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero,
                                                   decelerationRate * Time.fixedDeltaTime);
         }

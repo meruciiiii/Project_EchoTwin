@@ -2,8 +2,36 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - R_01
+  - R_02
+  - R_03
+  - R_04
+  - R_05
+  - R_06
+  - R_07
+  - R_08
+  - R_09
+  - R_10
+  - R_11
+  - R_12
+  - R_13
+  - R_14
+  - R_15
+  - R_16
+  - R_17
+  - R_18
+  - R_19
+  - R_20
+  - R_21
+  - R_22
+  - R_101
+  - R_102
+  - R_103
+  - R_104
+  - M_SP
+  - P_SP
   layers:
   - Default
   - TransparentFX
@@ -50,27 +78,3 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 

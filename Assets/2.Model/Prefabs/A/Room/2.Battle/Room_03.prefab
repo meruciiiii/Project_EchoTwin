@@ -869,8 +869,8 @@ Transform:
   m_Children:
   - {fileID: 6642121456187045278}
   - {fileID: 131695701933391837}
-  - {fileID: 7392298622398446791}
   - {fileID: 1114173171808205434}
+  - {fileID: 7392298622398446791}
   m_Father: {fileID: 6902011655284393243}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5979256000260126091
@@ -1460,11 +1460,11 @@ GameObject:
   - component: {fileID: 6902011655284393243}
   m_Layer: 0
   m_Name: Room_03
-  m_TagString: Untagged
+  m_TagString: R_03
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6902011655284393243
 Transform:
   m_ObjectHideFlags: 0
@@ -1548,8 +1548,8 @@ Transform:
   m_Children:
   - {fileID: 4006998073071416043}
   - {fileID: 8079838500957073739}
-  - {fileID: 7302522249814354115}
   - {fileID: 5824173973376491959}
+  - {fileID: 7302522249814354115}
   m_Father: {fileID: 6902011655284393243}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8991767839415567119
