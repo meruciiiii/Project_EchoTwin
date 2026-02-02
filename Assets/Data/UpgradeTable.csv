@@ -1,4 +1,7 @@
 ID,UpgradeName,TargetStat,MaxLevel,BaseCost,CostMultiplier,ValuePerLevel,Description
-0,강철 피부,MaxHP,10,100,1.5,20,최대 체력을 증가시킵니다.
-1,날카로운 의지,BaseDamage,10,150,1.6,5,기본 공격력을 증가시킵니다.
-2,가벼운 발걸음,MoveSpeed,5,200,1.8,0.5,이동 속도를 증가시킵니다.
+0,무뎌진 고통,MaxHP,10,100,1.5,20,최대 체력을 증가시킵니다.
+1,직시하는 용기,BaseDamage,10,150,1.6,5,기본 공격력을 증가시킵니다.
+2,후회없는 전진,MoveSpeed,5,200,1.8,0.5,이동 속도를 증가시킵니다.
+3,되돌아오는 메아리,EchoDamageRatio,10,180,1.7,0.1,잔향(추가타)의 데미지 비율을 강화합니다.
+4,확장되는 시야,AttackRange,5,250,1.9,0.3,공격 범위를 넓혀 안전거리를 확보합니다.
+5,단호한 결단,AttackSpeed,10,120,1.5,0.2,공격 속도를 올려 더 많은 타격을 가합니다

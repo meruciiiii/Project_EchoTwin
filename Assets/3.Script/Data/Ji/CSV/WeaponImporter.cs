@@ -20,7 +20,7 @@ public static class WeaponImporter
         //파일->공유->다른사용자와 공유->링크가 있는 사용자
         //웹에 게시(csv) 후 주소 복사
         string url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQogVKqcICNFgPz5xQ4Qn8LkrB0jiASyYzdlwybkagRZhIRF_5gH6GBPyPg-V79TgY6mqBd2eW2-u9R/pub?gid=0&single=true&output=csv";
-        string localPath = "Assets/Data/EnemyDataTable.csv";
+        string localPath = "Assets/Data/WeaponDataTable.csv";
     
         ConnectGoogle.DownloaCSV(url, localPath);
     
@@ -50,15 +50,15 @@ public static class WeaponImporter
         {
             ID = ParseInt(c[0]),
             name = c[1],
-            identity = c[2],
-            type = c[3],
-            baseDamage = ParseFloat(c[4]),
-            attackSpeed = ParseFloat(c[5]),
-            attackRange = ParseFloat(c[6]),
-            knockback = ParseFloat(c[7]),
-            echoDMGRatio = ParseFloat(c[8]),
-            echoDescription = c[9],
-            iconPath = c[10]
+            baseDamage = ParseFloat(c[2]),
+            attackSpeed = ParseFloat(c[3]),
+            attackRange = ParseFloat(c[4]),
+            knockback = ParseFloat(c[5]),
+            echoDMGRatio = ParseFloat(c[6]),
+            iconPath = c[7],
+            comboCount = ParseInt(c[8]),
+            comboCooltime = ParseFloat(c[9]),
+            description = c[10]
         };
     }
 
@@ -83,10 +83,8 @@ public static class WeaponImporter
             AssetDatabase.CreateAsset(data, assetPath);
         }
 
-        data.id = rows.ID;
-        data.weaponName = rows.name;
-        data.identity = rows.identity;
-        data.type = rows.type;
+        data.ID = rows.ID;
+        data.name = rows.name;
 
         data.baseDamage = rows.baseDamage;
         data.attackSpeed = rows.attackSpeed;
@@ -94,9 +92,12 @@ public static class WeaponImporter
         data.knockback = rows.knockback;
 
         data.echoDMGRatio = rows.echoDMGRatio;
-        data.echoDescription = rows.echoDescription;
 
         data.icon = LoadSprite(rows.iconPath);
+        data.comboCount = rows.comboCount;
+        data.comboCooltime = rows.comboCooltime;
+
+        data.description = rows.description;
 
         EditorUtility.SetDirty(data);
     }

@@ -18,7 +18,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float dashDelay = 1f;
     public bool isDash = false;
 
-    [Header("about Blink")]
+    [Header("Take Damage")]
     [SerializeField] private int flashAmount = 3;//±ôºýÀÌ´Â È½¼ö
     [SerializeField] private float flashDuration = 0.1f;//1È¸ ±ôºýÀÏ ¶§ °É¸®´Â ½Ã°£
 

@@ -9,10 +9,12 @@ public class OrbitAxe : MonoBehaviour
     private float angle;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float radius = 2f;
+    private float damage;
 
-    public void Init(Transform player)
+    public void Init(Transform player, float damage)
     {
         this.player = player;
+        this.damage = damage;
         angle = 0f;
     }
 
@@ -33,6 +35,7 @@ public class OrbitAxe : MonoBehaviour
         if(other.CompareTag("Enemy"))
         {
             //other.getcomponent<enemy>().takedamage(damage);
+            other.GetComponent<EnemyStateAbstract>().takeDamage(damage);
         }
     }
 }

@@ -11,6 +11,22 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected float lastAttackTime;
     protected int resonanceCount;
+    protected int comboCount;
+
+    public void SetComboCount()
+    {
+        comboCount = weaponData.comboCount;
+    }
+
+    public bool canCombo()
+    {
+        return comboCount > 0;
+    }
+
+    public void ConsumeComboCount()
+    {
+        comboCount--;
+    }
 
     public  void SetResonance(int count)
     {
@@ -37,9 +53,18 @@ public abstract class WeaponAbstract : MonoBehaviour
         lastAttackTime = Time.time;
     }
 
+    protected virtual void enemyKnockback(Collider target)
+    {
+        if(target.TryGetComponent<Iknockback>(out Iknockback kb))
+        {
+            Vector3 dir = (target.transform.position - transform.position).normalized;
+            kb.applyKnockback(dir, weaponData.knockback);
+        }
+    }
+
     protected float calcDamage()
     {
-        return weaponData.baseDamage + characterData.valuePerLv + stats.PlayerDMG;
+        return weaponData.baseDamage + stats.PlayerDMG;// + characterData.valuePerLv 이 부분 정리
     }
 
     public abstract void Attack(AttackContext context);

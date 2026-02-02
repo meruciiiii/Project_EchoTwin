@@ -21,7 +21,7 @@ public class MapImporter
         //파일->공유->다른사용자와 공유->링크가 있는 사용자
         //웹에 게시(csv) 후 주소 복사
         string url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSdPCDiSs9BQxYe-fw3S2W6p55k0n945WoPVoqwPKIqE0fkgX7x0iTIaZIoCb4RfmWPFdpRAVn7R6LP/pub?gid=0&single=true&output=csv";
-        string localPath = "Assets/Data/EnemyDataTable.csv";
+        string localPath = "Assets/Data/MapDataTable.csv";
 
         ConnectGoogle.DownloaCSV(url, localPath);
 

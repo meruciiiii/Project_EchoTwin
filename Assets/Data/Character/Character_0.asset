@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Character_0
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   id: 0
-  name: "\uAC15\uCCA0 \uD53C\uBD80"
+  name: "\uBB34\uB38C\uC9C4 \uACE0\uD1B5"
   targetStat: MaxHP
   maxLv: 10
   cost: 100

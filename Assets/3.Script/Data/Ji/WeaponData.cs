@@ -8,10 +8,8 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     [Header("ID")]
-    public int id;
-    public string weaponName;
-    public string identity;
-    public string type;
+    public int ID;
+    public string name;
 
     [Header("Stats")]
     public float baseDamage;
@@ -25,4 +23,10 @@ public class WeaponData : ScriptableObject
 
     [Header("Image")]
     public Sprite icon;
+
+    [Header("Combo")]
+    public int comboCount;
+    public float comboCooltime;
+
+    public string description;
 }

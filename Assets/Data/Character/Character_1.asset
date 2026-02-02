@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Character_1
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   id: 1
-  name: "\uB0A0\uCE74\uB85C\uC6B4 \uC758\uC9C0"
+  name: "\uC9C1\uC2DC\uD558\uB294 \uC6A9\uAE30"
   targetStat: BaseDamage
   maxLv: 10
   cost: 150

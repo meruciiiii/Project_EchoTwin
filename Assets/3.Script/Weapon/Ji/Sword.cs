@@ -20,13 +20,6 @@ public class Sword : WeaponAbstract
         return hits;
     }
 
-    private float getDamage()
-    {
-        float totalDamage = stats.PlayerDMG + calcDamage();
-
-        return totalDamage;
-    }
-
     public override void Attack(AttackContext context)
     {
         if (!canAttack()) return;
@@ -40,7 +33,9 @@ public class Sword : WeaponAbstract
             if (!target.CompareTag("Enemy")) continue;
 
             context.hitTargets.Add(target);
-            //target stat 에 getdamage만큼 데미지
+            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+
+            enemyKnockback(target);
         }
     }
 
@@ -63,7 +58,13 @@ public class Sword : WeaponAbstract
 
             Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 
-            //hits 에게 데미지 주기
+            foreach(Collider hit in hits)
+            {
+                if(hit.CompareTag("Enemy"))
+                {
+                    hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
+                }
+            }
         }
         //attack 과 똑같이 가고 damage * data.damageratio 만큼
         //mainWeapon 에 닿은 target의 위치에 기본공격과 같은 크기의 범위만큼 공격

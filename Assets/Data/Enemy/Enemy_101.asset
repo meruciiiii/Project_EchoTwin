@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Enemy_101
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   id: 101
-  name: "\uC65C\uACE1\uB41C \uAC10\uC2DC\uC790"
+  name: Mushroom
   tier: Normal
-  maxHP: 60
-  damage: 12
-  moveSpeed: 2.5
-  detectRange: 12
-  attackRange: 5
+  maxHP: 40
+  damage: 8
+  moveSpeed: 2
+  attackSpeed: 1
+  attackRange: 1.5
   coolTime: 2
-  dropEXP: 25
-  dropGold: 15
+  dropEXP: 10
+  dropGold: 5
   prefab: {fileID: 0}

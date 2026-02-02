@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Character_2
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   id: 2
-  name: "\uAC00\uBCBC\uC6B4 \uBC1C\uAC78\uC74C"
+  name: "\uD6C4\uD68C\uC5C6\uB294 \uC804\uC9C4"
   targetStat: MoveSpeed
   maxLv: 5
   cost: 200

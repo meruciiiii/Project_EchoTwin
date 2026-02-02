@@ -20,7 +20,7 @@ public static class CharacterImport
         //파일->공유->다른사용자와 공유->링크가 있는 사용자
         //웹에 게시(csv) 후 주소 복사
         string url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSBVM5OLYnSDKKMQonPh0Jopw5olheEDc6xjxfBdEPc1LnQ8zKaHv8GE059V5HHo_AsBqXSvNtlGjm/pub?gid=0&single=true&output=csv";
-        string localPath = "Assets/Data/EnemyDataTable.csv";
+        string localPath = "Assets/Data/UpgradeTable.csv";
 
         ConnectGoogle.DownloaCSV(url, localPath);
 

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4938df9174b63f4fb6541551209d131, type: 3}
+  m_Name: MonsterPack_1
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterPackData
+  monsterPackID: 1
+  monsters:
+  - monsterID: 101
+    count: 2
+  - monsterID: 109
+    count: 1
+  totalCount: 3
+  description: "\uBA38\uC26C\uB8F8 2 + \uD398\uBE14 1 (\uAE30\uBCF8 \uC870\uD569)"

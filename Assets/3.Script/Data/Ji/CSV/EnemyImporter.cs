@@ -54,7 +54,7 @@ public class EnemyImporter
             maxHP = ParseInt(c[3]),
             damage = ParseInt(c[4]),
             moveSpeed = ParseFloat(c[5]),
-            detectRange = ParseFloat(c[6]),
+            attackSpeed = ParseFloat(c[6]),
             attackRange = ParseFloat(c[7]),
             coolTime = ParseFloat(c[8]),
             dropEXP = ParseInt(c[9]),
@@ -89,7 +89,7 @@ public class EnemyImporter
         data.maxHP = rows.maxHP;
         data.damage = rows.damage;
         data.moveSpeed = rows.moveSpeed;
-        data.detectRange = rows.detectRange;
+        data.attackSpeed = rows.attackSpeed;
         data.attackRange = rows.attackRange;
         data.coolTime = rows.coolTime;
         data.dropEXP = rows.dropEXP;

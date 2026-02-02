@@ -41,6 +41,7 @@ public class Axe : WeaponAbstract
             if (!target.CompareTag("Enemy")) continue;
 
             context.hitTargets.Add(target);
+            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
             //target stat 에 getdamage만큼 데미지
         }
 
@@ -56,6 +57,6 @@ public class Axe : WeaponAbstract
         //mainWeapon 공격시 생성되어 플레이어 주변 공전. 닿을 시 데미지
 
         GameObject spawnAxe = Instantiate(axePrefab, stats.transform.position, Quaternion.identity);
-        spawnAxe.GetComponent<OrbitAxe>().Init(stats.transform);
+        spawnAxe.GetComponent<OrbitAxe>().Init(stats.transform, calcDamage() * weaponData.echoDMGRatio);
     }
 }

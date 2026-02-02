@@ -13,6 +13,9 @@ public class PlayerAction : MonoBehaviour
     private PlayerStats stats;
     private FlashEffect effect;
 
+    private bool hasDamaged = false;
+    [SerializeField] private float invincibilityTime = 2f;
+
     private void Awake()
     {
         Equipment = new PlayerEquipment();
@@ -37,9 +40,19 @@ public class PlayerAction : MonoBehaviour
 
     }
 
+    private IEnumerator superArmor()
+    {
+        hasDamaged = true;
+        yield return new WaitForSeconds(invincibilityTime);
+        hasDamaged = false;
+    }
+
     public void takeDamage(int damage)
     {
+        if (hasDamaged) return;
+
         stats.takeDamage(damage);
+        StartCoroutine(superArmor());
 
         effect.Flash(stats.FlashAmount,stats.FlashDuration);
 

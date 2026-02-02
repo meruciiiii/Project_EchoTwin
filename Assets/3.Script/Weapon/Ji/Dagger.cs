@@ -42,6 +42,7 @@ public class Dagger : WeaponAbstract
             if (!target.CompareTag("Enemy")) continue;
 
             context.hitTargets.Add(target);
+            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
             //target stat 에 getdamage만큼 데미지
         }
 
@@ -61,7 +62,7 @@ public class Dagger : WeaponAbstract
         foreach (Collider target in context.hitTargets)
         {
             GameObject dagger = Instantiate(daggerPrefab, spawnPos, Quaternion.identity);
-            dagger.GetComponent<ThrowDagger>().Init(target.transform);
+            dagger.GetComponent<ThrowDagger>().Init(target.transform, calcDamage() * weaponData.echoDMGRatio);
         }
     }
 }

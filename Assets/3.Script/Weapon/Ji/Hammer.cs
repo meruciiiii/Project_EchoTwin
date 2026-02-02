@@ -39,6 +39,7 @@ public class Hammer : WeaponAbstract
             if (!target.CompareTag("Enemy")) continue;
 
             context.hitTargets.Add(target);
+            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
             //target stat 에 getdamage만큼 데미지
         }
 
@@ -62,6 +63,12 @@ public class Hammer : WeaponAbstract
 
         Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 
+        foreach (Collider hit in hits)
+        {
+            if (!hit.CompareTag("Enemy")) continue;
+
+            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
+        }
         //hits 에게 데미지, hits transform 을 centerPos 로 lerp 사용해서 이동
     }
 }
