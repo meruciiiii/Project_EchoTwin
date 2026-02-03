@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-
 public enum EnemyState
 {
     chase,
@@ -20,21 +18,26 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     [SerializeField] protected NavMeshAgent navMesh;
     [SerializeField] protected PlayerStats player;
     protected FlashEffect effect;
-    protected EnemyState state;
+    protected EnemyState state = EnemyState.chase;
 
     protected float lastAttackTime;
     protected float currentHP;
-    //protected bool isDead = false;
-    //protected bool isKnockback = false;
 
     [SerializeField] protected float knockbackTime = 0.2f;
 
     protected virtual void Awake()
     {
         currentHP = enemyData.maxHP;
-        player = FindAnyObjectByType<PlayerStats>();
+        //player = FindAnyObjectByType<PlayerStats>();
         TryGetComponent(out effect);
-        state = EnemyState.chase;
+        setMoveSpeed();
+    }
+
+    protected virtual void attackMotion(float time)
+    {
+        effect.ChargeEffect(time);
+        WaitForSeconds wfs = new WaitForSeconds(time);
+        //animator
     }
 
     public virtual void takeDamage(float damage)
@@ -102,8 +105,10 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         navMesh.isStopped = true;
     }
 
-    public abstract void Move();
-    public abstract void Attack();
+    protected virtual void setMoveSpeed()
+    {
+        navMesh.speed = enemyData.moveSpeed;
+    }
     protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -111,4 +116,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             player.takeDamage(enemyData.damage);
         }
     }
+
+    public abstract void Move();
+    public abstract void Attack();
 }

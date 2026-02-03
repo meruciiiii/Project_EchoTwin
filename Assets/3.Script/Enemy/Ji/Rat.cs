@@ -11,11 +11,6 @@ public class Rat : EnemyStateAbstract
         Move();
     }
 
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-    }
-
     public override void Attack()
     {
 

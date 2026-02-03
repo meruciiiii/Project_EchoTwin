@@ -3,22 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mushroom : EnemyStateAbstract
+public class Crab : EnemyStateAbstract
 {
-    private void Update()
+    [SerializeField] private int shieldCount = 10;
+    [SerializeField] private float reduceRatio = 0.9f;
+
+    public override void takeDamage(float damage)
     {
         if (state == EnemyState.dead) return;
-        Move();
+        if (shieldCount > 0)
+        {
+            damage *= 1 - reduceRatio;
+            effect.Flash(1, 0.5f);
+        }
+
+        currentHP -= damage;
+        checkOnDie();
     }
 
     public override void Attack()
     {
+        if (!canAttack()) return;
         if (state == EnemyState.attack) return;
-
-        turnOffNavmesh();
 
         state = EnemyState.attack;
         checkAttackTime();
+
+        turnOffNavmesh();
 
         attackMotion(enemyData.attackSpeed);
 

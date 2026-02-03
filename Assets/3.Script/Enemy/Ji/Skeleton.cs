@@ -3,22 +3,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mushroom : EnemyStateAbstract
+public class Skeleton : EnemyStateAbstract
 {
+    [SerializeField] private float shieldDgree = 0.3f;
+    [SerializeField] private float reduceRatio = 0.9f;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        navMesh.updateRotation = true;
+    }
+
     private void Update()
     {
         if (state == EnemyState.dead) return;
         Move();
     }
 
+    public override void takeDamage(float damage)
+    {
+        if (state == EnemyState.dead) return;
+
+        Vector3 attackerPos = player.transform.position;
+        Vector3 dir = (attackerPos = transform.position).normalized;
+        float dot = Vector3.Dot(transform.forward, dir);
+
+        if (dot > shieldDgree)
+        {
+            damage *= 1 - reduceRatio;
+            effect.Flash(1, 0.5f);//∏∑æ“¿ª Ω√ π¯¬Ω ¿Ã∆Â∆Æ
+        }
+
+        currentHP -= damage;
+        checkOnDie();
+    }
+
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
 
-        turnOffNavmesh();
-
         state = EnemyState.attack;
         checkAttackTime();
+
+        turnOffNavmesh();
 
         attackMotion(enemyData.attackSpeed);
 
@@ -38,6 +65,8 @@ public class Mushroom : EnemyStateAbstract
     public override void Move()
     {
         if (state == EnemyState.knockback) return;
+
+        state = EnemyState.chase;
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;

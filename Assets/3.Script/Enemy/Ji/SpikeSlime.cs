@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mushroom : EnemyStateAbstract
+public class SpikeSlime : EnemyStateAbstract
 {
+    private Coroutine coroutine;
+
     private void Update()
     {
         if (state == EnemyState.dead) return;
@@ -15,22 +17,44 @@ public class Mushroom : EnemyStateAbstract
     {
         if (state == EnemyState.attack) return;
 
+        state = EnemyState.attack;
+
+        Vector3 targetPos = player.transform.position;
+        Vector3 startPos = transform.position;
+
+        coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
+    }
+
+    private IEnumerator Attack_Co(Vector3 destPos, Vector3 startPos)
+    {
+        float duration = 0.5f;
+        float jumpHeight = 2f;
+        float timer = 0f;
+
         turnOffNavmesh();
 
-        state = EnemyState.attack;
         checkAttackTime();
 
         attackMotion(enemyData.attackSpeed);
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange);
-        foreach (Collider hit in hits)
+        while (timer < duration)
         {
-            if (hit.CompareTag("Player"))
-            {
-                player.takeDamage(enemyData.damage);
-            }
+            timer += Time.deltaTime;
+            float t = timer / duration;
+
+            Vector3 pos = Vector3.Lerp(startPos, destPos, t);
+
+            float height = Mathf.Sin(t * Mathf.PI) * jumpHeight;
+            pos.y += height;
+
+            transform.position = pos;
+
+            yield return null;
         }
+        transform.position = destPos;
+
         state = EnemyState.chase;
+        coroutine = null;
 
         turnOnNavmesh();
     }
@@ -38,6 +62,9 @@ public class Mushroom : EnemyStateAbstract
     public override void Move()
     {
         if (state == EnemyState.knockback) return;
+        if (coroutine != null) return;
+
+        state = EnemyState.chase;
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;

@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goblin : EnemyStateAbstract
+public class Pebble : EnemyStateAbstract
 {
+    [SerializeField] GameObject projectile;
     private Coroutine coroutine;
-    [SerializeField] float attackSpeed = 10f;
-    [SerializeField] float dashDuration = 0.5f;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     private void Update()
     {
@@ -15,38 +19,49 @@ public class Goblin : EnemyStateAbstract
         Move();
     }
 
-    private IEnumerator attack_Co(float attackTime)
+    public override void Attack()
     {
+        if (state == EnemyState.attack) return;
+
         state = EnemyState.attack;
-
-        turnOffNavmesh();
-
-        attackMotion(enemyData.attackSpeed);
 
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
 
-        Vector3 dir = (targetPos - startPos).normalized;
+        coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
+    }
 
-        float timer = dashDuration;
-        while (timer > 0f)
+    private IEnumerator Attack_Co(Vector3 targetPos, Vector3 startPos)
+    {
+        turnOffNavmesh();
+
+        float timer = 0f;
+        float duration = 1f;
+
+        attackMotion(enemyData.attackSpeed);
+
+        projectile.transform.position = transform.position;
+        projectile.SetActive(true);
+
+        while (timer < duration)
         {
-            navMesh.Move(dir * attackTime * Time.deltaTime);
-            timer -= Time.deltaTime;
+            if(state == EnemyState.dead)
+            {
+                projectile.SetActive(false);
+                yield break;
+            }
+
+            timer += Time.deltaTime;
+            float t = timer / duration;
+            projectile.transform.position = Vector3.Lerp(startPos, targetPos, t);
+
             yield return null;
         }
-
-        checkAttackTime();
+        projectile.transform.position = transform.position;
 
         state = EnemyState.chase;
         coroutine = null;
-
         turnOnNavmesh();
-    }
-
-    public override void Attack()
-    {
-
     }
 
     public override void Move()
@@ -82,11 +97,9 @@ public class Goblin : EnemyStateAbstract
         Vector3 runPos = transform.position + dir.normalized * 2f;
 
         UnityEngine.AI.NavMeshHit hit;
-        if (UnityEngine.AI.NavMesh.SamplePosition(runPos, out hit, 1f, UnityEngine.AI.NavMesh.AllAreas))
+        if(UnityEngine.AI.NavMesh.SamplePosition(runPos, out hit, 1f, UnityEngine.AI.NavMesh.AllAreas))
         {
             navMesh.SetDestination(hit.position);
-            transform.LookAt(player.transform);
         }
     }
 }
-

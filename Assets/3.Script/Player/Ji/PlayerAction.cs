@@ -14,7 +14,7 @@ public class PlayerAction : MonoBehaviour
     private FlashEffect effect;
 
     private bool hasDamaged = false;
-    [SerializeField] private float invincibilityTime = 2f;
+    [SerializeField] private float invincibilityTime = 1f;
 
     private void Awake()
     {
