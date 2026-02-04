@@ -1,0 +1,6 @@
+ID,WeaponName,BaseDamage,AttackSpeed,AttackRange,Knockback,EchoDamageRatio,IconPath,ComboCount,ComboCooltme,특징 및 콤보 구성
+0,억눌린 자의 검,10,1,2.5,2,0.5,Icons/Sword_0,3,0.4,표준형: 좌-우-내려베기. 마지막 타격 후 0.4초 쿨타임.
+1,파괴자의 망치,25,2.2,3,8,0.3,Icons/Hammer_0,1,1,마우스 홀딩 시 들고 있다가 - 내리찍기. 마지막 타격 후 1.0초 쿨타임.
+2,편집증의 단검,5,0.4,1.5,1,0.4,Icons/Dagger_0,5,0.3,찌르기 4회-회전 베기. 마지막 타격 후 0.3초 쿨타임.
+3,희생의 창,15,1.5,4.5,3,0.6,Icons/Spear_0,4,0.6,찌르기 세 번-강하게 찌르기. 마지막 타격 후 0.6초 쿨타임.
+4,광기의 도끼,20,1.8,3.5,4,0.4,Icons/Axe_0,2,0.8,가로 베기-회전 베기. 마지막 타격 후 0.8초 쿨타임.
