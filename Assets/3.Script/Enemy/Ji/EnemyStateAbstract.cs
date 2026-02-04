@@ -25,19 +25,14 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     [SerializeField] protected float knockbackTime = 0.2f;
 
+    protected Coroutine coroutine;
+
     protected virtual void Awake()
     {
         currentHP = enemyData.maxHP;
         //player = FindAnyObjectByType<PlayerStats>();
         TryGetComponent(out effect);
         setMoveSpeed();
-    }
-
-    protected virtual void attackMotion(float time)
-    {
-        effect.ChargeEffect(time);
-        WaitForSeconds wfs = new WaitForSeconds(time);
-        //animator
     }
 
     public virtual void takeDamage(float damage)

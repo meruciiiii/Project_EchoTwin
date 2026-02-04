@@ -20,8 +20,6 @@ public class FlyingEye : EnemyStateAbstract
     {
         if (state == EnemyState.attack) return;
 
-        state = EnemyState.attack;
-
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
 
@@ -30,13 +28,15 @@ public class FlyingEye : EnemyStateAbstract
 
     private IEnumerator Attack_Co(Vector3 destPos, Vector3 startPos)
     {
-        float timer = 0f;
+        state = EnemyState.attack;
 
         turnOffNavmesh();
 
-        checkAttackTime();
+        float timer = 0f;
 
-        attackMotion(enemyData.attackSpeed);
+        effect.ChargeEffect(enemyData.attackSpeed);
+        yield return new WaitForSeconds(enemyData.attackSpeed);
+        //animator
 
         while (timer < duration)
         {
@@ -49,10 +49,12 @@ public class FlyingEye : EnemyStateAbstract
         }
         transform.position = startPos;
 
-        state = EnemyState.chase;
+        checkAttackTime();
         coroutine = null;
 
         turnOnNavmesh();
+
+        state = EnemyState.chase;
     }
 
     public override void Move()

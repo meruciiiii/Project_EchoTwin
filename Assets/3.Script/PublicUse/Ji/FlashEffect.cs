@@ -68,6 +68,7 @@ public class FlashEffect : MonoBehaviour
             targetRenderer.material.color = Color.Lerp(originalColor, Color.white, timer / duration);
             yield return null;
         }
+        targetRenderer.material.color = originalColor;
     }
 
     public void RestColor()

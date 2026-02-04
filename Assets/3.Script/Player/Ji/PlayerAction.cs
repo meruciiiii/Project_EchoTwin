@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(FlashEffect))]
 public class PlayerAction : MonoBehaviour
 {
-    private PlayerEquipment Equipment;
+    [SerializeField] private PlayerEquipment Equipment;
     private IWeaponCommand command;
     private AttackContext context;
     private PlayerStats stats;
@@ -16,10 +16,14 @@ public class PlayerAction : MonoBehaviour
     private bool hasDamaged = false;
     [SerializeField] private float invincibilityTime = 1f;
 
+    public AttackDebugGizmo gizmo;
+
     private void Awake()
     {
-        Equipment = new PlayerEquipment();
-        context = new AttackContext();
+        if (Equipment == null)
+        {
+            Equipment = new PlayerEquipment();
+        }
         TryGetComponent(out stats);
         TryGetComponent(out effect);
     }
@@ -27,7 +31,12 @@ public class PlayerAction : MonoBehaviour
     public void OnAttack()
     {
         if (stats.isDash) return;
+
+        context = new AttackContext();
+        RebuildAttackCmd();
         command?.execute();
+
+        Debug.Log("playerAction");
     }
 
     public void OnChargingAttack()
@@ -54,9 +63,9 @@ public class PlayerAction : MonoBehaviour
         stats.takeDamage(damage);
         StartCoroutine(superArmor());
 
-        effect.Flash(stats.FlashAmount,stats.FlashDuration);
+        effect.Flash(stats.FlashAmount, stats.FlashDuration);
 
-        if(stats.isDead)
+        if (stats.isDead)
         {
             GameManager.instance.ChangeState(GameManager.GameState.Die);
         }
@@ -64,15 +73,24 @@ public class PlayerAction : MonoBehaviour
 
     public void OnWeaponAcquire(WeaponAbstract newWeapon)
     {
+        if (gizmo.mainWeapon == null)
+        {
+            gizmo.mainWeapon = newWeapon;//gizmo
+        }
+        else
+        {
+            gizmo.subWeapon = gizmo.mainWeapon;
+            gizmo.mainWeapon = newWeapon;
+        }
+
         Equipment.EquipWeapon(newWeapon);
-        RebuildAttackCmd();
     }
 
     private void RebuildAttackCmd()
     {
         AttackCommand mainAttack = new AttackCommand(Equipment.MainWeapon, context);
 
-        if(Equipment.SubWeapon == null)
+        if (Equipment.SubWeapon == null)
         {
             command = mainAttack;
         }

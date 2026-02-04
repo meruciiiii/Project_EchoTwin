@@ -17,12 +17,16 @@ public class Sword : WeaponAbstract
 
         Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 
+        lastAttackInfo = new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.red };//gizmo
+        hasDebugInfo = true;//gizmo
+
         return hits;
     }
 
     public override void Attack(AttackContext context)
     {
         if (!canAttack()) return;
+        Debug.Log("sword");
 
         checkAttackTime();
 
@@ -46,6 +50,8 @@ public class Sword : WeaponAbstract
 
     public override void OnEcho(AttackContext context)
     {
+        echoAttackInfos.Clear();//gizmo
+
         foreach(Collider target in context.hitTargets)
         {
             GameObject player = stats.gameObject;
@@ -55,6 +61,8 @@ public class Sword : WeaponAbstract
             Vector3 centerPos = target.transform.position + forward * (weaponData.attackRange * 0.5f);
 
             Vector3 targetPos = new Vector3(player_XSize, 1f, weaponData.attackRange * 0.5f);
+
+            echoAttackInfos.Add(new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.cyan });//gizmo
 
             Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 

@@ -38,16 +38,15 @@ public class Skeleton : EnemyStateAbstract
         checkOnDie();
     }
 
-    public override void Attack()
+    private IEnumerator Attack_Co()
     {
-        if (state == EnemyState.attack) return;
-
         state = EnemyState.attack;
-        checkAttackTime();
 
         turnOffNavmesh();
 
-        attackMotion(enemyData.attackSpeed);
+        effect.ChargeEffect(enemyData.attackSpeed);
+        yield return new WaitForSeconds(enemyData.attackSpeed);
+        //animator
 
         Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange);
         foreach (Collider hit in hits)
@@ -57,14 +56,25 @@ public class Skeleton : EnemyStateAbstract
                 player.takeDamage(enemyData.damage);
             }
         }
-        state = EnemyState.chase;
+        checkAttackTime();
+        coroutine = null;
 
         turnOnNavmesh();
+
+        state = EnemyState.chase;
+    }
+
+    public override void Attack()
+    {
+        if (state == EnemyState.attack) return;
+
+        coroutine = StartCoroutine(Attack_Co());
     }
 
     public override void Move()
     {
         if (state == EnemyState.knockback) return;
+        if (coroutine != null) return;
 
         state = EnemyState.chase;
 

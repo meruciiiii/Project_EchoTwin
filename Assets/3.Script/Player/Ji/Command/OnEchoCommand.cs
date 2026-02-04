@@ -18,9 +18,11 @@ public class OnEchoCommand : IWeaponCommand
     {
         if (!subWeapon.canEcho()) return;
 
+        Debug.Log(context.hitTargets.Count);
         if (context.hitTargets.Count == 0) return;
 
         subWeapon.OnEcho(context);
         subWeapon.ConsumeResonance();
+        Debug.Log("onecho");
     }
 }
