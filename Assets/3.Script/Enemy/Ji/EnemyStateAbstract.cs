@@ -87,7 +87,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         state = EnemyState.knockback;
 
         float timer = knockbackTime;
-        while(timer>0f)
+        while (timer > 0f)
         {
             navMesh.Move(dir * power * Time.deltaTime);
             timer -= Time.deltaTime;
@@ -121,9 +121,27 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            player.takeDamage(enemyData.damage,transform.position);
+            player.takeDamage(enemyData.damage, transform.position);
+        }
+    }
+
+    protected virtual IEnumerator BodyAttack_Co()
+    {
+        float timer = enemyData.attackSpeed;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange + radius);
+            foreach (Collider hit in hits)
+            {
+                if (hit.CompareTag("Player"))
+                {
+                    player.takeDamage(enemyData.damage, transform.position);
+                }
+            }
+            yield return null;
         }
     }
 
