@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStats stats;
     private InputManager Input;
     private Rigidbody rb;
+    private Animator animator; // 애니메이터 추가
 
     private Vector3 mousePos;
 
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
         TryGetComponent(out Input);
         TryGetComponent(out rb);
         TryGetComponent(out stats);
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void FixedUpdate()
@@ -31,18 +33,26 @@ public class PlayerMovement : MonoBehaviour
 
         rb.MovePosition(transform.position + movePos);
 
-        Vector3 moveDir = moveInput.normalized;
+        // 2. 중요: moveDir를 만들 때 Vector2의 y를 Vector3의 z에 넣어줘야 합니다!
+        Vector3 moveDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
 
-        if(moveDir.magnitude>0.1f)
+        if (moveDir.magnitude>0.1f)
         {
             Vector3 localMoveDir = transform.InverseTransformDirection(moveDir);
 
             //animator localMoveDir.x -> 좌우 움직임 애니메이터
             //animator localMoveDir.z -> 앞뒤 움직임 애니매이터
+
+            // 0.1f는 부드러운 애니메이션 전환을 위한 댐핑 값입니다.
+            animator.SetFloat("MoveX", localMoveDir.x, 0.1f, Time.deltaTime);
+            animator.SetFloat("MoveZ", localMoveDir.z, 0.1f, Time.deltaTime);
+
         }
         else
         {
-
+            // 멈췄을 때 애니메이션도 0으로 부드럽게 복귀
+            animator.SetFloat("MoveX", 0, 0.1f, Time.deltaTime);
+            animator.SetFloat("MoveZ", 0, 0.1f, Time.deltaTime);
         }
     }
 
