@@ -16,6 +16,8 @@ public class PlayerAction : MonoBehaviour
     private bool hasDamaged = false;
     [SerializeField] private float invincibilityTime = 1f;
 
+    [SerializeField] private float knockBackForce = 2f;
+
     public AttackDebugGizmo gizmo;
 
     private void Awake()
@@ -56,11 +58,15 @@ public class PlayerAction : MonoBehaviour
         hasDamaged = false;
     }
 
-    public void takeDamage(int damage)
+    public void takeDamage(int damage,Vector3 damagePos)
     {
         if (hasDamaged) return;
 
         stats.takeDamage(damage);
+
+        Vector3 dir = (damagePos - transform.position).normalized;
+        knockBack(dir);
+
         StartCoroutine(superArmor());
 
         effect.Flash(stats.FlashAmount, stats.FlashDuration);
@@ -69,6 +75,11 @@ public class PlayerAction : MonoBehaviour
         {
             GameManager.instance.ChangeState(GameManager.GameState.Die);
         }
+    }
+
+    private void knockBack(Vector3 dir)
+    {
+        transform.GetComponent<Rigidbody>().AddForce(-dir* knockBackForce);
     }
 
     public void OnWeaponAcquire(WeaponAbstract newWeapon)

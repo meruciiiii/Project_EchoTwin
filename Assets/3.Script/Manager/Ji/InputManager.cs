@@ -56,6 +56,18 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void Event_ChargingAttack(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed)
+        {
+
+        }
+        else if(context.phase == InputActionPhase.Canceled)
+        {
+
+        }
+    }
+
     public void Event_Curse(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)

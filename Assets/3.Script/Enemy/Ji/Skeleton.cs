@@ -53,7 +53,7 @@ public class Skeleton : EnemyStateAbstract
         {
             if (hit.CompareTag("Player"))
             {
-                player.takeDamage(enemyData.damage);
+                player.takeDamage(enemyData.damage,transform.position);
             }
         }
         checkAttackTime();

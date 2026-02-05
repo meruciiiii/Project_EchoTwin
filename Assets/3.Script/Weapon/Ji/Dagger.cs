@@ -19,6 +19,9 @@ public class Dagger : WeaponAbstract
 
         Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 
+        lastAttackInfo = new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.red };//gizmo
+        hasDebugInfo = true;//gizmo
+
         return hits;
     }
 
