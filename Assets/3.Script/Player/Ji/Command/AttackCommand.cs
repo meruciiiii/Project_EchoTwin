@@ -20,5 +20,6 @@ public class AttackCommand : IWeaponCommand
 
         context.hitTargets.Clear();
         weapon.Attack(context);
+        Debug.Log("attackCommand");
     }
 }

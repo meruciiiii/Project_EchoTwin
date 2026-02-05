@@ -32,8 +32,6 @@ public class Bat : EnemyStateAbstract
     {
         if (state == EnemyState.attack) return;
 
-        state = EnemyState.attack;
-
         Vector3 targetPos = player.transform.position;
         targetPos.y = fixedY;
         Vector3 startPos = transform.position;
@@ -43,9 +41,13 @@ public class Bat : EnemyStateAbstract
 
     private IEnumerator Attack_Co(Vector3 destPos, Vector3 startPos)
     {
+        state = EnemyState.attack;
+
         turnOffNavmesh();
 
-        attackMotion(enemyData.attackSpeed);
+        effect.ChargeEffect(enemyData.attackSpeed);
+        yield return new WaitForSeconds(enemyData.attackSpeed);
+        //animator
 
         Vector3 dir = (destPos - startPos).normalized;
 
@@ -58,11 +60,11 @@ public class Bat : EnemyStateAbstract
         }
 
         checkAttackTime();
-
-        state = EnemyState.chase;
         coroutine = null;
 
         turnOnNavmesh();
+
+        state = EnemyState.chase;
     }
 
     public override void Move()

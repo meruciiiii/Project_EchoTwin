@@ -23,8 +23,6 @@ public class Pebble : EnemyStateAbstract
     {
         if (state == EnemyState.attack) return;
 
-        state = EnemyState.attack;
-
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
 
@@ -33,19 +31,23 @@ public class Pebble : EnemyStateAbstract
 
     private IEnumerator Attack_Co(Vector3 targetPos, Vector3 startPos)
     {
+        state = EnemyState.attack;
+
         turnOffNavmesh();
+
+        effect.ChargeEffect(enemyData.attackSpeed);
+        yield return new WaitForSeconds(enemyData.attackSpeed);
+        //animator
 
         float timer = 0f;
         float duration = 1f;
-
-        attackMotion(enemyData.attackSpeed);
 
         projectile.transform.position = transform.position;
         projectile.SetActive(true);
 
         while (timer < duration)
         {
-            if(state == EnemyState.dead)
+            if (state == EnemyState.dead)
             {
                 projectile.SetActive(false);
                 yield break;
@@ -59,9 +61,12 @@ public class Pebble : EnemyStateAbstract
         }
         projectile.transform.position = transform.position;
 
-        state = EnemyState.chase;
+        checkAttackTime();
         coroutine = null;
+
         turnOnNavmesh();
+
+        state = EnemyState.chase;
     }
 
     public override void Move()

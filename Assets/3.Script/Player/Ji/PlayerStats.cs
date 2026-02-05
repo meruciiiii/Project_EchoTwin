@@ -44,6 +44,8 @@ public class PlayerStats : MonoBehaviour
     public void takeDamage(int damage)
     {
         if (isDash) return;
+        Debug.Log(currentHP);
         currentHP -= damage;
+        Debug.Log(currentHP);
     }
 }

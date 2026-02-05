@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
 {
     private PlayerMovement Player;
     private ItemPickup pickup;
+    private PlayerAction Action;
 
     private Vector2 moveValue;
     public Vector2 MoveValue => moveValue;
@@ -47,9 +48,21 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
-
+            Action.OnAttack();
         }
         else if (context.phase == InputActionPhase.Canceled)
+        {
+
+        }
+    }
+
+    public void Event_ChargingAttack(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed)
+        {
+
+        }
+        else if(context.phase == InputActionPhase.Canceled)
         {
 
         }

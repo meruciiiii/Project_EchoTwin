@@ -27,15 +27,17 @@ public class SpikeSlime : EnemyStateAbstract
 
     private IEnumerator Attack_Co(Vector3 destPos, Vector3 startPos)
     {
-        float duration = 0.5f;
-        float jumpHeight = 2f;
-        float timer = 0f;
+        state = EnemyState.attack;
 
         turnOffNavmesh();
 
-        checkAttackTime();
+        effect.ChargeEffect(enemyData.attackSpeed);
+        yield return new WaitForSeconds(enemyData.attackSpeed);
+        //animator
 
-        attackMotion(enemyData.attackSpeed);
+        float duration = 0.5f;
+        float jumpHeight = 2f;
+        float timer = 0f;
 
         while (timer < duration)
         {
@@ -53,10 +55,12 @@ public class SpikeSlime : EnemyStateAbstract
         }
         transform.position = destPos;
 
-        state = EnemyState.chase;
+        checkAttackTime();
         coroutine = null;
 
         turnOnNavmesh();
+
+        state = EnemyState.chase;
     }
 
     public override void Move()

@@ -16,6 +16,9 @@ public class Hammer : WeaponAbstract
 
         Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 
+        lastAttackInfo = new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.red };//gizmo
+        hasDebugInfo = true;//gizmo
+
         return hits;
     }
 
@@ -52,6 +55,8 @@ public class Hammer : WeaponAbstract
 
     public override void OnEcho(AttackContext context)
     {
+        echoAttackInfos.Clear();//gizmo
+
         //mainWeapon 공격시 기본공격과 같은 범위와 위치에 추가 데미지
 
         GameObject player = stats.gameObject;
@@ -60,6 +65,8 @@ public class Hammer : WeaponAbstract
         Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
 
         Vector3 targetPos = new Vector3(weaponData.attackRange * 0.5f, 1f, weaponData.attackRange * 0.5f);
+
+        echoAttackInfos.Add(new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.cyan });//gizmo
 
         Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 

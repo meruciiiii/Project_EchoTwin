@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerEquipment
 {
-    public WeaponAbstract MainWeapon { get; private set; }
-    public WeaponAbstract SubWeapon { get; private set; }
+    //public WeaponAbstract MainWeapon { get; private set; }
+    //public WeaponAbstract SubWeapon { get; private set; }
+    public WeaponAbstract MainWeapon;
+    public WeaponAbstract SubWeapon;
 
     public void EquipWeapon(WeaponAbstract newWeapon)
     {

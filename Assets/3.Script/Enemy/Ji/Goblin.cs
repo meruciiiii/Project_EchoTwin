@@ -15,13 +15,15 @@ public class Goblin : EnemyStateAbstract
         Move();
     }
 
-    private IEnumerator attack_Co(float attackTime)
+    private IEnumerator Attack_Co(float attackSpeed)
     {
         state = EnemyState.attack;
 
         turnOffNavmesh();
 
-        attackMotion(enemyData.attackSpeed);
+        effect.ChargeEffect(enemyData.attackSpeed);
+        yield return new WaitForSeconds(enemyData.attackSpeed);
+        //animator
 
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
@@ -31,22 +33,24 @@ public class Goblin : EnemyStateAbstract
         float timer = dashDuration;
         while (timer > 0f)
         {
-            navMesh.Move(dir * attackTime * Time.deltaTime);
+            navMesh.Move(dir * attackSpeed * Time.deltaTime);
             timer -= Time.deltaTime;
             yield return null;
         }
 
         checkAttackTime();
-
-        state = EnemyState.chase;
         coroutine = null;
 
         turnOnNavmesh();
+
+        state = EnemyState.chase;
     }
 
     public override void Attack()
     {
+        if (state == EnemyState.attack) return;
 
+        coroutine = StartCoroutine(Attack_Co(attackSpeed));
     }
 
     public override void Move()

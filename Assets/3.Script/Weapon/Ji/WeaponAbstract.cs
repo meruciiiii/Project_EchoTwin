@@ -13,6 +13,22 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected int resonanceCount;
     protected int comboCount;
 
+    protected AttackDebugInfo lastAttackInfo;
+    protected bool hasDebugInfo;
+
+    protected List<AttackDebugInfo> echoAttackInfos = new List<AttackDebugInfo>();
+
+    public AttackDebugInfo DebugInfo => lastAttackInfo;
+    public bool HasDebugInfo => hasDebugInfo;
+
+    public IReadOnlyList<AttackDebugInfo> EchoAttackInfos => echoAttackInfos;
+
+    private void Awake()
+    {
+        SetComboCount();
+        resonanceCount = 10;
+    }
+
     public void SetComboCount()
     {
         comboCount = weaponData.comboCount;
@@ -26,6 +42,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     public void ConsumeComboCount()
     {
         comboCount--;
+        Debug.Log($"{comboCount}");
     }
 
     public  void SetResonance(int count)
