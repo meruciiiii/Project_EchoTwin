@@ -30,6 +30,20 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movePos = new Vector3(moveInput.x, 0, moveInput.y) * stats.MoveSpeed * Time.deltaTime * GameManager.instance.timeScale;
 
         rb.MovePosition(transform.position + movePos);
+
+        Vector3 moveDir = moveInput.normalized;
+
+        if(moveDir.magnitude>0.1f)
+        {
+            Vector3 localMoveDir = transform.InverseTransformDirection(moveDir);
+
+            //animator localMoveDir.x -> 좌우 움직임 애니메이터
+            //animator localMoveDir.z -> 앞뒤 움직임 애니매이터
+        }
+        else
+        {
+
+        }
     }
 
     public IEnumerator Dash()
