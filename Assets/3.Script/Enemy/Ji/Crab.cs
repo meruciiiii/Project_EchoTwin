@@ -26,29 +26,39 @@ public class Crab : EnemyStateAbstract
         if (!canAttack()) return;
         if (state == EnemyState.attack) return;
 
+        coroutine = StartCoroutine(Attack_Co());
+    }
+
+    private IEnumerator Attack_Co()
+    {
         state = EnemyState.attack;
-        checkAttackTime();
 
         turnOffNavmesh();
 
-        attackMotion(enemyData.attackSpeed);
+        effect.ChargeEffect(enemyData.attackSpeed);
+        yield return new WaitForSeconds(enemyData.attackSpeed);
+        //animator
 
         Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange);
         foreach (Collider hit in hits)
         {
             if (hit.CompareTag("Player"))
             {
-                player.takeDamage(enemyData.damage);
+                player.takeDamage(enemyData.damage,transform.position);
             }
         }
-        state = EnemyState.chase;
+        checkAttackTime();
+        coroutine = null;
 
         turnOnNavmesh();
+
+        state = EnemyState.chase;
     }
 
     public override void Move()
     {
         if (state == EnemyState.knockback) return;
+        if (coroutine != null) return;
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;

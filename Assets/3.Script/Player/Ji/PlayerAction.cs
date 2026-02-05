@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(FlashEffect))]
 public class PlayerAction : MonoBehaviour
 {
-    private PlayerEquipment Equipment;
+    [SerializeField] private PlayerEquipment Equipment;
     private IWeaponCommand command;
     private AttackContext context;
     private PlayerStats stats;
@@ -16,10 +16,16 @@ public class PlayerAction : MonoBehaviour
     private bool hasDamaged = false;
     [SerializeField] private float invincibilityTime = 1f;
 
+    [SerializeField] private float knockBackForce = 2f;
+
+    public AttackDebugGizmo gizmo;
+
     private void Awake()
     {
-        Equipment = new PlayerEquipment();
-        context = new AttackContext();
+        if (Equipment == null)
+        {
+            Equipment = new PlayerEquipment();
+        }
         TryGetComponent(out stats);
         TryGetComponent(out effect);
     }
@@ -27,7 +33,12 @@ public class PlayerAction : MonoBehaviour
     public void OnAttack()
     {
         if (stats.isDash) return;
+
+        context = new AttackContext();
+        RebuildAttackCmd();
         command?.execute();
+
+        Debug.Log("playerAction");
     }
 
     public void OnChargingAttack()
@@ -47,32 +58,50 @@ public class PlayerAction : MonoBehaviour
         hasDamaged = false;
     }
 
-    public void takeDamage(int damage)
+    public void takeDamage(int damage,Vector3 damagePos)
     {
         if (hasDamaged) return;
 
         stats.takeDamage(damage);
+
+        Vector3 dir = (damagePos - transform.position).normalized;
+        knockBack(dir);
+
         StartCoroutine(superArmor());
 
-        effect.Flash(stats.FlashAmount,stats.FlashDuration);
+        effect.Flash(stats.FlashAmount, stats.FlashDuration);
 
-        if(stats.isDead)
+        if (stats.isDead)
         {
             GameManager.instance.ChangeState(GameManager.GameState.Die);
         }
     }
 
+    private void knockBack(Vector3 dir)
+    {
+        transform.GetComponent<Rigidbody>().AddForce(-dir* knockBackForce);
+    }
+
     public void OnWeaponAcquire(WeaponAbstract newWeapon)
     {
+        if (gizmo.mainWeapon == null)
+        {
+            gizmo.mainWeapon = newWeapon;//gizmo
+        }
+        else
+        {
+            gizmo.subWeapon = gizmo.mainWeapon;
+            gizmo.mainWeapon = newWeapon;
+        }
+
         Equipment.EquipWeapon(newWeapon);
-        RebuildAttackCmd();
     }
 
     private void RebuildAttackCmd()
     {
         AttackCommand mainAttack = new AttackCommand(Equipment.MainWeapon, context);
 
-        if(Equipment.SubWeapon == null)
+        if (Equipment.SubWeapon == null)
         {
             command = mainAttack;
         }

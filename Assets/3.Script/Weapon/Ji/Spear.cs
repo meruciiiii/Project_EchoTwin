@@ -17,6 +17,9 @@ public class Spear : WeaponAbstract
 
         Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 
+        lastAttackInfo = new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.red };//gizmo
+        hasDebugInfo = true;//gizmo
+
         return hits;
     }
 
@@ -53,6 +56,8 @@ public class Spear : WeaponAbstract
 
     public override void OnEcho(AttackContext context)
     {
+        echoAttackInfos.Clear();//gizmo
+
         //mainWeapon 공격시 기본공격과 같은 위치에 공격. 다만 사거리는 조금 더 길 예정
 
         GameObject player = stats.gameObject;
@@ -62,6 +67,8 @@ public class Spear : WeaponAbstract
         Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange);
 
         Vector3 targetPos = new Vector3(player_XSize * 0.25f, 1f, weaponData.attackRange);
+
+        echoAttackInfos.Add(new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.cyan });//gizmo
 
         Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 
