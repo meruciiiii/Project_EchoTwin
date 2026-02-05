@@ -59,9 +59,29 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator Dash()
     {
         stats.isDash = true;
-        Vector2 dashPos = Input.MoveValue.normalized * stats.DashLength;
-        Vector3 destPos = new Vector3(transform.position.x + dashPos.x, transform.position.y, transform.position.z + dashPos.y);
+        // 1. 구르기 애니메이션 실행
+        if (animator != null)
+        {
+            animator.SetTrigger("Roll");
+        }
+
+        Vector2 moveInput = Input.MoveValue;
+        Vector3 dashDir;
+
+        // 2. 방향 결정: 이동 키를 누르고 있다면 그 방향으로, 아니면 정면으로
+        if (moveInput.magnitude > 0.1f)
+        {
+            dashDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+        }
+        else
+        {
+            dashDir = transform.forward;
+        }
+
+
         Vector3 startPos = transform.position;
+        Vector3 destPos = startPos + (dashDir * stats.DashLength);
+
         float timer = 0;
         while (timer < 1f)
         {
