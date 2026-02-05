@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c466ea50bf20684dba68cabd8a017f8, type: 3}
+  m_Name: Weapon_4
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  ID: 4
+  name: "\uAD11\uAE30\uC758 \uB3C4\uB07C"
+  baseDamage: 20
+  attackSpeed: 1.8
+  attackRange: 3.5
+  knockback: 4
+  echoDMGRatio: 0.4
+  echoDescription: "\uD68C\uC804 \uBCA0\uAE30 \uC794\uD5A5"
+  icon: {fileID: 0}
+  comboCount: 2
+  comboCooltime: 0.8
+  description: "\uAC00\uB85C \uBCA0\uAE30-\uD68C\uC804 \uBCA0\uAE30. \uB9C8\uC9C0\uB9C9
+    \uD0C0\uACA9 \uD6C4 0.8\uCD08 \uCFE8\uD0C0\uC784."

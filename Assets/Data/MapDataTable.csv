@@ -1,0 +1,3 @@
+RegionID,RegionName,FloorTilePath,WallTilePath,EnemyPoolIDs,BossID,MinRooms,MaxRooms
+1,상실의 숲,Tiles/Forest_F,Tiles/Forest_W,100;101,999,8,12
+2,왜곡된 심연,Tiles/Void_F,Tiles/Void_W,101;102,1000,12,16
