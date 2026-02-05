@@ -432,7 +432,7 @@ Animator:
   m_GameObject: {fileID: 2358821496233666400}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fa7f36c71b9e8fa4798df3a931c2fd92, type: 3}
-  m_Controller: {fileID: 9100000, guid: 705ce6546e50d914e8399e44318596e7, type: 2}
+  m_Controller: {fileID: 9100000, guid: bc9a12416d9aaa94b90a31d9ccb740b5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   maxHP: 6
   playerDMG: 1
   moveSpeed: 10
-  dashLength: 10
+  dashLength: 4
   dashSpeed: 4
   dashDelay: 1
   isDash: 0
