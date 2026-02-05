@@ -16,10 +16,9 @@ public class AttackCommand : IWeaponCommand
 
     public void execute()
     {
-        if (!weapon.canCombo()) return;
+        if (!weapon.CanAttack()) return;
 
         context.hitTargets.Clear();
         weapon.Attack(context);
-        Debug.Log("attackCommand");
     }
 }

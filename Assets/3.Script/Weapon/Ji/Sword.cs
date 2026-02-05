@@ -25,10 +25,12 @@ public class Sword : WeaponAbstract
 
     public override void Attack(AttackContext context)
     {
-        if (!canAttack()) return;
-        Debug.Log("sword");
+        if (!CanAttack()) return;
+        Debug.Log($"combo count = {comboCount}");
 
         checkAttackTime();
+
+        SetAnimator();
 
         Collider[] targets = getTargetInRange();
 
@@ -41,6 +43,9 @@ public class Sword : WeaponAbstract
 
             enemyKnockback(target);
         }
+
+        UpdateComboState();
+        Debug.Log($"combo count = {comboCount}");
     }
 
     public override void ChargingAttack()

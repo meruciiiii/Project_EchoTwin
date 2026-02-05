@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Goblin : EnemyStateAbstract
 {
-    private Coroutine coroutine;
     [SerializeField] float attackSpeed = 10f;
     [SerializeField] float dashDuration = 0.5f;
 

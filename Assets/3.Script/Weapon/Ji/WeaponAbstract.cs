@@ -8,44 +8,81 @@ public abstract class WeaponAbstract : MonoBehaviour
     [SerializeField] protected WeaponData weaponData;
     [SerializeField] protected CharacterData characterData;
     [SerializeField] protected PlayerStats stats;
+    [SerializeField] protected Animator animator;
+
+    protected int resonanceCount;
 
     protected float lastAttackTime;
-    protected int resonanceCount;
     protected int comboCount;
+    protected bool isComboCooltime = false;
+
+    protected float comboExpireTime;
 
     protected AttackDebugInfo lastAttackInfo;
     protected bool hasDebugInfo;
-
     protected List<AttackDebugInfo> echoAttackInfos = new List<AttackDebugInfo>();
 
     public AttackDebugInfo DebugInfo => lastAttackInfo;
     public bool HasDebugInfo => hasDebugInfo;
-
     public IReadOnlyList<AttackDebugInfo> EchoAttackInfos => echoAttackInfos;
 
     private void Awake()
     {
-        SetComboCount();
-        resonanceCount = 10;
+        if (animator == null) animator = GetComponentInParent<Animator>();
+
+        comboCount = 0;
+        SetResonance(10);
     }
 
-    public void SetComboCount()
+    #region Combo관련
+    public bool CanAttack()
     {
-        comboCount = weaponData.comboCount;
+        if (isComboCooltime) return false;
+
+        if (Time.time < lastAttackTime) return false;
+
+        return true;
     }
 
-    public bool canCombo()
+    protected void checkAttackTime()
     {
-        return comboCount > 0;
+        float comboExpireTime = lastAttackTime + weaponData.attackSpeed;
+
+        if(Time.time > comboExpireTime)
+        {
+            comboCount = 0;
+        }
+
+        lastAttackTime = Time.time + weaponData.attackSpeed;
     }
 
-    public void ConsumeComboCount()
+    protected void UpdateComboState()
     {
-        comboCount--;
-        Debug.Log($"{comboCount}");
+        comboCount++;
+
+        if (comboCount >= weaponData.comboCount)
+        {
+            comboCount = 0;
+            StartCoroutine(ComboCooltime_Co());
+        }
     }
 
-    public  void SetResonance(int count)
+    protected IEnumerator ComboCooltime_Co()
+    {
+        isComboCooltime = true;
+        yield return new WaitForSeconds(weaponData.comboCooltime + weaponData.attackSpeed);
+        isComboCooltime = false;
+    }
+
+    protected void SetAnimator()
+    {
+        //animator.SetInteger("콤보모션", comboCount);
+        //animator.SetTrigger("공격모션 트리거");
+    }
+    #endregion
+
+    #region Echo관련
+    public void SetResonance(int count)
     {
         resonanceCount = count;
     }
@@ -59,16 +96,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     {
         resonanceCount--;
     }
-
-    protected bool canAttack()
-    {
-        return Time.time >= lastAttackTime + (1f / weaponData.attackSpeed);
-    }
-
-    protected void checkAttackTime()
-    {
-        lastAttackTime = Time.time;
-    }
+    #endregion
 
     protected virtual void enemyKnockback(Collider target)
     {

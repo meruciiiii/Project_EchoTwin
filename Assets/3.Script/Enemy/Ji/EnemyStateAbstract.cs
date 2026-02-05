@@ -17,22 +17,36 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     [SerializeField] protected EnemyData enemyData;
     [SerializeField] protected NavMeshAgent navMesh;
     [SerializeField] protected PlayerAction player;
+
+    AttackDebugGizmo gizmo;
+
     protected FlashEffect effect;
     protected EnemyState state = EnemyState.chase;
 
     protected float lastAttackTime;
     protected float currentHP;
+    protected float radius;
 
     [SerializeField] protected float knockbackTime = 0.2f;
 
     protected Coroutine coroutine;
+
+    protected AttackDebugInfo lastAttackInfo;
+    protected bool hasDebugInfo;
+
+    public AttackDebugInfo DebugInfo => lastAttackInfo;
+    public bool HasDebugInfo => hasDebugInfo;
+
 
     protected virtual void Awake()
     {
         currentHP = enemyData.maxHP;
         //player = FindAnyObjectByType<PlayerStats>();
         TryGetComponent(out effect);
+        TryGetComponent(out gizmo);
+        gizmo.enemy = this;
         setMoveSpeed();
+        radius = transform.GetComponent<CapsuleCollider>().radius;
     }
 
     public virtual void takeDamage(float damage)
@@ -73,7 +87,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         state = EnemyState.knockback;
 
         float timer = knockbackTime;
-        while(timer>0f)
+        while (timer > 0f)
         {
             navMesh.Move(dir * power * Time.deltaTime);
             timer -= Time.deltaTime;
@@ -104,11 +118,30 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         navMesh.speed = enemyData.moveSpeed;
     }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            player.takeDamage(enemyData.damage,transform.position);
+            player.takeDamage(enemyData.damage, transform.position);
+        }
+    }
+
+    protected virtual IEnumerator BodyAttack_Co()
+    {
+        float timer = enemyData.attackSpeed;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange + radius);
+            foreach (Collider hit in hits)
+            {
+                if (hit.CompareTag("Player"))
+                {
+                    player.takeDamage(enemyData.damage, transform.position);
+                }
+            }
+            yield return null;
         }
     }
 

@@ -31,9 +31,11 @@ public class Hammer : WeaponAbstract
 
     public override void Attack(AttackContext context)
     {
-        if (!canAttack()) return;
+        if (!CanAttack()) return;
 
         checkAttackTime();
+
+        SetAnimator();
 
         Collider[] targets = getTargetInRange();
 
@@ -46,6 +48,7 @@ public class Hammer : WeaponAbstract
             //target stat 에 getdamage만큼 데미지
         }
 
+        UpdateComboState();
     }
 
     public override void ChargingAttack()
@@ -77,5 +80,10 @@ public class Hammer : WeaponAbstract
             hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
         }
         //hits 에게 데미지, hits transform 을 centerPos 로 lerp 사용해서 이동
+    }
+
+    private IEnumerator EnemyGatherng()
+    {
+        yield return null;
     }
 }

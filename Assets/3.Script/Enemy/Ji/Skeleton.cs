@@ -48,6 +48,9 @@ public class Skeleton : EnemyStateAbstract
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
 
+        lastAttackInfo = new AttackDebugInfo { center = transform.position, halfExtents = Vector3.one * enemyData.attackRange, rotation = Quaternion.identity, color = Color.magenta };//gizmo
+        hasDebugInfo = true;//gizmo
+
         Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange);
         foreach (Collider hit in hits)
         {

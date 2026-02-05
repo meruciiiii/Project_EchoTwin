@@ -33,9 +33,11 @@ public class Axe : WeaponAbstract
 
     public override void Attack(AttackContext context)
     {
-        if (!canAttack()) return;
+        if (!CanAttack()) return;
 
         checkAttackTime();
+
+        SetAnimator();
 
         Collider[] targets = getTargetInRange();
 
@@ -48,6 +50,7 @@ public class Axe : WeaponAbstract
             //target stat 에 getdamage만큼 데미지
         }
 
+        UpdateComboState();
     }
 
     public override void ChargingAttack()

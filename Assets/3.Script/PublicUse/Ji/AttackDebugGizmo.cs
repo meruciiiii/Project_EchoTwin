@@ -16,39 +16,31 @@ public class AttackDebugGizmo : MonoBehaviour
     public WeaponAbstract mainWeapon;
     public WeaponAbstract subWeapon;
 
-    private void OnDrawGizmosSelected()
-    {
-        if (mainWeapon == null) return;
-        if (!mainWeapon.HasDebugInfo) return;
-
-        Debug.Log("gizmo");
-
-        AttackDebugInfo info = mainWeapon.DebugInfo;
-
-        Gizmos.color = info.color;
-
-        Matrix4x4 old = Gizmos.matrix;
-        Gizmos.matrix = Matrix4x4.TRS(info.center, info.rotation, Vector3.one);
-
-        Gizmos.DrawWireCube(Vector3.zero, info.halfExtents * 2f);
-        Gizmos.matrix = old;
-    }
+    public EnemyStateAbstract enemy;
 
     private void OnDrawGizmos()
     {
-        if (subWeapon == null) return;
-
-        if(mainWeapon.HasDebugInfo)
+        if (mainWeapon != null && mainWeapon.HasDebugInfo)
         {
             DrawBox(mainWeapon.DebugInfo);
         }
 
-        IReadOnlyList<AttackDebugInfo> echos = subWeapon.EchoAttackInfos;
-        if (echos == null) return;
-
-        foreach(AttackDebugInfo info in echos)
+        if (subWeapon != null)
         {
-            DrawBox(info);
+            IReadOnlyList<AttackDebugInfo> echos = subWeapon.EchoAttackInfos;
+            if (echos != null)
+            {
+                foreach (AttackDebugInfo info in echos)
+                {
+                    DrawBox(info);
+                }
+            }
+
+        }
+
+        if (enemy != null && enemy.HasDebugInfo)
+        {
+            DrawSphere(enemy.DebugInfo);
         }
     }
 
@@ -61,5 +53,12 @@ public class AttackDebugGizmo : MonoBehaviour
 
         Gizmos.DrawWireCube(Vector3.zero, info.halfExtents * 2f);
         Gizmos.matrix = old;
+    }
+
+    private void DrawSphere(AttackDebugInfo info)
+    {
+        Gizmos.color = info.color;
+
+        Gizmos.DrawSphere(info.center, info.halfExtents.x);
     }
 }
