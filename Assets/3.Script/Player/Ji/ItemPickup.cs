@@ -25,7 +25,8 @@ public class ItemPickup : MonoBehaviour
     {
         if (image == null || cam == null) return;
 
-        Vector3 worldPos = transform.position + Vector3.up * height;
+        //Vector3 worldPos = transform.position + Vector3.up * height;
+        Vector3 worldPos = weapon.transform.position + cam.transform.up * height;
         Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
 
         image.rectTransform.position = screenPos;
@@ -41,6 +42,7 @@ public class ItemPickup : MonoBehaviour
             image.color = c;
 
             player = other.GetComponent<PlayerAction>();
+            player.SetPickup(this);
         }
     }
 
@@ -53,6 +55,7 @@ public class ItemPickup : MonoBehaviour
             c.a = 0f;
             image.color = c;
 
+            player.ClearPickup(this);
             player = null;
         }
     }

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class SpikeSlime : EnemyStateAbstract
 {
-    private Coroutine coroutine;
-
     private void Update()
     {
         if (state == EnemyState.dead) return;

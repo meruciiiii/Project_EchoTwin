@@ -8,8 +8,6 @@ public class Bat : EnemyStateAbstract
     [SerializeField] private float duration = 0.5f;
     private float fixedY;
 
-    private Coroutine coroutine;
-
     [SerializeField] private float zigzagRadius = 2f;
     [SerializeField] private float zigzagTime = 0.3f;
 

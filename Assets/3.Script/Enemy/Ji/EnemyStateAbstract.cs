@@ -17,22 +17,36 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     [SerializeField] protected EnemyData enemyData;
     [SerializeField] protected NavMeshAgent navMesh;
     [SerializeField] protected PlayerAction player;
+
+    AttackDebugGizmo gizmo;
+
     protected FlashEffect effect;
     protected EnemyState state = EnemyState.chase;
 
     protected float lastAttackTime;
     protected float currentHP;
+    protected float radius;
 
     [SerializeField] protected float knockbackTime = 0.2f;
 
     protected Coroutine coroutine;
+
+    protected AttackDebugInfo lastAttackInfo;
+    protected bool hasDebugInfo;
+
+    public AttackDebugInfo DebugInfo => lastAttackInfo;
+    public bool HasDebugInfo => hasDebugInfo;
+
 
     protected virtual void Awake()
     {
         currentHP = enemyData.maxHP;
         //player = FindAnyObjectByType<PlayerStats>();
         TryGetComponent(out effect);
+        TryGetComponent(out gizmo);
+        gizmo.enemy = this;
         setMoveSpeed();
+        radius = transform.GetComponent<CapsuleCollider>().radius;
     }
 
     public virtual void takeDamage(float damage)
@@ -104,6 +118,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         navMesh.speed = enemyData.moveSpeed;
     }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))

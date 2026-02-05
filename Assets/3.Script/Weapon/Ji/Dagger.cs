@@ -34,9 +34,11 @@ public class Dagger : WeaponAbstract
 
     public override void Attack(AttackContext context)
     {
-        if (!canAttack()) return;
+        if (!CanAttack()) return;
 
         checkAttackTime();
+
+        SetAnimator();
 
         Collider[] targets = getTargetInRange();
 
@@ -49,6 +51,7 @@ public class Dagger : WeaponAbstract
             //target stat 에 getdamage만큼 데미지
         }
 
+        UpdateComboState();
     }
 
     public override void ChargingAttack()

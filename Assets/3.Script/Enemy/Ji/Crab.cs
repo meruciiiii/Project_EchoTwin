@@ -39,7 +39,10 @@ public class Crab : EnemyStateAbstract
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange);
+        lastAttackInfo = new AttackDebugInfo { center = transform.position, halfExtents = Vector3.one * (enemyData.attackRange + radius), rotation = Quaternion.identity, color = Color.magenta };//gizmo
+        hasDebugInfo = true;//gizmo
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange + radius);
         foreach (Collider hit in hits)
         {
             if (hit.CompareTag("Player"))

@@ -8,14 +8,17 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField] private PlayerEquipment Equipment;
+    private InputManager inputManager;
     private IWeaponCommand command;
     private AttackContext context;
     private PlayerStats stats;
     private FlashEffect effect;
 
-    private bool hasDamaged = false;
-    [SerializeField] private float invincibilityTime = 1f;
+    private ItemPickup currentPickup;
 
+    private bool hasDamaged = false;
+
+    [SerializeField] private float invincibilityTime = 1f;
     [SerializeField] private float knockBackForce = 2f;
 
     public AttackDebugGizmo gizmo;
@@ -28,17 +31,28 @@ public class PlayerAction : MonoBehaviour
         }
         TryGetComponent(out stats);
         TryGetComponent(out effect);
+        TryGetComponent(out inputManager);
+        TryGetComponent(out gizmo);
+    }
+
+    private void Update()
+    {
+        if (stats.isDash || Equipment.MainWeapon == null) return;
+
+        if(inputManager.isAttackPressed)
+        {
+            if(Equipment.MainWeapon.CanAttack())
+            {
+                OnAttack();
+            }
+        }
     }
 
     public void OnAttack()
     {
-        if (stats.isDash) return;
-
         context = new AttackContext();
         RebuildAttackCmd();
         command?.execute();
-
-        Debug.Log("playerAction");
     }
 
     public void OnChargingAttack()
@@ -49,6 +63,22 @@ public class PlayerAction : MonoBehaviour
     public void OnCurse()
     {
 
+    }
+
+    public void SetPickup(ItemPickup pickup)
+    {
+        currentPickup = pickup;
+    }
+
+    public void ClearPickup(ItemPickup pickup)
+    {
+        if (currentPickup == pickup) currentPickup = null;
+    }
+
+    public void GetItem()
+    {
+        if (currentPickup == null) return;
+        currentPickup.GetNewWeapon();
     }
 
     private IEnumerator superArmor()
@@ -84,6 +114,8 @@ public class PlayerAction : MonoBehaviour
 
     public void OnWeaponAcquire(WeaponAbstract newWeapon)
     {
+        Equipment.EquipWeapon(newWeapon);
+
         if (gizmo.mainWeapon == null)
         {
             gizmo.mainWeapon = newWeapon;//gizmo
@@ -93,8 +125,6 @@ public class PlayerAction : MonoBehaviour
             gizmo.subWeapon = gizmo.mainWeapon;
             gizmo.mainWeapon = newWeapon;
         }
-
-        Equipment.EquipWeapon(newWeapon);
     }
 
     private void RebuildAttackCmd()

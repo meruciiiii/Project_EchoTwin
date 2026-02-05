@@ -7,7 +7,6 @@ public class FlyingEye : EnemyStateAbstract
 {
     [SerializeField] private float height = 2f;
     [SerializeField] private float duration = 0.5f;
-    private Coroutine coroutine;
     private float fixedY;
 
     protected override void Awake()

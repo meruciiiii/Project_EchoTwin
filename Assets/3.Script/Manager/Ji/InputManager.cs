@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private PlayerMovement Player;
-    private ItemPickup pickup;
     private PlayerAction Action;
 
     private Vector2 moveValue;
@@ -16,9 +15,12 @@ public class InputManager : MonoBehaviour
     private Vector2 mousePos;
     public Vector2 MousePos => mousePos;
 
+    public bool isAttackPressed { get; private set; }
+
     private void Awake()
     {
         TryGetComponent(out Player);
+        TryGetComponent(out Action);
     }
     public void Event_Move(InputAction.CallbackContext context)
     {
@@ -48,11 +50,11 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            Action.OnAttack();
+            isAttackPressed = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-
+            isAttackPressed = false;
         }
     }
 
@@ -89,7 +91,7 @@ public class InputManager : MonoBehaviour
     {
         if(context.phase == InputActionPhase.Performed)
         {
-            pickup.GetNewWeapon();
+            Action.GetItem();
         }
         else if(context.phase == InputActionPhase.Canceled)
         {

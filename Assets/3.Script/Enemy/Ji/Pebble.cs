@@ -6,7 +6,6 @@ using UnityEngine;
 public class Pebble : EnemyStateAbstract
 {
     [SerializeField] GameObject projectile;
-    private Coroutine coroutine;
 
     protected override void Awake()
     {
