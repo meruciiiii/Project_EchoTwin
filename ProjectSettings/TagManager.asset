@@ -32,6 +32,7 @@ TagManager:
   - R_104
   - M_SP
   - P_SP
+  - Bridge
   layers:
   - Default
   - TransparentFX
