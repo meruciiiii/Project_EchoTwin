@@ -42,7 +42,7 @@ public class ItemPickup : MonoBehaviour
             image.color = c;
 
             player = other.GetComponent<PlayerAction>();
-            player.SetPickup(this);
+            player.onInteraction.AddListener(GetNewWeapon);
         }
     }
 
@@ -55,7 +55,7 @@ public class ItemPickup : MonoBehaviour
             c.a = 0f;
             image.color = c;
 
-            player.ClearPickup(this);
+            player.onInteraction.RemoveListener(GetNewWeapon);
             player = null;
         }
     }

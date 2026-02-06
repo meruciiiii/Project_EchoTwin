@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class SpikeSlime : EnemyStateAbstract
 {
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (state == EnemyState.dead) return;
         Move();
     }
@@ -32,10 +33,13 @@ public class SpikeSlime : EnemyStateAbstract
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        checkAttackTime();
 
         float duration = 0.5f;
         float jumpHeight = 2f;
         float timer = 0f;
+
+        bool isAttacked = false;
 
         while (timer < duration)
         {
@@ -49,11 +53,18 @@ public class SpikeSlime : EnemyStateAbstract
 
             transform.position = pos;
 
+            if(!isAttacked)
+            {
+                if (BodyAttack(enemyData.attackRange))
+                {
+                    isAttacked = true;
+                }
+            }
+
             yield return null;
         }
         transform.position = destPos;
 
-        checkAttackTime();
         coroutine = null;
 
         turnOnNavmesh();
@@ -66,7 +77,7 @@ public class SpikeSlime : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
-        state = EnemyState.chase;
+        BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;

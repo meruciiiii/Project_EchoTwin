@@ -8,6 +8,13 @@ public class Crab : EnemyStateAbstract
     [SerializeField] private int shieldCount = 10;
     [SerializeField] private float reduceRatio = 0.9f;
 
+    protected override void Update()
+    {
+        base.Update();
+        if (state == EnemyState.dead) return;
+        Move();
+    }
+
     public override void takeDamage(float damage)
     {
         if (state == EnemyState.dead) return;
@@ -38,19 +45,10 @@ public class Crab : EnemyStateAbstract
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
-
-        lastAttackInfo = new AttackDebugInfo { center = transform.position, halfExtents = Vector3.one * (enemyData.attackRange + radius), rotation = Quaternion.identity, color = Color.magenta };//gizmo
-        hasDebugInfo = true;//gizmo
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange + radius);
-        foreach (Collider hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                player.takeDamage(enemyData.damage,transform.position);
-            }
-        }
         checkAttackTime();
+
+        AreaAttack(enemyData.attackRange, 180f);
+
         coroutine = null;
 
         turnOnNavmesh();
@@ -62,6 +60,8 @@ public class Crab : EnemyStateAbstract
     {
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
+
+        BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;

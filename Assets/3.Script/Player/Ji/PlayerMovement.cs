@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move()
     {
         Vector2 moveInput = Input.MoveValue;
-        Vector3 movePos = new Vector3(moveInput.x, 0, moveInput.y) * stats.MoveSpeed * Time.deltaTime * GameManager.instance.timeScale;
+        Vector3 movePos = new Vector3(moveInput.x, 0, moveInput.y) * stats.MoveSpeed * Time.deltaTime;
 
         rb.MovePosition(transform.position + movePos);
 
@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
         {
-            mousePos = hit.point * GameManager.instance.timeScale;
+            mousePos = hit.point;
         }
         mousePos.y = transform.position.y;
         transform.LookAt(mousePos);

@@ -27,6 +27,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected float currentHP;
     protected float radius;
 
+    protected float standardRange = 1f;
+
     [SerializeField] protected float knockbackTime = 0.2f;
 
     protected Coroutine coroutine;
@@ -47,6 +49,15 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         gizmo.enemy = this;
         setMoveSpeed();
         radius = transform.GetComponent<CapsuleCollider>().radius;
+    }
+
+    protected virtual void Update()
+    {
+        if (GameManager.instance.isStop)
+        {
+            turnOffNavmesh();
+            return;
+        }
     }
 
     public virtual void takeDamage(float damage)
@@ -127,22 +138,51 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         }
     }
 
-    protected virtual IEnumerator BodyAttack_Co()
+    protected bool BodyAttack(float range)
     {
-        float timer = enemyData.attackSpeed;
-        while (timer > 0)
+        float checkRadius = radius + range;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
+        foreach(Collider hit in hits)
         {
-            timer -= Time.deltaTime;
-            Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange + radius);
-            foreach (Collider hit in hits)
+            if(hit.CompareTag("Player"))
             {
-                if (hit.CompareTag("Player"))
+                player.takeDamage(enemyData.damage, transform.position);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected void AreaAttack(float range , float angle)
+    {
+        lastAttackInfo = new AttackDebugInfo
+        {
+            center = transform.position,
+            halfExtents = Vector3.one * range,
+            rotation = Quaternion.identity,
+            color = Color.magenta,
+            angle = angle,
+            direction = transform.forward
+        };
+        hasDebugInfo = true;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, range);
+        foreach(Collider hit in hits)
+        {
+            if(hit.CompareTag("Player"))
+            {
+                Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
+                dirToTarget.y = 0f;
+                Vector3 forward = transform.forward;
+                forward.y = 0f;
+
+                if(Vector3.Angle(forward, dirToTarget) <= angle * 0.5f)
                 {
                     player.takeDamage(enemyData.damage, transform.position);
                 }
             }
-            yield return null;
-        }
+        }    
     }
 
     public abstract void Move();

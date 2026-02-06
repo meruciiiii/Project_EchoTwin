@@ -26,6 +26,7 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
+            if (GameManager.instance.isStop) return;
             moveValue = context.ReadValue<Vector2>();
         }
         else if (context.phase == InputActionPhase.Canceled)
@@ -38,6 +39,7 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
+            if (GameManager.instance.isStop) return;
             StartCoroutine(Player.Dash());
         }
         else if (context.phase == InputActionPhase.Canceled)
@@ -84,14 +86,17 @@ public class InputManager : MonoBehaviour
 
     public void Event_MousPos(InputAction.CallbackContext context)
     {
+        if (GameManager.instance.isStop) return;
         mousePos = context.ReadValue<Vector2>();
     }
 
-    public void Event_GetItem(InputAction.CallbackContext context)
+    public void Event_Interact(InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Performed)
         {
-            Action.GetItem();
+            if (GameManager.instance.isStop) return;
+
+            Action.onInteraction?.Invoke();
         }
         else if(context.phase == InputActionPhase.Canceled)
         {
