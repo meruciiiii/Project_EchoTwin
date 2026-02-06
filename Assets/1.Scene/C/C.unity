@@ -311,7 +311,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 436992068}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: Event_GetItem
+        m_MethodName: Event_Interact
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -514,6 +514,9 @@ MonoBehaviour:
   invincibilityTime: 1
   knockBackForce: 4
   gizmo: {fileID: 0}
+  onInteraction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &436992077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -820,7 +823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fbb4a3d195a264f9d78ce3307c5dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  timeScale: 1
+  isStop: 0
+  isDead: 0
 --- !u!4 &1014739616
 Transform:
   m_ObjectHideFlags: 0
