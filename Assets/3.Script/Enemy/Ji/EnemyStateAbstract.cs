@@ -18,7 +18,9 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     [SerializeField] protected NavMeshAgent navMesh;
     [SerializeField] protected PlayerAction player;
 
-    AttackDebugGizmo gizmo;
+    protected AttackDebugGizmo gizmo;
+    protected Animator ani;
+    protected Rigidbody rb;
 
     protected FlashEffect effect;
     protected EnemyState state = EnemyState.chase;
@@ -48,7 +50,10 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         TryGetComponent(out gizmo);
         gizmo.enemy = this;
         setMoveSpeed();
-        radius = transform.GetComponent<CapsuleCollider>().radius;
+        radius = transform.GetComponent<BoxCollider>().size.x * 0.5f;
+
+        ani = GetComponentInChildren<Animator>();
+        TryGetComponent(out rb);
     }
 
     protected virtual void Update()
@@ -94,19 +99,32 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected IEnumerator knockback_Co(Vector3 dir, float power)
     {
-        turnOffNavmesh();
-        state = EnemyState.knockback;
+        //turnOffNavmesh();
+        //state = EnemyState.knockback;
 
-        float timer = knockbackTime;
-        while (timer > 0f)
-        {
-            navMesh.Move(dir * power * Time.deltaTime);
-            timer -= Time.deltaTime;
-            yield return null;
-        }
+        //float timer = knockbackTime;
+        //while (timer > 0f)
+        //{
+        //    navMesh.Move(dir * power * Time.deltaTime);
+        //    timer -= Time.deltaTime;
+        //    yield return null;
+        //}
+        //yield return new WaitForSeconds(knockbackTime);
+        //turnOnNavmesh();
+        //state = EnemyState.chase;
+
+        state = EnemyState.knockback;
+        navMesh.enabled = false;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.AddForce(dir * power, ForceMode.Impulse);
+
         yield return new WaitForSeconds(knockbackTime);
 
-        turnOnNavmesh();
+        rb.linearVelocity = Vector3.zero;
+        navMesh.enabled = true;
+        navMesh.Warp(transform.position);
+
         state = EnemyState.chase;
     }
 
