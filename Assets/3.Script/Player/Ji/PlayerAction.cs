@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 [RequireComponent(typeof(FlashEffect))]
@@ -14,14 +15,14 @@ public class PlayerAction : MonoBehaviour
     private PlayerStats stats;
     private FlashEffect effect;
 
-    private ItemPickup currentPickup;
-
     private bool hasDamaged = false;
 
     [SerializeField] private float invincibilityTime = 1f;
     [SerializeField] private float knockBackForce = 2f;
 
     public AttackDebugGizmo gizmo;
+
+    public UnityEvent onInteraction;
 
     private void Awake()
     {
@@ -38,8 +39,9 @@ public class PlayerAction : MonoBehaviour
     private void Update()
     {
         if (stats.isDash || Equipment.MainWeapon == null) return;
+        if (GameManager.instance.isStop) return;
 
-        if(inputManager.isAttackPressed)
+        if (inputManager.isAttackPressed)
         {
             if(Equipment.MainWeapon.CanAttack())
             {
@@ -63,22 +65,6 @@ public class PlayerAction : MonoBehaviour
     public void OnCurse()
     {
 
-    }
-
-    public void SetPickup(ItemPickup pickup)
-    {
-        currentPickup = pickup;
-    }
-
-    public void ClearPickup(ItemPickup pickup)
-    {
-        if (currentPickup == pickup) currentPickup = null;
-    }
-
-    public void GetItem()
-    {
-        if (currentPickup == null) return;
-        currentPickup.GetNewWeapon();
     }
 
     private IEnumerator superArmor()

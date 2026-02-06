@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
         Die,
     }
 
-    public int timeScale = 1;
+    public bool isStop = false;
+    public bool isDead = false;
     private GameState gameState = GameManager.GameState.Playing;
     public GameState gamestate => gameState;
 
@@ -38,11 +39,17 @@ public class GameManager : MonoBehaviour
         Debug.Log(gameState);
         if(gameState == GameState.UI)
         {
-            timeScale = 0;
+            isStop = true;
         }
         else if(gameState == GameState.Die)
         {
-            timeScale = 0;
+            isDead = true;
+            //SceneChangeManager.instance.SceneChange(SceneChangeManager.SceneType.Die); 뒤지는 씬으로 넘기기
+        }
+        else if(gameState == GameState.Playing)
+        {
+            isStop = false;
+            isDead = false;
         }
     }
 }

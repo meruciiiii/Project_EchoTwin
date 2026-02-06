@@ -5,7 +5,8 @@ using UnityEngine;
 public class Bat : EnemyStateAbstract
 {
     [SerializeField] private float height = 2f;
-    [SerializeField] private float duration = 0.5f;
+    [SerializeField] private int bodyAttackMultiple = 3;
+
     private float fixedY;
 
     [SerializeField] private float zigzagRadius = 2f;
@@ -20,8 +21,9 @@ public class Bat : EnemyStateAbstract
         fixedY = transform.position.y + height;
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (state == EnemyState.dead) return;
         Move();
     }
@@ -46,18 +48,32 @@ public class Bat : EnemyStateAbstract
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        checkAttackTime();
 
+        bool isAttacked = false;
         Vector3 dir = (destPos - startPos).normalized;
+        float distance = Vector3.Distance(startPos, destPos);
 
-        float timer = duration;
-        while (timer > 0f)
+        while (distance > 0f)
         {
-            navMesh.Move(dir * enemyData.attackSpeed * Time.deltaTime);
-            timer -= Time.deltaTime;
+            //navMesh.Move(dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
+            Vector3 targetPos = transform.position + (dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
+            transform.position = targetPos;
+
+            distance -= enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime;
+
+            if (!isAttacked)
+            {
+                if(BodyAttack(enemyData.attackRange))
+                {
+                    isAttacked = true;
+                }
+            }
             yield return null;
         }
+        yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
+        transform.position = startPos;
 
-        checkAttackTime();
         coroutine = null;
 
         turnOnNavmesh();
@@ -69,6 +85,8 @@ public class Bat : EnemyStateAbstract
     {
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
+
+        BodyAttack(enemyData.attackRange);
 
         makeZigzag();
 

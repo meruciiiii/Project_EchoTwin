@@ -7,13 +7,9 @@ public class Pebble : EnemyStateAbstract
 {
     [SerializeField] GameObject projectile;
 
-    protected override void Awake()
+    protected override void Update()
     {
-        base.Awake();
-    }
-
-    private void Update()
-    {
+        base.Update();
         if (state == EnemyState.dead) return;
         Move();
     }
@@ -37,6 +33,7 @@ public class Pebble : EnemyStateAbstract
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        checkAttackTime();
 
         float timer = 0f;
         float duration = 1f;
@@ -59,8 +56,8 @@ public class Pebble : EnemyStateAbstract
             yield return null;
         }
         projectile.transform.position = transform.position;
+        projectile.SetActive(false);
 
-        checkAttackTime();
         coroutine = null;
 
         turnOnNavmesh();
@@ -72,6 +69,8 @@ public class Pebble : EnemyStateAbstract
     {
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
+
+        BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;

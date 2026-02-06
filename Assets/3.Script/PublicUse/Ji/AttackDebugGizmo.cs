@@ -10,6 +10,9 @@ public struct AttackDebugInfo
     public Vector3 halfExtents;
     public Quaternion rotation;
     public Color color;
+
+    public float angle;
+    public Vector3 direction;
 }
 public class AttackDebugGizmo : MonoBehaviour
 {
@@ -40,7 +43,7 @@ public class AttackDebugGizmo : MonoBehaviour
 
         if (enemy != null && enemy.HasDebugInfo)
         {
-            DrawSphere(enemy.DebugInfo);
+            DrawGizmo(enemy.DebugInfo);
         }
     }
 
@@ -55,10 +58,17 @@ public class AttackDebugGizmo : MonoBehaviour
         Gizmos.matrix = old;
     }
 
-    private void DrawSphere(AttackDebugInfo info)
+    private void DrawGizmo(AttackDebugInfo info)
     {
-        Gizmos.color = info.color;
+#if UNITY_EDITOR
+        UnityEditor.Handles.color = new Color(info.color.r, info.color.g, info.color.b, 0.3f);
 
-        Gizmos.DrawSphere(info.center, info.halfExtents.x);
+        Vector3 startDir = Quaternion.AngleAxis(-info.angle * 0.5f, Vector3.up) * info.direction;
+
+        UnityEditor.Handles.DrawSolidArc(info.center, Vector3.up, startDir, info.angle, info.halfExtents.x);
+
+        UnityEditor.Handles.color = info.color;
+        UnityEditor.Handles.DrawWireArc(info.center, Vector3.up, startDir, info.angle, info.halfExtents.x);
+#endif
     }
 }
