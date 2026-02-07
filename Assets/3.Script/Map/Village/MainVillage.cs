@@ -1,9 +1,7 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class MainVillage : MonoBehaviour
 {
     //¿Ãµø
@@ -17,6 +15,8 @@ public class MainVillage : MonoBehaviour
     private void Awake()
     {
         if (!TryGetComponent(out storeController))
+            Debug.Log("TryGetComponent StoreController is fail");
+        if (!TryGetComponent(out storeUIController))
             Debug.Log("TryGetComponent StoreController is fail");
     }
     private void OnTriggerEnter(Collider other)

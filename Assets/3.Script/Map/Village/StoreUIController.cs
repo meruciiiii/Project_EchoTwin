@@ -1,10 +1,8 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class StoreUIController : MonoBehaviour
 {
     public enum UpgradeType
@@ -59,7 +57,7 @@ public class StoreUIController : MonoBehaviour
                 continue;
             }
 
-            uiSet.Add(type, set);
+            uiSet[type] = set;
         }
         //upgradeSliders[type].maxValue = maxUpgrade; 12200
     }

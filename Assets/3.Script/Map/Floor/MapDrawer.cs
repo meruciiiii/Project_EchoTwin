@@ -3,56 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class MapDrawer : MonoBehaviour
 {
     public GameObject plate;
     private RectTransform parent;
     private List<GameObject> plateList;
-    private bool bossRoomisTop = false;
-    public void EnterDraw(IReadOnlyDictionary<Vector2Int, MapData> microMap)
+    private BiDictionary<Vector2Int, GameObject> plateMappings;
+    public void EnterDraw(IReadOnlyDictionary<Vector2Int, FloorData> microMap)
     {
         RemoveMapNode();
         DrawMap(microMap);
     }
-    //private void SettingMap(IReadOnlyDictionary<Vector2Int, MapData> microMap)
-    //{
-    //    //int plateCount = 0;
-    //    //int minCount = 15;
-    //    //int maxCount = 15;
-    //    //int safetyCount = 50;
-    //    //do
-    //    //{
-    //        RemoveMapNode();
-    //        DrawMap(microMap);
-    //    //plateCount = CountObject();
-    //    //if (!BossRoomCheck())
-    //    //plateCount = 0;
-    //    //safetyCount--;
-    //    //if (safetyCount < 0)
-    //    //        {
-    //    //minCount = 14;
-    //    //maxCount = 16;
-    //    //}
-    //    //if (safetyCount < -40)
-    //    //{
-    //    //Debug.Log("is infinity");
-    //    //break;
-    //    //}
-    //    //}
-    //    //Debug.Log("bossRoomisTop is infinity" + BossRoomCheck());
-    //    //}
-    //    //while (plateCount < minCount || plateCount > maxCount);
-    //}
-    //private bool BossRoomCheck()
-    //{
-    //    // 추후에 bossRoomisTop 반환 할 예정
-    //    return bossRoomisTop;
-    //}
-    //private int CountObject()
-    //{
-    //    return plateList.Count;
-    //}
     private void RemoveMapNode()
     {
         if (plateList == null) return;
@@ -61,17 +22,19 @@ public class MapDrawer : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        plateList?.Clear();
+        plateMappings?.Clear();
     }
-    private void DrawMap(IReadOnlyDictionary<Vector2Int, MapData> microMap)
+    private void DrawMap(IReadOnlyDictionary<Vector2Int, FloorData> microMap)
     {
         if (!TryGetComponent(out parent))
             Debug.Log("TryGetComponent RectTransform parent is fail");
-        bossRoomisTop = false;
         plateList = new List<GameObject>();
-        foreach (KeyValuePair<Vector2Int, MapData> drawMap in microMap)
+        foreach (KeyValuePair<Vector2Int, FloorData> drawMap in microMap)
         {
             GameObject ui = Instantiate(plate, parent);
             plateList.Add(ui);
+            plateMappings.Add(drawMap.Key, ui);
             // Instantiate 이후 루프 안에서...
             //MapNodeUI nodeUI = ui.GetComponent<MapNodeUI>(); // 커스텀 스크립트가 있다면
             Image[] images = ui.GetComponentsInChildren<Image>();
@@ -101,4 +64,42 @@ public class MapDrawer : MonoBehaviour
             rt.anchoredPosition = drawMap.Key * 100;
         }
     }
+    public void AlreadyStep(Vector2Int playerFootprint)
+    {
+        // ui 변수를 선언함과 동시에 TryGetValue의 결과가 true일 때만 로직 실행
+        if (plateMappings != null && plateMappings.TryGetValue(playerFootprint, out GameObject ui))
+        {
+            // ui가 확실히 존재할 때만 컴포넌트를 가져옴
+            Image[] images = ui.GetComponentsInChildren<Image>();
+
+            if (images != null && images.Length > 0)
+            {
+                // 지나간 plate가 되면 회색으로 변환
+                images[0].color = Color.gray;
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"{playerFootprint} 위치의 발판을 찾을 수 없습니다.");
+        }
+    }// 지나간 plate가 되면 회색으로 변환
+    public void playerStanding(Vector2Int playerPosition)
+    {
+        // ui 변수를 선언함과 동시에 TryGetValue의 결과가 true일 때만 로직 실행
+        if (plateMappings != null && plateMappings.TryGetValue(playerPosition, out GameObject ui))
+        {
+            // ui가 확실히 존재할 때만 컴포넌트를 가져옴
+            Image[] images = ui.GetComponentsInChildren<Image>();
+
+            if (images != null && images.Length > 0)
+            {
+                // 새로운 plate가 되면 노랑으로 변환
+                images[0].color = Color.yellow;
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"{playerPosition} 위치의 발판을 찾을 수 없습니다.");
+        }
+    }// 새로운 plate가 되면 노랑으로 변환
 }

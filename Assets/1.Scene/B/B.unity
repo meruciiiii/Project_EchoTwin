@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 3649503}
   - component: {fileID: 3649502}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 75927913}
   - component: {fileID: 75927912}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 86410634}
   m_Layer: 5
   m_Name: EchoDamageRatiospace
-  m_TagString: Untagged
+  m_TagString: Upgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 244093456}
   - component: {fileID: 244093455}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -923,7 +923,7 @@ GameObject:
   - component: {fileID: 280913709}
   - component: {fileID: 280913708}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2662,7 +2662,7 @@ GameObject:
   - component: {fileID: 916607137}
   m_Layer: 5
   m_Name: MaxHPspace
-  m_TagString: Untagged
+  m_TagString: Upgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2831,7 +2831,7 @@ GameObject:
   - component: {fileID: 965376310}
   m_Layer: 5
   m_Name: AttackSpeedspace
-  m_TagString: Untagged
+  m_TagString: Upgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2990,7 +2990,7 @@ GameObject:
   - component: {fileID: 1078561047}
   - component: {fileID: 1078561046}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3111,7 +3111,7 @@ GameObject:
   - component: {fileID: 1122054638}
   - component: {fileID: 1122054637}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3851,7 +3851,7 @@ GameObject:
   - component: {fileID: 1343513170}
   m_Layer: 5
   m_Name: BaseDamagespace
-  m_TagString: Untagged
+  m_TagString: Upgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4563,7 +4563,7 @@ GameObject:
   - component: {fileID: 1654654927}
   m_Layer: 5
   m_Name: AttackRangespace
-  m_TagString: Untagged
+  m_TagString: Upgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4797,7 +4797,7 @@ GameObject:
   - component: {fileID: 1777728810}
   m_Layer: 5
   m_Name: MoveSpeedspace
-  m_TagString: Untagged
+  m_TagString: Upgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5272,7 +5272,7 @@ GameObject:
   - component: {fileID: 1991243265}
   m_Layer: 5
   m_Name: UpgradeStore
-  m_TagString: Untagged
+  m_TagString: Store
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

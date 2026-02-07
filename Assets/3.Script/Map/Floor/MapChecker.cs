@@ -2,15 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class MapChecker : MonoBehaviour
 {
-
-
     private List<Vector2Int> connectedRoom;
     private List<Vector2Int> singleDoorRoom = new List<Vector2Int>();
     private Queue<Vector2Int> adjacentNode = new Queue<Vector2Int>();
-    private Queue<Vector2Int> tempNode = new Queue<Vector2Int>();
     private HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
     private Queue<int> depthNode = new Queue<int>();
     private Vector2Int startNode = Vector2Int.zero;
@@ -18,7 +14,7 @@ public class MapChecker : MonoBehaviour
     private int deepestDistance = 0;
     private bool bossRoomisTop = false;
     private bool checker;
-    public bool LongestCheck(Dictionary<Vector2Int, MapData> microMap)
+    public bool LongestCheck(Dictionary<Vector2Int, FloorData> microMap)
     {
         checker = false;
         if(microMap.Count < 15)                                                             // 방 개수 정하기
@@ -43,9 +39,12 @@ public class MapChecker : MonoBehaviour
         furthestNode = Vector2Int.zero;
         return checker;
     }
-    public void DepthSerch(Dictionary<Vector2Int, MapData> microMap, Vector2Int startNode)
+    public void DepthSerch(Dictionary<Vector2Int, FloorData> microMap, Vector2Int startNode)
     {
         //노드를 저장할 공간, 노드의 깊이를 저장할 공간, 가장 먼 노드, 가장 먼 노드와의 거리
+        adjacentNode.Clear();
+        depthNode.Clear();
+        visited.Clear();
         adjacentNode.Enqueue(startNode);
         depthNode.Enqueue(0);
         visited.Add(startNode);
@@ -55,9 +54,9 @@ public class MapChecker : MonoBehaviour
         {
             current = adjacentNode.Dequeue();
             currentDepth = depthNode.Dequeue();
-            if (!microMap.TryGetValue(current, out MapData mapData))
+            if (!microMap.TryGetValue(current, out FloorData floorData))
                 continue;
-            connectedRoom = mapData.GetConnectedRoom();
+            connectedRoom = floorData.GetConnectedRoom();
 
             foreach (Vector2Int next in connectedRoom)
             {
@@ -76,10 +75,10 @@ public class MapChecker : MonoBehaviour
             furthestNode = current;
         }
     }
-    public void SingleDoorRoom(Dictionary<Vector2Int, MapData> microMap)
+    public void SingleDoorRoom(Dictionary<Vector2Int, FloorData> microMap)
     {
         singleDoorRoom.Clear();
-        foreach (KeyValuePair<Vector2Int, MapData> drawMap in microMap)
+        foreach (KeyValuePair<Vector2Int, FloorData> drawMap in microMap)
         {
             if (drawMap.Value.GetOpenDoorCount() < 2)
             {
@@ -97,7 +96,7 @@ public class MapChecker : MonoBehaviour
         }
         startNode = singleDoorRoom[0];
     }
-    public void DoorisDown(KeyValuePair<Vector2Int, MapData> drawMap)
+    public void DoorisDown(KeyValuePair<Vector2Int, FloorData> drawMap)
     {
         bossRoomisTop = drawMap.Value.GetDoorState(2);
     }
