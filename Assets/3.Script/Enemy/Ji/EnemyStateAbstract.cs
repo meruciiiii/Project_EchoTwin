@@ -30,8 +30,10 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected float radius;
 
     protected float standardRange = 1f;
+    public float Damage => enemyData.damage;
 
     [SerializeField] protected float knockbackTime = 0.2f;
+    [SerializeField] protected LayerMask ground;
 
     protected Coroutine coroutine;
 
@@ -40,7 +42,6 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     public AttackDebugInfo DebugInfo => lastAttackInfo;
     public bool HasDebugInfo => hasDebugInfo;
-
 
     protected virtual void Awake()
     {
@@ -54,13 +55,15 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         ani = GetComponentInChildren<Animator>();
         TryGetComponent(out rb);
+        rb.isKinematic = true;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     protected virtual void Update()
     {
         if (GameManager.instance.isStop)
         {
-            turnOffNavmesh();
+            TurnOffNavmesh();
             return;
         }
     }
@@ -97,7 +100,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         StartCoroutine(knockback_Co(dir, power));
     }
 
-    protected IEnumerator knockback_Co(Vector3 dir, float power)
+    protected virtual IEnumerator knockback_Co(Vector3 dir, float power)
     {
         //turnOffNavmesh();
         //state = EnemyState.knockback;
@@ -114,33 +117,61 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         //state = EnemyState.chase;
 
         state = EnemyState.knockback;
-        navMesh.enabled = false;
 
-        rb.linearVelocity = Vector3.zero;
-        rb.AddForce(dir * power, ForceMode.Impulse);
+        TurnOffNavmesh();
+
+        Vector3 force = dir * power;
+        force.y = 0f;
+
+        rb.AddForce(force, ForceMode.Impulse);
 
         yield return new WaitForSeconds(knockbackTime);
 
-        rb.linearVelocity = Vector3.zero;
-        navMesh.enabled = true;
-        navMesh.Warp(transform.position);
-
-        state = EnemyState.chase;
+        if (isItOnTheGround())
+        {
+            TurnOnNavmesh();
+            state = EnemyState.chase;
+        }
     }
 
+    #region navMesh
     protected virtual void setPlayerPos()
     {
         navMesh.SetDestination(player.transform.position);
     }
 
-    protected virtual void turnOnNavmesh()
+    protected virtual void TurnOffNavmesh()
     {
-        navMesh.isStopped = false;
+        //navMesh.isStopped = true;
+
+        navMesh.enabled = false;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = false;
     }
 
-    protected virtual void turnOffNavmesh()
+    protected virtual void TurnOnNavmesh()
     {
-        navMesh.isStopped = true;
+        //navMesh.isStopped = false;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        {
+            navMesh.enabled = true;
+            navMesh.Warp(hit.position);
+        }
+        else
+        {
+            state = EnemyState.dead;
+        }
+    }
+
+    protected virtual bool isItOnTheGround()
+    {
+        RaycastHit hit;
+        return Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out hit, 1.5f, ground);
     }
 
     protected virtual void setMoveSpeed()
@@ -155,15 +186,17 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             player.takeDamage(enemyData.damage, transform.position);
         }
     }
+    #endregion
 
+    #region attack
     protected bool BodyAttack(float range)
     {
         float checkRadius = radius + range;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
-        foreach(Collider hit in hits)
+        foreach (Collider hit in hits)
         {
-            if(hit.CompareTag("Player"))
+            if (hit.CompareTag("Player"))
             {
                 player.takeDamage(enemyData.damage, transform.position);
                 return true;
@@ -172,7 +205,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         return false;
     }
 
-    protected void AreaAttack(float range , float angle)
+    protected void AreaAttack(float range, float angle)
     {
         lastAttackInfo = new AttackDebugInfo
         {
@@ -186,22 +219,23 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         hasDebugInfo = true;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, range);
-        foreach(Collider hit in hits)
+        foreach (Collider hit in hits)
         {
-            if(hit.CompareTag("Player"))
+            if (hit.CompareTag("Player"))
             {
                 Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
                 dirToTarget.y = 0f;
                 Vector3 forward = transform.forward;
                 forward.y = 0f;
 
-                if(Vector3.Angle(forward, dirToTarget) <= angle * 0.5f)
+                if (Vector3.Angle(forward, dirToTarget) <= angle * 0.5f)
                 {
                     player.takeDamage(enemyData.damage, transform.position);
                 }
             }
-        }    
+        }
     }
+    #endregion
 
     public abstract void Move();
     public abstract void Attack();

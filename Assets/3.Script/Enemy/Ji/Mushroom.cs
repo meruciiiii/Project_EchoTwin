@@ -23,7 +23,7 @@ public class Mushroom : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
-        turnOffNavmesh();
+        TurnOffNavmesh();
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
@@ -34,9 +34,7 @@ public class Mushroom : EnemyStateAbstract
 
         coroutine = null;
 
-        turnOnNavmesh();
-
-        state = EnemyState.chase;
+        TurnOnNavmesh();
     }
 
     public override void Move()
@@ -49,7 +47,7 @@ public class Mushroom : EnemyStateAbstract
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;
 
-        if (distance > enemyData.attackRange + buffer)
+        if (distance > enemyData.attackRange - buffer)
         {
             state = EnemyState.chase;
             setPlayerPos();

@@ -25,6 +25,7 @@ public class Crab : EnemyStateAbstract
         }
 
         currentHP -= damage;
+        shieldCount--;
         checkOnDie();
     }
 
@@ -40,7 +41,7 @@ public class Crab : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
-        turnOffNavmesh();
+        TurnOffNavmesh();
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
@@ -51,9 +52,7 @@ public class Crab : EnemyStateAbstract
 
         coroutine = null;
 
-        turnOnNavmesh();
-
-        state = EnemyState.chase;
+        TurnOnNavmesh();
     }
 
     public override void Move()

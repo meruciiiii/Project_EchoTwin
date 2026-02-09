@@ -3,12 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeaponType
+{
+    onehand,
+    twohand,
+    dual,
+}
+
 public abstract class WeaponAbstract : MonoBehaviour
 {
     [SerializeField] protected WeaponData weaponData;
     [SerializeField] protected CharacterData characterData;
     [SerializeField] protected PlayerStats stats;
     [SerializeField] protected Animator animator;
+
+    public WeaponType weaponType;
+    public GameObject forDualWeaponPrefab;
 
     protected int resonanceCount;
 

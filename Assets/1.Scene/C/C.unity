@@ -511,6 +511,8 @@ MonoBehaviour:
   Equipment:
     MainWeapon: {fileID: 0}
     SubWeapon: {fileID: 0}
+  rightHand: {fileID: 0}
+  leftHand: {fileID: 0}
   invincibilityTime: 1
   knockBackForce: 4
   gizmo: {fileID: 0}
@@ -579,7 +581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   weapon: {fileID: 639796516}
-  attachPos: {fileID: 1147056169}
   image: {fileID: 1459475434}
   height: 2.5
   isPickedUp: 0
@@ -599,6 +600,8 @@ MonoBehaviour:
   characterData: {fileID: 0}
   stats: {fileID: 436992075}
   animator: {fileID: 0}
+  weaponType: 0
+  forDualWeaponPrefab: {fileID: 0}
 --- !u!136 &639796517
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1239,6 +1242,9 @@ MonoBehaviour:
   navMesh: {fileID: 1102470337}
   player: {fileID: 436992076}
   knockbackTime: 0.2
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1102470339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1703,7 +1709,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   weapon: {fileID: 1986475542}
-  attachPos: {fileID: 1147056169}
   image: {fileID: 1312674219}
   height: 2.5
   isPickedUp: 0
@@ -1723,6 +1728,8 @@ MonoBehaviour:
   characterData: {fileID: 0}
   stats: {fileID: 436992075}
   animator: {fileID: 0}
+  weaponType: 0
+  forDualWeaponPrefab: {fileID: 0}
 --- !u!136 &1986475543
 CapsuleCollider:
   m_ObjectHideFlags: 0

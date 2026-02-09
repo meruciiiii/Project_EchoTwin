@@ -7,6 +7,11 @@ public class Axe : WeaponAbstract
 {
     [SerializeField] GameObject axePrefab;
 
+    private void Awake()
+    {
+        this.weaponType = WeaponType.onehand;
+    }
+
     private Collider[] getTargetInRange()
     {
         GameObject player = stats.gameObject;

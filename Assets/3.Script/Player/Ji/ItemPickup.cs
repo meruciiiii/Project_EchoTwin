@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class ItemPickup : MonoBehaviour
 {
     [SerializeField] private WeaponAbstract weapon;
-    [SerializeField] private Transform attachPos;
     [SerializeField] private Image image;
     [SerializeField] private float height = 5f;
 
@@ -68,7 +67,7 @@ public class ItemPickup : MonoBehaviour
         isPickedUp = true;
 
         player.OnWeaponAcquire(weapon);
-        AttachToPlayer(player.transform, attachPos);
+        AttachToPlayer(player.transform);
 
         CleanupItemComponents();
     }
@@ -89,12 +88,10 @@ public class ItemPickup : MonoBehaviour
         this.enabled = false;
     }
 
-    private void AttachToPlayer(Transform player, Transform attachPos)
+    private void AttachToPlayer(Transform player)
     {
         transform.SetParent(player);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
-        transform.position = attachPos.position;
-        transform.rotation = attachPos.rotation;
     }
 }
