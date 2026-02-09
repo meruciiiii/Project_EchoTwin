@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStats stats;
     private InputManager Input;
     private Rigidbody rb;
-    private Animator animator; // ¾Ö´Ï¸ŞÀÌÅÍ Ãß°¡
+    private Animator animator; // ì• ë‹ˆë©”ì´í„° ì¶”ê°€
 
     private Vector3 mousePos;
 
@@ -22,16 +22,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // 1. GameManagerÀÇ isStop »óÅÂ Ã¼Å©
+        // 1. GameManagerì˜ isStop ìƒíƒœ ì²´í¬
         if (GameManager.instance != null && GameManager.instance.isStop)
         {
-            // ¸ØÃèÀ» ¶§ ¾Ö´Ï¸ŞÀÌ¼Ç ÆÄ¶ó¹ÌÅÍ¸¦ Áï½Ã 0À¸·Î (´ïÇÎ ÀÎÀÚ Á¦°Å)
+            // [ì¶”ê°€] ë¬¼ë¦¬ì ì¸ ì†ë„ë¥¼ ì™„ì „íˆ 0ìœ¼ë¡œ ë§Œë“¤ì–´ì•¼ ë¯¸ë„ëŸ¬ì§€ì§€ ì•ŠìŠµë‹ˆë‹¤.
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            // ë©ˆì·„ì„ ë•Œ ì• ë‹ˆë©”ì´ì…˜ íŒŒë¼ë¯¸í„°ë¥¼ ì¦‰ì‹œ 0ìœ¼ë¡œ (ëŒí•‘ ì¸ì ì œê±°)
             animator.SetFloat("MoveX", 0);
             animator.SetFloat("MoveZ", 0);
-            return; // ÀÌÈÄ Move(), FocusOnMouse() ½ÇÇà ¾È ÇÔ
+            return; // ì´í›„ Move(), FocusOnMouse() ì‹¤í–‰ ì•ˆ í•¨
         }
 
-        // ´ë½¬ Áß¿¡´Â ÀÏ¹İ ÀÌµ¿/È¸Àü ·ÎÁ÷ °Ç³Ê¶Ü
+        // ëŒ€ì‰¬ ì¤‘ì—ëŠ” ì¼ë°˜ ì´ë™/íšŒì „ ë¡œì§ ê±´ë„ˆëœ€
         if (stats.isDash) return;
 
         Move();
@@ -42,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 moveInput = Input.MoveValue;
 
-        // ÀÔ·ÂÀÌ ¾øÀ» ¶§µµ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ¼­¼­È÷(0.1f) Idle·Î µ¹¸²
+        // ì…ë ¥ì´ ì—†ì„ ë•Œë„ ì• ë‹ˆë©”ì´ì…˜ì„ ì„œì„œíˆ(0.1f) Idleë¡œ ëŒë¦¼
         if (moveInput.magnitude <= 0.1f)
         {
             animator.SetFloat("MoveX", 0, 0.1f, Time.deltaTime);
@@ -56,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
         Vector3 localMoveDir = transform.InverseTransformDirection(moveDir);
 
-        // ÀÌµ¿ ÁßÀÏ ¶§´Â ºÎµå·´°Ô ¾Ö´Ï¸ŞÀÌ¼Ç Àû¿ë
+        // ì´ë™ ì¤‘ì¼ ë•ŒëŠ” ë¶€ë“œëŸ½ê²Œ ì• ë‹ˆë©”ì´ì…˜ ì ìš©
         animator.SetFloat("MoveX", localMoveDir.x, 0.1f, Time.deltaTime);
         animator.SetFloat("MoveZ", localMoveDir.z, 0.1f, Time.deltaTime);
     }
@@ -64,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator Dash()
     {
         stats.isDash = true;
-        // 1. ±¸¸£±â ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+        // 1. êµ¬ë¥´ê¸° ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
         if (animator != null)
         {
             animator.SetTrigger("Roll");
@@ -73,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 moveInput = Input.MoveValue;
         Vector3 dashDir;
 
-        // 2. ¹æÇâ °áÁ¤: ÀÌµ¿ Å°¸¦ ´©¸£°í ÀÖ´Ù¸é ±× ¹æÇâÀ¸·Î, ¾Æ´Ï¸é Á¤¸éÀ¸·Î
+        // 2. ë°©í–¥ ê²°ì •: ì´ë™ í‚¤ë¥¼ ëˆ„ë¥´ê³  ìˆë‹¤ë©´ ê·¸ ë°©í–¥ìœ¼ë¡œ, ì•„ë‹ˆë©´ ì •ë©´ìœ¼ë¡œ
         if (moveInput.magnitude > 0.1f)
         {
             dashDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
