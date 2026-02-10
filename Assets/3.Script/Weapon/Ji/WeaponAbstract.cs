@@ -12,11 +12,12 @@ public enum WeaponType
 
 public abstract class WeaponAbstract : MonoBehaviour
 {
-    [SerializeField] protected WeaponData weaponData;
+    [SerializeField] public WeaponData weaponData;
     [SerializeField] protected CharacterData characterData;
     [SerializeField] protected PlayerStats stats;
     [SerializeField] protected Animator animator;
     [SerializeField] protected PlayerEquipment equipment;
+    [SerializeField] protected InputManager input;
 
     public WeaponType weaponType;
     public GameObject DualWeapon;
@@ -122,7 +123,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         }
     }
 
-    protected float calcDamage()
+    protected virtual float calcDamage()
     {
         return weaponData.baseDamage + stats.PlayerDMG;// + characterData.valuePerLv 이 부분 정리
     }

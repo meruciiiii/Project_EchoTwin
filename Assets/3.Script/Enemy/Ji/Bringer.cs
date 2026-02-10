@@ -50,6 +50,7 @@ public class Bringer : EnemyStateAbstract
         projectile.transform.position = targetPos;
         projectile.SetActive(true);
         //bullet animator
+        yield return new WaitForSeconds(1.6f);
         projectile.SetActive(false);
 
         coroutine = null;
@@ -72,8 +73,6 @@ public class Bringer : EnemyStateAbstract
         coroutine = null;
         TurnOnNavmesh();
     }
-
-    
 
     public override void Move()
     {

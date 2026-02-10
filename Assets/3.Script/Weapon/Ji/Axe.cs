@@ -49,6 +49,8 @@ public class Axe : WeaponAbstract
 
             context.hitTargets.Add(target);
             target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+
+            enemyKnockback(target);
         }
     }
 

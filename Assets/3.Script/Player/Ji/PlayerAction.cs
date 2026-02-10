@@ -49,7 +49,7 @@ public class PlayerAction : MonoBehaviour
 
         if (inputManager.isAttackPressed)
         {
-            if(Equipment.MainWeapon.CanAttack())
+            if (Equipment.MainWeapon.CanAttack())
             {
                 OnAttack();
             }
@@ -80,7 +80,7 @@ public class PlayerAction : MonoBehaviour
         hasDamaged = false;
     }
 
-    public void takeDamage(int damage,Vector3 damagePos)
+    public void takeDamage(int damage, Vector3 damagePos)
     {
         if (hasDamaged) return;
 
@@ -101,12 +101,15 @@ public class PlayerAction : MonoBehaviour
 
     private void knockBack(Vector3 dir)
     {
-        transform.GetComponent<Rigidbody>().AddForce(-dir* knockBackForce,ForceMode.Impulse);
+        transform.GetComponent<Rigidbody>().AddForce(-dir * knockBackForce, ForceMode.Impulse);
     }
 
     public void OnWeaponAcquire(WeaponAbstract newWeapon)
     {
         Equipment.EquipWeapon(newWeapon);
+        Equipment.MainWeapon.Initialize(this.ani);
+
+        //ani.runtimeAnimatorController = axeOverride;
 
         if (gizmo.mainWeapon == null)
         {
