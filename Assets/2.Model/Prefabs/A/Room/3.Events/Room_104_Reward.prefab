@@ -6817,8 +6817,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6887119023045404864}
   m_Layer: 0
-  m_Name: Room_Reward
-  m_TagString: R_01
+  m_Name: Room_104_Reward
+  m_TagString: R_104
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
