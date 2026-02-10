@@ -29,7 +29,12 @@ public class PlayerEquipment
         }
         else
         {
+            if(SubWeapon.DualWeapon != null)
+            {
+                GameObject.Destroy(SubWeapon.DualWeapon);
+            }
             GameObject.Destroy(SubWeapon.gameObject);
+            
             SubWeapon = MainWeapon;
             SubWeapon.gameObject.SetActive(false);
 

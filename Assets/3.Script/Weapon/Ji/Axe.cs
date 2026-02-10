@@ -7,11 +7,6 @@ public class Axe : WeaponAbstract
 {
     [SerializeField] GameObject axePrefab;
 
-    private void Awake()
-    {
-        this.weaponType = WeaponType.onehand;
-    }
-
     private Collider[] getTargetInRange()
     {
         GameObject player = stats.gameObject;
@@ -42,6 +37,8 @@ public class Axe : WeaponAbstract
 
         checkAttackTime();
 
+        UpdateComboState();
+        
         SetAnimator();
 
         Collider[] targets = getTargetInRange();
@@ -52,10 +49,7 @@ public class Axe : WeaponAbstract
 
             context.hitTargets.Add(target);
             target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
-            //target stat 에 getdamage만큼 데미지
         }
-
-        UpdateComboState();
     }
 
     public override void ChargingAttack()

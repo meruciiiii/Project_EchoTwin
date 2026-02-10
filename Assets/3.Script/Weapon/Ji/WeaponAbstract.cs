@@ -16,9 +16,10 @@ public abstract class WeaponAbstract : MonoBehaviour
     [SerializeField] protected CharacterData characterData;
     [SerializeField] protected PlayerStats stats;
     [SerializeField] protected Animator animator;
+    [SerializeField] protected PlayerEquipment equipment;
 
     public WeaponType weaponType;
-    public GameObject forDualWeaponPrefab;
+    public GameObject DualWeapon;
 
     protected int resonanceCount;
 
@@ -38,10 +39,14 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     private void Awake()
     {
-        if (animator == null) animator = GetComponentInParent<Animator>();
-
         comboCount = 0;
         SetResonance(10);
+    }
+
+    public void Initialize(Animator  playerAni)
+    {
+        this.animator = playerAni;
+        animator.SetInteger("WeaponType", weaponData.ID);
     }
 
     #region Combo관련
@@ -86,8 +91,8 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void SetAnimator()
     {
-        //animator.SetInteger("콤보모션", comboCount);
-        //animator.SetTrigger("공격모션 트리거");
+        animator.SetInteger("ComboState", comboCount);
+        animator.SetTrigger("Attack");
     }
     #endregion
 

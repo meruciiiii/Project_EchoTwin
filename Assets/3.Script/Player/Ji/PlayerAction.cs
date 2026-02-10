@@ -18,6 +18,7 @@ public class PlayerAction : MonoBehaviour
     private AttackContext context;
     private PlayerStats stats;
     private FlashEffect effect;
+    private Animator ani;
 
     private bool hasDamaged = false;
 
@@ -38,6 +39,7 @@ public class PlayerAction : MonoBehaviour
         TryGetComponent(out effect);
         TryGetComponent(out inputManager);
         TryGetComponent(out gizmo);
+        ani = GetComponentInChildren<Animator>();
     }
 
     private void Update()

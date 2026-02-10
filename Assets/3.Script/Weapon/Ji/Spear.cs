@@ -37,6 +37,8 @@ public class Spear : WeaponAbstract
 
         checkAttackTime();
 
+        UpdateComboState();
+
         SetAnimator();
 
         Collider[] targets = getTargetInRange();
@@ -47,10 +49,7 @@ public class Spear : WeaponAbstract
 
             context.hitTargets.Add(target);
             target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
-            //target stat 에 getdamage만큼 데미지
         }
-
-        UpdateComboState();
     }
 
     public override void ChargingAttack()
