@@ -109,7 +109,7 @@ public class PlayerAction : MonoBehaviour
         Equipment.EquipWeapon(newWeapon);
         Equipment.MainWeapon.Initialize(this.ani);
 
-        //ani.runtimeAnimatorController = axeOverride;
+        ani.runtimeAnimatorController = newWeapon.overrideController;
 
         if (gizmo.mainWeapon == null)
         {

@@ -21,6 +21,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     public WeaponType weaponType;
     public GameObject DualWeapon;
+    [SerializeField] public AnimatorOverrideController overrideController;
 
     protected int resonanceCount;
 
