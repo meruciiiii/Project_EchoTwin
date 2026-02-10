@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 702458805249424707}
   - component: {fileID: 1888075184449851684}
   m_Layer: 0
-  m_Name: 1HAxe
+  m_Name: 2HAxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
