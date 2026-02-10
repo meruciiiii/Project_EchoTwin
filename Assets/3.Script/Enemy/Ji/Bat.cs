@@ -1,25 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Bat : EnemyStateAbstract
 {
-    [SerializeField] private float height = 2f;
     [SerializeField] private int bodyAttackMultiple = 3;
-
-    private float fixedY;
 
     [SerializeField] private float zigzagRadius = 2f;
     [SerializeField] private float zigzagTime = 0.3f;
 
     private Vector3 zigzag;
     private float zigzagtimer;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        fixedY = transform.position.y + height;
-    }
 
     protected override void Update()
     {
@@ -33,7 +25,6 @@ public class Bat : EnemyStateAbstract
         if (state == EnemyState.attack) return;
 
         Vector3 targetPos = player.transform.position;
-        targetPos.y = fixedY;
         Vector3 startPos = transform.position;
 
         coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
@@ -43,7 +34,7 @@ public class Bat : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
-        turnOffNavmesh();
+        TurnOffNavmesh();
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
@@ -76,9 +67,7 @@ public class Bat : EnemyStateAbstract
 
         coroutine = null;
 
-        turnOnNavmesh();
-
-        state = EnemyState.chase;
+        TurnOnNavmesh();
     }
 
     public override void Move()
@@ -118,10 +107,39 @@ public class Bat : EnemyStateAbstract
         }
     }
 
-    protected override void setPlayerPos()
+    protected override void TurnOnNavmesh()
     {
-        Vector3 targetPos = player.transform.position + zigzag;
-        targetPos.y = fixedY;
-        navMesh.SetDestination(targetPos);
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        {
+            navMesh.enabled = true;
+            navMesh.Warp(hit.position);
+        }
+        else
+        {
+            StartCoroutine(ReturnToField_Co());
+        }
+    }
+
+    private IEnumerator ReturnToField_Co()
+    {
+        float returnSpeed = enemyData.moveSpeed * 1.5f;
+
+        while (true)
+        {
+            Vector3 dir = (player.transform.position = transform.position).normalized;
+            transform.position += dir * returnSpeed * Time.deltaTime;
+
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            {
+                navMesh.enabled = true;
+                navMesh.Warp(hit.position);
+                state = EnemyState.chase;
+                yield break;
+            }
+            yield return null;
+        }
     }
 }

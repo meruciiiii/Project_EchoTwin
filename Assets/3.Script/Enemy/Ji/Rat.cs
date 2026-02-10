@@ -21,11 +21,11 @@ public class Rat : EnemyStateAbstract
     {
         if (state == EnemyState.knockback) return;
 
-        BodyAttack(standardRange);
+        BodyAttack(enemyData.attackRange);
 
         state = EnemyState.chase;
 
-        turnOnNavmesh();
+        TurnOnNavmesh();
         setPlayerPos();
     }
 }

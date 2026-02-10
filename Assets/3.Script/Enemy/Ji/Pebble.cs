@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Pebble : EnemyStateAbstract
 {
-    [SerializeField] GameObject projectile;
+    [SerializeField] private GameObject projectile;
 
     protected override void Update()
     {
@@ -28,7 +28,7 @@ public class Pebble : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
-        turnOffNavmesh();
+        TurnOffNavmesh();
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
@@ -38,14 +38,13 @@ public class Pebble : EnemyStateAbstract
         float timer = 0f;
         float duration = 1f;
 
-        projectile.transform.position = transform.position;
+        projectile.transform.position = startPos;
         projectile.SetActive(true);
 
         while (timer < duration)
         {
-            if (state == EnemyState.dead)
+            if (state == EnemyState.dead || !projectile.activeSelf)
             {
-                projectile.SetActive(false);
                 yield break;
             }
 
@@ -55,14 +54,12 @@ public class Pebble : EnemyStateAbstract
 
             yield return null;
         }
-        projectile.transform.position = transform.position;
+        projectile.transform.position = startPos;
         projectile.SetActive(false);
 
         coroutine = null;
 
-        turnOnNavmesh();
-
-        state = EnemyState.chase;
+        TurnOnNavmesh();
     }
 
     public override void Move()

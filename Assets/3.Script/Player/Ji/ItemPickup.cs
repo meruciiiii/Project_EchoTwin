@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class ItemPickup : MonoBehaviour
 {
     [SerializeField] private WeaponAbstract weapon;
-    [SerializeField] private Transform attachPos;
     [SerializeField] private Image image;
     [SerializeField] private float height = 5f;
 
@@ -68,7 +67,7 @@ public class ItemPickup : MonoBehaviour
         isPickedUp = true;
 
         player.OnWeaponAcquire(weapon);
-        AttachToPlayer(player.transform, attachPos);
+        AttachToPlayer(weapon, player);
 
         CleanupItemComponents();
     }
@@ -89,12 +88,44 @@ public class ItemPickup : MonoBehaviour
         this.enabled = false;
     }
 
-    private void AttachToPlayer(Transform player, Transform attachPos)
+    private void AttachToPlayer(WeaponAbstract weapon, PlayerAction player)
     {
-        transform.SetParent(player);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-        transform.position = attachPos.position;
-        transform.rotation = attachPos.rotation;
+        Transform rightHand = player.RightHand;
+        Transform leftHand = player.LeftHand;
+
+        if (weapon.weaponType == WeaponType.onehand || weapon.weaponType == WeaponType.twohand)
+        {
+            weapon.transform.SetParent(rightHand);
+            weapon.transform.localPosition = Vector3.zero;
+            weapon.transform.localRotation = Quaternion.identity;
+
+            weapon.GetComponent<Collider>().enabled = false;
+        }
+        else if (weapon.weaponType == WeaponType.dual)
+        {
+            weapon.transform.SetParent(rightHand);
+            weapon.transform.localPosition = Vector3.zero;
+            weapon.transform.localRotation = Quaternion.identity;
+
+            if (weapon.DualWeapon == null)
+            {
+                weapon.DualWeapon = Instantiate(weapon.gameObject, leftHand);
+                weapon.DualWeapon.transform.localPosition = Vector3.zero;
+                weapon.DualWeapon.transform.localRotation = Quaternion.identity;
+
+                if (weapon.DualWeapon.TryGetComponent<ItemPickup>(out ItemPickup item))
+                {
+                    Destroy(item);
+                }
+                if (weapon.DualWeapon.TryGetComponent<Collider>(out Collider col))
+                {
+                    col.enabled = false;
+                }
+                if (weapon.DualWeapon.TryGetComponent<WeaponAbstract>(out WeaponAbstract WA))
+                {
+                    WA.enabled = false;
+                }
+            }
+        }
     }
 }

@@ -27,7 +27,7 @@ public class Goblin : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
-        turnOffNavmesh();
+        TurnOffNavmesh();
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
@@ -65,9 +65,7 @@ public class Goblin : EnemyStateAbstract
 
         coroutine = null;
 
-        turnOnNavmesh();
-
-        state = EnemyState.chase;
+        TurnOnNavmesh();
     }
 
     public override void Move()

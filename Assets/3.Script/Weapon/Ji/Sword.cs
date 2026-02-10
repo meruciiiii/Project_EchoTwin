@@ -30,6 +30,8 @@ public class Sword : WeaponAbstract
 
         checkAttackTime();
 
+        UpdateComboState();
+
         SetAnimator();
 
         Collider[] targets = getTargetInRange();
@@ -43,9 +45,6 @@ public class Sword : WeaponAbstract
 
             enemyKnockback(target);
         }
-
-        UpdateComboState();
-        Debug.Log($"combo count = {comboCount}");
     }
 
     public override void ChargingAttack()

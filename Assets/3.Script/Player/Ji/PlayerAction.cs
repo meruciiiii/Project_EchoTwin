@@ -9,11 +9,16 @@ using UnityEngine.Events;
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField] private PlayerEquipment Equipment;
+    [SerializeField] private Transform rightHand;
+    [SerializeField] private Transform leftHand;
+    public Transform RightHand => rightHand;
+    public Transform LeftHand => leftHand;
     private InputManager inputManager;
     private IWeaponCommand command;
     private AttackContext context;
     private PlayerStats stats;
     private FlashEffect effect;
+    private Animator ani;
 
     private bool hasDamaged = false;
 
@@ -34,6 +39,7 @@ public class PlayerAction : MonoBehaviour
         TryGetComponent(out effect);
         TryGetComponent(out inputManager);
         TryGetComponent(out gizmo);
+        ani = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -95,7 +101,7 @@ public class PlayerAction : MonoBehaviour
 
     private void knockBack(Vector3 dir)
     {
-        transform.GetComponent<Rigidbody>().AddForce(-dir* knockBackForce);
+        transform.GetComponent<Rigidbody>().AddForce(-dir* knockBackForce,ForceMode.Impulse);
     }
 
     public void OnWeaponAcquire(WeaponAbstract newWeapon)

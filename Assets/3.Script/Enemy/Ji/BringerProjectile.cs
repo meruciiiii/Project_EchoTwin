@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PebbleProjectile : MonoBehaviour
+public class BringerProjectile : MonoBehaviour
 {
     private EnemyStateAbstract enemy;
     private bool hasHit;
@@ -27,7 +27,6 @@ public class PebbleProjectile : MonoBehaviour
         {
             hasHit = true;
             other.GetComponent<PlayerAction>().takeDamage((int)enemy.Damage, transform.position);
-            gameObject.SetActive(false);
         }
     }
 }
