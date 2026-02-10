@@ -6828,8 +6828,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7536574127580286889}
   m_Layer: 0
-  m_Name: Room_Forge
-  m_TagString: R_01
+  m_Name: Room_103_Forge
+  m_TagString: R_103
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
