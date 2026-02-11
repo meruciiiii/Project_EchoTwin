@@ -753,9 +753,10 @@ GameObject:
   - component: {fileID: 4541788095088085409}
   - component: {fileID: 6946189258489899875}
   - component: {fileID: 8973658171197724542}
+  - component: {fileID: 8866549256690108435}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -964,7 +965,19 @@ MonoBehaviour:
     m_ActionId: 97b0b4fe-5176-49bd-9b41-1d43440d9603
     m_ActionName: 'New action map/Dash[/Keyboard/space]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3690637346300873848}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: Event_Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6d52842e-0f99-4946-81a0-4eb4bde39a72
     m_ActionName: 'New action map/Attack[/Mouse/leftButton]'
   - m_PersistentCalls:
@@ -992,7 +1005,19 @@ MonoBehaviour:
     m_ActionId: 22aabb21-9a92-46a1-aad9-563754ad62fe
     m_ActionName: 'New action map/MousePos[/Mouse/position]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3690637346300873848}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: Event_Interact
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c23504c7-d800-4d70-bc51-ed1de396f2ef
     m_ActionName: 'New action map/GetItem[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
@@ -1039,9 +1064,10 @@ MonoBehaviour:
     SubWeapon: {fileID: 0}
   rightHand: {fileID: 0}
   leftHand: {fileID: 0}
+  isAttack: 0
   invincibilityTime: 1
   knockBackForce: 2
-  gizmo: {fileID: 0}
+  gizmo: {fileID: 8866549256690108435}
   onInteraction:
     m_PersistentCalls:
       m_Calls: []
@@ -1057,6 +1083,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5eb11b794797e4cbba69e4201c560c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlashEffect
+--- !u!114 &8866549256690108435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5457555905653196507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98c8d34c6681e94e849d9a160342bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackDebugGizmo
+  mainWeapon: {fileID: 0}
+  subWeapon: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &5798588630514761277
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,9 +37,9 @@ public class Spear : WeaponAbstract
 
         checkAttackTime();
 
+        SetAnimator();
         UpdateComboState();
 
-        SetAnimator();
 
         Collider[] targets = getTargetInRange();
 

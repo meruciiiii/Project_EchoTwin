@@ -37,9 +37,9 @@ public class Axe : WeaponAbstract
 
         checkAttackTime();
 
-        UpdateComboState();
         
         SetAnimator();
+        UpdateComboState();
 
         Collider[] targets = getTargetInRange();
 

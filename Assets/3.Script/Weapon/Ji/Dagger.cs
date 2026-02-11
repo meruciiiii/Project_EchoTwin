@@ -38,9 +38,9 @@ public class Dagger : WeaponAbstract
 
         checkAttackTime();
 
+        SetAnimator();
         UpdateComboState();
 
-        SetAnimator();
 
         Collider[] targets = getTargetInRange();
 
