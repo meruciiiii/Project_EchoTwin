@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Rat : EnemyStateAbstract
 {
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (state == EnemyState.dead) return;
         Move();
     }
@@ -20,9 +21,11 @@ public class Rat : EnemyStateAbstract
     {
         if (state == EnemyState.knockback) return;
 
+        BodyAttack(enemyData.attackRange);
+
         state = EnemyState.chase;
 
-        turnOnNavmesh();
+        TurnOnNavmesh();
         setPlayerPos();
     }
 }

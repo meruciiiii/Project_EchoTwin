@@ -7,8 +7,9 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private PlayerMovement Player;
-    private ItemPickup pickup;
     private PlayerAction Action;
+    private PlayerStats stats;
+    public Coroutine coroutine;
 
     private Vector2 moveValue;
     public Vector2 MoveValue => moveValue;
@@ -16,14 +17,20 @@ public class InputManager : MonoBehaviour
     private Vector2 mousePos;
     public Vector2 MousePos => mousePos;
 
+    public bool isAttackPressed { get; private set; }
+
     private void Awake()
     {
         TryGetComponent(out Player);
+        TryGetComponent(out Action);
+        TryGetComponent(out stats);
     }
     public void Event_Move(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
+            if (GameManager.instance.isStop) return;
+            if (isAttackPressed) return;
             moveValue = context.ReadValue<Vector2>();
         }
         else if (context.phase == InputActionPhase.Canceled)
@@ -36,7 +43,10 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            StartCoroutine(Player.Dash());
+            if (GameManager.instance.isStop) return;
+            if (isAttackPressed) return;
+            if (coroutine != null) return;
+            coroutine = StartCoroutine(Player.Dash());
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
@@ -48,11 +58,11 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            Action.OnAttack();
+            isAttackPressed = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-
+            isAttackPressed = false;
         }
     }
 
@@ -82,14 +92,18 @@ public class InputManager : MonoBehaviour
 
     public void Event_MousPos(InputAction.CallbackContext context)
     {
+        if (GameManager.instance.isStop) return;
+        if (Action.isAttack) return;
         mousePos = context.ReadValue<Vector2>();
     }
 
-    public void Event_GetItem(InputAction.CallbackContext context)
+    public void Event_Interact(InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Performed)
         {
-            pickup.GetNewWeapon();
+            if (GameManager.instance.isStop) return;
+
+            Action.onInteraction?.Invoke();
         }
         else if(context.phase == InputActionPhase.Canceled)
         {

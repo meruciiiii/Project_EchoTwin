@@ -10,6 +10,7 @@ public class SceneChangeManager : MonoBehaviour
     {
         Title,
         Game,
+        Die,
     }
 
     private SceneType currentScene = SceneType.Title;

@@ -6,7 +6,6 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine;
 public class AllDataSyncTool
 {
     [MenuItem("Tools/Sync All CSV Data")]

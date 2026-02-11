@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStats stats;
     private InputManager Input;
     private Rigidbody rb;
-    private Animator animator; // ¾Ö´Ï¸ŞÀÌÅÍ Ãß°¡
+    private Animator animator; // ì• ë‹ˆë©”ì´í„° ì¶”ê°€
 
     private Vector3 mousePos;
 
@@ -22,6 +22,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 1. GameManagerì˜ isStop ìƒíƒœ ì²´í¬
+        if (GameManager.instance != null && GameManager.instance.isStop)
+        {
+            // [ì¶”ê°€] ë¬¼ë¦¬ì ì¸ ì†ë„ë¥¼ ì™„ì „íˆ 0ìœ¼ë¡œ ë§Œë“¤ì–´ì•¼ ë¯¸ë„ëŸ¬ì§€ì§€ ì•ŠìŠµë‹ˆë‹¤.
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            // ë©ˆì·„ì„ ë•Œ ì• ë‹ˆë©”ì´ì…˜ íŒŒë¼ë¯¸í„°ë¥¼ ì¦‰ì‹œ 0ìœ¼ë¡œ (ëŒí•‘ ì¸ì ì œê±°)
+            animator.SetFloat("MoveX", 0);
+            animator.SetFloat("MoveZ", 0);
+            return; // ì´í›„ Move(), FocusOnMouse() ì‹¤í–‰ ì•ˆ í•¨
+        }
+
+        // ëŒ€ì‰¬ ì¤‘ì—ëŠ” ì¼ë°˜ ì´ë™/íšŒì „ ë¡œì§ ê±´ë„ˆëœ€
+
+        if (stats.isDash) return;
         Move();
         FocusOnMouse();
     }
@@ -29,37 +45,31 @@ public class PlayerMovement : MonoBehaviour
     public void Move()
     {
         Vector2 moveInput = Input.MoveValue;
-        Vector3 movePos = new Vector3(moveInput.x, 0, moveInput.y) * stats.MoveSpeed * Time.deltaTime * GameManager.instance.timeScale;
+        if (stats.isDash) return;
 
-        rb.MovePosition(transform.position + movePos);
-
-        // 2. Áß¿ä: moveDir¸¦ ¸¸µé ¶§ Vector2ÀÇ y¸¦ Vector3ÀÇ z¿¡ ³Ö¾îÁà¾ß ÇÕ´Ï´Ù!
-        Vector3 moveDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
-
-        if (moveDir.magnitude>0.1f)
+        // ì…ë ¥ì´ ì—†ì„ ë•Œë„ ì• ë‹ˆë©”ì´ì…˜ì„ ì„œì„œíˆ(0.1f) Idleë¡œ ëŒë¦¼
+        if (moveInput.magnitude <= 0.1f)
         {
-            Vector3 localMoveDir = transform.InverseTransformDirection(moveDir);
-
-            //animator localMoveDir.x -> ÁÂ¿ì ¿òÁ÷ÀÓ ¾Ö´Ï¸ŞÀÌÅÍ
-            //animator localMoveDir.z -> ¾ÕµÚ ¿òÁ÷ÀÓ ¾Ö´Ï¸ÅÀÌÅÍ
-
-            // 0.1f´Â ºÎµå·¯¿î ¾Ö´Ï¸ŞÀÌ¼Ç ÀüÈ¯À» À§ÇÑ ´ïÇÎ °ªÀÔ´Ï´Ù.
-            animator.SetFloat("MoveX", localMoveDir.x, 0.1f, Time.deltaTime);
-            animator.SetFloat("MoveZ", localMoveDir.z, 0.1f, Time.deltaTime);
-
-        }
-        else
-        {
-            // ¸ØÃèÀ» ¶§ ¾Ö´Ï¸ŞÀÌ¼Çµµ 0À¸·Î ºÎµå·´°Ô º¹±Í
             animator.SetFloat("MoveX", 0, 0.1f, Time.deltaTime);
             animator.SetFloat("MoveZ", 0, 0.1f, Time.deltaTime);
+            return;
         }
+
+        Vector3 movePos = new Vector3(moveInput.x, 0, moveInput.y) * stats.MoveSpeed * Time.deltaTime;
+        rb.MovePosition(transform.position + movePos);
+
+        Vector3 moveDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+        Vector3 localMoveDir = transform.InverseTransformDirection(moveDir);
+
+        // ì´ë™ ì¤‘ì¼ ë•ŒëŠ” ë¶€ë“œëŸ½ê²Œ ì• ë‹ˆë©”ì´ì…˜ ì ìš©
+        animator.SetFloat("MoveX", localMoveDir.x, 0.1f, Time.deltaTime);
+        animator.SetFloat("MoveZ", localMoveDir.z, 0.1f, Time.deltaTime);
     }
 
     public IEnumerator Dash()
     {
         stats.isDash = true;
-        // 1. ±¸¸£±â ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+        // 1. êµ¬ë¥´ê¸° ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
         if (animator != null)
         {
             animator.SetTrigger("Roll");
@@ -68,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 moveInput = Input.MoveValue;
         Vector3 dashDir;
 
-        // 2. ¹æÇâ °áÁ¤: ÀÌµ¿ Å°¸¦ ´©¸£°í ÀÖ´Ù¸é ±× ¹æÇâÀ¸·Î, ¾Æ´Ï¸é Á¤¸éÀ¸·Î
+        // 2. ë°©í–¥ ê²°ì •: ì´ë™ í‚¤ë¥¼ ëˆ„ë¥´ê³  ìˆë‹¤ë©´ ê·¸ ë°©í–¥ìœ¼ë¡œ, ì•„ë‹ˆë©´ ì •ë©´ìœ¼ë¡œ
         if (moveInput.magnitude > 0.1f)
         {
             dashDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
@@ -95,15 +105,18 @@ public class PlayerMovement : MonoBehaviour
 
         stats.isDash = false;
         yield return new WaitForSeconds(stats.DashDelay);
+        Input.coroutine = null;
     }
 
     private void FocusOnMouse()
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) return;
+
         mousePos = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
         {
-            mousePos = hit.point * GameManager.instance.timeScale;
+            mousePos = hit.point;
         }
         mousePos.y = transform.position.y;
         transform.LookAt(mousePos);

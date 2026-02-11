@@ -2,23 +2,33 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 [RequireComponent(typeof(FlashEffect))]
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField] private PlayerEquipment Equipment;
+    [SerializeField] private Transform rightHand;
+    [SerializeField] private Transform leftHand;
+    public Transform RightHand => rightHand;
+    public Transform LeftHand => leftHand;
+    private InputManager inputManager;
     private IWeaponCommand command;
     private AttackContext context;
     private PlayerStats stats;
     private FlashEffect effect;
+    private Animator ani;
 
     private bool hasDamaged = false;
-    [SerializeField] private float invincibilityTime = 1f;
+    public bool isAttack = false;
 
+    [SerializeField] private float invincibilityTime = 1f;
     [SerializeField] private float knockBackForce = 2f;
 
     public AttackDebugGizmo gizmo;
+
+    public UnityEvent onInteraction;
 
     private void Awake()
     {
@@ -28,17 +38,30 @@ public class PlayerAction : MonoBehaviour
         }
         TryGetComponent(out stats);
         TryGetComponent(out effect);
+        TryGetComponent(out inputManager);
+        TryGetComponent(out gizmo);
+        ani = GetComponentInChildren<Animator>();
+    }
+
+    private void Update()
+    {
+        if (stats.isDash || Equipment.MainWeapon == null) return;
+        if (GameManager.instance.isStop) return;
+
+        if (inputManager.isAttackPressed)
+        {
+            if (Equipment.MainWeapon.CanAttack())
+            {
+                OnAttack();
+            }
+        }
     }
 
     public void OnAttack()
     {
-        if (stats.isDash) return;
-
         context = new AttackContext();
         RebuildAttackCmd();
         command?.execute();
-
-        Debug.Log("playerAction");
     }
 
     public void OnChargingAttack()
@@ -58,7 +81,7 @@ public class PlayerAction : MonoBehaviour
         hasDamaged = false;
     }
 
-    public void takeDamage(int damage,Vector3 damagePos)
+    public void takeDamage(int damage, Vector3 damagePos)
     {
         if (hasDamaged) return;
 
@@ -79,22 +102,47 @@ public class PlayerAction : MonoBehaviour
 
     private void knockBack(Vector3 dir)
     {
-        transform.GetComponent<Rigidbody>().AddForce(-dir* knockBackForce);
+        transform.GetComponent<Rigidbody>().AddForce(-dir * knockBackForce, ForceMode.Impulse);
     }
 
-    public void OnWeaponAcquire(WeaponAbstract newWeapon)
+    public void OnWeaponAcquire(WeaponID ID)
     {
+        WeaponAbstract[] weapons = GetComponentsInChildren<WeaponAbstract>(true);
+
+        WeaponAbstract target = null;
+
+        foreach (WeaponAbstract weapon in weapons)
+        {
+            weapon.gameObject.SetActive(false);
+            if (weapon.weaponID == ID)
+            {
+                target = weapon;
+                break;
+            }
+        }
+
+        if (target == null)
+        {
+            Debug.Log("playerAction onweaponaquire error");
+            return;
+        }
+
+        target.gameObject.SetActive(true);
+
+        Equipment.EquipWeapon(target);
+        Equipment.MainWeapon.Initialize(this.ani);
+
+        ani.runtimeAnimatorController = target.overrideController;
+
         if (gizmo.mainWeapon == null)
         {
-            gizmo.mainWeapon = newWeapon;//gizmo
+            gizmo.mainWeapon = target;//gizmo
         }
         else
         {
             gizmo.subWeapon = gizmo.mainWeapon;
-            gizmo.mainWeapon = newWeapon;
+            gizmo.mainWeapon = target;
         }
-
-        Equipment.EquipWeapon(newWeapon);
     }
 
     private void RebuildAttackCmd()

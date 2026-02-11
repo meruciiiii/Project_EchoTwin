@@ -5,25 +5,36 @@ using UnityEngine;
 
 public class Goblin : EnemyStateAbstract
 {
-    private Coroutine coroutine;
     [SerializeField] float attackSpeed = 10f;
     [SerializeField] float dashDuration = 0.5f;
+    [SerializeField] float buffer = 0.5f;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (state == EnemyState.dead) return;
         Move();
+    }
+
+    public override void Attack()
+    {
+        if (state == EnemyState.attack) return;
+
+        coroutine = StartCoroutine(Attack_Co(attackSpeed));
     }
 
     private IEnumerator Attack_Co(float attackSpeed)
     {
         state = EnemyState.attack;
 
-        turnOffNavmesh();
+        TurnOffNavmesh();
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        checkAttackTime();
+
+        bool isAttacked = false;
 
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
@@ -34,23 +45,27 @@ public class Goblin : EnemyStateAbstract
         while (timer > 0f)
         {
             navMesh.Move(dir * attackSpeed * Time.deltaTime);
+
+            if (!isAttacked)
+            {
+                Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange - buffer);
+                foreach (Collider hit in hits)
+                {
+                    if (hit.CompareTag("Player"))
+                    {
+                        AreaAttack(enemyData.attackRange, 180f);
+                        isAttacked = true;
+                    }
+                }
+            }
+
             timer -= Time.deltaTime;
             yield return null;
         }
 
-        checkAttackTime();
         coroutine = null;
 
-        turnOnNavmesh();
-
-        state = EnemyState.chase;
-    }
-
-    public override void Attack()
-    {
-        if (state == EnemyState.attack) return;
-
-        coroutine = StartCoroutine(Attack_Co(attackSpeed));
+        TurnOnNavmesh();
     }
 
     public override void Move()
@@ -58,8 +73,9 @@ public class Goblin : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
+        BodyAttack(standardRange);
+
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        float buffer = 0.5f;
 
         if (distance > enemyData.attackRange + buffer)
         {

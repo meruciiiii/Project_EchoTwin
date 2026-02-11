@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Hammer : WeaponAbstract
 {
+    private bool isCharging = false;
+    private float time = 0f;
+
     private Collider[] getTargetInRange()
     {
         GameObject player = stats.gameObject;
@@ -31,9 +34,44 @@ public class Hammer : WeaponAbstract
 
     public override void Attack(AttackContext context)
     {
-        if (!canAttack()) return;
+        if (!CanAttack()) return;
+        if (isCharging) return;
+        StartCoroutine(Attack_Co(context));
+    }
 
+    private IEnumerator Attack_Co(AttackContext context)
+    {
+        time = 0f;
+        isCharging = true;
+        SetAnimator();//무기 든 모션
+        //yield return new WaitForSeconds(0.5f);
+        animator.SetFloat("HoldSpeed", 0);
+
+        while (time < 0.5f)
+        {
+            if(!input.isAttackPressed)
+            {
+                //애니메이터 취소 어케함
+                isCharging = false;
+                yield break;
+            }
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        time = 0f;
+
+        while (input.isAttackPressed)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        time = Mathf.Min(time, 3f);
+
+        animator.SetFloat("HoldSpeed", 1);
         checkAttackTime();
+        UpdateComboState();
 
         Collider[] targets = getTargetInRange();
 
@@ -42,10 +80,10 @@ public class Hammer : WeaponAbstract
             if (!target.CompareTag("Enemy")) continue;
 
             context.hitTargets.Add(target);
-            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
-            //target stat 에 getdamage만큼 데미지
-        }
+            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * time);
 
+            enemyKnockback(target);
+        }
     }
 
     public override void ChargingAttack()
@@ -74,8 +112,30 @@ public class Hammer : WeaponAbstract
         {
             if (!hit.CompareTag("Enemy")) continue;
 
-            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
+            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+            StartCoroutine(EnemyGatherng(centerPos, hit));
         }
-        //hits 에게 데미지, hits transform 을 centerPos 로 lerp 사용해서 이동
+    }
+
+    private IEnumerator EnemyGatherng(Vector3 centerPos, Collider target)
+    {
+        Vector3 targetPos = target.transform.position;
+
+        float time = 0f;
+        float duration = 1f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+
+            target.transform.position = Vector3.Lerp(targetPos, centerPos, t);
+            yield return null;
+        }
+        target.transform.position = centerPos;
+    }
+
+    protected override float calcDamage()
+    {
+        return weaponData.baseDamage * time + stats.PlayerDMG;// + characterData.valuePerLv 이 부분 정리
     }
 }

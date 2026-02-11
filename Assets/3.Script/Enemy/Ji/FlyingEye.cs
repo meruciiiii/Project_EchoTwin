@@ -2,20 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FlyingEye : EnemyStateAbstract
 {
-    [SerializeField] private float height = 2f;
     [SerializeField] private float duration = 0.5f;
-    private Coroutine coroutine;
-    private float fixedY;
 
-    protected override void Awake()
+    protected override void Update()
     {
-        base.Awake();
-        fixedY = transform.position.y + height;
+        base.Update();
+        if (state == EnemyState.dead) return;
+        Move();
     }
-
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
@@ -30,13 +28,15 @@ public class FlyingEye : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
-        turnOffNavmesh();
+        TurnOffNavmesh();
 
         float timer = 0f;
+        bool isAttacked = false;
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        checkAttackTime();
 
         while (timer < duration)
         {
@@ -44,23 +44,30 @@ public class FlyingEye : EnemyStateAbstract
             float t = timer / duration;
 
             transform.position = Vector3.Lerp(startPos, destPos, t);
+            if (!isAttacked)
+            {
+                if (BodyAttack(enemyData.attackRange))
+                {
+                    isAttacked = true;
+                }
+            }
 
             yield return null;
         }
+        yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
         transform.position = startPos;
 
-        checkAttackTime();
         coroutine = null;
 
-        turnOnNavmesh();
-
-        state = EnemyState.chase;
+        TurnOnNavmesh();
     }
 
     public override void Move()
     {
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
+
+        BodyAttack(enemyData.attackRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;
@@ -79,10 +86,39 @@ public class FlyingEye : EnemyStateAbstract
         }
     }
 
-    protected override void setPlayerPos()
+    protected override void TurnOnNavmesh()
     {
-        Vector3 targetPos = player.transform.position;
-        targetPos.y = fixedY;
-        navMesh.SetDestination(targetPos);
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        {
+            navMesh.enabled = true;
+            navMesh.Warp(hit.position);
+        }
+        else
+        {
+            StartCoroutine(ReturnToField_Co());
+        }
+    }
+
+    private IEnumerator ReturnToField_Co()
+    {
+        float returnSpeed = enemyData.moveSpeed * 1.5f;
+
+        while (true)
+        {
+            Vector3 dir = (player.transform.position = transform.position).normalized;
+            transform.position += dir * returnSpeed * Time.deltaTime;
+
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            {
+                navMesh.enabled = true;
+                navMesh.Warp(hit.position);
+                state = EnemyState.chase;
+                yield break;
+            }
+            yield return null;
+        }
     }
 }

@@ -32,9 +32,14 @@ public class Spear : WeaponAbstract
 
     public override void Attack(AttackContext context)
     {
-        if (!canAttack()) return;
+        if (!CanAttack()) return;
+        Debug.Log($"combo count = {comboCount}");
 
         checkAttackTime();
+
+        UpdateComboState();
+
+        SetAnimator();
 
         Collider[] targets = getTargetInRange();
 
@@ -44,9 +49,9 @@ public class Spear : WeaponAbstract
 
             context.hitTargets.Add(target);
             target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
-            //target stat 에 getdamage만큼 데미지
-        }
 
+            enemyKnockback(target);
+        }
     }
 
     public override void ChargingAttack()

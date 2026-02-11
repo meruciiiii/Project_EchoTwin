@@ -61,7 +61,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "GetItem",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "c23504c7-d800-4d70-bc51-ed1de396f2ef",
                     "expectedControlType": "",
@@ -188,7 +188,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GetItem",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

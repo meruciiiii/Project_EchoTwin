@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class ItemPickup : MonoBehaviour
 {
-    [SerializeField] private WeaponAbstract weapon;
-    [SerializeField] private Transform attachPos;
+    //[SerializeField] private WeaponAbstract weapon;
+    [SerializeField] private WeaponID weaponID;
     [SerializeField] private Image image;
     [SerializeField] private float height = 5f;
 
@@ -25,7 +25,8 @@ public class ItemPickup : MonoBehaviour
     {
         if (image == null || cam == null) return;
 
-        Vector3 worldPos = transform.position + Vector3.up * height;
+        //Vector3 worldPos = transform.position + Vector3.up * height;
+        Vector3 worldPos = this.transform.position + cam.transform.up * height;
         Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
 
         image.rectTransform.position = screenPos;
@@ -41,6 +42,7 @@ public class ItemPickup : MonoBehaviour
             image.color = c;
 
             player = other.GetComponent<PlayerAction>();
+            player.onInteraction.AddListener(GetNewWeapon);
         }
     }
 
@@ -53,6 +55,7 @@ public class ItemPickup : MonoBehaviour
             c.a = 0f;
             image.color = c;
 
+            player.onInteraction.RemoveListener(GetNewWeapon);
             player = null;
         }
     }
@@ -64,10 +67,12 @@ public class ItemPickup : MonoBehaviour
 
         isPickedUp = true;
 
-        player.OnWeaponAcquire(weapon);
-        AttachToPlayer(player.transform, attachPos);
+        player.OnWeaponAcquire(weaponID);
 
-        CleanupItemComponents();
+        gameObject.SetActive(false);
+
+        //AttachToPlayer(weapon, player);
+        //CleanupItemComponents();
     }
 
     private void CleanupItemComponents()
@@ -86,12 +91,44 @@ public class ItemPickup : MonoBehaviour
         this.enabled = false;
     }
 
-    private void AttachToPlayer(Transform player, Transform attachPos)
+    private void AttachToPlayer(WeaponAbstract weapon, PlayerAction player)
     {
-        transform.SetParent(player);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-        transform.position = attachPos.position;
-        transform.rotation = attachPos.rotation;
+        Transform rightHand = player.RightHand;
+        Transform leftHand = player.LeftHand;
+
+        if (weapon.weaponType == WeaponType.onehand || weapon.weaponType == WeaponType.twohand)
+        {
+            weapon.transform.SetParent(rightHand);
+            weapon.transform.localPosition = Vector3.zero;
+            weapon.transform.localRotation = Quaternion.identity;
+
+            weapon.GetComponent<Collider>().enabled = false;
+        }
+        else if (weapon.weaponType == WeaponType.dual)
+        {
+            weapon.transform.SetParent(rightHand);
+            weapon.transform.localPosition = Vector3.zero;
+            weapon.transform.localRotation = Quaternion.identity;
+
+            if (weapon.DualWeapon == null)
+            {
+                weapon.DualWeapon = Instantiate(weapon.gameObject, leftHand);
+                weapon.DualWeapon.transform.localPosition = Vector3.zero;
+                weapon.DualWeapon.transform.localRotation = Quaternion.identity;
+
+                if (weapon.DualWeapon.TryGetComponent<ItemPickup>(out ItemPickup item))
+                {
+                    Destroy(item);
+                }
+                if (weapon.DualWeapon.TryGetComponent<Collider>(out Collider col))
+                {
+                    col.enabled = false;
+                }
+                if (weapon.DualWeapon.TryGetComponent<WeaponAbstract>(out WeaponAbstract WA))
+                {
+                    WA.enabled = false;
+                }
+            }
+        }
     }
 }
