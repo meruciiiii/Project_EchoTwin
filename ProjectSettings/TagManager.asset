@@ -7,6 +7,8 @@ TagManager:
   - MapNode
   - Door
   - Store
+  - Upgrade
+  - MapDrawer
   layers:
   - Default
   - TransparentFX

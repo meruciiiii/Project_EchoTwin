@@ -102,10 +102,15 @@ public class FloorData
     {
         DoorStartSetting();
         connectedRoom = new List<Vector2Int>();
+        room = new Room();
     }
-    private void CallRoomData(Room room)
+    public void SetRoomData(Room room)
     {
         this.room = room;
+    }
+    public Room GetRoomData()
+    {
+        return this.room;
     }
     private void DoorStartSetting()
     {

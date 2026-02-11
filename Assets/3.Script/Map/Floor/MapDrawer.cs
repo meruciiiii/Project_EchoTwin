@@ -30,6 +30,7 @@ public class MapDrawer : MonoBehaviour
         if (!TryGetComponent(out parent))
             Debug.Log("TryGetComponent RectTransform parent is fail");
         plateList = new List<GameObject>();
+        plateMappings = new BiDictionary<Vector2Int, GameObject>();
         foreach (KeyValuePair<Vector2Int, FloorData> drawMap in microMap)
         {
             GameObject ui = Instantiate(plate, parent);

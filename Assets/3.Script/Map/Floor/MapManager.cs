@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public class MapManager : MonoBehaviour
 {
-    private Dictionary<Vector2Int, FloorData> microMap;          // map node is here
-    private MapCreater mapCreater;
-    private MapChecker mapChecker;
-    private MapDrawer mapDrawer;
-    private MapTrace mapTrace;
-    private DoorTrigger doorTrigger;
+    [SerializeField] private Dictionary<Vector2Int, FloorData> microMap;          // map node is here
+    [SerializeField] private MapCreater mapCreater;
+    [SerializeField] private MapChecker mapChecker;
+    [SerializeField] private GameObject mapDrawCanvas;
+    [SerializeField] private MapDrawer mapDrawer;
+    [SerializeField] private MapRoomPopulator mapRoomPopulator;
+    [SerializeField] private MapTrace mapTrace;
     private void Awake()
     {
         microMap = new Dictionary<Vector2Int, FloorData>();
@@ -17,12 +18,13 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetComponent MapCreater is fail");
         if (!TryGetComponent(out mapChecker))
             Debug.Log("TryGetComponent MapChecker is fail");
-        if (!TryGetComponent(out mapDrawer))
+        mapDrawCanvas = GameObject.FindWithTag("MapDrawer");
+        if (!mapDrawCanvas.TryGetComponent(out mapDrawer))
             Debug.Log("TryGetComponent MapDrawer is fail");
         if (!TryGetComponent(out mapTrace))
             Debug.Log("TryGetComponent MapTrace is fail");
-        if (!TryGetComponent(out doorTrigger))
-            Debug.Log("TryGetComponent DoorTrigger is fail");
+        if (!TryGetComponent(out mapRoomPopulator))
+            Debug.Log("TryGetComponent MapRoomPopulator is fail");
     }
     public void GenerateMap()
     {
@@ -41,7 +43,8 @@ public class MapManager : MonoBehaviour
         int count = 100 - safety;
         Debug.Log("Map Create is Finished in " + count + "....................");
         mapDrawer.EnterDraw(GetMap());
-        doorTrigger.onPlayerEnter += PlayerMove;
+        mapRoomPopulator.Populate(microMap, 1);
+        Debug.Log("Populate is sucess");
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
     {
