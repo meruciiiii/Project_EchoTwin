@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
 {
     private PlayerMovement Player;
     private PlayerAction Action;
+    private PlayerStats stats;
+    public Coroutine coroutine;
 
     private Vector2 moveValue;
     public Vector2 MoveValue => moveValue;
@@ -21,6 +23,7 @@ public class InputManager : MonoBehaviour
     {
         TryGetComponent(out Player);
         TryGetComponent(out Action);
+        TryGetComponent(out stats);
     }
     public void Event_Move(InputAction.CallbackContext context)
     {
@@ -42,7 +45,8 @@ public class InputManager : MonoBehaviour
         {
             if (GameManager.instance.isStop) return;
             if (isAttackPressed) return;
-            StartCoroutine(Player.Dash());
+            if (coroutine != null) return;
+            coroutine = StartCoroutine(Player.Dash());
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
@@ -89,6 +93,7 @@ public class InputManager : MonoBehaviour
     public void Event_MousPos(InputAction.CallbackContext context)
     {
         if (GameManager.instance.isStop) return;
+        if (Action.isAttack) return;
         mousePos = context.ReadValue<Vector2>();
     }
 
