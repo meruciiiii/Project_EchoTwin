@@ -36,8 +36,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // 대쉬 중에는 일반 이동/회전 로직 건너뜀
-        if (stats.isDash) return;
 
+        if (stats.isDash) return;
         Move();
         FocusOnMouse();
     }
@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move()
     {
         Vector2 moveInput = Input.MoveValue;
+        if (stats.isDash) return;
 
         // 입력이 없을 때도 애니메이션을 서서히(0.1f) Idle로 돌림
         if (moveInput.magnitude <= 0.1f)
@@ -104,10 +105,13 @@ public class PlayerMovement : MonoBehaviour
 
         stats.isDash = false;
         yield return new WaitForSeconds(stats.DashDelay);
+        Input.coroutine = null;
     }
 
     private void FocusOnMouse()
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) return;
+
         mousePos = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f))

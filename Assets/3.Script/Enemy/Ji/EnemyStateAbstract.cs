@@ -81,6 +81,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (currentHP <= 0)
         {
             state = EnemyState.dead;
+            TurnOffNavmesh();
             Destroy(gameObject);
         }
     }
