@@ -7,6 +7,7 @@ public class Hammer : WeaponAbstract
 {
     private bool isCharging = false;
     private float time = 0f;
+    [SerializeField] float windUpTime = 0.3f;
 
     private Collider[] getTargetInRange()
     {
@@ -41,18 +42,18 @@ public class Hammer : WeaponAbstract
 
     private IEnumerator Attack_Co(AttackContext context)
     {
-        time = 0f;
         isCharging = true;
-        SetAnimator();//무기 든 모션
-        //yield return new WaitForSeconds(0.5f);
-        animator.SetFloat("HoldSpeed", 0);
+        stats.GetComponent<PlayerAction>().isAttack = true;
 
+        SetAnimator();//무기 든 모션
+        yield return new WaitForSeconds(windUpTime);
+        time = 0f;
+        AniSpeed(0f);
         while (time < 0.5f)
         {
             if(!input.isAttackPressed)
             {
-                //애니메이터 취소 어케함
-                isCharging = false;
+                cancleCharging();
                 yield break;
             }
             time += Time.deltaTime;
@@ -69,9 +70,10 @@ public class Hammer : WeaponAbstract
 
         time = Mathf.Min(time, 3f);
 
-        animator.SetFloat("HoldSpeed", 1);
-        checkAttackTime();
-        UpdateComboState();
+        AniSpeed(1f);
+        //checkAttackTime();
+        //UpdateComboState();
+        yield return new WaitForSeconds(0.2f / weaponData.attackSpeed);
 
         Collider[] targets = getTargetInRange();
 
@@ -84,6 +86,26 @@ public class Hammer : WeaponAbstract
 
             enemyKnockback(target);
         }
+
+        isCharging = false;
+        stats.GetComponent<PlayerAction>().isAttack = false;
+    }
+
+    private void cancleCharging()
+    {
+        if (!isCharging) return;
+
+        StopAllCoroutines();
+        isCharging = false;
+        AniSpeed(1f);
+        animator.Play("Move",0,0);
+        stats.GetComponent<PlayerAction>().isAttack = false;
+    }
+
+    private void AniSpeed(float holdSpeed = 1f)
+    {
+        float finalSpeed = weaponData.attackSpeed * holdSpeed;
+        animator.SetFloat("AttackSpeed", finalSpeed);
     }
 
     public override void ChargingAttack()

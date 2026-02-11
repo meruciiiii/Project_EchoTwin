@@ -59,6 +59,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     {
         this.animator = playerAni;
         animator.SetInteger("WeaponType", weaponData.ID);
+        animator.SetFloat("AttackSpeed", weaponData.attackSpeed);
     }
 
     #region Combo°ü·Ã
@@ -66,33 +67,41 @@ public abstract class WeaponAbstract : MonoBehaviour
     {
         if (isComboCooltime) return false;
 
-        if (Time.time < lastAttackTime) return false;
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsTag("Attack"))
+        {
+            if (stateInfo.normalizedTime < 0.8f)
+            {
+                return false;
+            }
+        }
 
         return true;
     }
 
-    protected void checkAttackTime()
-    {
-        float comboExpireTime = lastAttackTime + 0.5f;// + weaponData.attackSpeed;
+    //protected void checkAttackTime()
+    //{
+    //    float comboExpireTime = lastAttackTime + 0.5f;// + weaponData.attackSpeed;
 
-        if (Time.time > comboExpireTime)
-        {
-            comboCount = 0;
-        }
+    //    if (Time.time > comboExpireTime)
+    //    {
+    //        comboCount = 0;
+    //    }
 
-        lastAttackTime = Time.time + weaponData.attackSpeed;
-    }
+    //    lastAttackTime = Time.time + weaponData.attackSpeed;
+    //}
 
-    protected void UpdateComboState()
-    {
-        comboCount++;
+    //protected void UpdateComboState()
+    //{
+    //    comboCount++;
 
-        if (comboCount >= weaponData.comboCount)
-        {
-            comboCount = 0;
-            StartCoroutine(ComboCooltime_Co());
-        }
-    }
+    //    if (comboCount >= weaponData.comboCount)
+    //    {
+    //        comboCount = 0;
+    //        StartCoroutine(ComboCooltime_Co());
+    //    }
+    //}
 
     protected IEnumerator ComboCooltime_Co()
     {
@@ -104,10 +113,25 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected void SetAnimator()
     {
         animator.SetInteger("ComboState", comboCount);
-        if (comboCount == 0)
+        animator.SetTrigger("Attack");
+
+        comboCount++;
+
+        if (comboCount >= weaponData.comboCount)
         {
-            animator.SetTrigger("Attack");
+            comboCount = 0;
+            StartCoroutine(ComboCooltime_Co());
         }
+
+        StopCoroutine(nameof(ComboTimer));
+        StartCoroutine(nameof(ComboTimer));
+    }
+
+    private IEnumerator ComboTimer()
+    {
+        yield return new WaitForSeconds(weaponData.comboCooltime);
+        comboCount = 0;
+        animator.SetInteger("ComboState", 0);
     }
     #endregion
 
