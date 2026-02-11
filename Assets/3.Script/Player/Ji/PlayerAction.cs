@@ -21,6 +21,7 @@ public class PlayerAction : MonoBehaviour
     private Animator ani;
 
     private bool hasDamaged = false;
+    public bool isAttack = false;
 
     [SerializeField] private float invincibilityTime = 1f;
     [SerializeField] private float knockBackForce = 2f;
@@ -58,9 +59,11 @@ public class PlayerAction : MonoBehaviour
 
     public void OnAttack()
     {
+        isAttack = true;
         context = new AttackContext();
         RebuildAttackCmd();
         command?.execute();
+        isAttack = false;
     }
 
     public void OnChargingAttack()
