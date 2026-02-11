@@ -33,6 +33,7 @@ TagManager:
   - M_SP
   - P_SP
   - Bridge
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -73,7 +73,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void checkAttackTime()
     {
-        float comboExpireTime = lastAttackTime + weaponData.attackSpeed;
+        float comboExpireTime = lastAttackTime + 0.5f;// + weaponData.attackSpeed;
 
         if (Time.time > comboExpireTime)
         {
