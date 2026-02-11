@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class ItemPickup : MonoBehaviour
 {
-    [SerializeField] private WeaponAbstract weapon;
+    //[SerializeField] private WeaponAbstract weapon;
+    [SerializeField] private WeaponID weaponID;
     [SerializeField] private Image image;
     [SerializeField] private float height = 5f;
 
@@ -25,7 +26,7 @@ public class ItemPickup : MonoBehaviour
         if (image == null || cam == null) return;
 
         //Vector3 worldPos = transform.position + Vector3.up * height;
-        Vector3 worldPos = weapon.transform.position + cam.transform.up * height;
+        Vector3 worldPos = this.transform.position + cam.transform.up * height;
         Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
 
         image.rectTransform.position = screenPos;
@@ -66,10 +67,12 @@ public class ItemPickup : MonoBehaviour
 
         isPickedUp = true;
 
-        player.OnWeaponAcquire(weapon);
-        AttachToPlayer(weapon, player);
+        player.OnWeaponAcquire(weaponID);
 
-        CleanupItemComponents();
+        gameObject.SetActive(false);
+
+        //AttachToPlayer(weapon, player);
+        //CleanupItemComponents();
     }
 
     private void CleanupItemComponents()

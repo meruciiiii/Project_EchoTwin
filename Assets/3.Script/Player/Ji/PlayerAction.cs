@@ -104,21 +104,43 @@ public class PlayerAction : MonoBehaviour
         transform.GetComponent<Rigidbody>().AddForce(-dir * knockBackForce, ForceMode.Impulse);
     }
 
-    public void OnWeaponAcquire(WeaponAbstract newWeapon)
+    public void OnWeaponAcquire(WeaponID ID)
     {
-        Equipment.EquipWeapon(newWeapon);
+        WeaponAbstract[] weapons = GetComponentsInChildren<WeaponAbstract>(true);
+
+        WeaponAbstract target = null;
+
+        foreach (WeaponAbstract weapon in weapons)
+        {
+            weapon.gameObject.SetActive(false);
+            if (weapon.weaponID == ID)
+            {
+                target = weapon;
+                break;
+            }
+        }
+
+        if (target == null)
+        {
+            Debug.Log("playerAction onweaponaquire error");
+            return;
+        }
+
+        target.gameObject.SetActive(true);
+
+        Equipment.EquipWeapon(target);
         Equipment.MainWeapon.Initialize(this.ani);
 
-        ani.runtimeAnimatorController = newWeapon.overrideController;
+        ani.runtimeAnimatorController = target.overrideController;
 
         if (gizmo.mainWeapon == null)
         {
-            gizmo.mainWeapon = newWeapon;//gizmo
+            gizmo.mainWeapon = target;//gizmo
         }
         else
         {
             gizmo.subWeapon = gizmo.mainWeapon;
-            gizmo.mainWeapon = newWeapon;
+            gizmo.mainWeapon = target;
         }
     }
 

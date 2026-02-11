@@ -10,6 +10,15 @@ public enum WeaponType
     dual,
 }
 
+public enum WeaponID
+{
+    Sword,
+    Hammer,
+    Dagger,
+    Spear,
+    Axe,
+}
+
 public abstract class WeaponAbstract : MonoBehaviour
 {
     [SerializeField] public WeaponData weaponData;
@@ -20,6 +29,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     [SerializeField] protected InputManager input;
 
     public WeaponType weaponType;
+    public WeaponID weaponID;
     public GameObject DualWeapon;
     [SerializeField] public AnimatorOverrideController overrideController;
 
@@ -45,7 +55,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         SetResonance(10);
     }
 
-    public void Initialize(Animator  playerAni)
+    public void Initialize(Animator playerAni)
     {
         this.animator = playerAni;
         animator.SetInteger("WeaponType", weaponData.ID);
@@ -65,7 +75,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     {
         float comboExpireTime = lastAttackTime + weaponData.attackSpeed;
 
-        if(Time.time > comboExpireTime)
+        if (Time.time > comboExpireTime)
         {
             comboCount = 0;
         }
@@ -94,7 +104,10 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected void SetAnimator()
     {
         animator.SetInteger("ComboState", comboCount);
-        animator.SetTrigger("Attack");
+        if (comboCount == 0)
+        {
+            animator.SetTrigger("Attack");
+        }
     }
     #endregion
 
@@ -117,7 +130,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected virtual void enemyKnockback(Collider target)
     {
-        if(target.TryGetComponent<Iknockback>(out Iknockback kb))
+        if (target.TryGetComponent<Iknockback>(out Iknockback kb))
         {
             Vector3 dir = (target.transform.position - transform.position).normalized;
             kb.applyKnockback(dir, weaponData.knockback);
