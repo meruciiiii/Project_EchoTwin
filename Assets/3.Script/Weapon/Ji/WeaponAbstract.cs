@@ -113,7 +113,10 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected void SetAnimator()
     {
         animator.SetInteger("ComboState", comboCount);
-        animator.SetTrigger("Attack");
+        if (comboCount == 0)
+        {
+            animator.SetTrigger("Attack");
+        }
 
         comboCount++;
 
