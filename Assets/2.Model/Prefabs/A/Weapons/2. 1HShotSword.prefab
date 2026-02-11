@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3078840177937256508}
   - component: {fileID: 5440346528134138897}
   m_Layer: 0
-  m_Name: 1HShotSword
+  m_Name: 2. 1HShotSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
