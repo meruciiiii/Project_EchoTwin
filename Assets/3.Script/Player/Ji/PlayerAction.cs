@@ -59,11 +59,9 @@ public class PlayerAction : MonoBehaviour
 
     public void OnAttack()
     {
-        isAttack = true;
         context = new AttackContext();
         RebuildAttackCmd();
         command?.execute();
-        isAttack = false;
     }
 
     public void OnChargingAttack()
