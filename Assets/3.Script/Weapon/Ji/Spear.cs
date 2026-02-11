@@ -35,9 +35,9 @@ public class Spear : WeaponAbstract
         if (!CanAttack()) return;
         Debug.Log($"combo count = {comboCount}");
 
-        checkAttackTime();
+        //checkAttackTime();
 
-        UpdateComboState();
+        //UpdateComboState();
 
         SetAnimator();
 

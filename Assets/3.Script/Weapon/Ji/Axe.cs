@@ -35,9 +35,9 @@ public class Axe : WeaponAbstract
     {
         if (!CanAttack()) return;
 
-        checkAttackTime();
+        //checkAttackTime();
 
-        UpdateComboState();
+        //UpdateComboState();
         
         SetAnimator();
 
