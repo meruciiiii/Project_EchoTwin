@@ -110,6 +110,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FocusOnMouse()
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) return;
+
         mousePos = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
