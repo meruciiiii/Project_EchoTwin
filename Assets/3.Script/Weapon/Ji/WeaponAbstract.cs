@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponType
-{
-    onehand,
-    twohand,
-    dual,
-}
+//public enum WeaponType
+//{
+//    onehand,
+//    twohand,
+//    dual,
+//}
 
 public enum WeaponID
 {
@@ -22,13 +22,14 @@ public enum WeaponID
 public abstract class WeaponAbstract : MonoBehaviour
 {
     [SerializeField] public WeaponData weaponData;
-    [SerializeField] protected CharacterData characterData;
+    //[SerializeField] protected CharacterData characterData;
     [SerializeField] protected PlayerStats stats;
     [SerializeField] protected Animator animator;
     [SerializeField] protected PlayerEquipment equipment;
     [SerializeField] protected InputManager input;
+    protected PlayerAction action;
 
-    public WeaponType weaponType;
+    //public WeaponType weaponType;
     public WeaponID weaponID;
     public GameObject DualWeapon;
     [SerializeField] public AnimatorOverrideController overrideController;
@@ -51,6 +52,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     private void Awake()
     {
+        action = stats.GetComponent<PlayerAction>();
         comboCount = 0;
         SetResonance(10);
     }
@@ -66,12 +68,12 @@ public abstract class WeaponAbstract : MonoBehaviour
     public bool CanAttack()
     {
         if (isComboCooltime) return false;
-
+        if (animator.IsInTransition(0)) return false;
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime < 0.8f)
+            if (stateInfo.normalizedTime < 0.6f)
             {
                 return false;
             }
@@ -79,19 +81,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         return true;
     }
-
-    //protected void checkAttackTime()
-    //{
-    //    float comboExpireTime = lastAttackTime + 0.5f;// + weaponData.attackSpeed;
-
-    //    if (Time.time > comboExpireTime)
-    //    {
-    //        comboCount = 0;
-    //    }
-
-    //    lastAttackTime = Time.time + weaponData.attackSpeed;
-    //}
-
+    
     //protected void UpdateComboState()
     //{
     //    comboCount++;
@@ -106,7 +96,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected IEnumerator ComboCooltime_Co()
     {
         isComboCooltime = true;
-        yield return new WaitForSeconds(weaponData.comboCooltime + weaponData.attackSpeed);
+        yield return new WaitForSeconds(weaponData.comboCooltime);
         isComboCooltime = false;
     }
 
@@ -125,16 +115,6 @@ public abstract class WeaponAbstract : MonoBehaviour
             comboCount = 0;
             StartCoroutine(ComboCooltime_Co());
         }
-
-        //StopCoroutine(nameof(ComboTimer));
-        //StartCoroutine(nameof(ComboTimer));
-    }
-
-    private IEnumerator ComboTimer()
-    {
-        yield return new WaitForSeconds(weaponData.comboCooltime);
-        comboCount = 0;
-        animator.SetInteger("ComboState", 0);
     }
     #endregion
 
