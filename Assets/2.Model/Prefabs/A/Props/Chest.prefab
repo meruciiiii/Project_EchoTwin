@@ -150,15 +150,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.45
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.45
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.45
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -220,15 +220,38 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5191764595336238723}
+      addedObject: {fileID: -7961447260838240017}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1005885449240019844}
   m_SourcePrefab: {fileID: 100100000, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
 --- !u!1 &5875820757321720622 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
   m_PrefabInstance: {fileID: 6722310776919039615}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &5191764595336238723
-MeshCollider:
+--- !u!114 &-7961447260838240017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5875820757321720622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef771c9d1c63354c922d3245d9e36b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewardChest
+  chestLid: {fileID: 0}
+  coinEffect: {fileID: 0}
+  openSpeed: 2
+  coinPrefab: {fileID: 0}
+  heartPrefab: {fileID: 0}
+  coinCount: 5
+  heartCount: 1
+  jumpForce: 5
+--- !u!65 &-1005885449240019844
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -245,10 +268,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -9220581356695433201, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 2.3735197, y: 0.79624057, z: 1.7869536}
+  m_Center: {x: 0.002988815, y: 0.35274202, z: 0.0059204395}
 --- !u!4 &6539450360010340756 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e9b41703383b02d4287bdc2785c0db9a, type: 3}
