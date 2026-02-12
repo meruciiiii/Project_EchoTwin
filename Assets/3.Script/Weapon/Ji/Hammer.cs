@@ -7,6 +7,7 @@ public class Hammer : WeaponAbstract
 {
     private bool isCharging = false;
     private float time = 0f;
+    private Coroutine coroutine;
     [SerializeField] float windUpTime = 0.3f;
 
     private Collider[] getTargetInRange()
@@ -37,7 +38,7 @@ public class Hammer : WeaponAbstract
     {
         if (!CanAttack()) return;
         if (isCharging) return;
-        StartCoroutine(Attack_Co(context));
+        coroutine = StartCoroutine(Attack_Co(context));
     }
 
     private IEnumerator Attack_Co(AttackContext context)
@@ -51,7 +52,7 @@ public class Hammer : WeaponAbstract
         AniSpeed(0f);
         while (time < 0.5f)
         {
-            if(!input.isAttackPressed)
+            if (!input.isAttackPressed)
             {
                 cancleCharging();
                 yield break;
@@ -87,6 +88,7 @@ public class Hammer : WeaponAbstract
             enemyKnockback(target);
         }
 
+        coroutine = null;
         isCharging = false;
         stats.GetComponent<PlayerAction>().isAttack = false;
     }
@@ -95,10 +97,14 @@ public class Hammer : WeaponAbstract
     {
         if (!isCharging) return;
 
-        StopAllCoroutines();
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
         isCharging = false;
         AniSpeed(1f);
-        animator.Play("Move",0,0);
+        animator.Play("Move", 0, 0);
         stats.GetComponent<PlayerAction>().isAttack = false;
     }
 
