@@ -35,10 +35,8 @@ public class Axe : WeaponAbstract
     {
         if (!CanAttack()) return;
 
-        //checkAttackTime();
+        AttackTimeChecker();
 
-        //UpdateComboState();
-        
         SetAnimator();
 
         Collider[] targets = getTargetInRange();

@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Animator animator; // 애니메이터 추가
     private PlayerAction action;
+    private WeaponAbstract weapon;
 
     private Vector3 mousePos;
 
@@ -20,12 +21,13 @@ public class PlayerMovement : MonoBehaviour
         TryGetComponent(out stats);
         TryGetComponent(out action);
         animator = GetComponentInChildren<Animator>();
+        weapon = GetComponentInChildren<WeaponAbstract>(true);
     }
 
     private void FixedUpdate()
     {
         // 1. GameManager의 isStop 상태 체크
-        if (GameManager.instance != null && GameManager.instance.isStop || action.isAttack)
+        if (GameManager.instance != null && GameManager.instance.isStop)
         {
             // [추가] 물리적인 속도를 완전히 0으로 만들어야 미끄러지지 않습니다.
             rb.linearVelocity = Vector3.zero;
@@ -97,9 +99,10 @@ public class PlayerMovement : MonoBehaviour
         float timer = 0;
         while (timer < 1f)
         {
-            timer += stats.DashSpeed* Time.deltaTime;
+            timer += stats.DashSpeed * Time.deltaTime;
 
             transform.position = Vector3.Lerp(startPos, destPos, timer);
+            transform.LookAt(destPos);
 
             yield return null;
         }
@@ -112,7 +115,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FocusOnMouse()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) return;
+        if (!weapon.CanRotate()) return;
+        if (stats.isDash) return;
 
         mousePos = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);

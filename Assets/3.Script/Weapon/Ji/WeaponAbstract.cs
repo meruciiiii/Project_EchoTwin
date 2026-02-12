@@ -41,6 +41,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected bool isComboCooltime = false;
 
     protected float comboExpireTime;
+    protected bool isCancelled = false;
 
     protected AttackDebugInfo lastAttackInfo;
     protected bool hasDebugInfo;
@@ -55,6 +56,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         action = stats.GetComponent<PlayerAction>();
         comboCount = 0;
         SetResonance(10);
+        SetAttackTime();
     }
 
     public void Initialize(Animator playerAni)
@@ -81,20 +83,39 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         return true;
     }
-    
-    //protected void UpdateComboState()
-    //{
-    //    comboCount++;
 
-    //    if (comboCount >= weaponData.comboCount)
-    //    {
-    //        comboCount = 0;
-    //        StartCoroutine(ComboCooltime_Co());
-    //    }
-    //}
-
-    protected IEnumerator ComboCooltime_Co()
+    public virtual bool CanRotate()
     {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsTag("Attack"))
+        {
+            if (stateInfo.normalizedTime <  0.65f)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
+    private void SetAttackTime()
+    {
+        lastAttackTime = Time.time;
+    }
+
+    protected void AttackTimeChecker()
+    {
+        if(Time.time > lastAttackTime + weaponData.attackSpeed)
+        {
+            comboCount = 0;
+        }
+        lastAttackTime = Time.time;
+    }
+
+    protected virtual IEnumerator ComboCooltime_Co()
+    {
+        if (isCancelled) yield break;
         isComboCooltime = true;
         yield return new WaitForSeconds(weaponData.comboCooltime);
         isComboCooltime = false;
@@ -113,7 +134,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         if (comboCount >= weaponData.comboCount)
         {
             comboCount = 0;
-            StartCoroutine(ComboCooltime_Co());
+            StartCoroutine(nameof(ComboCooltime_Co));
         }
     }
     #endregion
