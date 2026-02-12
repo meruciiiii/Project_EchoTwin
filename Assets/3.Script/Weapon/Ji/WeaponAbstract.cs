@@ -126,8 +126,8 @@ public abstract class WeaponAbstract : MonoBehaviour
             StartCoroutine(ComboCooltime_Co());
         }
 
-        StopCoroutine(nameof(ComboTimer));
-        StartCoroutine(nameof(ComboTimer));
+        //StopCoroutine(nameof(ComboTimer));
+        //StartCoroutine(nameof(ComboTimer));
     }
 
     private IEnumerator ComboTimer()
