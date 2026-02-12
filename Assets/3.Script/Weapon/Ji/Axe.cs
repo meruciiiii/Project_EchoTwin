@@ -38,6 +38,7 @@ public class Axe : WeaponAbstract
         AttackTimeChecker();
 
         SetAnimator();
+        Debug.Log($"combo count = {comboCount}");
 
         Collider[] targets = getTargetInRange();
 

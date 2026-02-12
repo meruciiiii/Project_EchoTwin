@@ -48,9 +48,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
-        Vector2 moveInput = Input.MoveValue;
         if (stats.isDash) return;
+        if (action.isPlayingAani) return;
 
+        Vector2 moveInput = Input.MoveValue;
         // 입력이 없을 때도 애니메이션을 서서히(0.1f) Idle로 돌림
         if (moveInput.magnitude <= 0.1f)
         {
@@ -115,7 +116,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FocusOnMouse()
     {
-        if (!weapon.CanRotate()) return;
+        //if (!weapon.CanRotate()) return;
+        if (action.isPlayingAani) return;
+
         if (stats.isDash) return;
 
         mousePos = Vector3.zero;
