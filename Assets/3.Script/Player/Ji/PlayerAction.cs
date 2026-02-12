@@ -127,8 +127,6 @@ public class PlayerAction : MonoBehaviour
             return;
         }
 
-        target.gameObject.SetActive(true);
-
         Equipment.EquipWeapon(target);
         Equipment.MainWeapon.Initialize(this.ani);
 
