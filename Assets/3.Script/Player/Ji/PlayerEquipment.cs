@@ -17,23 +17,22 @@ public class PlayerEquipment
         {
             MainWeapon = newWeapon;
             MainWeapon.gameObject.SetActive(true);
+            if (MainWeapon.weaponID == WeaponID.Dagger) MainWeapon.DualWeapon.SetActive(true);
         }
         else if(SubWeapon == null)
         {
             SubWeapon = MainWeapon;
             //SubWeapon.SetResonance(SubWeapon.GetComponent<WeaponData>().echoAmount);
             SubWeapon.gameObject.SetActive(false);
+            if (SubWeapon.weaponID == WeaponID.Dagger) SubWeapon.DualWeapon.SetActive(false);
 
             MainWeapon = newWeapon;
             MainWeapon.gameObject.SetActive(true);
         }
         else
         {
-            if(SubWeapon.DualWeapon != null)
-            {
-                GameObject.Destroy(SubWeapon.DualWeapon);
-            }
-            GameObject.Destroy(SubWeapon.gameObject);
+            SubWeapon.gameObject.SetActive(false);
+            if (SubWeapon.weaponID == WeaponID.Dagger) SubWeapon.DualWeapon.SetActive(false);
             
             SubWeapon = MainWeapon;
             SubWeapon.gameObject.SetActive(false);
