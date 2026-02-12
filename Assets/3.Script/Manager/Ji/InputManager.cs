@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour
         if (context.phase == InputActionPhase.Performed)
         {
             if (GameManager.instance.isStop) return;
-            if (isAttackPressed) return;
+            if (Action.isAttack) return;
             moveValue = context.ReadValue<Vector2>();
         }
         else if (context.phase == InputActionPhase.Canceled)
@@ -44,7 +44,7 @@ public class InputManager : MonoBehaviour
         if (context.phase == InputActionPhase.Performed)
         {
             if (GameManager.instance.isStop) return;
-            if (isAttackPressed) return;
+            if (Action.isAttack) return;
             if (coroutine != null) return;
             coroutine = StartCoroutine(Player.Dash());
         }

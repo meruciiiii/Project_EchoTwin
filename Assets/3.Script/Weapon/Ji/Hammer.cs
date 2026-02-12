@@ -43,7 +43,7 @@ public class Hammer : WeaponAbstract
     private IEnumerator Attack_Co(AttackContext context)
     {
         isCharging = true;
-        stats.GetComponent<PlayerAction>().isAttack = true;
+        action.isAttack = true;
 
         SetAnimator();//무기 든 모션
         yield return new WaitForSeconds(windUpTime);
@@ -88,7 +88,7 @@ public class Hammer : WeaponAbstract
         }
 
         isCharging = false;
-        stats.GetComponent<PlayerAction>().isAttack = false;
+        action.isAttack = false;
     }
 
     private void cancleCharging()

@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private InputManager Input;
     private Rigidbody rb;
     private Animator animator; // 애니메이터 추가
+    private PlayerAction action;
 
     private Vector3 mousePos;
 
@@ -17,13 +18,14 @@ public class PlayerMovement : MonoBehaviour
         TryGetComponent(out Input);
         TryGetComponent(out rb);
         TryGetComponent(out stats);
+        TryGetComponent(out action);
         animator = GetComponentInChildren<Animator>();
     }
 
     private void FixedUpdate()
     {
         // 1. GameManager의 isStop 상태 체크
-        if (GameManager.instance != null && GameManager.instance.isStop)
+        if (GameManager.instance != null && GameManager.instance.isStop || action.isAttack)
         {
             // [추가] 물리적인 속도를 완전히 0으로 만들어야 미끄러지지 않습니다.
             rb.linearVelocity = Vector3.zero;

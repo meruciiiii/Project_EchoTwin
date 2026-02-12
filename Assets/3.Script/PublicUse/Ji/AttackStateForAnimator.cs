@@ -10,11 +10,22 @@ public class AttackStateForAnimator : StateMachineBehaviour
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (action == null) action = animator.GetComponentInParent<PlayerAction>();
-        if (action != null) action.isAttack = true;
+        if (action != null)
+        {
+            Debug.Log($"{action.gameObject.name}");
+            action.isAttack = true;
+        }
+        else Debug.Log($"action is null in animator");
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (action != null) action.isAttack = false;
+        if (action == null) return;
+
+        AnimatorStateInfo nextInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
+
+        if (nextInfo.IsTag("Attack")) return;
+
+        action.isAttack = false;
     }
 }
