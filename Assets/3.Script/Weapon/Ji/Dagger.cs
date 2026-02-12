@@ -35,10 +35,9 @@ public class Dagger : WeaponAbstract
     public override void Attack(AttackContext context)
     {
         if (!CanAttack()) return;
+        Debug.Log($"combo count = {comboCount}");
 
-        //checkAttackTime();
-
-        //UpdateComboState();
+        AttackTimeChecker();
 
         SetAnimator();
 

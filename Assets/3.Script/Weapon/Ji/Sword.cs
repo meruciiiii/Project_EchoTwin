@@ -28,9 +28,7 @@ public class Sword : WeaponAbstract
         if (!CanAttack()) return;
         Debug.Log($"combo count = {comboCount}");
 
-        //checkAttackTime();
-
-        //UpdateComboState();
+        AttackTimeChecker();
 
         SetAnimator();
 

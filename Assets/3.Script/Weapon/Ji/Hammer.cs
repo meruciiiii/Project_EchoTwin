@@ -8,7 +8,16 @@ public class Hammer : WeaponAbstract
     private bool isCharging = false;
     private float time = 0f;
     private Coroutine coroutine;
-    [SerializeField] float windUpTime = 0.3f;
+
+    public override bool CanRotate()
+    {
+        //if(isCharging)
+        //{
+        //    return true;
+        //}
+
+        return true;
+    }
 
     private Collider[] getTargetInRange()
     {
@@ -44,12 +53,12 @@ public class Hammer : WeaponAbstract
     private IEnumerator Attack_Co(AttackContext context)
     {
         isCharging = true;
-        action.isAttack = true;
 
         SetAnimator();//무기 든 모션
-        yield return new WaitForSeconds(windUpTime);
         time = 0f;
+        yield return new WaitForSeconds(0.1f);
         AniSpeed(0f);
+
         while (time < 0.5f)
         {
             if (!input.isAttackPressed)
@@ -72,8 +81,7 @@ public class Hammer : WeaponAbstract
         time = Mathf.Min(time, 3f);
 
         AniSpeed(1f);
-        //checkAttackTime();
-        //UpdateComboState();
+
         yield return new WaitForSeconds(0.2f / weaponData.attackSpeed);
 
         Collider[] targets = getTargetInRange();
@@ -90,7 +98,7 @@ public class Hammer : WeaponAbstract
 
         coroutine = null;
         isCharging = false;
-        action.isAttack = false;
+        isCancelled = false;
     }
 
     private void cancleCharging()
@@ -99,13 +107,13 @@ public class Hammer : WeaponAbstract
 
         if (coroutine != null)
         {
-            StopCoroutine(coroutine);
             coroutine = null;
         }
         isCharging = false;
         AniSpeed(1f);
         animator.Play("Move", 0, 0);
-        stats.GetComponent<PlayerAction>().isAttack = false;
+        stats.GetComponent<PlayerAction>().isPlayingAani = false;
+        isCancelled = true;
     }
 
     private void AniSpeed(float holdSpeed = 1f)

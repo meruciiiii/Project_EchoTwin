@@ -21,7 +21,7 @@ public class PlayerAction : MonoBehaviour
     private Animator ani;
 
     private bool hasDamaged = false;
-    [SerializeField] public bool isAttack = false;
+    [SerializeField] public bool isPlayingAani= false;
 
     [SerializeField] private float invincibilityTime = 1f;
     [SerializeField] private float knockBackForce = 2f;
@@ -123,7 +123,6 @@ public class PlayerAction : MonoBehaviour
 
         if (target == null)
         {
-            Debug.Log("playerAction onweaponaquire error");
             return;
         }
 

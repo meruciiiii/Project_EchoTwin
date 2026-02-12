@@ -13,7 +13,7 @@ public class AttackStateForAnimator : StateMachineBehaviour
         if (action != null)
         {
             Debug.Log($"{action.gameObject.name}");
-            action.isAttack = true;
+            action.isPlayingAani = true;
         }
         else Debug.Log($"action is null in animator");
     }
@@ -26,6 +26,6 @@ public class AttackStateForAnimator : StateMachineBehaviour
 
         if (nextInfo.IsTag("Attack")) return;
 
-        action.isAttack = false;
+        action.isPlayingAani = false;
     }
 }
