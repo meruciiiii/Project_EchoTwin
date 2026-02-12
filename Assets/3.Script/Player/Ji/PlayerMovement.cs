@@ -99,9 +99,10 @@ public class PlayerMovement : MonoBehaviour
         float timer = 0;
         while (timer < 1f)
         {
-            timer += stats.DashSpeed* Time.deltaTime;
+            timer += stats.DashSpeed * Time.deltaTime;
 
             transform.position = Vector3.Lerp(startPos, destPos, timer);
+            transform.LookAt(destPos);
 
             yield return null;
         }
@@ -115,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
     private void FocusOnMouse()
     {
         if (!weapon.CanRotate()) return;
+        if (stats.isDash) return;
 
         mousePos = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);
