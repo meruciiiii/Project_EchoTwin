@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 4168634819871070}
   - component: {fileID: 95247164175502188}
   m_Layer: 0
-  m_Name: Sentinel
+  m_Name: 301_Sentinel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

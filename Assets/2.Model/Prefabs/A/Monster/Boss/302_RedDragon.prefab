@@ -1180,7 +1180,7 @@ GameObject:
   - component: {fileID: 485588}
   - component: {fileID: 9586004}
   m_Layer: 0
-  m_Name: RedDragon
+  m_Name: 302_RedDragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
