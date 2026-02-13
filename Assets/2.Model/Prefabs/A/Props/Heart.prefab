@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2014596805947347225}
   - component: {fileID: 8633324678992044094}
   - component: {fileID: 5828555863916645297}
-  m_Layer: 0
+  - component: {fileID: 2816012979738491920}
+  m_Layer: 7
   m_Name: FX_Pickup_Beams_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4906,6 +4907,27 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!65 &2816012979738491920
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184546343181183977}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.84013367, y: 0.8928304, z: 0.8271179}
+  m_Center: {x: -0.0008544922, y: 0.18281376, z: -0.001663208}
 --- !u!1 &2267649956660991186
 GameObject:
   m_ObjectHideFlags: 0
@@ -4917,7 +4939,7 @@ GameObject:
   - component: {fileID: 818016002186094431}
   - component: {fileID: 1421613156563566787}
   - component: {fileID: 2204396059002246107}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FX_Pickup_Glow_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9823,7 +9845,7 @@ GameObject:
   - component: {fileID: 360665871333153952}
   - component: {fileID: 7025689733956601604}
   - component: {fileID: 5883081704755117931}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FX_Pickup_Sparkles_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14730,8 +14752,9 @@ GameObject:
   - component: {fileID: 6667229132733047074}
   - component: {fileID: 8919277530732524837}
   - component: {fileID: -7184059717342890093}
+  - component: {fileID: -3416470460299936265}
   - component: {fileID: -4480916037330691038}
-  m_Layer: 1
+  m_Layer: 7
   m_Name: Heart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19585,8 +19608,35 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.6512375, y: 0.7956346, z: 0.67855835}
+  m_Center: {x: -0.012256622, y: 0.10218269, z: 0.010314941}
+--- !u!54 &-3416470460299936265
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7462146097232442813}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!114 &-4480916037330691038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19599,6 +19649,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796093b23f8d4d5459ec1f8bf75edceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemFloating
-  rotateSpeed: 50
-  floatHeight: 0.5
-  floatSpeed: 2
+  rotateSpeed: 30
+  floatHeight: 0.1
+  floatSpeed: 1
