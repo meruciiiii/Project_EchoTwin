@@ -42,14 +42,14 @@ public class PlayerMovement : MonoBehaviour
         // 대쉬 중에는 일반 이동/회전 로직 건너뜀
 
         if (stats.isDash) return;
-        Move();
         FocusOnMouse();
+        Move();
     }
 
     public void Move()
     {
         if (stats.isDash) return;
-        if (action.isPlayingAani) return;
+        if (action.forStopMove) return;
 
         Vector2 moveInput = Input.MoveValue;
         // 입력이 없을 때도 애니메이션을 서서히(0.1f) Idle로 돌림
@@ -116,9 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FocusOnMouse()
     {
-        //if (!weapon.CanRotate()) return;
-        if (action.isPlayingAani) return;
-
+        if (action.forStopRotate) return;
         if (stats.isDash) return;
 
         mousePos = Vector3.zero;

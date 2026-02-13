@@ -13,7 +13,12 @@ public class AttackStateForAnimator : StateMachineBehaviour
         if (action != null)
         {
             Debug.Log($"{action.gameObject.name}");
-            action.isPlayingAani = true;
+            action.forStopMove = true;
+            if(action.Equipment.MainWeapon.weaponID != WeaponID.Hammer) action.forStopRotate = true;
+            else
+            {
+                action.forStopRotate = false;
+            }
         }
         else Debug.Log($"action is null in animator");
     }
@@ -26,6 +31,7 @@ public class AttackStateForAnimator : StateMachineBehaviour
 
         if (nextInfo.IsTag("Attack")) return;
 
-        action.isPlayingAani = false;
+        action.forStopMove = false;
+        action.forStopRotate = false;
     }
 }

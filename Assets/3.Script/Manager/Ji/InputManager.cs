@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour
         if (context.phase == InputActionPhase.Performed)
         {
             if (GameManager.instance.isStop) return;
-            if (Action.isPlayingAani) return;
+            if (Action.forStopMove) return;
             moveValue = context.ReadValue<Vector2>();
         }
         else if (context.phase == InputActionPhase.Canceled)
@@ -44,7 +44,7 @@ public class InputManager : MonoBehaviour
         if (context.phase == InputActionPhase.Performed)
         {
             if (GameManager.instance.isStop) return;
-            if (Action.isPlayingAani) return;
+            if (Action.forStopMove) return;
             if (coroutine != null) return;
             coroutine = StartCoroutine(Player.Dash());
         }
@@ -68,11 +68,11 @@ public class InputManager : MonoBehaviour
 
     public void Event_ChargingAttack(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed)
+        if (context.phase == InputActionPhase.Performed)
         {
 
         }
-        else if(context.phase == InputActionPhase.Canceled)
+        else if (context.phase == InputActionPhase.Canceled)
         {
 
         }
@@ -98,13 +98,13 @@ public class InputManager : MonoBehaviour
 
     public void Event_Interact(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed)
+        if (context.phase == InputActionPhase.Performed)
         {
             if (GameManager.instance.isStop) return;
 
             Action.onInteraction?.Invoke();
         }
-        else if(context.phase == InputActionPhase.Canceled)
+        else if (context.phase == InputActionPhase.Canceled)
         {
 
         }

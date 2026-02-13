@@ -6,18 +6,9 @@ using UnityEngine;
 public class Hammer : WeaponAbstract
 {
     private bool isCharging = false;
+    public bool IsCharging => isCharging;
     private float time = 0f;
     private Coroutine coroutine;
-
-    public override bool CanRotate()
-    {
-        //if(isCharging)
-        //{
-        //    return true;
-        //}
-
-        return true;
-    }
 
     private Collider[] getTargetInRange()
     {
@@ -36,13 +27,6 @@ public class Hammer : WeaponAbstract
         return hits;
     }
 
-    private float getDamage()
-    {
-        float totalDamage = stats.PlayerDMG + calcDamage();
-
-        return totalDamage;
-    }
-
     public override void Attack(AttackContext context)
     {
         if (!CanAttack()) return;
@@ -55,11 +39,14 @@ public class Hammer : WeaponAbstract
         isCharging = true;
 
         SetAnimator();//무기 든 모션
+
+        action.forStopRotate = false;
+
         time = 0f;
         yield return new WaitForSeconds(0.1f);
         AniSpeed(0f);
 
-        while (time < 0.5f)
+        while (time < 0.3f)
         {
             if (!input.isAttackPressed)
             {
@@ -91,7 +78,7 @@ public class Hammer : WeaponAbstract
             if (!target.CompareTag("Enemy")) continue;
 
             context.hitTargets.Add(target);
-            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * time);
+            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
 
             enemyKnockback(target);
         }
@@ -99,6 +86,7 @@ public class Hammer : WeaponAbstract
         coroutine = null;
         isCharging = false;
         isCancelled = false;
+        action.forStopRotate = false;
     }
 
     private void cancleCharging()
@@ -112,8 +100,9 @@ public class Hammer : WeaponAbstract
         isCharging = false;
         AniSpeed(1f);
         animator.Play("Move", 0, 0);
-        stats.GetComponent<PlayerAction>().isPlayingAani = false;
+        stats.GetComponent<PlayerAction>().forStopMove = false;
         isCancelled = true;
+        action.forStopRotate = false;
     }
 
     private void AniSpeed(float holdSpeed = 1f)
