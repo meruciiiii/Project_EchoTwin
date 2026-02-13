@@ -8,7 +8,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(FlashEffect))]
 public class PlayerAction : MonoBehaviour
 {
-    [SerializeField] private PlayerEquipment Equipment;
+    [SerializeField] public PlayerEquipment Equipment;
     [SerializeField] private Transform rightHand;
     [SerializeField] private Transform leftHand;
     public Transform RightHand => rightHand;
@@ -21,7 +21,8 @@ public class PlayerAction : MonoBehaviour
     private Animator ani;
 
     private bool hasDamaged = false;
-    [SerializeField] public bool isPlayingAani= false;
+    [SerializeField] public bool forStopMove = false;
+    public bool forStopRotate = false;
 
     [SerializeField] private float invincibilityTime = 1f;
     [SerializeField] private float knockBackForce = 2f;

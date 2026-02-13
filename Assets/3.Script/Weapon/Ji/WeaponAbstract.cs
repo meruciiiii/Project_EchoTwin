@@ -75,7 +75,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime < 0.6f)
+            if (stateInfo.normalizedTime < 0.65f)
             {
                 return false;
             }
@@ -106,7 +106,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void AttackTimeChecker()
     {
-        if(Time.time > lastAttackTime + weaponData.attackSpeed)
+        if(Time.time > lastAttackTime + 1 /weaponData.attackSpeed)
         {
             comboCount = 0;
         }
@@ -134,7 +134,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         if (comboCount >= weaponData.comboCount)
         {
             comboCount = 0;
-            StartCoroutine(nameof(ComboCooltime_Co));
+            StartCoroutine(ComboCooltime_Co());
         }
     }
     #endregion
