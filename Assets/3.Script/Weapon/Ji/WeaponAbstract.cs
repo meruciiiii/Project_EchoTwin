@@ -75,7 +75,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime < 0.6f)
+            if (stateInfo.normalizedTime < 0.65f)
             {
                 return false;
             }

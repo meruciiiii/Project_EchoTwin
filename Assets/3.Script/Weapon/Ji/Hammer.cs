@@ -40,8 +40,6 @@ public class Hammer : WeaponAbstract
 
         SetAnimator();//무기 든 모션
 
-        action.forStopRotate = false;
-
         time = 0f;
         yield return new WaitForSeconds(0.1f);
         AniSpeed(0f);
@@ -86,7 +84,6 @@ public class Hammer : WeaponAbstract
         coroutine = null;
         isCharging = false;
         isCancelled = false;
-        action.forStopRotate = false;
     }
 
     private void cancleCharging()
@@ -102,7 +99,6 @@ public class Hammer : WeaponAbstract
         animator.Play("Move", 0, 0);
         stats.GetComponent<PlayerAction>().forStopMove = false;
         isCancelled = true;
-        action.forStopRotate = false;
     }
 
     private void AniSpeed(float holdSpeed = 1f)

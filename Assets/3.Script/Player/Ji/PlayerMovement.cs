@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         Input.coroutine = null;
     }
 
-    private void FocusOnMouse()
+    public void FocusOnMouse()
     {
         if (action.forStopRotate) return;
         if (stats.isDash) return;

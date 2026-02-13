@@ -12,6 +12,7 @@ public enum EnemyState
 }
 
 [RequireComponent(typeof(FlashEffect))]
+[RequireComponent(typeof(NavMeshAgent))]
 public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 {
     [SerializeField] protected EnemyData enemyData;
