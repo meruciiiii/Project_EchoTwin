@@ -10,7 +10,7 @@ public class AttackStateForAnimator : StateMachineBehaviour
 
     private bool isLastAttack = false;
     [Range(0f, 1f)] public float unlockRotationTime = 0.6f;
-    [Range(0f, 1f)] public float lastAttackRotationTime = 0.9f;
+    [Range(0f, 1f)] public float lastAttackRotationTime = 0.95f;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
