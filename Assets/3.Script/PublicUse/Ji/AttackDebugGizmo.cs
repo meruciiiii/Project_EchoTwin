@@ -43,7 +43,14 @@ public class AttackDebugGizmo : MonoBehaviour
 
         if (enemy != null && enemy.HasDebugInfo)
         {
-            DrawGizmo(enemy.DebugInfo);
+            if(enemy.DebugInfo.angle > 0f)
+            {
+                DrawGizmo(enemy.DebugInfo);
+            }
+            else
+            {
+                DrawCircle(enemy.DebugInfo);
+            }
         }
     }
 
@@ -57,11 +64,24 @@ public class AttackDebugGizmo : MonoBehaviour
         Gizmos.DrawWireCube(Vector3.zero, info.halfExtents * 2f);
         Gizmos.matrix = old;
     }
+    private void DrawCircle(AttackDebugInfo info)
+    {
+#if UNITY_EDITOR
+        UnityEditor.Handles.color = new Color(info.color.r, info.color.g, info.color.b, 0.5f);
+
+        Vector3 startDir = Quaternion.AngleAxis(-info.angle * 0.5f, Vector3.up) * info.direction;
+
+        UnityEditor.Handles.DrawSolidArc(info.center, Vector3.up, startDir, info.angle, info.halfExtents.x);
+
+        UnityEditor.Handles.color = info.color;
+        UnityEditor.Handles.DrawWireArc(info.center, Vector3.up, startDir, info.angle, info.halfExtents.x);
+#endif
+    }
 
     private void DrawGizmo(AttackDebugInfo info)
     {
 #if UNITY_EDITOR
-        UnityEditor.Handles.color = new Color(info.color.r, info.color.g, info.color.b, 0.3f);
+        UnityEditor.Handles.color = new Color(info.color.r, info.color.g, info.color.b, 0.5f);
 
         Vector3 startDir = Quaternion.AngleAxis(-info.angle * 0.5f, Vector3.up) * info.direction;
 

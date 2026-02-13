@@ -13,6 +13,7 @@ public enum EnemyState
 
 [RequireComponent(typeof(FlashEffect))]
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(AttackDebugGizmo))]
 public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 {
     [SerializeField] protected EnemyData enemyData;
@@ -22,6 +23,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected AttackDebugGizmo gizmo;
     protected Animator ani;
     protected Rigidbody rb;
+    protected BoxCollider boxCol;
 
     protected FlashEffect effect;
     protected EnemyState state = EnemyState.chase;
@@ -30,7 +32,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected float currentHP;
     protected float radius;
 
-    protected float standardRange = 1f;
+    protected float standardRange = 0.2f;
     public float Damage => enemyData.damage;
 
     [SerializeField] protected float knockbackTime = 0.2f;
@@ -50,9 +52,11 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         //player = FindAnyObjectByType<PlayerStats>();
         TryGetComponent(out effect);
         TryGetComponent(out gizmo);
+        TryGetComponent(out boxCol);
         gizmo.enemy = this;
         setMoveSpeed();
-        radius = transform.GetComponent<BoxCollider>().size.x * 0.5f;
+        radius = boxCol.size.x * 0.5f;
+        boxCol.isTrigger = false;
 
         ani = GetComponentInChildren<Animator>();
         TryGetComponent(out rb);
@@ -72,11 +76,11 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             TurnOffNavmesh();
             return;
         }
-        if(navMesh.desiredVelocity.x > 0.1f)
+        if (navMesh.desiredVelocity.x > 0.1f)
         {
             GetComponentInChildren<SpriteRenderer>().flipX = false;
         }
-        else if(navMesh.desiredVelocity.x<-0.1f)
+        else if (navMesh.desiredVelocity.x < -0.1f)
         {
             GetComponentInChildren<SpriteRenderer>().flipX = true;
         }
@@ -161,8 +165,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         navMesh.enabled = false;
 
-        rb.linearVelocity = Vector3.zero;
         rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
     }
 
     protected virtual void TurnOnNavmesh()
@@ -220,11 +224,24 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         float checkRadius = radius + range;
 
+        lastAttackInfo = new AttackDebugInfo
+        {
+            center = transform.position,
+            halfExtents = Vector3.one * checkRadius,
+            rotation = Quaternion.identity,
+            color = Color.gray,
+            angle = 0f,
+            direction = transform.forward
+        };
+        hasDebugInfo = true;
+
         Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
         foreach (Collider hit in hits)
         {
             if (hit.CompareTag("Player"))
             {
+                
+
                 player.takeDamage(enemyData.damage, transform.position);
                 return true;
             }
@@ -234,6 +251,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected void AreaAttack(float range, float angle)
     {
+        Vector3 dir = (player.transform.position - transform.position).normalized;
+        dir.y = 0f;
         lastAttackInfo = new AttackDebugInfo
         {
             center = transform.position,
@@ -241,7 +260,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             rotation = Quaternion.identity,
             color = Color.magenta,
             angle = angle,
-            direction = transform.forward
+            direction = dir
         };
         hasDebugInfo = true;
 
@@ -252,7 +271,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             {
                 Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
                 dirToTarget.y = 0f;
-                Vector3 forward = transform.forward;
+                //Vector3 forward = transform.forward;
+                Vector3 forward = navMesh.desiredVelocity;
                 forward.y = 0f;
 
                 if (Vector3.Angle(forward, dirToTarget) <= angle * 0.5f)

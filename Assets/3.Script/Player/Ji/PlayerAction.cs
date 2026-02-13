@@ -24,9 +24,6 @@ public class PlayerAction : MonoBehaviour
     [SerializeField] public bool forStopMove = false;
     public bool forStopRotate = false;
 
-    [SerializeField] private float invincibilityTime = 1f;
-    [SerializeField] private float knockBackForce = 2f;
-
     public AttackDebugGizmo gizmo;
 
     public UnityEvent onInteraction;
@@ -78,7 +75,7 @@ public class PlayerAction : MonoBehaviour
     private IEnumerator superArmor()
     {
         hasDamaged = true;
-        yield return new WaitForSeconds(invincibilityTime);
+        yield return new WaitForSeconds(stats.InvincibilityTime);
         hasDamaged = false;
     }
 
@@ -103,7 +100,7 @@ public class PlayerAction : MonoBehaviour
 
     private void knockBack(Vector3 dir)
     {
-        transform.GetComponent<Rigidbody>().AddForce(-dir * knockBackForce, ForceMode.Impulse);
+        transform.GetComponent<Rigidbody>().AddForce(-dir * stats.KnockBackForce, ForceMode.Impulse);
     }
 
     public void OnWeaponAcquire(WeaponID ID)

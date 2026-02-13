@@ -25,6 +25,11 @@ public class PlayerStats : MonoBehaviour
     [Header("Delay to Echo")]
     [SerializeField] private float timeBetweenAttack = 0.5f;
 
+    [Header("Player Physics")]
+    [SerializeField] private float invincibilityTime = 1f;
+    [SerializeField] private float knockBackForce = 2f;
+
+
     public int MaxHP => maxHP;
     public int CurrentHP => currentHP;
     public float PlayerDMG => playerDMG;
@@ -35,6 +40,8 @@ public class PlayerStats : MonoBehaviour
     public int FlashAmount => flashAmount;
     public float FlashDuration => flashDuration;
     public float TimeBetweenAttack => timeBetweenAttack;
+    public float InvincibilityTime => invincibilityTime;
+    public float KnockBackForce => knockBackForce;
 
     private void Awake()
     {
@@ -46,6 +53,5 @@ public class PlayerStats : MonoBehaviour
         if (isDash) return;
         Debug.Log(currentHP);
         currentHP -= damage;
-        Debug.Log(currentHP);
     }
 }
