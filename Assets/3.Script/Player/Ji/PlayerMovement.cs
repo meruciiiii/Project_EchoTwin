@@ -12,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAction action;
     private WeaponAbstract weapon;
 
-    private Vector3 mousePos;
+    private Vector3 mousePosition;
+    public float rotationSpeed = 10f;
 
     private void Awake()
     {
@@ -119,13 +120,22 @@ public class PlayerMovement : MonoBehaviour
         if (action.forStopRotate) return;
         if (stats.isDash) return;
 
-        mousePos = Vector3.zero;
+        mousePosition = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
         {
-            mousePos = hit.point;
+            //if(hit.transform.CompareTag("Ground") || hit.transform.CompareTag("Rava"))
+            mousePosition = hit.point;
+            mousePosition.y = transform.position.y;
+
+            Vector3 dir = (mousePosition - transform.position).normalized;
+
+            if(dir != Vector3.zero)
+            {
+                Quaternion mouseRotation = Quaternion.LookRotation(dir);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, mouseRotation, Time.deltaTime * rotationSpeed * weapon.weaponData.attackSpeed);
+            }
         }
-        mousePos.y = transform.position.y;
-        transform.LookAt(mousePos);
     }
 }
