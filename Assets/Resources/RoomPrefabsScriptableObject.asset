@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af13d92cf576bfa419248d995ed78bf9, type: 3}
+  m_Name: RoomPrefabsScriptableObject
+  m_EditorClassIdentifier: Assembly-CSharp::RoomPrefabs
+  physicalStartRoom: {fileID: 7312074844717613769, guid: fa9cc2a8a817c8d4f97a52e0ff0d53bb, type: 3}
+  physicalBattleRoom:
+  - {fileID: 4824457294683799726, guid: bd6b56a9f2e77464bb3ff842a08231db, type: 3}
+  - {fileID: 4105652867367149277, guid: 23eea627775bc614fb55053fc2b9eabd, type: 3}
+  - {fileID: 7784566524703635401, guid: ea04c6fd14dab4b4a8159d731f1db129, type: 3}
+  - {fileID: 7494961653495372047, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
+  - {fileID: 2766112134232008238, guid: 411ecaf639406f141a42d1f8f6384de0, type: 3}
+  - {fileID: 6973385826831699643, guid: 44e2dc516c7577548866b94324128604, type: 3}
+  - {fileID: 730826503623565183, guid: 0c7757ca20178d0439c4dcde467e6e4f, type: 3}
+  - {fileID: 1663168719901460171, guid: f92b27038efbd4e4988111b79d501da9, type: 3}
+  - {fileID: 6471409362333403402, guid: e7208d7e789263e46b0316b1526d7320, type: 3}
+  - {fileID: 813594790137917868, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
+  - {fileID: 2360035627749720636, guid: df5a6ee87dac5fc4fb24433b025a6aab, type: 3}
+  - {fileID: 5750832392251140592, guid: 7f57544b978b7d64c965881130d5d976, type: 3}
+  - {fileID: 5506315792423036508, guid: deb843824c71b684c885283dbf246eb8, type: 3}
+  - {fileID: 668125198615818456, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
+  - {fileID: 1811985812145210294, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
+  - {fileID: 1313694494674773280, guid: 7d74a2a405f7c16439dc27fb35345606, type: 3}
+  - {fileID: 974636698227045581, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
+  - {fileID: 628752946531425335, guid: 3a962e217ad66b640a16e1e1108ed7cb, type: 3}
+  physicalShopRoom: {fileID: 6993727797686298436, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
+  physicalForgeRoom: {fileID: 7749808791364372614, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
+  physicalEliteRoom:
+  - {fileID: 8601509843148786856, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
+  - {fileID: 3575594775475109475, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
+  physicalRewardRoom: {fileID: 8841672602562226852, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
+  physicalFirstBossRoom: {fileID: 5133280748272134380, guid: 854bcd3508457dd4ca54da58b0823f4a, type: 3}
+  physicalSecondBossRoom: {fileID: 4139305285346789805, guid: 863869e3f4e9e384f86c367e5ddf132b, type: 3}

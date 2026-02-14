@@ -1,15 +1,15 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class MapRoomPopulator : MonoBehaviour
 {
     int eventRoomCount;
     int eliteRoomCount;
     int eliteRoomProbability;
+    int roomID;
     int floor;
+    Room.RoomType roomType;
 
     public void Populate(Dictionary<Vector2Int, FloorData> microMap, int floor)
     {
@@ -25,19 +25,57 @@ public class MapRoomPopulator : MonoBehaviour
     }
     private void CreateRoom(FloorData floor)
     {
-        floor.GetRoomData().SetRoom(DecisionRoomID(),this.floor, DecisionMonsterPackID(), DecisionType(floor));
+        DecisionType(floor);
+        floor.GetRoomData().SetRoom(DecisionRoomID(),this.floor, DecisionMonsterPackID(), roomType);
     }
     private int DecisionRoomID()
     {
-        int choice = UnityEngine.Random.Range(0, ((int)Room.RoomType.count));
+        int choice = 0;
+        if (roomType.Equals(Room.RoomType.Start))
+        {
+            choice = 101;
+        }
+        else if (roomType.Equals(Room.RoomType.Battle))
+        {
+            choice = UnityEngine.Random.Range(1, 18);
+        }
+        else if (roomType.Equals(Room.RoomType.Shop))
+        {
+            choice = 102;
+        }
+        else if (roomType.Equals(Room.RoomType.Forge))
+        {
+            choice = 103;
+        }
+        else if (roomType.Equals(Room.RoomType.Elite))
+        {
+            choice = UnityEngine.Random.Range(19, 20);
+        }
+        else if (roomType.Equals(Room.RoomType.Reward))
+        {
+            choice = 104;
+        }
+        else if (roomType.Equals(Room.RoomType.Boss))
+        {
+            if (floor.Equals(1))
+                choice = 21;
+            else if (floor.Equals(2))
+                choice = 22;
+            else
+                choice = 0;
+        }
         return choice;
     }
     private int DecisionMonsterPackID()
     {
-        int choice = UnityEngine.Random.Range(0, ((int)Room.RoomType.count));
+        int choice = 0;
+        if (roomType.Equals(Room.RoomType.Battle))
+        {
+            choice = UnityEngine.Random.Range(1, 9);
+        }
         return choice;
     }
-    private Room.RoomType DecisionType(FloorData floor)
+    private void DecisionType(FloorData floor)
     {
         int choice = UnityEngine.Random.Range(1, ((int)Room.RoomType.count)-3);
         if (choice.Equals(2) || choice.Equals(3))
@@ -75,7 +113,7 @@ public class MapRoomPopulator : MonoBehaviour
             choice = 0;
         if (floor.getBoolEndRoom())
             choice = 5;
-        return (Room.RoomType)choice;
+        roomType = (Room.RoomType)choice;
     }//Start, Battle, Shop, Forge, Elite, Reward, Boss, count
     private void RoomCondition()
     {

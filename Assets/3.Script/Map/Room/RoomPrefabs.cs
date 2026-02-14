@@ -4,15 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomPrefabs : MonoBehaviour
+public class RoomPrefabs : ScriptableObject
 {
-    [SerializeField] private GameObject physicalStartRoom;
-    [SerializeField] private List<GameObject> physicalBattleRoom;
-    [SerializeField] private GameObject physicalShopRoom;
-    [SerializeField] private GameObject physicalForgeRoom;
-    [SerializeField] private GameObject physicalEliteRoom;
-    [SerializeField] private GameObject physicalRewardRoom;
-    [SerializeField] private GameObject physicalFirstBossRoom;
-    [SerializeField] private GameObject physicalSecondBossRoom;
+    [SerializeField] public GameObject physicalStartRoom;
+    [SerializeField] public List<GameObject> physicalBattleRoom;
+    [SerializeField] public GameObject physicalShopRoom;
+    [SerializeField] public GameObject physicalForgeRoom;
+    [SerializeField] public List<GameObject> physicalEliteRoom;
+    [SerializeField] public GameObject physicalRewardRoom;
+    [SerializeField] public GameObject physicalFirstBossRoom;
+    [SerializeField] public GameObject physicalSecondBossRoom;
 }
 //Start, Battle, Shop, Forge, Elite, Reward, Boss, count

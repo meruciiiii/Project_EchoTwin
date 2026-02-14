@@ -4,13 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] private Dictionary<Vector2Int, FloorData> microMap;          // map node is here
-    [SerializeField] private MapCreater mapCreater;
-    [SerializeField] private MapChecker mapChecker;
-    [SerializeField] private GameObject mapDrawCanvas;
-    [SerializeField] private MapDrawer mapDrawer;
-    [SerializeField] private MapRoomPopulator mapRoomPopulator;
-    [SerializeField] private MapTrace mapTrace;
+    private Dictionary<Vector2Int, FloorData> microMap;          // map node is here
+    private MapCreater mapCreater;
+    private MapChecker mapChecker;
+    private GameObject mapDrawCanvas;
+    private MapDrawer mapDrawer;
+    private MapRoomPopulator mapRoomPopulator;
+    private MapMoving mapMoving;
+    //private MapTrace mapTrace;
+    [SerializeField] private RoomPrefabs roomPrefabs;
+    [SerializeField] private Vector2Int currentCoord;
+
+    //오브젝트 연결 필요(맵 순서에 맞춰서, 노드들에 입히는것 중복 없게 만들기)
     private void Awake()
     {
         microMap = new Dictionary<Vector2Int, FloorData>();
@@ -21,10 +26,11 @@ public class MapManager : MonoBehaviour
         mapDrawCanvas = GameObject.FindWithTag("MapDrawer");
         if (!mapDrawCanvas.TryGetComponent(out mapDrawer))
             Debug.Log("TryGetComponent MapDrawer is fail");
-        if (!TryGetComponent(out mapTrace))
-            Debug.Log("TryGetComponent MapTrace is fail");
         if (!TryGetComponent(out mapRoomPopulator))
             Debug.Log("TryGetComponent MapRoomPopulator is fail");
+        if (!TryGetComponent(out mapMoving))
+            Debug.Log("TryGetComponent MapMoving is fail");
+        roomPrefabs = Resources.Load<RoomPrefabs>("RoomPrefabsScriptableObject");
     }
     public void GenerateMap()
     {
@@ -45,17 +51,50 @@ public class MapManager : MonoBehaviour
         mapDrawer.EnterDraw(GetMap());
         mapRoomPopulator.Populate(microMap, 1);
         Debug.Log("Populate is sucess");
+        SetStartCoord();
+        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
+        {
+            Debug.Log("currentCoord is Error");
+            return;
+        }
+        mapMoving.ExecuteMove(Vector2Int.zero, floor.GetRoomData());
+        
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
     {
         return microMap;
     }
-    private void PlayerMove(Vector2Int currentPotint)
+    
+    public void PlayerTryMove(Vector2Int direction)
     {
-        Vector2Int pastPotint = mapTrace.GetCurrentStayPoint();
-        if (pastPotint!= new Vector2Int(-20, -20))
-        mapDrawer.AlreadyStep(pastPotint);
-        mapTrace.PlayerStep(currentPotint);
-        mapDrawer.playerStanding(currentPotint);
+        Vector2Int target = currentCoord + direction;
+        if (!microMap.TryGetValue(target, out FloorData floor))
+        {
+            return;
+        }
+
+        currentCoord = target;
+        mapMoving.ExecuteMove(direction, floor.GetRoomData());
+
     }// 플레이어가 움직이면 event에서 실행될 메서드
+    private void SetStartCoord()
+    {
+        foreach (KeyValuePair<Vector2Int, FloorData> pair in microMap)
+        {
+            if (pair.Value.getBoolStartRoom())
+            {
+                currentCoord = pair.Key;
+                break;
+            }
+        }
+    }
+    private void ConnectDoors()
+    {
+        DoorTrigger[] doors = FindObjectsOfType<DoorTrigger>();
+
+        foreach (var door in doors)
+        {
+            door.onPlayerEnter += PlayerTryMove;
+        }
+    }
 }

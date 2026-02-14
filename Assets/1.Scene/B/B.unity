@@ -789,6 +789,7 @@ MonoBehaviour:
   mapDrawer: {fileID: 0}
   mapRoomPopulator: {fileID: 0}
   mapTrace: {fileID: 0}
+  roomPrefabs: {fileID: 0}
 --- !u!114 &204158452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1433,7 +1434,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 546930784}
-  - component: {fileID: 546930783}
   m_Layer: 0
   m_Name: RoomType
   m_TagString: Untagged
@@ -1441,26 +1441,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &546930783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 546930782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af13d92cf576bfa419248d995ed78bf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RoomPrefabs
-  physicalStartRoom: {fileID: 0}
-  physicalBattleRoom: []
-  physicalShopRoom: {fileID: 0}
-  physicalForgeRoom: {fileID: 0}
-  physicalEliteRoom: {fileID: 0}
-  physicalRewardRoom: {fileID: 0}
-  physicalFirstBossRoom: {fileID: 0}
-  physicalSecondBossRoom: {fileID: 0}
 --- !u!4 &546930784
 Transform:
   m_ObjectHideFlags: 0

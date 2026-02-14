@@ -36,4 +36,8 @@ public class Room
         spawnPoints = new Vector2[4];
         return spawnPoints;
     }
+    public void SetSpawnPoints()
+    {
+
+    }
 }

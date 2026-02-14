@@ -12,20 +12,29 @@ public class MapMoving : MonoBehaviour
     // (배틀룸 일 경우) 
     // 플레이어가 완전히 들어가면 다리를 사라지게(내려가도록) 설정
     // 플레이어가 몬스터를 다 잡으면 다리가 다시 올라온다
-    private Vector2Int currentRoom;                                                 // 현재 플레이어가 있는 방의 룸 위치(관계적)
-    private Vector2Int nextRoom;                                                    // 플레이어가 넘어갈 방의 룸 위치(관계적)
-    private GameObject currentRoomObject;                                           // 현재 플레이어가 있는 방의 오브젝트
-    private GameObject nextRoomObject;                                              // 플레이어가 넘어갈 방의 오브젝트
-    private GameObject currentPlayerSPs;                                            // 현재 플레이어가 있는 방의 플레이어 스폰그룹의 상위 오브젝트
-    private GameObject nextPlayerSPs;                                               // 플레이어가 넘어갈 방의 플레이어 스폰그룹의 상위 오브젝트
-    private GameObject player;                                                      // 위치를 옮길 플레이어 오브젝트
+    //private Vector2Int currentRoom;                                                 // 현재 플레이어가 있는 방의 룸 위치(관계적)
+    //private Vector2Int nextRoom;                                                    // 플레이어가 넘어갈 방의 룸 위치(관계적)
+    //private GameObject currentRoomObject;                                           // 현재 플레이어가 있는 방의 오브젝트
+    //private GameObject nextRoomObject;                                              // 플레이어가 넘어갈 방의 오브젝트
+    //private GameObject currentPlayerSPs;                                            // 현재 플레이어가 있는 방의 플레이어 스폰그룹의 상위 오브젝트
+    //private GameObject nextPlayerSPs;                                               // 플레이어가 넘어갈 방의 플레이어 스폰그룹의 상위 오브젝트
+    //private GameObject player;                                                      // 위치를 옮길 플레이어 오브젝트
 
-    private void Awake()
+    [SerializeField] private RoomView roomView;
+    [SerializeField] private Transform player;
+
+    public void ExecuteMove(Vector2Int direction, Room room)
     {
-        
+        // 방 갱신
+        roomView.Initialize(room);
+
+        // 실제 플레이어 이동
+        MovePlayer(direction);
     }
-    private void RoomCheck()
-    {
 
+    private void MovePlayer(Vector2Int direction)
+    {
+        Vector3 move = new Vector3(direction.x, 0, direction.y);
+        player.position += move;
     }
 }
