@@ -91,44 +91,44 @@ public class ItemPickup : MonoBehaviour
         this.enabled = false;
     }
 
-    private void AttachToPlayer(WeaponAbstract weapon, PlayerAction player)
-    {
-        Transform rightHand = player.RightHand;
-        Transform leftHand = player.LeftHand;
+    //private void AttachToPlayer(WeaponAbstract weapon, PlayerAction player)
+    //{
+    //    Transform rightHand = player.RightHand;
+    //    Transform leftHand = player.LeftHand;
 
-        if (weapon.weaponType == WeaponType.onehand || weapon.weaponType == WeaponType.twohand)
-        {
-            weapon.transform.SetParent(rightHand);
-            weapon.transform.localPosition = Vector3.zero;
-            weapon.transform.localRotation = Quaternion.identity;
+    //    if (weapon.weaponType == WeaponType.onehand || weapon.weaponType == WeaponType.twohand)
+    //    {
+    //        weapon.transform.SetParent(rightHand);
+    //        weapon.transform.localPosition = Vector3.zero;
+    //        weapon.transform.localRotation = Quaternion.identity;
 
-            weapon.GetComponent<Collider>().enabled = false;
-        }
-        else if (weapon.weaponType == WeaponType.dual)
-        {
-            weapon.transform.SetParent(rightHand);
-            weapon.transform.localPosition = Vector3.zero;
-            weapon.transform.localRotation = Quaternion.identity;
+    //        weapon.GetComponent<Collider>().enabled = false;
+    //    }
+    //    else if (weapon.weaponType == WeaponType.dual)
+    //    {
+    //        weapon.transform.SetParent(rightHand);
+    //        weapon.transform.localPosition = Vector3.zero;
+    //        weapon.transform.localRotation = Quaternion.identity;
 
-            if (weapon.DualWeapon == null)
-            {
-                weapon.DualWeapon = Instantiate(weapon.gameObject, leftHand);
-                weapon.DualWeapon.transform.localPosition = Vector3.zero;
-                weapon.DualWeapon.transform.localRotation = Quaternion.identity;
+    //        if (weapon.DualWeapon == null)
+    //        {
+    //            weapon.DualWeapon = Instantiate(weapon.gameObject, leftHand);
+    //            weapon.DualWeapon.transform.localPosition = Vector3.zero;
+    //            weapon.DualWeapon.transform.localRotation = Quaternion.identity;
 
-                if (weapon.DualWeapon.TryGetComponent<ItemPickup>(out ItemPickup item))
-                {
-                    Destroy(item);
-                }
-                if (weapon.DualWeapon.TryGetComponent<Collider>(out Collider col))
-                {
-                    col.enabled = false;
-                }
-                if (weapon.DualWeapon.TryGetComponent<WeaponAbstract>(out WeaponAbstract WA))
-                {
-                    WA.enabled = false;
-                }
-            }
-        }
-    }
+    //            if (weapon.DualWeapon.TryGetComponent<ItemPickup>(out ItemPickup item))
+    //            {
+    //                Destroy(item);
+    //            }
+    //            if (weapon.DualWeapon.TryGetComponent<Collider>(out Collider col))
+    //            {
+    //                col.enabled = false;
+    //            }
+    //            if (weapon.DualWeapon.TryGetComponent<WeaponAbstract>(out WeaponAbstract WA))
+    //            {
+    //                WA.enabled = false;
+    //            }
+    //        }
+    //    }
+    //}
 }

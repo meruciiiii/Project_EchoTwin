@@ -36,11 +36,10 @@ public class Dagger : WeaponAbstract
     {
         if (!CanAttack()) return;
 
-        checkAttackTime();
-
-        UpdateComboState();
+        AttackTimeChecker();
 
         SetAnimator();
+        Debug.Log($"combo count = {comboCount}");
 
         Collider[] targets = getTargetInRange();
 

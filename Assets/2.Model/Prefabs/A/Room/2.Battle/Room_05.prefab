@@ -781,7 +781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &74119639617008568
 Transform:
   m_ObjectHideFlags: 0
@@ -795,11 +795,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6556833308722062524}
   - {fileID: 280048523602670234}
   - {fileID: 2062031427387892528}
   - {fileID: 842152728570097309}
   - {fileID: 245664429457797244}
-  - {fileID: 6556833308722062524}
   - {fileID: 6405302239613416056}
   - {fileID: 852572593873232664}
   m_Father: {fileID: 0}
@@ -2546,13 +2546,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8720481263714870291, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
       propertyPath: m_Name
-      value: PlatformSmall_004
+      value: Platform_nav
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8720481263714870291, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4205106330752432072}
   m_SourcePrefab: {fileID: 100100000, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
+--- !u!1 &5887714939495497222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8720481263714870291, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
+  m_PrefabInstance: {fileID: 2931845601963219477}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4205106330752432072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887714939495497222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 902936a947a6a984f8f04303af324799, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!4 &6556833308722062524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8236678191953804969, guid: 457947ad100152f4b9600b9385101c7e, type: 3}

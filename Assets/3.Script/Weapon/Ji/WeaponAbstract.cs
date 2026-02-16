@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponType
-{
-    onehand,
-    twohand,
-    dual,
-}
+//public enum WeaponType
+//{
+//    onehand,
+//    twohand,
+//    dual,
+//}
 
 public enum WeaponID
 {
@@ -22,13 +22,14 @@ public enum WeaponID
 public abstract class WeaponAbstract : MonoBehaviour
 {
     [SerializeField] public WeaponData weaponData;
-    [SerializeField] protected CharacterData characterData;
+    //[SerializeField] protected CharacterData characterData;
     [SerializeField] protected PlayerStats stats;
     [SerializeField] protected Animator animator;
     [SerializeField] protected PlayerEquipment equipment;
     [SerializeField] protected InputManager input;
+    protected PlayerAction action;
 
-    public WeaponType weaponType;
+    //public WeaponType weaponType;
     public WeaponID weaponID;
     public GameObject DualWeapon;
     [SerializeField] public AnimatorOverrideController overrideController;
@@ -40,6 +41,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected bool isComboCooltime = false;
 
     protected float comboExpireTime;
+    protected bool isCancelled = false;
 
     protected AttackDebugInfo lastAttackInfo;
     protected bool hasDebugInfo;
@@ -51,53 +53,71 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     private void Awake()
     {
+        action = stats.GetComponent<PlayerAction>();
         comboCount = 0;
         SetResonance(10);
+        SetAttackTime();
     }
 
     public void Initialize(Animator playerAni)
     {
         this.animator = playerAni;
         animator.SetInteger("WeaponType", weaponData.ID);
+        animator.SetFloat("AttackSpeed", weaponData.attackSpeed);
     }
 
     #region Combo°ü·Ã
     public bool CanAttack()
     {
         if (isComboCooltime) return false;
+        if (animator.IsInTransition(0)) return false;
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (Time.time < lastAttackTime) return false;
+        if (stateInfo.IsTag("Attack"))
+        {
+            if (stateInfo.normalizedTime < 0.65f)
+            {
+                return false;
+            }
+        }
 
         return true;
     }
 
-    protected void checkAttackTime()
+    public virtual bool CanRotate()
     {
-        float comboExpireTime = lastAttackTime + 0.5f;// + weaponData.attackSpeed;
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (Time.time > comboExpireTime)
+        if (stateInfo.IsTag("Attack"))
+        {
+            if (stateInfo.normalizedTime <  0.65f)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
+    private void SetAttackTime()
+    {
+        lastAttackTime = Time.time;
+    }
+
+    protected void AttackTimeChecker()
+    {
+        if(Time.time > lastAttackTime + 1 /weaponData.attackSpeed)
         {
             comboCount = 0;
         }
-
-        lastAttackTime = Time.time + weaponData.attackSpeed;
+        lastAttackTime = Time.time;
     }
 
-    protected void UpdateComboState()
+    protected virtual IEnumerator ComboCooltime_Co()
     {
-        comboCount++;
-
-        if (comboCount >= weaponData.comboCount)
-        {
-            comboCount = 0;
-            StartCoroutine(ComboCooltime_Co());
-        }
-    }
-
-    protected IEnumerator ComboCooltime_Co()
-    {
+        if (isCancelled) yield break;
         isComboCooltime = true;
-        yield return new WaitForSeconds(weaponData.comboCooltime + weaponData.attackSpeed);
+        yield return new WaitForSeconds(weaponData.comboCooltime);
         isComboCooltime = false;
     }
 
@@ -107,6 +127,14 @@ public abstract class WeaponAbstract : MonoBehaviour
         if (comboCount == 0)
         {
             animator.SetTrigger("Attack");
+        }
+
+        comboCount++;
+
+        if (comboCount >= weaponData.comboCount)
+        {
+            comboCount = 0;
+            StartCoroutine(ComboCooltime_Co());
         }
     }
     #endregion

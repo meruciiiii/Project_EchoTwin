@@ -6,7 +6,9 @@ using UnityEngine;
 public class Hammer : WeaponAbstract
 {
     private bool isCharging = false;
+    public bool IsCharging => isCharging;
     private float time = 0f;
+    private Coroutine coroutine;
 
     private Collider[] getTargetInRange()
     {
@@ -25,34 +27,28 @@ public class Hammer : WeaponAbstract
         return hits;
     }
 
-    private float getDamage()
-    {
-        float totalDamage = stats.PlayerDMG + calcDamage();
-
-        return totalDamage;
-    }
-
     public override void Attack(AttackContext context)
     {
         if (!CanAttack()) return;
         if (isCharging) return;
-        StartCoroutine(Attack_Co(context));
+        coroutine = StartCoroutine(Attack_Co(context));
     }
 
     private IEnumerator Attack_Co(AttackContext context)
     {
-        time = 0f;
         isCharging = true;
-        SetAnimator();//무기 든 모션
-        //yield return new WaitForSeconds(0.5f);
-        animator.SetFloat("HoldSpeed", 0);
 
-        while (time < 0.5f)
+        SetAnimator();//무기 든 모션
+
+        time = 0f;
+        yield return new WaitForSeconds(0.1f);
+        AniSpeed(0f);
+
+        while (time < 0.3f)
         {
-            if(!input.isAttackPressed)
+            if (!input.isAttackPressed)
             {
-                //애니메이터 취소 어케함
-                isCharging = false;
+                cancleCharging();
                 yield break;
             }
             time += Time.deltaTime;
@@ -69,9 +65,9 @@ public class Hammer : WeaponAbstract
 
         time = Mathf.Min(time, 3f);
 
-        animator.SetFloat("HoldSpeed", 1);
-        checkAttackTime();
-        UpdateComboState();
+        AniSpeed(1f);
+
+        yield return new WaitForSeconds(0.2f / weaponData.attackSpeed);
 
         Collider[] targets = getTargetInRange();
 
@@ -80,10 +76,35 @@ public class Hammer : WeaponAbstract
             if (!target.CompareTag("Enemy")) continue;
 
             context.hitTargets.Add(target);
-            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * time);
+            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
 
             enemyKnockback(target);
         }
+
+        coroutine = null;
+        isCharging = false;
+        isCancelled = false;
+    }
+
+    private void cancleCharging()
+    {
+        if (!isCharging) return;
+
+        if (coroutine != null)
+        {
+            coroutine = null;
+        }
+        isCharging = false;
+        AniSpeed(1f);
+        animator.Play("Move", 0, 0);
+        stats.GetComponent<PlayerAction>().forStopMove = false;
+        isCancelled = true;
+    }
+
+    private void AniSpeed(float holdSpeed = 1f)
+    {
+        float finalSpeed = weaponData.attackSpeed * holdSpeed;
+        animator.SetFloat("AttackSpeed", finalSpeed);
     }
 
     public override void ChargingAttack()

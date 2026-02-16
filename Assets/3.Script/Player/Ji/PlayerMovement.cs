@@ -9,15 +9,20 @@ public class PlayerMovement : MonoBehaviour
     private InputManager Input;
     private Rigidbody rb;
     private Animator animator; // 애니메이터 추가
+    private PlayerAction action;
+    private WeaponAbstract weapon;
 
-    private Vector3 mousePos;
+    private Vector3 mousePosition;
+    public float rotationSpeed = 10f;
 
     private void Awake()
     {
         TryGetComponent(out Input);
         TryGetComponent(out rb);
         TryGetComponent(out stats);
+        TryGetComponent(out action);
         animator = GetComponentInChildren<Animator>();
+        weapon = GetComponentInChildren<WeaponAbstract>(true);
     }
 
     private void FixedUpdate()
@@ -38,15 +43,16 @@ public class PlayerMovement : MonoBehaviour
         // 대쉬 중에는 일반 이동/회전 로직 건너뜀
 
         if (stats.isDash) return;
-        Move();
         FocusOnMouse();
+        Move();
     }
 
     public void Move()
     {
-        Vector2 moveInput = Input.MoveValue;
         if (stats.isDash) return;
+        if (action.forStopMove) return;
 
+        Vector2 moveInput = Input.MoveValue;
         // 입력이 없을 때도 애니메이션을 서서히(0.1f) Idle로 돌림
         if (moveInput.magnitude <= 0.1f)
         {
@@ -95,9 +101,10 @@ public class PlayerMovement : MonoBehaviour
         float timer = 0;
         while (timer < 1f)
         {
-            timer += stats.DashSpeed* Time.deltaTime;
+            timer += stats.DashSpeed * Time.deltaTime;
 
             transform.position = Vector3.Lerp(startPos, destPos, timer);
+            transform.LookAt(destPos);
 
             yield return null;
         }
@@ -108,17 +115,27 @@ public class PlayerMovement : MonoBehaviour
         Input.coroutine = null;
     }
 
-    private void FocusOnMouse()
+    public void FocusOnMouse()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) return;
+        if (action.forStopRotate) return;
+        if (stats.isDash) return;
 
-        mousePos = Vector3.zero;
+        mousePosition = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
         {
-            mousePos = hit.point;
+            //if(hit.transform.CompareTag("Ground") || hit.transform.CompareTag("Rava"))
+            mousePosition = hit.point;
+            mousePosition.y = transform.position.y;
+
+            Vector3 dir = (mousePosition - transform.position).normalized;
+
+            if(dir != Vector3.zero)
+            {
+                Quaternion mouseRotation = Quaternion.LookRotation(dir);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, mouseRotation, Time.deltaTime * rotationSpeed * weapon.weaponData.attackSpeed);
+            }
         }
-        mousePos.y = transform.position.y;
-        transform.LookAt(mousePos);
     }
 }

@@ -33,13 +33,11 @@ public class Spear : WeaponAbstract
     public override void Attack(AttackContext context)
     {
         if (!CanAttack()) return;
-        Debug.Log($"combo count = {comboCount}");
 
-        checkAttackTime();
-
-        UpdateComboState();
+        AttackTimeChecker();
 
         SetAnimator();
+        Debug.Log($"combo count = {comboCount}");
 
         Collider[] targets = getTargetInRange();
 

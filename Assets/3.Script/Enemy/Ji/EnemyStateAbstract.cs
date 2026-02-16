@@ -12,6 +12,7 @@ public enum EnemyState
 }
 
 [RequireComponent(typeof(FlashEffect))]
+[RequireComponent(typeof(NavMeshAgent))]
 public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 {
     [SerializeField] protected EnemyData enemyData;
@@ -59,12 +60,25 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
+    protected virtual void OnEnable()
+    {
+        FixedRotation();
+    }
+
     protected virtual void Update()
     {
         if (GameManager.instance.isStop)
         {
             TurnOffNavmesh();
             return;
+        }
+        if(navMesh.desiredVelocity.x > 0.1f)
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = false;
+        }
+        else if(navMesh.desiredVelocity.x<-0.1f)
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = true;
         }
     }
 
@@ -167,6 +181,18 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             state = EnemyState.dead;
         }
+    }
+
+    protected void UnFixedRotation()
+    {
+        navMesh.updateRotation = true;
+        navMesh.updateUpAxis = true;
+    }
+
+    protected void FixedRotation()
+    {
+        navMesh.updateRotation = false;
+        navMesh.updateUpAxis = false;
     }
 
     protected virtual bool isItOnTheGround()

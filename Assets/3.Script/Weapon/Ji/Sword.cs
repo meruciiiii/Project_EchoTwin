@@ -26,13 +26,11 @@ public class Sword : WeaponAbstract
     public override void Attack(AttackContext context)
     {
         if (!CanAttack()) return;
-        Debug.Log($"combo count = {comboCount}");
 
-        checkAttackTime();
+        AttackTimeChecker();
 
         SetAnimator();
-
-        UpdateComboState();
+        Debug.Log($"combo count = {comboCount}");
 
         Collider[] targets = getTargetInRange();
 
