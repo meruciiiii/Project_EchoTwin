@@ -49,7 +49,7 @@ public class MapManager : MonoBehaviour
         int count = 100 - safety;
         Debug.Log("Map Create is Finished in " + count + "....................");
         mapDrawer.EnterDraw(GetMap());
-        mapRoomPopulator.Populate(microMap, 1);
+        mapRoomPopulator.Populate(microMap, 1, 1, roomPrefabs);//please edit stage and floor
         Debug.Log("Populate is sucess");
         SetStartCoord();
         if (!microMap.TryGetValue(currentCoord, out FloorData floor))
@@ -57,7 +57,7 @@ public class MapManager : MonoBehaviour
             Debug.Log("currentCoord is Error");
             return;
         }
-        mapMoving.ExecuteMove(Vector2Int.zero, floor.GetRoomData());
+        mapMoving.ExecuteMove(currentCoord, floor.GetRoomData());
         
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()

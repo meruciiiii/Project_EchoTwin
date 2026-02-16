@@ -7,18 +7,28 @@ public class MapRoomPopulator : MonoBehaviour
     int eventRoomCount;
     int eliteRoomCount;
     int eliteRoomProbability;
-    int roomID;
+    int[] roomID;
+    int nextRoomIDNum;
+    int stage;
     int floor;
     Room.RoomType roomType;
+    RoomPrefabs roomPrefabs;
+    GameObject targetObject;
+    System.Random rnd = new System.Random();
 
-    public void Populate(Dictionary<Vector2Int, FloorData> microMap, int floor)
+    public void Populate(Dictionary<Vector2Int, FloorData> microMap, int stage, int floor, RoomPrefabs roomPrefabs)
     {
+        this.stage = stage;
         this.floor = floor;
         RoomCondition();
         //room 생성
-        foreach(KeyValuePair<Vector2Int, FloorData> room in microMap)
+        this.roomPrefabs = roomPrefabs;
+        SetBattleRoomNum();
+        nextRoomIDNum = 0;
+        foreach (KeyValuePair<Vector2Int, FloorData> room in microMap)
         {
             CreateRoom(room.Value);
+            nextRoomIDNum++;
         }
         //연결
 
@@ -26,7 +36,7 @@ public class MapRoomPopulator : MonoBehaviour
     private void CreateRoom(FloorData floor)
     {
         DecisionType(floor);
-        floor.GetRoomData().SetRoom(DecisionRoomID(),this.floor, DecisionMonsterPackID(), roomType);
+        floor.GetRoomData().SetRoom(DecisionRoomID(), this.floor, DecisionMonsterPackID(), roomType);
     }
     private int DecisionRoomID()
     {
@@ -37,7 +47,7 @@ public class MapRoomPopulator : MonoBehaviour
         }
         else if (roomType.Equals(Room.RoomType.Battle))
         {
-            choice = UnityEngine.Random.Range(1, 18);
+            choice = roomID[nextRoomIDNum];
         }
         else if (roomType.Equals(Room.RoomType.Shop))
         {
@@ -57,14 +67,30 @@ public class MapRoomPopulator : MonoBehaviour
         }
         else if (roomType.Equals(Room.RoomType.Boss))
         {
-            if (floor.Equals(1))
+            if (stage.Equals(1))
                 choice = 21;
-            else if (floor.Equals(2))
+            else if (stage.Equals(2))
                 choice = 22;
             else
                 choice = 0;
         }
         return choice;
+    }
+    private void SetBattleRoomNum()
+    {
+        roomID = new int[18];
+        int length = roomID.Length;
+        for (int i = 0; i < length; i++)
+        {
+            roomID[i] = i + 1;
+        }
+        for (int i = 0; i < length; i++)
+        {
+            int k = rnd.Next(i + 1);
+            int temp = roomID[k];
+            roomID[k] = roomID[i];
+            roomID[i] = temp;
+        }
     }
     private int DecisionMonsterPackID()
     {
@@ -77,7 +103,7 @@ public class MapRoomPopulator : MonoBehaviour
     }
     private void DecisionType(FloorData floor)
     {
-        int choice = UnityEngine.Random.Range(1, ((int)Room.RoomType.count)-3);
+        int choice = UnityEngine.Random.Range(1, ((int)Room.RoomType.count) - 3);
         if (choice.Equals(2) || choice.Equals(3))
         {
             if (eventRoomCount > 0)
@@ -95,13 +121,13 @@ public class MapRoomPopulator : MonoBehaviour
             {
                 if (this.floor > 4)
                 {
-                    if(this.floor > 8)
+                    if (this.floor > 8)
                     {
                         choice = 1;
                     }
                     else
                     {
-                        if (UnityEngine.Random.value*100 < eliteRoomProbability)
+                        if (UnityEngine.Random.value * 100 < eliteRoomProbability)
                             eliteRoomCount++;
                         else
                             choice = 1;
@@ -120,5 +146,13 @@ public class MapRoomPopulator : MonoBehaviour
         eventRoomCount = 0;
         eliteRoomCount = 0;
         eliteRoomProbability = 30;
+    }
+    private void SelectGameObject()
+    {
+
+    }
+    private void SetRoomDoor()
+    {
+
     }
 }

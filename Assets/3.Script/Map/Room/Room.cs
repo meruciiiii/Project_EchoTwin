@@ -11,7 +11,6 @@ public class Room
     }
     private float floor;
     private int monsterPackID;
-    private Vector2[] spawnPoints;
     private RoomType roomType;
     public Room()
     {
@@ -30,14 +29,5 @@ public class Room
     public void SetStartRoom()
     {
         this.roomType = RoomType.Start;
-    }
-    public Vector2[] GetSpawnPoints()
-    {
-        spawnPoints = new Vector2[4];
-        return spawnPoints;
-    }
-    public void SetSpawnPoints()
-    {
-
     }
 }

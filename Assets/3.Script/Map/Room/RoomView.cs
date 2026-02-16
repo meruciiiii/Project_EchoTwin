@@ -8,12 +8,9 @@ public class RoomView : MonoBehaviour
 {
     private DoorTrigger[] doors;
     private Room logicalRoom;
-    private void Awake()
+    private void SetDoors(GameObject roomPrefab)
     {
-        if(!TryGetComponent(out doors))
-        {
-            Debug.Log("TryGetComponent DoorTrigger is fail");
-        }
+        doors = roomPrefab.GetComponents<DoorTrigger>();
     }
     //문 다리 열림/닫힘 시각 처리
     //몬스터 스폰 위치
