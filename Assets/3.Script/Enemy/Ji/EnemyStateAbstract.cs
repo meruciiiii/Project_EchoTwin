@@ -161,17 +161,16 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         navMesh.enabled = false;
 
-        rb.linearVelocity = Vector3.zero;
         rb.isKinematic = false;
+        //rb.linearVelocity = Vector3.zero;
     }
 
     protected virtual void TurnOnNavmesh()
     {
         //navMesh.isStopped = false;
 
-        rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
-
+        //rb.linearVelocity = Vector3.zero;
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
             navMesh.enabled = true;
