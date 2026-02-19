@@ -31,6 +31,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected float lastAttackTime;
     protected float currentHP;
     protected float radius;
+    protected Vector3 lookDir = Vector3.zero;
 
     protected float standardRange = 0.2f;
     public float Damage => enemyData.damage;
@@ -40,11 +41,17 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected Coroutine coroutine;
 
-    protected AttackDebugInfo lastAttackInfo;
-    protected bool hasDebugInfo;
+    protected AttackDebugInfo bodyAttackInfo;
+    protected bool hasBodyAttackDebug;
+    protected AttackDebugInfo areaAttackInfo;
+    protected bool hasAreaAttackDebug;
 
-    public AttackDebugInfo DebugInfo => lastAttackInfo;
-    public bool HasDebugInfo => hasDebugInfo;
+    private List<AttackDebugInfo> debugInfoList = new List<AttackDebugInfo>();
+
+    public AttackDebugInfo BodyAttackInfo => bodyAttackInfo;
+    public bool HasBodyAttackDebug => hasBodyAttackDebug;
+    public AttackDebugInfo AreaAttackInfo => areaAttackInfo;
+    public bool HasAreaAttackDebug => hasAreaAttackDebug;
 
     protected virtual void Awake()
     {
@@ -83,13 +90,12 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
         }
 
-        if (navMesh.desiredVelocity.x > 0.1f)
+        if(navMesh.enabled && navMesh.desiredVelocity.sqrMagnitude > 0.01f)
         {
-            GetComponentInChildren<SpriteRenderer>().flipX = false;
-        }
-        else if (navMesh.desiredVelocity.x < -0.1f)
-        {
-            GetComponentInChildren<SpriteRenderer>().flipX = true;
+            lookDir = navMesh.desiredVelocity.normalized;
+            lookDir.y = 0f;
+
+            GetComponentInChildren<SpriteRenderer>().flipX = (lookDir.x < -0.1f);
         }
     }
 
@@ -241,20 +247,46 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     #endregion
 
     #region attack
+
+    public List<AttackDebugInfo> getAllDebugInfo()
+    {
+        debugInfoList.Clear();
+        if (hasBodyAttackDebug) debugInfoList.Add(bodyAttackInfo);
+        if (hasAreaAttackDebug) debugInfoList.Add(areaAttackInfo);
+
+        return debugInfoList;
+    }
+
+    protected void updateBossCharging(float currentTime, float maxTime, float range, float angle)
+    {
+        float progress = Mathf.Clamp01(currentTime / maxTime);
+
+        areaAttackInfo = new AttackDebugInfo
+        {
+            shape = AttackShape.sector,
+            center = transform.position,
+            size = new Vector3(range, 0, 0),
+            direction = transform.forward,
+            color = Color.Lerp(Color.yellow, Color.red, progress),
+            ratio = progress
+        };
+        hasAreaAttackDebug = true;
+    }
+
     protected bool BodyAttack(float range)
     {
         float checkRadius = radius + range;
 
-        lastAttackInfo = new AttackDebugInfo
+        bodyAttackInfo = new AttackDebugInfo
         {
+            shape = AttackShape.sphere,
             center = transform.position,
-            halfExtents = Vector3.one * checkRadius,
+            size = Vector3.one * checkRadius,
             rotation = Quaternion.identity,
             color = Color.gray,
-            angle = 0f,
-            direction = transform.forward
+            ratio = 1f
         };
-        hasDebugInfo = true;
+        hasBodyAttackDebug = true;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
         foreach (Collider hit in hits)
@@ -272,16 +304,18 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         Vector3 dir = (player.transform.position - transform.position).normalized;
         dir.y = 0f;
-        lastAttackInfo = new AttackDebugInfo
+        areaAttackInfo = new AttackDebugInfo
         {
+            shape = AttackShape.sector,
             center = transform.position,
-            halfExtents = Vector3.one * range,
+            size = new Vector3(range,0,0),
             rotation = Quaternion.identity,
             color = Color.magenta,
             angle = angle,
-            direction = dir
+            direction = lookDir,
+            ratio = 1f
         };
-        hasDebugInfo = true;
+        hasAreaAttackDebug = true;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, range);
         foreach (Collider hit in hits)
@@ -290,11 +324,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             {
                 Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
                 dirToTarget.y = 0f;
-                //Vector3 forward = transform.forward;
-                Vector3 forward = navMesh.desiredVelocity;
-                forward.y = 0f;
 
-                if (Vector3.Angle(forward, dirToTarget) <= angle * 0.5f)
+                if (Vector3.Angle(lookDir, dirToTarget) <= angle * 0.5f)
                 {
                     player.takeDamage(enemyData.damage, transform.position);
                 }
