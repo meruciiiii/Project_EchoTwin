@@ -7,23 +7,62 @@ public class Dagger : WeaponAbstract
 {
     [SerializeField] GameObject daggerPrefab;
 
-    private Collider[] getTargetInRange()
+    private List<Collider> getTargetInSector()
     {
+        List<Collider> Targets = new List<Collider>();
+
         GameObject player = stats.gameObject;
-        float player_XSize = player.GetComponent<CapsuleCollider>().radius;
-
         Vector3 forward = player.transform.forward;
-        Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
+        Vector3 centerPos = player.transform.position;
+        float range = weaponData.attackRange;
 
-        Vector3 targetPos = new Vector3(player_XSize * 0.5f, 1f, weaponData.attackRange * 0.5f);
+        Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
-        Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
+        foreach (Collider hit in hits)
+        {
+            if (!hit.CompareTag("Enemy")) continue;
 
-        lastAttackInfo = new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.red };//gizmo
-        hasDebugInfo = true;//gizmo
+            Vector3 dirToTarget = (hit.transform.position - centerPos).normalized;
 
-        return hits;
+            if (Vector3.Angle(forward, dirToTarget) < attackAngle * 0.5f)
+            {
+                Targets.Add(hit);
+            }
+        }
+
+        lastAttackInfo = new AttackDebugInfo
+        {
+            shape = AttackShape.sector,
+            center = centerPos,
+            size = new Vector3(range, 0, 0),
+            rotation = player.transform.rotation,
+            color = Color.red,
+            angle = attackAngle,
+            direction = forward,
+            ratio = 1f
+        };
+        hasDebugInfo = true;
+
+        return Targets;
     }
+
+    //private Collider[] getTargetInRange()
+    //{
+    //    GameObject player = stats.gameObject;
+    //    float player_XSize = player.GetComponent<CapsuleCollider>().radius;
+
+    //    Vector3 forward = player.transform.forward;
+    //    Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
+
+    //    Vector3 targetPos = new Vector3(player_XSize * 0.5f, 1f, weaponData.attackRange * 0.5f);
+
+    //    Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
+
+    //    lastAttackInfo = new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.red };//gizmo
+    //    hasDebugInfo = true;//gizmo
+
+    //    return hits;
+    //}
 
     private float getDamage()
     {
@@ -41,7 +80,7 @@ public class Dagger : WeaponAbstract
         SetAnimator();
         Debug.Log($"combo count = {comboCount}");
 
-        Collider[] targets = getTargetInRange();
+        List<Collider> targets = getTargetInSector();
 
         foreach (Collider target in targets)
         {

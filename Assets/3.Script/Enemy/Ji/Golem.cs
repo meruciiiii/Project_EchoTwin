@@ -91,12 +91,15 @@ public class Golem : EnemyStateAbstract
 
         bool isAttacked = false;
         Vector3 dir = (targetPos - startPos).normalized;
+        dir.y = 0f;
+
         float distance = Vector3.Distance(startPos, targetPos);
 
         while (distance > 0f)
         {
             //navMesh.Move(dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
             Vector3 destPos = transform.position + (dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
+            destPos.y = 0f;
             transform.position = destPos;
 
             distance -= enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime;
@@ -111,7 +114,8 @@ public class Golem : EnemyStateAbstract
             yield return null;
         }
         yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
-        transform.position = startPos;
+        targetPos.y = 0f;
+        transform.position = targetPos;
 
         checkAttackTime();
 
@@ -126,7 +130,7 @@ public class Golem : EnemyStateAbstract
 
         BodyAttack(standardRange);
 
-        setPlayerPos();
+        //setPlayerPos();
     }
 
     protected override void TurnOnNavmesh()

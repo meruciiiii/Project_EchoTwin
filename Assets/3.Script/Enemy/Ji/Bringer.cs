@@ -81,6 +81,6 @@ public class Bringer : EnemyStateAbstract
 
         BodyAttack(standardRange);
 
-        setPlayerPos();
+        //setPlayerPos();
     }
 }
