@@ -200,8 +200,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         //navMesh.isStopped = false;
 
-        rb.isKinematic = true;
         rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
 
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
