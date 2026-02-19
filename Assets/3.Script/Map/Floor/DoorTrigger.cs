@@ -12,6 +12,20 @@ public class DoorTrigger : MonoBehaviour
         Up
     }
     public MoveDirection selectedDoorDirection;
+    public int doorIntDirection
+    {
+        get
+        {
+            switch (selectedDoorDirection)
+            {
+                case MoveDirection.Right: return 1;
+                case MoveDirection.Left: return 0;
+                case MoveDirection.Down: return 2;
+                case MoveDirection.Up: return 3;
+                default: return -1;
+            }
+        }
+    }// 0 : East, 1 : West, 2 : South, 3 : North
     public Vector2Int Direction
     {
         get
