@@ -39,6 +39,7 @@ public class Bat : EnemyStateAbstract
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        if (ani != null) ani.SetTrigger("Attack");
         checkAttackTime();
 
         bool isAttacked = false;

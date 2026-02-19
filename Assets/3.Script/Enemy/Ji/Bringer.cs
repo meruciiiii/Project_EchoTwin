@@ -27,11 +27,13 @@ public class Bringer : EnemyStateAbstract
         if (distance > enemyData.attackRange - 0.5f)
         {
             if (coroutine != null) return;
+            if (ani != null) ani.SetTrigger("Attack 2");
             coroutine = StartCoroutine(ProjectileATK(targetPos));
         }
         else
         {
             if (coroutine != null) return;
+            if (ani != null) ani.SetTrigger("Attack");
             coroutine = StartCoroutine(Attack_Co());
         }
     }

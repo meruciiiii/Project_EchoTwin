@@ -339,6 +339,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6721f68e7cee94098c2827ff6edddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
+  unlockRotationTime: 0.6
+  lastAttackRotationTime: 0.95
 --- !u!1102 &-2125509911183930182
 AnimatorState:
   serializedVersion: 6
@@ -575,6 +577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6721f68e7cee94098c2827ff6edddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
+  unlockRotationTime: 0.6
+  lastAttackRotationTime: 0.95
 --- !u!206 &1323689861665328247
 BlendTree:
   m_ObjectHideFlags: 1
@@ -832,6 +836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6721f68e7cee94098c2827ff6edddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
+  unlockRotationTime: 0.6
+  lastAttackRotationTime: 0.95
 --- !u!1101 &6394414240563188995
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -981,6 +987,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6721f68e7cee94098c2827ff6edddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
+  unlockRotationTime: 0.6
+  lastAttackRotationTime: 0.95
 --- !u!1102 &8395308048049882297
 AnimatorState:
   serializedVersion: 6

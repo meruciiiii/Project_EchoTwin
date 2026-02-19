@@ -35,11 +35,13 @@ public class Golem : EnemyStateAbstract
         else if (distance < enemyData.attackRange * rangeMultiple && distance > enemyData.attackRange)
         {
             if (coroutine != null) return;
+            if (ani != null) ani.SetTrigger("Attack");
             coroutine = StartCoroutine(ProjectileAttack_Co(targetPos, startPos));
         }
         else
         {
             if (coroutine != null) return;
+            if (ani != null) ani.SetTrigger("Attack 2");
             coroutine = StartCoroutine(DashAttack_Co(targetPos, startPos));
         }
 

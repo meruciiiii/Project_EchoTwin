@@ -33,6 +33,8 @@ public class Pebble : EnemyStateAbstract
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        if (ani != null) ani.SetTrigger("Attack");
+
         checkAttackTime();
 
         float timer = 0f;
