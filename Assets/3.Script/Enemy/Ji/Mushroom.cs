@@ -30,7 +30,7 @@ public class Mushroom : EnemyStateAbstract
         //animator
         checkAttackTime();
 
-        AreaAttack(enemyData.attackRange, 180f);
+        AreaAttack(enemyData.attackRange + radius, 180f);
 
         coroutine = null;
 
@@ -45,7 +45,7 @@ public class Mushroom : EnemyStateAbstract
         BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        float buffer = 0.5f;
+        float buffer = 0.2f;
 
         if (distance > enemyData.attackRange - buffer)
         {

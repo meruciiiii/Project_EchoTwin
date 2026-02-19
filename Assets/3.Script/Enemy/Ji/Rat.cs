@@ -25,7 +25,6 @@ public class Rat : EnemyStateAbstract
 
         state = EnemyState.chase;
 
-        TurnOnNavmesh();
         setPlayerPos();
     }
 }

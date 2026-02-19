@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Goblin : EnemyStateAbstract
 {
@@ -40,11 +41,14 @@ public class Goblin : EnemyStateAbstract
         Vector3 startPos = transform.position;
 
         Vector3 dir = (targetPos - startPos).normalized;
+        dir.y = 0f;
 
         float timer = dashDuration;
         while (timer > 0f)
         {
-            navMesh.Move(dir * attackSpeed * Time.deltaTime);
+            //navMesh.Move(dir * attackSpeed * Time.deltaTime);
+
+            transform.position += dir * attackSpeed * Time.deltaTime;
 
             if (!isAttacked)
             {
@@ -105,7 +109,34 @@ public class Goblin : EnemyStateAbstract
         if (UnityEngine.AI.NavMesh.SamplePosition(runPos, out hit, 1f, UnityEngine.AI.NavMesh.AllAreas))
         {
             navMesh.SetDestination(hit.position);
-            transform.LookAt(player.transform);
+        }
+    }
+
+    protected override void TurnOffNavmesh()
+    {
+        navMesh.isStopped = true;
+
+        //navMesh.enabled = false;
+
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
+    }
+
+    protected override void TurnOnNavmesh()
+    {
+
+        rb.isKinematic = true;
+        rb.linearVelocity = Vector3.zero;
+
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        {
+            navMesh.isStopped = false;
+            //navMesh.enabled = true;
+            navMesh.Warp(hit.position);
+        }
+        else
+        {
+            state = EnemyState.dead;
         }
     }
 }

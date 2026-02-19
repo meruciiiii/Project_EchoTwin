@@ -13,8 +13,12 @@ public class FlashEffect : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out targetRenderer);
+        if (targetRenderer == null)
+        {
+            targetRenderer = GetComponentInChildren<Renderer>();
+        }
 
-        if(targetRenderer != null)
+        if (targetRenderer != null)
         {
             originalColor = targetRenderer.material.color;
         }
@@ -26,7 +30,7 @@ public class FlashEffect : MonoBehaviour
 
         if (flashCoroutine != null) StopCoroutine(flashCoroutine);
 
-        flashCoroutine = StartCoroutine(Blink_Co(count,duration));
+        flashCoroutine = StartCoroutine(Blink_Co(count, duration));
     }
 
     public void ChargeEffect(float duration)
@@ -43,7 +47,7 @@ public class FlashEffect : MonoBehaviour
         float halfDuration = duration / 2f;
         WaitForSeconds wfs = new WaitForSeconds(halfDuration);
 
-        for(int i=0; i<count; i++)
+        for (int i = 0; i < count; i++)
         {
             targetRenderer.material.color = Color.white;
 
@@ -61,7 +65,7 @@ public class FlashEffect : MonoBehaviour
     {
         float timer = 0f;
 
-        while(timer<duration)
+        while (timer < duration)
         {
             timer += Time.deltaTime;
 
