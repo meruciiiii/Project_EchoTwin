@@ -4,36 +4,40 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - R_01
-  - R_02
-  - R_03
-  - R_04
-  - R_05
-  - R_06
-  - R_07
-  - R_08
-  - R_09
-  - R_10
-  - R_11
-  - R_12
-  - R_13
-  - R_14
-  - R_15
-  - R_16
-  - R_17
-  - R_18
-  - R_19
-  - R_20
-  - R_21
-  - R_22
+  - MapNode
+  - Door
+  - Store
+  - Upgrade
+  - MapDrawer
   - R_101
-  - R_102
   - R_103
-  - R_104
+  - R_06
   - M_SP
-  - P_SP
+  - R_19
+  - R_22
+  - R_10
+  - R_21
+  - R_16
+  - R_13
+  - R_18
+  - R_08
+  - R_14
+  - R_05
+  - R_102
+  - R_09
+  - R_15
+  - R_07
+  - R_20
+  - R_17
+  - R_03
+  - R_12
+  - R_02
+  - R_04
+  - R_11
+  - R_01
   - Bridge
-  - Enemy
+  - R_104
+  - MapManager
   layers:
   - Default
   - TransparentFX

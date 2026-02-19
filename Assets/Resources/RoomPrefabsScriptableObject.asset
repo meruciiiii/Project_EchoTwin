@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af13d92cf576bfa419248d995ed78bf9, type: 3}
+  m_Name: RoomPrefabsScriptableObject
+  m_EditorClassIdentifier: Assembly-CSharp::RoomPrefabs
+  physicalStartRoom: {fileID: 0}
+  physicalBattleRoom:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  physicalShopRoom: {fileID: 6993727797686298436, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
+  physicalForgeRoom: {fileID: 7749808791364372614, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
+  physicalEliteRoom:
+  - {fileID: 8601509843148786856, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
+  - {fileID: 3575594775475109475, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
+  physicalRewardRoom: {fileID: 8841672602562226852, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
+  physicalFirstBossRoom: {fileID: 5133280748272134380, guid: 854bcd3508457dd4ca54da58b0823f4a, type: 3}
+  physicalSecondBossRoom: {fileID: 4139305285346789805, guid: 863869e3f4e9e384f86c367e5ddf132b, type: 3}

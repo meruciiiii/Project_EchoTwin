@@ -23,6 +23,11 @@ public class Crab : EnemyStateAbstract
             damage *= 1 - reduceRatio;
             effect.Flash(1, 0.5f);
         }
+        else
+        {
+            // 껍데기가 깨진 후에는 일반적인 피격 애니메이션 실행
+            if (ani != null) ani.SetTrigger("Hit");
+        }
 
         currentHP -= damage;
         shieldCount--;
@@ -43,9 +48,11 @@ public class Crab : EnemyStateAbstract
 
         TurnOffNavmesh();
 
+        //animator
+        if (ani != null) ani.SetTrigger("Attack");
+
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
-        //animator
         checkAttackTime();
 
         AreaAttack(enemyData.attackRange, 180f);

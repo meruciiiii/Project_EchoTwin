@@ -25,9 +25,12 @@ public class Mushroom : EnemyStateAbstract
 
         TurnOffNavmesh();
 
+        //animator
+        if (ani != null) ani.SetTrigger("Attack");
+
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
-        //animator
+
         checkAttackTime();
 
         AreaAttack(enemyData.attackRange + radius, 180f);

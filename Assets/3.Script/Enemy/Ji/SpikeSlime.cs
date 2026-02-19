@@ -30,9 +30,11 @@ public class SpikeSlime : EnemyStateAbstract
 
         TurnOffNavmesh();
 
+
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        if (ani != null) ani.SetTrigger("Attack");
         checkAttackTime();
 
         float duration = 0.5f;

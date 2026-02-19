@@ -32,6 +32,8 @@ public class Skeleton : EnemyStateAbstract
         if (dot > shieldDgree)
         {
             damage *= 1 - reduceRatio;
+            //막는 animator
+            if (ani != null) ani.SetTrigger("Attack 2");
             effect.Flash(1, 0.5f);//막았을 시 번쩍 이펙트
         }
 
@@ -45,9 +47,11 @@ public class Skeleton : EnemyStateAbstract
 
         TurnOffNavmesh();
 
+        //animator
+        if (ani != null) ani.SetTrigger("Attack");
+
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
-        //animator
         checkAttackTime();
 
         AreaAttack(enemyData.attackRange, 180f);

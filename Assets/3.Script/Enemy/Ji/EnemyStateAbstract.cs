@@ -31,7 +31,6 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected float lastAttackTime;
     protected float currentHP;
     protected float radius;
-    protected Vector3 lookDir = Vector3.zero;
 
     protected float standardRange = 0.2f;
     public float Damage => enemyData.damage;
@@ -41,18 +40,11 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected Coroutine coroutine;
 
-    protected List<AttackDebugInfo> debugInfoList = new List<AttackDebugInfo>();
+    protected AttackDebugInfo lastAttackInfo;
+    protected bool hasDebugInfo;
 
-    protected AttackDebugInfo bodyAttackInfo;
-    protected bool hasBodyAttackDebug;
-
-    protected AttackDebugInfo areaAttackInfo;
-    protected bool hasAreaAttackDebug;
-
-    public AttackDebugInfo BodyAttackInfo => bodyAttackInfo;
-    public bool HasBodyAttackDebug => hasBodyAttackDebug;
-    public AttackDebugInfo AreaAttackInfo => areaAttackInfo;
-    public bool HasAreaAttackDebug => hasAreaAttackDebug;
+    public AttackDebugInfo DebugInfo => lastAttackInfo;
+    public bool HasDebugInfo => hasDebugInfo;
 
     protected virtual void Awake()
     {
@@ -75,7 +67,6 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected virtual void OnEnable()
     {
         FixedRotation();
-        setPlayerPos();
     }
 
     protected virtual void Update()
@@ -86,24 +77,19 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             return;
         }
 
-        //if (navMesh.enabled)
-        //{
-        //    if (navMesh.desiredVelocity.x > 0.1f)
-        //    {
-        //        GetComponentInChildren<SpriteRenderer>().flipX = false;
-        //    }
-        //    else if (navMesh.desiredVelocity.x < -0.1f)
-        //    {
-        //        GetComponentInChildren<SpriteRenderer>().flipX = true;
-        //    }
-        //}
-
-        if(navMesh.enabled && navMesh.desiredVelocity.sqrMagnitude>0.01f)
+        // 속도가 있으면 Run, 없으면 Idle
+        if (ani != null)
         {
-            lookDir = navMesh.desiredVelocity.normalized;
-            lookDir.y = 0f;
+            ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
+        }
 
-            GetComponentInChildren<SpriteRenderer>().flipX = (lookDir.x < -0.1f);
+        if (navMesh.desiredVelocity.x > 0.1f)
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = false;
+        }
+        else if (navMesh.desiredVelocity.x < -0.1f)
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = true;
         }
     }
 
@@ -112,6 +98,10 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (state == EnemyState.dead) return;
 
         currentHP -= damage;
+
+        //if (ani != null) 
+            ani.SetTrigger("Hit");
+
         checkOnDie();
     }
 
@@ -121,8 +111,18 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             state = EnemyState.dead;
             TurnOffNavmesh();
-            Destroy(gameObject);
+            //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
+            StartCoroutine(DeathRoutine());
         }
+    }
+    private IEnumerator DeathRoutine()
+    {
+        if (ani != null) ani.SetTrigger("Death");
+
+        // 애니메이션 길이에 맞춰 대기 (예: 1.5초)
+        yield return new WaitForSeconds(1.5f);
+
+        Destroy(gameObject);
     }
 
     protected virtual bool canAttack()
@@ -142,6 +142,20 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected virtual IEnumerator knockback_Co(Vector3 dir, float power)
     {
+        //turnOffNavmesh();
+        //state = EnemyState.knockback;
+
+        //float timer = knockbackTime;
+        //while (timer > 0f)
+        //{
+        //    navMesh.Move(dir * power * Time.deltaTime);
+        //    timer -= Time.deltaTime;
+        //    yield return null;
+        //}
+        //yield return new WaitForSeconds(knockbackTime);
+        //turnOnNavmesh();
+        //state = EnemyState.chase;
+
         state = EnemyState.knockback;
 
         TurnOffNavmesh();
@@ -168,6 +182,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected virtual void TurnOffNavmesh()
     {
+        //navMesh.isStopped = true;
+
         navMesh.enabled = false;
 
         rb.isKinematic = false;
@@ -176,8 +192,10 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected virtual void TurnOnNavmesh()
     {
-        rb.linearVelocity = Vector3.zero;
+        //navMesh.isStopped = false;
+
         rb.isKinematic = true;
+        rb.linearVelocity = Vector3.zero;
 
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
@@ -223,48 +241,20 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     #endregion
 
     #region attack
-
-    public List<AttackDebugInfo> getAllDebugInfo()
-    {
-        debugInfoList.Clear();
-        if (hasBodyAttackDebug) debugInfoList.Add(bodyAttackInfo);
-        if (hasAreaAttackDebug) debugInfoList.Add(areaAttackInfo);
-
-        return debugInfoList;
-    }
-
-    protected void updateBossCharging(float currentTime, float maxTime, float range, float angle)
-    {
-        //coroutine으로 currentTime 을 늘려줘야 함
-        float progress = Mathf.Clamp01(currentTime / maxTime);
-
-        areaAttackInfo = new AttackDebugInfo
-        {
-            shape = AttackShape.sector,
-            center = transform.position,
-            size = new Vector3(range,0,0),
-            angle = angle,
-            direction = lookDir,
-            color = Color.Lerp(Color.yellow,Color.red,progress),
-            ratio = progress
-        };
-        hasAreaAttackDebug = true;
-    }
-
     protected bool BodyAttack(float range)
     {
         float checkRadius = radius + range;
 
-        bodyAttackInfo = new AttackDebugInfo
+        lastAttackInfo = new AttackDebugInfo
         {
-            shape = AttackShape.sphere,
             center = transform.position,
-            size = Vector3.one * checkRadius,
+            halfExtents = Vector3.one * checkRadius,
             rotation = Quaternion.identity,
             color = Color.gray,
-            ratio = 1f
+            angle = 0f,
+            direction = transform.forward
         };
-        hasBodyAttackDebug = true;
+        hasDebugInfo = true;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
         foreach (Collider hit in hits)
@@ -282,18 +272,16 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         Vector3 dir = (player.transform.position - transform.position).normalized;
         dir.y = 0f;
-        areaAttackInfo = new AttackDebugInfo
+        lastAttackInfo = new AttackDebugInfo
         {
-            shape = AttackShape.sector,
             center = transform.position,
-            size = new Vector3(range, 0, 0),
+            halfExtents = Vector3.one * range,
             rotation = Quaternion.identity,
             color = Color.magenta,
             angle = angle,
-            direction = lookDir,
-            ratio = 1f
+            direction = dir
         };
-        hasAreaAttackDebug = true;
+        hasDebugInfo = true;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, range);
         foreach (Collider hit in hits)
