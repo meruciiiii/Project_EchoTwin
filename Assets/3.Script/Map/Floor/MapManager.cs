@@ -5,14 +5,16 @@ using UnityEngine;
 public class MapManager : MonoBehaviour
 {
     private Dictionary<Vector2Int, FloorData> microMap;          // map node is here
+    private Dictionary<Vector2Int, GameObject> roomObject;
     private MapCreater mapCreater;
     private MapChecker mapChecker;
     private GameObject mapDrawCanvas;
     private MapDrawer mapDrawer;
     private MapRoomPopulator mapRoomPopulator;
+    private RoomView roomView;
     private MapMoving mapMoving;
     //private MapTrace mapTrace;
-    [SerializeField] private RoomPrefabs roomPrefabs;
+    [SerializeField] private RoomObjects roomObjects;
     [SerializeField] private Vector2Int currentCoord;
 
     //오브젝트 연결 필요(맵 순서에 맞춰서, 노드들에 입히는것 중복 없게 만들기)
@@ -28,9 +30,13 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetComponent MapDrawer is fail");
         if (!TryGetComponent(out mapRoomPopulator))
             Debug.Log("TryGetComponent MapRoomPopulator is fail");
+        if (!TryGetComponent(out roomView))
+            Debug.Log("TryGetComponent RoomView is fail");
         if (!TryGetComponent(out mapMoving))
             Debug.Log("TryGetComponent MapMoving is fail");
-        roomPrefabs = Resources.Load<RoomPrefabs>("RoomPrefabsScriptableObject");
+        if (!TryGetComponent(out roomObjects))
+            Debug.Log("TryGetComponent MapMoving is fail");
+        //roomObjects = Resources.Load<RoomObjects>("RoomPrefabsScriptableObject");
     }
     public void GenerateMap()
     {
@@ -49,16 +55,18 @@ public class MapManager : MonoBehaviour
         int count = 100 - safety;
         Debug.Log("Map Create is Finished in " + count + "....................");
         mapDrawer.EnterDraw(GetMap());
-        mapRoomPopulator.Populate(microMap, 1, 1, roomPrefabs);//please edit stage and floor
+        roomObject = mapRoomPopulator.Populate(microMap, 1, 1, roomObjects);//please edit stage and floor
         Debug.Log("Populate is sucess");
         SetStartCoord();
-        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
+        Debug.Log("currentCoord is : " + currentCoord);
+        mapMoving.MoveStartRooom();
+        if (!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
         {
-            Debug.Log("currentCoord is Error");
+            Debug.Log("TryGetValue roomPrefab is Error");
             return;
         }
-        mapMoving.ExecuteMove(currentCoord, floor.GetRoomData());
-        
+        roomView.SetDoors(roomPrefab);
+        roomView.OnDoorUsed += PlayerTryMove;
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
     {
@@ -70,11 +78,21 @@ public class MapManager : MonoBehaviour
         Vector2Int target = currentCoord + direction;
         if (!microMap.TryGetValue(target, out FloorData floor))
         {
+            Debug.Log("currentCoord is Error");
             return;
         }
-
         currentCoord = target;
-        mapMoving.ExecuteMove(direction, floor.GetRoomData());
+        //해당 오브젝트 가져오기
+        if(!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
+        {
+            Debug.Log("TryGetValue roomPrefab is Error");
+            return;
+        }
+        //이전 문에 대한 방향에 맞게 해당하는 문의 스폰위치 가져오기
+        //스폰 위치 Vector3 Position
+        roomView.SetDoors(roomPrefab);
+        Vector3 playerSpawnPosition = roomView.GetDoor(direction);
+        mapMoving.MovePlayer(playerSpawnPosition);
 
     }// 플레이어가 움직이면 event에서 실행될 메서드
     private void SetStartCoord()
@@ -83,18 +101,11 @@ public class MapManager : MonoBehaviour
         {
             if (pair.Value.getBoolStartRoom())
             {
+                Debug.Log("Start Room type check : "+pair.Value.GetRoomData().GetRoomType());
+                Debug.Log("Start Room object name : "+ roomObject[pair.Key].name);
                 currentCoord = pair.Key;
                 break;
             }
-        }
-    }
-    private void ConnectDoors()
-    {
-        DoorTrigger[] doors = FindObjectsOfType<DoorTrigger>();
-
-        foreach (var door in doors)
-        {
-            door.onPlayerEnter += PlayerTryMove;
         }
     }
 }

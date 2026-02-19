@@ -48,7 +48,7 @@ public class MapDrawer : MonoBehaviour
             if (drawMap.Value.getBoolStartRoom())
             {
                 //Debug.Log(drawMap.Key+": start node");
-                images[0].color = Color.red;
+                images[0].color = Color.green;
             }
             // drawMap 데이터 중 endroom 값이 true 이면 red으로 색상 변경
             if (drawMap.Value.getBoolEndRoom())
@@ -56,7 +56,7 @@ public class MapDrawer : MonoBehaviour
                 //Debug.Log(drawMap.Key + ": end node");
                 //bossRoomisTop = drawMap.Value.GetDoorState(2);
                 //Debug.Log("bossssssssssssssssssssssssssRoomisTop is " + bossRoomisTop);
-                images[0].color = Color.green;
+                images[0].color = Color.red;
             }
             RectTransform rt = ui.GetComponent<RectTransform>();
 

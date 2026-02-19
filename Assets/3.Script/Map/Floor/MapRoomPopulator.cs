@@ -12,26 +12,28 @@ public class MapRoomPopulator : MonoBehaviour
     int stage;
     int floor;
     Room.RoomType roomType;
-    RoomPrefabs roomPrefabs;
+    RoomObjects roomObjects;
     GameObject targetObject;
     System.Random rnd = new System.Random();
 
-    public void Populate(Dictionary<Vector2Int, FloorData> microMap, int stage, int floor, RoomPrefabs roomPrefabs)
+    public Dictionary<Vector2Int, GameObject> Populate(Dictionary<Vector2Int, FloorData> microMap, int stage, int floor, RoomObjects roomObjects)
     {
         this.stage = stage;
         this.floor = floor;
         RoomCondition();
         //room 생성
-        this.roomPrefabs = roomPrefabs;
+        this.roomObjects = roomObjects;
         SetBattleRoomNum();
         nextRoomIDNum = 0;
+        Dictionary<Vector2Int, GameObject> roomObject = new Dictionary<Vector2Int, GameObject>(); ;
         foreach (KeyValuePair<Vector2Int, FloorData> room in microMap)
         {
             CreateRoom(room.Value);
             nextRoomIDNum++;
+            roomObject.Add(room.Key, MappingRoom(room.Value.GetRoomData()));
         }
         //연결
-
+        return roomObject;
     }
     private void CreateRoom(FloorData floor)
     {
@@ -147,12 +149,52 @@ public class MapRoomPopulator : MonoBehaviour
         eliteRoomCount = 0;
         eliteRoomProbability = 30;
     }
-    private void SelectGameObject()
+    private GameObject MappingRoom(Room room)
     {
-
-    }
-    private void SetRoomDoor()
-    {
-
+        if (room.GetRoomType().Equals(Room.RoomType.Start))
+        {
+            return roomObjects.physicalStartRoom;
+        }
+        else if (room.GetRoomType().Equals(Room.RoomType.Battle))
+        {
+            return roomObjects.physicalBattleRoom[room.GetRoomID()-1];
+        }
+        else if (room.GetRoomType().Equals(Room.RoomType.Shop))
+        {
+            return roomObjects.physicalShopRoom;
+        }
+        else if (room.GetRoomType().Equals(Room.RoomType.Forge))
+        {
+            return roomObjects.physicalForgeRoom;
+        }
+        else if (room.GetRoomType().Equals(Room.RoomType.Elite))
+        {
+            if (room.GetRoomID().Equals(19))
+                return roomObjects.physicalEliteRoom[0];
+            else if (room.GetRoomID().Equals(20))
+                return roomObjects.physicalEliteRoom[1];
+        }
+        else if (room.GetRoomType().Equals(Room.RoomType.Reward))
+        {
+            return roomObjects.physicalRewardRoom;
+        }
+        else if (room.GetRoomType().Equals(Room.RoomType.Boss))
+        {
+            if (stage.Equals(1))
+            {
+                return roomObjects.physicalFirstBossRoom;
+            }
+            else if (stage.Equals(2))
+            {
+                return roomObjects.physicalSecondBossRoom;
+            }
+            else
+            {
+                Debug.Log("Int stage is error");
+                return roomObjects.physicalFirstBossRoom;
+            }
+        }
+        Debug.Log("Room.RoomType roomType is error");
+        return roomObjects.physicalStartRoom;
     }
 }

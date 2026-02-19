@@ -188,6 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9080565026189350799}
   - component: {fileID: 3240305020188207786}
+  - component: {fileID: 1633328986096855366}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -231,6 +232,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1633328986096855366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134149187177419736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed55856f103a8de45b2d721de77d589d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
+  selectedDoorDirection: 0
 --- !u!1 &1571401420661942047
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3265380892815619941}
   - component: {fileID: 8876882026748783580}
+  - component: {fileID: 7011971342319822596}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -354,6 +369,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7011971342319822596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2831095619109855102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed55856f103a8de45b2d721de77d589d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
+  selectedDoorDirection: 2
 --- !u!1 &2906707280799269896
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498828562058828846}
   - component: {fileID: 6650777172762637404}
+  - component: {fileID: 3764590343118692397}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -407,6 +436,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3764590343118692397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2906707280799269896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed55856f103a8de45b2d721de77d589d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
+  selectedDoorDirection: 1
 --- !u!1 &3247919766385998441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4872890769864398898}
   - component: {fileID: 2212825352196970968}
+  - component: {fileID: 3052078206222932001}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -1164,6 +1207,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3052078206222932001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5163338353247305518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed55856f103a8de45b2d721de77d589d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
+  selectedDoorDirection: 3
 --- !u!1 &5365504856829605803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,7 +2296,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 639899ac34e4ae045b55784628af8f8c, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 925a15f1175ae4e419a779cd3f369a00, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &7038800041569224808
 GameObject:

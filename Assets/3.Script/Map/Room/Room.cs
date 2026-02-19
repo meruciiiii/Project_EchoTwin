@@ -30,4 +30,12 @@ public class Room
     {
         this.roomType = RoomType.Start;
     }
+    public int GetRoomID()
+    {
+        return roomID;
+    }
+    public RoomType GetRoomType()
+    {
+        return roomType;
+    }
 }

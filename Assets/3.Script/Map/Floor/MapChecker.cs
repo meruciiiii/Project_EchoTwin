@@ -32,10 +32,10 @@ public class MapChecker : MonoBehaviour
         }
         deepestDistance = 0;
         if (microMap.ContainsKey(startNode))
-            microMap[startNode].SetStartRoom();
+            microMap[startNode].SetEndRoom();
         startNode = Vector2Int.zero;
         if (microMap.ContainsKey(furthestNode))
-            microMap[furthestNode].SetEndRoom();
+            microMap[furthestNode].SetStartRoom();
         furthestNode = Vector2Int.zero;
         return checker;
     }

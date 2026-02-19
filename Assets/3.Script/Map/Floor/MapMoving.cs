@@ -20,21 +20,18 @@ public class MapMoving : MonoBehaviour
     //private GameObject nextPlayerSPs;                                               // 플레이어가 넘어갈 방의 플레이어 스폰그룹의 상위 오브젝트
     //private GameObject player;                                                      // 위치를 옮길 플레이어 오브젝트
 
-    [SerializeField] private RoomView roomView;
     [SerializeField] private Transform player;
-
-    public void ExecuteMove(Vector2Int direction, Room room)
+    private void Awake()
     {
-        // 방 갱신
-        roomView.Initialize(room);
-
-        // 실제 플레이어 이동
-        MovePlayer(direction);
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
-
-    private void MovePlayer(Vector2Int direction)
+    public void MoveStartRooom()
     {
-        Vector3 move = new Vector3(direction.x, 0, direction.y);
-        player.position += move;
+        Debug.Log("Entered StartRoom");
+        player.position = new Vector3(0, 0.5f, -190);
+    }
+    public void MovePlayer(Vector3 position)
+    {
+        player.position = position;
     }
 }

@@ -31,11 +31,14 @@ public class DoorTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+        Debug.Log("Door Triger is started");
         if(Direction== Vector2Int.zero)
         {
             Debug.Log("Direction is not selected");
             return;
         }
+        Debug.Log("Invoke from: " + gameObject.name + " / " + GetInstanceID());
+        Debug.Log("Invoke : " + this.GetInstanceID());
         onPlayerEnter?.Invoke(Direction);
     }
 }
