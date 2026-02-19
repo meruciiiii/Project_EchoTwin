@@ -99,7 +99,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         currentHP -= damage;
 
-        if (ani != null) ani.SetTrigger("Hit");
+        //if (ani != null) 
+            ani.SetTrigger("Hit");
 
         checkOnDie();
     }
@@ -116,7 +117,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     }
     private IEnumerator DeathRoutine()
     {
-        if (ani != null) ani.SetTrigger("doDeath");
+        if (ani != null) ani.SetTrigger("Death");
 
         // 애니메이션 길이에 맞춰 대기 (예: 1.5초)
         yield return new WaitForSeconds(1.5f);

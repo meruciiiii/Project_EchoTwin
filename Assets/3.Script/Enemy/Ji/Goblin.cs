@@ -29,10 +29,12 @@ public class Goblin : EnemyStateAbstract
         state = EnemyState.attack;
 
         TurnOffNavmesh();
+        //animator
+        if (ani != null) ani.SetTrigger("Attack");
+        
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
-        //animator
         checkAttackTime();
 
         bool isAttacked = false;
