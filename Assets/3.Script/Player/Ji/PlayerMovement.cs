@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         // 대쉬 중에는 일반 이동/회전 로직 건너뜀
 
         if (stats.isDash) return;
+        if (action.isKnockback) return;
         FocusOnMouse();
         Move();
     }

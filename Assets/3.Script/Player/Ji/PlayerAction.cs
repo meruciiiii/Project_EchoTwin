@@ -18,8 +18,10 @@ public class PlayerAction : MonoBehaviour
     private AttackContext context;
     private PlayerStats stats;
     private FlashEffect effect;
+    private Rigidbody rb;
     private Animator ani;
 
+    public bool isKnockback = false;
     public bool hasDamaged = false;
     [SerializeField] public bool forStopMove = false;
     public bool forStopRotate = false;
@@ -38,6 +40,7 @@ public class PlayerAction : MonoBehaviour
         TryGetComponent(out effect);
         TryGetComponent(out inputManager);
         TryGetComponent(out gizmo);
+        TryGetComponent(out rb);
         ani = GetComponentInChildren<Animator>();
     }
 
@@ -86,7 +89,7 @@ public class PlayerAction : MonoBehaviour
         stats.takeDamage(damage);
 
         Vector3 dir = (damagePos - transform.position).normalized;
-        knockBack(dir);
+        knockback(dir);
 
         StartCoroutine(superArmor());
 
@@ -98,9 +101,28 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
-    private void knockBack(Vector3 dir)
+    private void knockback(Vector3 dir)
     {
-        transform.GetComponent<Rigidbody>().AddForce(-dir * stats.KnockBackForce, ForceMode.Impulse);
+        if (Equipment.MainWeapon.IsCharging) return;
+
+        if (isKnockback) return;
+
+        StartCoroutine(knockBack_Co(dir));
+    }
+
+    private IEnumerator knockBack_Co(Vector3 dir)
+    {
+        isKnockback = true;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.AddForce(-dir * stats.KnockBackForce, ForceMode.Impulse);
+
+        yield return new WaitForFixedUpdate();
+
+        while (rb.linearVelocity.magnitude > stats.KnockBackForce * 0.5f) yield return null;
+
+        isKnockback = false;
+        //transform.GetComponent<Rigidbody>().AddForce(-dir * stats.KnockBackForce, ForceMode.Impulse);
     }
 
     public void OnWeaponAcquire(WeaponID ID)

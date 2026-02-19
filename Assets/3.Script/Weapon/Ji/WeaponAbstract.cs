@@ -45,6 +45,9 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected float comboExpireTime;
     protected bool isCancelled = false;
+    protected bool isCharging = false;
+    public bool IsCharging => isCharging;
+
 
     protected AttackDebugInfo lastAttackInfo;
     protected bool hasDebugInfo;

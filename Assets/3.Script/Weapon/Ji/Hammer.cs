@@ -5,11 +5,8 @@ using UnityEngine;
 
 public class Hammer : WeaponAbstract
 {
-    private bool isCharging = false;
-    public bool IsCharging => isCharging;
     private float time = 0f;
     private Coroutine coroutine;
-
 
     private List<Collider> getTargetInSector()
     {
@@ -75,6 +72,7 @@ public class Hammer : WeaponAbstract
     private IEnumerator Attack_Co(AttackContext context)
     {
         isCharging = true;
+        action.GetComponent<Rigidbody>().isKinematic = true;
 
         SetAnimator();//무기 든 모션
 
@@ -117,6 +115,7 @@ public class Hammer : WeaponAbstract
             enemyKnockback(target);
         }
 
+        action.GetComponent<Rigidbody>().isKinematic = false;
         coroutine = null;
         isCharging = false;
         isCancelled = false;
