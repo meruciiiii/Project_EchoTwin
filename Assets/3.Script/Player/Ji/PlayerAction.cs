@@ -20,7 +20,7 @@ public class PlayerAction : MonoBehaviour
     private FlashEffect effect;
     private Animator ani;
 
-    private bool hasDamaged = false;
+    public bool hasDamaged = false;
     [SerializeField] public bool forStopMove = false;
     public bool forStopRotate = false;
 
