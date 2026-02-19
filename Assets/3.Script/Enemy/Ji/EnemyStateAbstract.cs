@@ -76,6 +76,13 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             TurnOffNavmesh();
             return;
         }
+
+        // 속도가 있으면 Run, 없으면 Idle
+        if (ani != null)
+        {
+            ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
+        }
+
         if (navMesh.desiredVelocity.x > 0.1f)
         {
             GetComponentInChildren<SpriteRenderer>().flipX = false;
@@ -91,6 +98,9 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (state == EnemyState.dead) return;
 
         currentHP -= damage;
+
+        if (ani != null) ani.SetTrigger("Hit");
+
         checkOnDie();
     }
 
@@ -100,8 +110,18 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             state = EnemyState.dead;
             TurnOffNavmesh();
-            Destroy(gameObject);
+            //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
+            StartCoroutine(DeathRoutine());
         }
+    }
+    private IEnumerator DeathRoutine()
+    {
+        if (ani != null) ani.SetTrigger("doDeath");
+
+        // 애니메이션 길이에 맞춰 대기 (예: 1.5초)
+        yield return new WaitForSeconds(1.5f);
+
+        Destroy(gameObject);
     }
 
     protected virtual bool canAttack()
