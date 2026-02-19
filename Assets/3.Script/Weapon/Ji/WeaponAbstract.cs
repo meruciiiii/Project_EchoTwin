@@ -79,9 +79,10 @@ public abstract class WeaponAbstract : MonoBehaviour
         if (animator.IsInTransition(0)) return false;
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
+        //Debug.Log(animator.IsInTransition(0) + "animator");
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime < 0.65f)
+            if (stateInfo.normalizedTime < 0.5f)
             {
                 return false;
             }
@@ -112,7 +113,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void AttackTimeChecker()
     {
-        if(Time.time > lastAttackTime + 1 /weaponData.attackSpeed)
+        if(Time.time > lastAttackTime + 2f /weaponData.attackSpeed)
         {
             comboCount = 0;
         }
