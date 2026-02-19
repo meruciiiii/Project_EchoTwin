@@ -27,6 +27,10 @@ public abstract class WeaponAbstract : MonoBehaviour
     [SerializeField] protected Animator animator;
     [SerializeField] protected PlayerEquipment equipment;
     [SerializeField] protected InputManager input;
+
+    [SerializeField] protected float radius;
+    [SerializeField] protected float angle;
+  
     protected PlayerAction action;
 
     //public WeaponType weaponType;

@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1500222037847732299}
   - component: {fileID: 6028054692264545905}
+  - component: {fileID: 9070587743961033223}
   m_Layer: 0
   m_Name: 202_Bringer_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1500222037847732299
 Transform:
   m_ObjectHideFlags: 0
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 213063058649400304}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 347.27274, y: 1.6594529, z: -191.59808}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -54,6 +55,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.3289715, y: 2.3788216, z: 0.2}
   m_Center: {x: -0.058359563, y: 1.1595174, z: 0}
+--- !u!114 &9070587743961033223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213063058649400304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4943e9d6b353db046b3d2c43d2922c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BringerProjectile
 --- !u!1 &1687781744588780627
 GameObject:
   m_ObjectHideFlags: 0
