@@ -11,6 +11,10 @@ GameObject:
   - component: {fileID: 751920994904368410}
   - component: {fileID: 2344259271823213892}
   - component: {fileID: 195724075899031452}
+  - component: {fileID: 5470725974333926996}
+  - component: {fileID: 1867195443535947967}
+  - component: {fileID: 7398599536974779931}
+  - component: {fileID: 116578621360475903}
   m_Layer: 0
   m_Name: 109_Skull
   m_TagString: Untagged
@@ -28,8 +32,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8151509768894580734}
   m_Father: {fileID: 0}
@@ -80,8 +84,77 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6135874, y: 0.9907998, z: 1}
-  m_Center: {x: 0.02760087, y: 0.49221617, z: 0}
+  m_Size: {x: 0.6135874, y: 2.0577106, z: 1}
+  m_Center: {x: 0.027600884, y: -0.04123926, z: 0}
+--- !u!114 &5470725974333926996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2740674598713461448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98c8d34c6681e94e849d9a160342bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackDebugGizmo
+  mainWeapon: {fileID: 0}
+  subWeapon: {fileID: 0}
+  enemy: {fileID: 0}
+--- !u!114 &1867195443535947967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2740674598713461448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5eb11b794797e4cbba69e4201c560c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashEffect
+--- !u!195 &7398599536974779931
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2740674598713461448}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1.08
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &116578621360475903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2740674598713461448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d8cef2fe52662245b0298f8a0e2b35f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pebble
+  enemyData: {fileID: 0}
+  navMesh: {fileID: 0}
+  player: {fileID: 0}
+  knockbackTime: 0.2
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
+  projectile: {fileID: 0}
 --- !u!1 &6354200790711754995
 GameObject:
   m_ObjectHideFlags: 0

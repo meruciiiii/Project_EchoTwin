@@ -249,9 +249,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5651951340925732923}
   - {fileID: 2978161379628409034}
   - {fileID: 4004566520325754767}
-  - {fileID: 5651951340925732923}
   - {fileID: 9090260450361088113}
   - {fileID: 8736390342064708790}
   - {fileID: 5531611577848627310}
@@ -502,7 +502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6900071029114840312, guid: 53f66d0cc1522534293c1675797df0f4, type: 3}
       propertyPath: m_Name
-      value: Floor
+      value: Platform_nav
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
