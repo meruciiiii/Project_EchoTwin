@@ -91,7 +91,7 @@ public class Golem : EnemyStateAbstract
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
 
-        bool isAttacked = false;
+        //bool isAttacked = false;
         Vector3 dir = (targetPos - startPos).normalized;
         dir.y = 0f;
 
@@ -106,13 +106,13 @@ public class Golem : EnemyStateAbstract
 
             distance -= enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime;
 
-            if (!isAttacked)
-            {
-                if (BodyAttack(enemyData.attackRange))
-                {
-                    isAttacked = true;
-                }
-            }
+            //if (!isAttacked)
+            //{
+            //    if (BodyAttack(enemyData.attackRange))
+            //    {
+            //        isAttacked = true;
+            //    }
+            //}
             yield return null;
         }
         yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
@@ -130,7 +130,7 @@ public class Golem : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
-        BodyAttack(standardRange);
+        //BodyAttack(standardRange);
 
         //setPlayerPos();
     }

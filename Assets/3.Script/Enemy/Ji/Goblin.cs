@@ -20,6 +20,7 @@ public class Goblin : EnemyStateAbstract
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
+        if (coroutine != null) return;
 
         coroutine = StartCoroutine(Attack_Co(attackSpeed));
     }
@@ -31,7 +32,7 @@ public class Goblin : EnemyStateAbstract
         TurnOffNavmesh();
         //animator
         if (ani != null) ani.SetTrigger("Attack");
-        
+
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
@@ -77,9 +78,8 @@ public class Goblin : EnemyStateAbstract
     public override void Move()
     {
         if (state == EnemyState.knockback) return;
-        if (coroutine != null) return;
 
-        BodyAttack(standardRange);
+        //BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
 
@@ -127,8 +127,8 @@ public class Goblin : EnemyStateAbstract
     protected override void TurnOnNavmesh()
     {
 
-        rb.isKinematic = true;
         rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
 
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {

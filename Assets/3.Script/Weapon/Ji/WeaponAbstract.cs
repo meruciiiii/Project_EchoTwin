@@ -29,7 +29,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     [SerializeField] protected InputManager input;
 
     [SerializeField] protected float attackAngle = 90f;
-  
+
     protected PlayerAction action;
 
     //public WeaponType weaponType;
@@ -40,8 +40,9 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected int resonanceCount;
 
     protected float lastAttackTime;
-    protected int comboCount;
+    protected int comboCount = 0;
     protected bool isComboCooltime = false;
+    protected bool isAttackReserved = false;
 
     protected float comboExpireTime;
     protected bool isCancelled = false;
@@ -60,7 +61,6 @@ public abstract class WeaponAbstract : MonoBehaviour
     private void Awake()
     {
         action = stats.GetComponent<PlayerAction>();
-        comboCount = 0;
         SetResonance(10);
         SetAttackTime();
     }
@@ -82,7 +82,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         //Debug.Log(animator.IsInTransition(0) + "animator");
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime < 0.5f)
+            if (stateInfo.normalizedTime < 0.5f || stateInfo.normalizedTime > 0.9f)
             {
                 return false;
             }
@@ -97,7 +97,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime <  0.65f)
+            if (stateInfo.normalizedTime < 0.65f)
             {
                 return false;
             }
@@ -105,7 +105,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         return true;
     }
-    
+
     private void SetAttackTime()
     {
         lastAttackTime = Time.time;
@@ -113,7 +113,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void AttackTimeChecker()
     {
-        if(Time.time > lastAttackTime + 2f /weaponData.attackSpeed)
+        if (Time.time > lastAttackTime + 2f / weaponData.attackSpeed)
         {
             comboCount = 0;
         }
@@ -130,8 +130,20 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void SetAnimator()
     {
-        animator.SetInteger("ComboState", comboCount);
-        if (comboCount == 0)
+        //animator.SetInteger("ComboState", comboCount);
+        //if (comboCount == 0)
+        //{
+        //    animator.SetTrigger("Attack");
+        //}
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if(!stateInfo.IsTag("Attack") || stateInfo.normalizedTime > 0.9f)
+        {
+            comboCount = 0;
+        }
+
+        if(comboCount == 0)
         {
             animator.SetTrigger("Attack");
         }

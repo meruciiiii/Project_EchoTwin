@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         if (action.forStopMove) return;
 
         Vector2 moveInput = Input.MoveValue;
+
         // 입력이 없을 때도 애니메이션을 서서히(0.1f) Idle로 돌림
         if (moveInput.magnitude <= 0.1f)
         {

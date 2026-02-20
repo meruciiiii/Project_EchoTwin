@@ -90,7 +90,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
         }
 
-        if(navMesh.enabled && navMesh.desiredVelocity.sqrMagnitude > 0.01f)
+        if (navMesh.enabled && navMesh.desiredVelocity.sqrMagnitude > 0.01f)
         {
             lookDir = navMesh.desiredVelocity.normalized;
             lookDir.y = 0f;
@@ -104,9 +104,9 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (state == EnemyState.dead) return;
 
         currentHP -= damage;
-
+        Debug.Log(state);
         //if (ani != null) 
-            ani.SetTrigger("Hit");
+        ani.SetTrigger("Hit");
 
         checkOnDie();
     }
@@ -116,6 +116,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (currentHP <= 0)
         {
             state = EnemyState.dead;
+            Debug.Log(state);
             TurnOffNavmesh();
             //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
             StartCoroutine(DeathRoutine());
@@ -273,31 +274,39 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         hasAreaAttackDebug = true;
     }
 
-    protected bool BodyAttack(float range)
+    //protected bool BodyAttack(float range)
+    //{
+    //    float checkRadius = radius + range;
+
+    //    bodyAttackInfo = new AttackDebugInfo
+    //    {
+    //        shape = AttackShape.sphere,
+    //        center = transform.position,
+    //        size = Vector3.one * checkRadius,
+    //        rotation = Quaternion.identity,
+    //        color = Color.gray,
+    //        ratio = 1f
+    //    };
+    //    hasBodyAttackDebug = true;
+
+    //    Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
+    //    foreach (Collider hit in hits)
+    //    {
+    //        if (hit.CompareTag("Player"))
+    //        {
+    //            player.takeDamage(enemyData.damage, transform.position);
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
+
+    protected void OnCollisionEnter(Collision collision)
     {
-        float checkRadius = radius + range;
-
-        bodyAttackInfo = new AttackDebugInfo
+        if (collision.transform.CompareTag("Player"))
         {
-            shape = AttackShape.sphere,
-            center = transform.position,
-            size = Vector3.one * checkRadius,
-            rotation = Quaternion.identity,
-            color = Color.gray,
-            ratio = 1f
-        };
-        hasBodyAttackDebug = true;
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
-        foreach (Collider hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                player.takeDamage(enemyData.damage, transform.position);
-                return true;
-            }
+            player.takeDamage(enemyData.damage, transform.position);
         }
-        return false;
     }
 
     protected void AreaAttack(float range, float angle)
@@ -308,7 +317,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             shape = AttackShape.sector,
             center = transform.position,
-            size = new Vector3(range,0,0),
+            size = new Vector3(range, 0, 0),
             rotation = Quaternion.identity,
             color = Color.magenta,
             angle = angle,
