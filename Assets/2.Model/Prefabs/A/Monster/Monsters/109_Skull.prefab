@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &751920994904368410
 Transform:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -147,13 +147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8cef2fe52662245b0298f8a0e2b35f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pebble
-  enemyData: {fileID: 0}
-  navMesh: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: ac4c6a0cbbc5c5a4da806f14dd888d87, type: 2}
+  navMesh: {fileID: 7398599536974779931}
   player: {fileID: 0}
   knockbackTime: 0.2
   ground:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   projectile: {fileID: 0}
 --- !u!1 &6354200790711754995
 GameObject:
@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 8151509768894580734}
   - component: {fileID: 1417110851135380145}
   - component: {fileID: 1657371948812040040}
+  - component: {fileID: 7376654722126886234}
   m_Layer: 0
   m_Name: 109_Skull_mesh
   m_TagString: Untagged
@@ -268,3 +269,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &7376654722126886234
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6354200790711754995}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.13, y: 0.39, z: 0.2}
+  m_Center: {x: 0, y: -0.07, z: 0}

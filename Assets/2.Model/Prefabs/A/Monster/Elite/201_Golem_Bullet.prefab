@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6751694727854897748}
   - component: {fileID: 5267963114745445118}
   - component: {fileID: -668009251908033342}
+  - component: {fileID: 8109517120590585865}
   m_Layer: 0
   m_Name: 201_Golem_Bullet
   m_TagString: Untagged
@@ -47,7 +48,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -67,6 +68,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c0e0f71bdf2a3419d1d5f4a7f3457b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GolemProjectile
+--- !u!114 &8109517120590585865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733646691776608040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98c8d34c6681e94e849d9a160342bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackDebugGizmo
+  mainWeapon: {fileID: 0}
+  subWeapon: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &4936572402052300990
 GameObject:
   m_ObjectHideFlags: 0
