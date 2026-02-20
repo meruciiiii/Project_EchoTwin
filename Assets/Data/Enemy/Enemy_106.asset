@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 106
   name: Crab
   tier: Normal
-  maxHP: 150
+  maxHP: 100
   damage: 18
   moveSpeed: 1.5
   attackSpeed: 0.7

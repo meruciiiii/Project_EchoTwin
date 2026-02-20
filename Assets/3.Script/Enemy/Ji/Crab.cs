@@ -20,6 +20,7 @@ public class Crab : EnemyStateAbstract
         if (state == EnemyState.dead) return;
         if (shieldCount > 0)
         {
+            if (ani != null) ani.SetTrigger("Ability");
             damage *= 1 - reduceRatio;
             effect.Flash(1, 0.5f);
         }
