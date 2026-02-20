@@ -138,12 +138,14 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        if(!stateInfo.IsTag("Attack") || stateInfo.normalizedTime > 0.9f)
+        if (!stateInfo.IsTag("Attack"))
         {
             comboCount = 0;
         }
 
-        if(comboCount == 0)
+        animator.SetInteger("ComboState", comboCount);
+
+        if (comboCount == 0)
         {
             animator.SetTrigger("Attack");
         }
