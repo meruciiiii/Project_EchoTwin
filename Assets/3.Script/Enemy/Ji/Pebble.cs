@@ -11,6 +11,7 @@ public class Pebble : EnemyStateAbstract
     {
         base.Update();
         if (state == EnemyState.dead) return;
+        ani.SetBool("Run", false);
         Move();
     }
 
