@@ -21,7 +21,7 @@ public class Rat : EnemyStateAbstract
     {
         if (state == EnemyState.knockback) return;
 
-        BodyAttack(enemyData.attackRange);
+        //BodyAttack(enemyData.attackRange);
 
         state = EnemyState.chase;
 

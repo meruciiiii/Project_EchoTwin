@@ -81,8 +81,8 @@ public class Bringer : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
-        BodyAttack(standardRange);
+        //BodyAttack(standardRange);
 
-        //setPlayerPos();
+        setPlayerPos();
     }
 }

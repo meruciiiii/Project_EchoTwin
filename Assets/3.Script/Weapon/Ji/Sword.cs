@@ -28,8 +28,6 @@ public class Sword : WeaponAbstract
             }
         }
 
-        Debug.Log($"{attackAngle} attackangle");
-
         lastAttackInfo = new AttackDebugInfo
         {
             shape = AttackShape.sector,

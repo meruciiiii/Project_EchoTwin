@@ -64,6 +64,7 @@ public class Skeleton : EnemyStateAbstract
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
+        if (coroutine != null) return;
 
         coroutine = StartCoroutine(Attack_Co());
     }
@@ -73,7 +74,7 @@ public class Skeleton : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
-        BodyAttack(standardRange);
+        //BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;
