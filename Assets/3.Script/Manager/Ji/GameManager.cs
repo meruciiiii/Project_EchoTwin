@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         Playing,
+        Loading,
         UI,
         Die,
     }
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     private GameState gameState = GameManager.GameState.Playing;
     public GameState gamestate => gameState;
 
+    public int lastStage = 0;
+    
     public static GameManager instance = null;
 
     private void Awake()
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
         }
         else if(gameState == GameState.Die)
         {
+            //lastStage = currentStage;
             isDead = true;
             //SceneChangeManager.instance.SceneChange(SceneChangeManager.SceneType.Die); 뒤지는 씬으로 넘기기
         }
@@ -50,6 +54,10 @@ public class GameManager : MonoBehaviour
         {
             isStop = false;
             isDead = false;
+        }
+        else if(gamestate == GameState.Loading)
+        {
+            isStop = true;
         }
     }
 }
