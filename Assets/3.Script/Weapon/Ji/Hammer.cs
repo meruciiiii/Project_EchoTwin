@@ -68,50 +68,65 @@ public class Hammer : WeaponAbstract
         if (isCharging) return;
         coroutine = StartCoroutine(Attack_Co(context));
     }
-
     private IEnumerator Attack_Co(AttackContext context)
     {
         isCharging = true;
         action.GetComponent<Rigidbody>().isKinematic = true;
 
-        SetAnimator();//무기 든 모션
+        SetAnimator(); // 공격 애니메이션 트리거 (Trigger "Attack")
 
-        time = 0f;
-        yield return new WaitForSeconds(0.1f);
-        AniSpeed(0f);
+        // 애니메이션 상태가 바뀔 때까지 한 프레임 대기
+        yield return null;
 
-        while (time < 0.3f)
-        {
-            if (!input.isAttackPressed)
-            {
-                cancleCharging();
-                yield break;
-            }
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        time = 0f;
-
+        // [핵심 로직] 버튼을 누르고 있는 동안 무한 루프
         while (input.isAttackPressed)
         {
-            time += Time.deltaTime;
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (stateInfo.IsTag("Attack"))
+            {
+                // 애니메이션이 0.5f(절반)에 도달하면 속도를 0으로 만들어 멈춤 (차징 대기)
+                if (stateInfo.normalizedTime >= 0.3f)
+                {
+                    AniSpeed(0f);
+                }
+            }
             yield return null;
         }
 
-        time = Mathf.Min(time, 3f);
+        AnimatorStateInfo finalState = animator.GetCurrentAnimatorStateInfo(0);
 
+        // 1. 0.5f 미만에서 뗐다면 공격 취소
+        if (finalState.normalizedTime < 0.3f)
+        {
+            cancleCharging();
+            yield break;
+        }
+
+        // 2. 0.5f 이상에서 뗐다면 공격 실행
+        // 멈췄던 애니메이션 속도를 다시 1로 복구
         AniSpeed(1f);
 
+        // 버튼을 뗀 후부터 추가 차징 시간 측정 (기존 로직 유지)
+        time = 0f;
+        
+        /*
+        while (input.isAttackPressed) // 이미 위에서 뗐으므로 이 루프는 스킵될 것임
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        */
+
+        // 공격 타격 시점까지 대기 (애니메이션의 남은 부분 재생 시간)
         yield return new WaitForSeconds(0.2f / weaponData.attackSpeed);
 
+        // 타격 판정
         List<Collider> targets = getTargetInSector();
-
         foreach (Collider target in targets)
         {
             context.hitTargets.Add(target);
             target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
-
             enemyKnockback(target);
         }
 
