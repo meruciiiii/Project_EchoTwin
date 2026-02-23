@@ -17,8 +17,6 @@ public class MapMoving : MonoBehaviour
     //private GameObject currentRoomObject;                                           // 현재 플레이어가 있는 방의 오브젝트
     //private GameObject nextRoomObject;                                              // 플레이어가 넘어갈 방의 오브젝트
     //private GameObject currentPlayerSPs;                                            // 현재 플레이어가 있는 방의 플레이어 스폰그룹의 상위 오브젝트
-    //private GameObject nextPlayerSPs;                                               // 플레이어가 넘어갈 방의 플레이어 스폰그룹의 상위 오브젝트
-    //private GameObject player;                                                      // 위치를 옮길 플레이어 오브젝트
 
     [SerializeField] private Transform player;
     private void Awake()
@@ -34,4 +32,12 @@ public class MapMoving : MonoBehaviour
     {
         player.position = position;
     }
+    //public void PlayerPush(Vector2Int direction)
+    //{
+    //    Vector3 playerDirection = new Vector3()
+    //}
+    //private IEnumerator PlayerPushing()
+    //{
+
+    //}
 }

@@ -18,7 +18,7 @@ MonoBehaviour:
   maxHP: 35
   damage: 10
   moveSpeed: 3.8
-  attackSpeed: 1.5
+  attackSpeed: 0.1
   attackRange: 1.8
   coolTime: 2
   dropEXP: 18

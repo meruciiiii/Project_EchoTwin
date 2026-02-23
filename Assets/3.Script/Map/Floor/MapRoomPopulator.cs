@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 public class MapRoomPopulator : MonoBehaviour
 {
-    int eventRoomCount;
-    int eliteRoomCount;
-    int eliteRoomProbability;
-    int[] roomID;
-    int nextRoomIDNum;
-    int stage;
-    int floor;
-    Room.RoomType roomType;
-    RoomObjects roomObjects;
-    GameObject targetObject;
-    System.Random rnd = new System.Random();
+    private int eventRoomCount;
+    private int eliteRoomCount;
+    private int eliteRoomProbability;
+    private int roomID;
+    private int[] batteRoomID;
+    private int nextRoomIDNum;
+    private int stage;
+    private int floor;
+    private Room.RoomType roomType;
+    private RoomObjects roomObjects;
+    [SerializeField] private FloorScriptableObject floorScriptable;
+    private System.Random rnd = new System.Random();
 
     public Dictionary<Vector2Int, GameObject> Populate(Dictionary<Vector2Int, FloorData> microMap, int stage, int floor, RoomObjects roomObjects)
     {
@@ -38,7 +39,7 @@ public class MapRoomPopulator : MonoBehaviour
     private void CreateRoom(FloorData floor)
     {
         DecisionType(floor);
-        floor.GetRoomData().SetRoom(DecisionRoomID(), this.floor, DecisionMonsterPackID(), roomType);
+        floor.GetRoomData().SetRoom(roomID = DecisionRoomID(), this.floor, DecisionMonsterPackID(), roomType) ;
     }
     private int DecisionRoomID()
     {
@@ -49,7 +50,7 @@ public class MapRoomPopulator : MonoBehaviour
         }
         else if (roomType.Equals(Room.RoomType.Battle))
         {
-            choice = roomID[nextRoomIDNum];
+            choice = batteRoomID[nextRoomIDNum];
         }
         else if (roomType.Equals(Room.RoomType.Shop))
         {
@@ -80,28 +81,26 @@ public class MapRoomPopulator : MonoBehaviour
     }
     private void SetBattleRoomNum()
     {
-        roomID = new int[18];
-        int length = roomID.Length;
+        batteRoomID = new int[18];
+        int length = batteRoomID.Length;
         for (int i = 0; i < length; i++)
         {
-            roomID[i] = i + 1;
+            batteRoomID[i] = i + 1;
         }
         for (int i = 0; i < length; i++)
         {
             int k = rnd.Next(i + 1);
-            int temp = roomID[k];
-            roomID[k] = roomID[i];
-            roomID[i] = temp;
+            int temp = batteRoomID[k];
+            batteRoomID[k] = batteRoomID[i];
+            batteRoomID[i] = temp;
         }
     }
     private int DecisionMonsterPackID()
     {
-        int choice = 0;
-        if (roomType.Equals(Room.RoomType.Battle))
-        {
-            choice = UnityEngine.Random.Range(1, 9);
-        }
-        return choice;
+        if (roomID < 23)
+            return floorScriptable.rooms[roomID - 1].monsterPackID;
+        else
+            return floorScriptable.rooms[roomID - 79].monsterPackID;
     }
     private void DecisionType(FloorData floor)
     {

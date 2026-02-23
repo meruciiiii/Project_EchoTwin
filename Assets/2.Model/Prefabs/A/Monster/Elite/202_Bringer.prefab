@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9084874780780747145
 Transform:
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 7246479703544871162}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.71, y: 2.34, z: -2.5000043}
+  m_LocalPosition: {x: -1.71, y: 2.34, z: -0.003}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -303,9 +303,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: 202_Bringer_Bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 213063058649400304, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1500222037847732299, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6682765
+      value: 1.83
       objectReference: {fileID: 0}
     - target: {fileID: 1500222037847732299, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
       propertyPath: m_LocalPosition.y
@@ -313,7 +317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1500222037847732299, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.31788
+      value: -0.11
       objectReference: {fileID: 0}
     - target: {fileID: 1500222037847732299, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
       propertyPath: m_LocalRotation.w

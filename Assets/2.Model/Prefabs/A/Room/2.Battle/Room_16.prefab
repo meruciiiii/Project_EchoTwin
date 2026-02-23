@@ -44,7 +44,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7302852461599187741}
   - component: {fileID: 5282952113558240705}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform_nav
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 1da722ce7af1afb48bb91a9bc2b43219, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: cde201f82de330f4e9c6c038f8f2c640, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1313694494674773280
 GameObject:
@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 6085879515914086193}
   - component: {fileID: 3596788128944710378}
   - component: {fileID: 7712870893786422476}
+  - component: {fileID: 6543587701735714482}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -203,6 +204,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 2
+--- !u!114 &6543587701735714482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551765261156298029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &1895944223924868944
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,6 +695,7 @@ GameObject:
   - component: {fileID: 1415573457931357457}
   - component: {fileID: 8193564164259776125}
   - component: {fileID: 1793726852338841425}
+  - component: {fileID: 5682933769901739880}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -737,6 +753,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 0
+--- !u!114 &5682933769901739880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3883124103383073770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &3901697829947707292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,6 +1251,7 @@ GameObject:
   - component: {fileID: 5511693186862439575}
   - component: {fileID: 2942446625713129472}
   - component: {fileID: 2487942058337247200}
+  - component: {fileID: 5106766047148264661}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -1278,6 +1309,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 3
+--- !u!114 &5106766047148264661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6450290492770477609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &6492578976655918524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,6 +1478,7 @@ GameObject:
   - component: {fileID: 8450501961810461870}
   - component: {fileID: 6054217408084142098}
   - component: {fileID: 9124466454267157695}
+  - component: {fileID: 7370182658169709145}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -1490,6 +1536,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 1
+--- !u!114 &7370182658169709145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534493848236772039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &6594660095877355538
 GameObject:
   m_ObjectHideFlags: 0
@@ -6982,7 +7042,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1277885483427274290, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6908129
+      value: 0.7916025
       objectReference: {fileID: 0}
     - target: {fileID: 1277885483427274290, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_LocalScale.y
@@ -6990,7 +7050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1277885483427274290, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6908129
+      value: 0.95204914
       objectReference: {fileID: 0}
     - target: {fileID: 1277885483427274290, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7035,6 +7095,10 @@ PrefabInstance:
     - target: {fileID: 1941094041277940872, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_Name
       value: PlatformSmall_002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1941094041277940872, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

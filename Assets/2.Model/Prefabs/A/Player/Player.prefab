@@ -1622,10 +1622,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2HHammer
       objectReference: {fileID: 0}
-    - target: {fileID: 1676580046644239857, guid: 4418458f424a68f44bb4a31ab1a6d2c3, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 8827957161136208501, guid: 4418458f424a68f44bb4a31ab1a6d2c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.146
@@ -1688,10 +1684,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2HShotSword
       objectReference: {fileID: 0}
-    - target: {fileID: 2433183401127699998, guid: 33d5998c05266e54cbfc95d61fe9ba9e, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 3344160982127037783, guid: 33d5998c05266e54cbfc95d61fe9ba9e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.066
@@ -1748,10 +1740,6 @@ PrefabInstance:
       propertyPath: DualWeapon
       value: 
       objectReference: {fileID: 9004888474224783869}
-    - target: {fileID: 5560303928278231072, guid: 33d5998c05266e54cbfc95d61fe9ba9e, type: 3}
-      propertyPath: daggerPrefab
-      value: 
-      objectReference: {fileID: 2433183401127699998, guid: 4dc3785c478b7e2439709c8cb0ee5e55, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1814,10 +1802,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2HAxe
       objectReference: {fileID: 0}
-    - target: {fileID: 2418499675567049797, guid: 3537b7b497c887d4c9f4d75c9d850059, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 3916803346825685748, guid: 3537b7b497c887d4c9f4d75c9d850059, type: 3}
       propertyPath: input
       value: 
@@ -1830,10 +1814,6 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 156075459610407375}
-    - target: {fileID: 3916803346825685748, guid: 3537b7b497c887d4c9f4d75c9d850059, type: 3}
-      propertyPath: axePrefab
-      value: 
-      objectReference: {fileID: 2418499675567049797, guid: 563e3b50349673844a73bda6e20c8c02, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1896,10 +1876,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2HSpear
       objectReference: {fileID: 0}
-    - target: {fileID: 1921278514771966014, guid: b6326c9c91259d34e9a19af81c5233c2, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 9028144344288759285, guid: b6326c9c91259d34e9a19af81c5233c2, type: 3}
       propertyPath: input
       value: 
@@ -1933,14 +1909,6 @@ PrefabInstance:
     - target: {fileID: 3080971189016318417, guid: 9eda5e7f8056ba2408b196f55156fdae, type: 3}
       propertyPath: m_Name
       value: 1HSword
-      objectReference: {fileID: 0}
-    - target: {fileID: 3080971189016318417, guid: 9eda5e7f8056ba2408b196f55156fdae, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3080971189016318417, guid: 9eda5e7f8056ba2408b196f55156fdae, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5900695499678589400, guid: 9eda5e7f8056ba2408b196f55156fdae, type: 3}
       propertyPath: input

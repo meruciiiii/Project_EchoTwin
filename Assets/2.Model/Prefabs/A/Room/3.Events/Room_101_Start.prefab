@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 7720499302605724618}
   - component: {fileID: 4880321653999905083}
   - component: {fileID: 2017444888155671956}
+  - component: {fileID: 7373948781360413366}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -95,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 1879599695310730598}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.65, y: 0, z: -0.03}
+  m_LocalPosition: {x: -11.17, y: 0, z: -0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -136,6 +137,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 1
+--- !u!114 &7373948781360413366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879599695310730598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &3849122671017744914
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +162,7 @@ GameObject:
   - component: {fileID: 2771333285524601685}
   - component: {fileID: 5099364440534576368}
   - component: {fileID: 2201257225938585739}
+  - component: {fileID: 8808148375587181356}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -163,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 3849122671017744914}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 0, z: 9.42}
+  m_LocalPosition: {x: -0.04, y: 0, z: 11.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -204,6 +220,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 3
+--- !u!114 &8808148375587181356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3849122671017744914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &4498052687619272282
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +245,7 @@ GameObject:
   - component: {fileID: 7112896569132547746}
   - component: {fileID: 3699070098906103782}
   - component: {fileID: 6105632572363782451}
+  - component: {fileID: 8670834785714648835}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -231,7 +262,7 @@ Transform:
   m_GameObject: {fileID: 4498052687619272282}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.85, y: 0, z: -0.04}
+  m_LocalPosition: {x: 11.6, y: 0, z: -0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -272,6 +303,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 0
+--- !u!114 &8670834785714648835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4498052687619272282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &4709516332016324552
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +376,7 @@ Transform:
   m_GameObject: {fileID: 5116037176857169909}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.7200003, z: 0}
+  m_LocalPosition: {x: 0, y: -6.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -352,6 +397,7 @@ GameObject:
   - component: {fileID: 4952334781452997440}
   - component: {fileID: 6417676735664648522}
   - component: {fileID: 6658842368239476014}
+  - component: {fileID: 7402249304905476141}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -368,7 +414,7 @@ Transform:
   m_GameObject: {fileID: 6834423746297883960}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0, z: -9.98}
+  m_LocalPosition: {x: 0.06, y: 0, z: -11.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -409,6 +455,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 2
+--- !u!114 &7402249304905476141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6834423746297883960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &7312074844717613769
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,8 +564,8 @@ Transform:
   m_GameObject: {fileID: 7857902822041474905}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -1.47, z: 0}
+  m_LocalScale: {x: 1.3447, y: 1.3447, z: 1.3447}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6124917445934666653}
@@ -1169,15 +1229,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 216129491594329198, guid: 14f983802e7a8dd40b5580f58710adfb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8409
+      value: 1.1307582
       objectReference: {fileID: 0}
     - target: {fileID: 216129491594329198, guid: 14f983802e7a8dd40b5580f58710adfb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8409
+      value: 1.1307582
       objectReference: {fileID: 0}
     - target: {fileID: 216129491594329198, guid: 14f983802e7a8dd40b5580f58710adfb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8409
+      value: 1.1307582
       objectReference: {fileID: 0}
     - target: {fileID: 216129491594329198, guid: 14f983802e7a8dd40b5580f58710adfb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1185,7 +1245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 216129491594329198, guid: 14f983802e7a8dd40b5580f58710adfb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8
+      value: -9.47
       objectReference: {fileID: 0}
     - target: {fileID: 216129491594329198, guid: 14f983802e7a8dd40b5580f58710adfb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1821,11 +1881,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594640817046260401, guid: b0e143e25afd829449c7c3f1be4971d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.46
+      value: -1.13
       objectReference: {fileID: 0}
     - target: {fileID: 3594640817046260401, guid: b0e143e25afd829449c7c3f1be4971d7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.8
+      value: -4.72
       objectReference: {fileID: 0}
     - target: {fileID: 3594640817046260401, guid: b0e143e25afd829449c7c3f1be4971d7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2147,11 +2207,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594640817046260401, guid: b0e143e25afd829449c7c3f1be4971d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.55
+      value: 1.16
       objectReference: {fileID: 0}
     - target: {fileID: 3594640817046260401, guid: b0e143e25afd829449c7c3f1be4971d7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.8
+      value: -4.7199993
       objectReference: {fileID: 0}
     - target: {fileID: 3594640817046260401, guid: b0e143e25afd829449c7c3f1be4971d7, type: 3}
       propertyPath: m_LocalPosition.z

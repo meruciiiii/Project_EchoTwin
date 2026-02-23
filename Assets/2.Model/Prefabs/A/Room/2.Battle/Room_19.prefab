@@ -4926,7 +4926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3231054322457104182}
   - component: {fileID: 1471337710060416736}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform_nav
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5475,6 +5475,7 @@ GameObject:
   - component: {fileID: 1477043505154771102}
   - component: {fileID: 6971482476103564645}
   - component: {fileID: 6347084998689802405}
+  - component: {fileID: 8666165878734372795}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -5532,6 +5533,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 1
+--- !u!114 &8666165878734372795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3020075974373390643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &3256100538663163497
 GameObject:
   m_ObjectHideFlags: 0
@@ -5690,6 +5705,7 @@ GameObject:
   - component: {fileID: 4279725236559135778}
   - component: {fileID: 2576979579662066237}
   - component: {fileID: 2191646424342586927}
+  - component: {fileID: 913561075807234029}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -5747,6 +5763,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 3
+--- !u!114 &913561075807234029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993886081132848470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &4112296803269786079
 GameObject:
   m_ObjectHideFlags: 0
@@ -5758,6 +5788,7 @@ GameObject:
   - component: {fileID: 7394282687084895285}
   - component: {fileID: 5990746734871917456}
   - component: {fileID: 8912988545935080687}
+  - component: {fileID: 635849941199550433}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -5815,6 +5846,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 2
+--- !u!114 &635849941199550433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4112296803269786079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &4359500091917495896
 GameObject:
   m_ObjectHideFlags: 0
@@ -6231,6 +6276,7 @@ GameObject:
   - component: {fileID: 3995944753905912139}
   - component: {fileID: 3452584000808677316}
   - component: {fileID: 3415628484516923123}
+  - component: {fileID: 6892767610580136021}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -6288,6 +6334,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 0
+--- !u!114 &6892767610580136021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5372069127309821215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &5944500862401289906
 GameObject:
   m_ObjectHideFlags: 0
@@ -6982,6 +7042,10 @@ PrefabInstance:
     - target: {fileID: 294096222662239958, guid: be30b18102142cd478a9056b86260054, type: 3}
       propertyPath: m_Name
       value: ColumnBig_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 294096222662239958, guid: be30b18102142cd478a9056b86260054, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1107611009643805804, guid: be30b18102142cd478a9056b86260054, type: 3}
       propertyPath: m_LocalScale.x

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5330856137940134205}
   - component: {fileID: 6518795011511829850}
   - component: {fileID: 3916803346825685748}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 2HAxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2418499675567049797}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5399266, y: 0.097097516, z: 0.70348847, w: 0.45183554}
+  m_LocalRotation: {x: -0.5399241, y: -0.097095564, z: -0.7034905, w: -0.4518357}
   m_LocalPosition: {x: 0.071, y: 0.068, z: 0.014}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 15.371, y: -249.26001, z: 87.537}
+  m_LocalEulerAnglesHint: {x: 20.567, y: -295.164, z: 127.722}
 --- !u!33 &5330856137940134205
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -103,15 +103,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Axe
   weaponData: {fileID: 11400000, guid: 9336c94ead8dbef429e91302ca180896, type: 2}
-  characterData: {fileID: 0}
   stats: {fileID: 0}
   animator: {fileID: 0}
   equipment:
     MainWeapon: {fileID: 0}
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
+  attackAngle: 90
   weaponType: 1
   weaponID: 4
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: 7ab0cc44807572a4faa5e6fd4a3089b4, type: 2}
-  axePrefab: {fileID: 7049434423448508475, guid: cc60efdc74e89084997250cdee4cff5f, type: 3}
+  axePrefab: {fileID: 2418499675567049797, guid: 563e3b50349673844a73bda6e20c8c02, type: 3}

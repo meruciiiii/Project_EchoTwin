@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ public class RoomView : MonoBehaviour
 {
     public event Action<Vector2Int> OnDoorUsed;
     private DoorTrigger[] doors;
+    //bridge
     public void SetDoors(GameObject roomPrefab)
     {
         if (doors != null)
@@ -19,7 +19,6 @@ public class RoomView : MonoBehaviour
             }
         }
         doors = roomPrefab.GetComponentsInChildren<DoorTrigger>(true);
-        Debug.Log("SetDoors target: " + roomPrefab.name + " / " + roomPrefab.GetInstanceID());
         foreach (DoorTrigger door in doors)
         {
             if (door == null)
@@ -27,7 +26,6 @@ public class RoomView : MonoBehaviour
                 Debug.Log("DoorTrigger Setting is failed");
                 continue;
             }
-            Debug.Log("Subscribe : " + door.GetInstanceID());
             door.onPlayerEnter += HandleDoorEnter;
         }
     }
@@ -41,11 +39,27 @@ public class RoomView : MonoBehaviour
         {
             if (door.Direction.Equals(-direction))
             {
-                return door.gameObject.transform.position;
+                door.Lock(0.5f);
+                return door.gameObject.transform.position + new Vector3(direction.x * 2.2f, 0f, direction.y * 2.2f);
             }
         }
         Debug.Log("Can't find door");
         return Vector3.zero;
+    }
+    public void DoorAccordingState(FloorData floor)
+    {
+        foreach (DoorTrigger door in doors)
+        {
+            if (door == null)
+            {
+                Debug.Log("DoorTrigger Setting is failed");
+                continue;
+            }
+            BridgeMoving bridgeMoving;
+            if (!door.TryGetComponent(out bridgeMoving))
+                Debug.Log("TryGetComponent BridgeMoving is fail");
+            bridgeMoving.SetState(floor.GetDoorState(door.doorIntDirection));
+        }
     }
     //문 다리 열림/닫힘 시각 처리
     //몬스터 스폰 위치

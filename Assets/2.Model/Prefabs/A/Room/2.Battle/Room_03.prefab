@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 860137954214917939}
   - component: {fileID: 4144431619974291625}
   - component: {fileID: 7759169312033022183}
+  - component: {fileID: 8902244770339300313}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -315,7 +316,7 @@ Transform:
   m_GameObject: {fileID: 1217487412640330105}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.203, y: 0, z: 8.48}
+  m_LocalPosition: {x: -3.203, y: 0, z: 10.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -356,6 +357,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 3
+--- !u!114 &8902244770339300313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217487412640330105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &1598776608097417369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1127,7 @@ GameObject:
   - component: {fileID: 3683217289556612262}
   - component: {fileID: 3795149016000194820}
   - component: {fileID: 6044661188716832756}
+  - component: {fileID: 3575712702798374087}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -1128,7 +1144,7 @@ Transform:
   m_GameObject: {fileID: 6141766817638112891}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.667, y: 0, z: -2.281}
+  m_LocalPosition: {x: 16.55, y: 0, z: -2.281}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1169,6 +1185,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 0
+--- !u!114 &3575712702798374087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6141766817638112891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &6816467385242183298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,6 +1323,7 @@ GameObject:
   - component: {fileID: 6536619293359759676}
   - component: {fileID: 3529172768375894504}
   - component: {fileID: 2114475271735844862}
+  - component: {fileID: 5892700648615748407}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -1309,7 +1340,7 @@ Transform:
   m_GameObject: {fileID: 6946411594291339946}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.278, y: 0, z: -3.277}
+  m_LocalPosition: {x: -16.58, y: 0, z: -3.277}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1350,6 +1381,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 1
+--- !u!114 &5892700648615748407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6946411594291339946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &7572842365016479723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1606,6 +1651,7 @@ GameObject:
   - component: {fileID: 7556106539753992075}
   - component: {fileID: 4479737564806421866}
   - component: {fileID: 7028614934461287851}
+  - component: {fileID: 8370067808121261306}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -1622,7 +1668,7 @@ Transform:
   m_GameObject: {fileID: 8128063949473376706}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.172, y: 0, z: -10.851}
+  m_LocalPosition: {x: -0.172, y: 0, z: -12.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1663,6 +1709,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 2
+--- !u!114 &8370067808121261306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128063949473376706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &8991767839415567119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,7 +2106,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8236678191953804969, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.27522
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 8236678191953804969, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
       propertyPath: m_LocalScale.y
@@ -2054,7 +2114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8236678191953804969, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.27522
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 8236678191953804969, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2099,6 +2159,10 @@ PrefabInstance:
     - target: {fileID: 8720481263714870291, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
       propertyPath: m_Name
       value: Platform_nav
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720481263714870291, guid: 457947ad100152f4b9600b9385101c7e, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2146,7 +2210,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 9c6a896d0c9727b47979cec1a15ea063, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ed8678f1f6748694da4c9561acb3db3b, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &8702685979021367256 stripped
 Transform:

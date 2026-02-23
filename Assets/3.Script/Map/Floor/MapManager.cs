@@ -6,6 +6,7 @@ public class MapManager : MonoBehaviour
 {
     private Dictionary<Vector2Int, FloorData> microMap;          // map node is here
     private Dictionary<Vector2Int, GameObject> roomObject;
+    private Dictionary<Vector2Int, List<GameObject>> enemyPool;
     private MapCreater mapCreater;
     private MapChecker mapChecker;
     private GameObject mapDrawCanvas;
@@ -13,6 +14,7 @@ public class MapManager : MonoBehaviour
     private MapRoomPopulator mapRoomPopulator;
     private RoomView roomView;
     private MapMoving mapMoving;
+    private EnemySpawner enemySpawner;
     //private MapTrace mapTrace;
     [SerializeField] private RoomObjects roomObjects;
     [SerializeField] private Vector2Int currentCoord;
@@ -36,6 +38,8 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetComponent MapMoving is fail");
         if (!TryGetComponent(out roomObjects))
             Debug.Log("TryGetComponent MapMoving is fail");
+        if (!TryGetComponent(out enemySpawner))
+            Debug.Log("TryGetComponent EnemySpawner is fail");
         //roomObjects = Resources.Load<RoomObjects>("RoomPrefabsScriptableObject");
     }
     public void GenerateMap()
@@ -57,6 +61,8 @@ public class MapManager : MonoBehaviour
         mapDrawer.EnterDraw(GetMap());
         roomObject = mapRoomPopulator.Populate(microMap, 1, 1, roomObjects);//please edit stage and floor
         Debug.Log("Populate is sucess");
+        enemyPool = enemySpawner.SpawnMonster(microMap, roomObject);
+        Debug.Log("enemySpawn is sucess");
         SetStartCoord();
         Debug.Log("currentCoord is : " + currentCoord);
         mapMoving.MoveStartRooom();
@@ -66,6 +72,12 @@ public class MapManager : MonoBehaviour
             return;
         }
         roomView.SetDoors(roomPrefab);
+        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
+        {
+            Debug.Log("TryGetValue roomPrefab is Error");
+            return;
+        }
+        roomView.DoorAccordingState(floor);
         roomView.OnDoorUsed += PlayerTryMove;
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
@@ -91,8 +103,10 @@ public class MapManager : MonoBehaviour
         //이전 문에 대한 방향에 맞게 해당하는 문의 스폰위치 가져오기
         //스폰 위치 Vector3 Position
         roomView.SetDoors(roomPrefab);
+        roomView.DoorAccordingState(floor);
         Vector3 playerSpawnPosition = roomView.GetDoor(direction);
         mapMoving.MovePlayer(playerSpawnPosition);
+        //mapMoving.PlayerPush(direction);
 
     }// 플레이어가 움직이면 event에서 실행될 메서드
     private void SetStartCoord()

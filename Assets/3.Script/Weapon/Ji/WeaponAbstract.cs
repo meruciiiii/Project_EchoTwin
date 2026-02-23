@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//public enum WeaponType
-//{
-//    onehand,
-//    twohand,
-//    dual,
-//}
+public enum WeaponType
+{
+    onehand,
+    twohand,
+    dual,
+}
 
 public enum WeaponID
 {
@@ -32,7 +32,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected PlayerAction action;
 
-    //public WeaponType weaponType;
+    public WeaponType weaponType;
     public WeaponID weaponID;
     public GameObject DualWeapon;
     [SerializeField] public AnimatorOverrideController overrideController;
@@ -68,6 +68,10 @@ public abstract class WeaponAbstract : MonoBehaviour
     public void Initialize(Animator playerAni)
     {
         this.animator = playerAni;
+
+        float groupValue = (float)weaponType;
+        animator.SetFloat("WeaponGroup", groupValue);
+
         animator.SetInteger("WeaponType", weaponData.ID);
         animator.SetFloat("AttackSpeed", weaponData.attackSpeed);
     }

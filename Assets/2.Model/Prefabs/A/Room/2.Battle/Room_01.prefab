@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 6299343127348993243}
   - component: {fileID: 7930588403264802924}
   - component: {fileID: 729687608442050651}
+  - component: {fileID: 6906603566863183387}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -180,6 +181,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 1
+--- !u!114 &6906603566863183387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468651679309814461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &759218602851731436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1738,6 +1753,7 @@ GameObject:
   - component: {fileID: 7597709483566952378}
   - component: {fileID: 4571729442509194954}
   - component: {fileID: 652575080348970059}
+  - component: {fileID: 7138501551168315133}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -1795,6 +1811,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 3
+--- !u!114 &7138501551168315133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5527385393088439942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &5868443258730031713
 GameObject:
   m_ObjectHideFlags: 0
@@ -7910,6 +7940,7 @@ GameObject:
   - component: {fileID: 8534606355016892624}
   - component: {fileID: 2786954373159203713}
   - component: {fileID: 6409847409092980335}
+  - component: {fileID: 7241327742056309491}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -7967,6 +7998,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 0
+--- !u!114 &7241327742056309491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8436788568936545661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &8607886303743152258
 GameObject:
   m_ObjectHideFlags: 0
@@ -7978,6 +8023,7 @@ GameObject:
   - component: {fileID: 6156296649227063864}
   - component: {fileID: 64248715976297155}
   - component: {fileID: 8332062032326165482}
+  - component: {fileID: 92293710226678054}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -8035,6 +8081,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 2
+--- !u!114 &92293710226678054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8607886303743152258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &8709426153725978051
 GameObject:
   m_ObjectHideFlags: 0
@@ -8158,6 +8218,10 @@ PrefabInstance:
     - target: {fileID: 2622161969521075731, guid: f0e467273026e3244b94bd6af701443a, type: 3}
       propertyPath: m_Name
       value: Platform_nav
+      objectReference: {fileID: 0}
+    - target: {fileID: 2622161969521075731, guid: f0e467273026e3244b94bd6af701443a, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3397995363979230377, guid: f0e467273026e3244b94bd6af701443a, type: 3}
       propertyPath: m_LocalScale.x

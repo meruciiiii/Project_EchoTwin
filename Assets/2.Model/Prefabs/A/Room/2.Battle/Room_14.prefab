@@ -5185,7 +5185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8662436168677363628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5370,6 +5370,7 @@ GameObject:
   - component: {fileID: 3904622591381090802}
   - component: {fileID: 1021131889076422638}
   - component: {fileID: 4621031003495111317}
+  - component: {fileID: 3947907963617653008}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -5427,6 +5428,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 1
+--- !u!114 &3947907963617653008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2314958603436100940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &3908986533300789318
 GameObject:
   m_ObjectHideFlags: 0
@@ -5551,6 +5566,7 @@ GameObject:
   - component: {fileID: 502542846613680827}
   - component: {fileID: 7731607172983370119}
   - component: {fileID: 41589505268143066}
+  - component: {fileID: 525704983450110253}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -5608,6 +5624,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 2
+--- !u!114 &525704983450110253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4392415044106859921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &4417245409378612034
 GameObject:
   m_ObjectHideFlags: 0
@@ -5952,6 +5982,7 @@ GameObject:
   - component: {fileID: 6298275228566342854}
   - component: {fileID: 3736856938911384353}
   - component: {fileID: 7201043236727743478}
+  - component: {fileID: 8001087220581788090}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -6009,6 +6040,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 0
+--- !u!114 &8001087220581788090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5418707482955224714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &5583859515463888738
 GameObject:
   m_ObjectHideFlags: 0
@@ -6195,6 +6240,7 @@ GameObject:
   - component: {fileID: 3783325043058874378}
   - component: {fileID: 6847268736371026197}
   - component: {fileID: 6729547633532539618}
+  - component: {fileID: 579606244483393612}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -6252,6 +6298,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 3
+--- !u!114 &579606244483393612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745810105125111854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &7013145006833349966
 GameObject:
   m_ObjectHideFlags: 0
@@ -7172,6 +7232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_001 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9179041542745047514, guid: 3a7d37c9d478d364492cdfdb40489610, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7324,6 +7388,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_005
       objectReference: {fileID: 0}
+    - target: {fileID: 5471899685099740717, guid: 2695a01f49f55514cb704e378e41ab83, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7423,6 +7491,10 @@ PrefabInstance:
     - target: {fileID: 7270920734366573070, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
       propertyPath: m_Name
       value: Stone_004
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270920734366573070, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8046999384069601460, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
       propertyPath: m_LocalScale.x
@@ -7706,6 +7778,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_006 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1030543210910813294, guid: a80936f3e0ebc564689c598da1fcbeaa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7858,6 +7934,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_006
       objectReference: {fileID: 0}
+    - target: {fileID: 1030543210910813294, guid: a80936f3e0ebc564689c598da1fcbeaa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7879,6 +7959,10 @@ PrefabInstance:
     - target: {fileID: 7270920734366573070, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
       propertyPath: m_Name
       value: Stone_004 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270920734366573070, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8046999384069601460, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
       propertyPath: m_LocalScale.x
@@ -8005,6 +8089,10 @@ PrefabInstance:
     - target: {fileID: 9179041542745047514, guid: 3a7d37c9d478d364492cdfdb40489610, type: 3}
       propertyPath: m_Name
       value: Stone_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179041542745047514, guid: 3a7d37c9d478d364492cdfdb40489610, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8157,6 +8245,10 @@ PrefabInstance:
     - target: {fileID: 5471899685099740717, guid: 2695a01f49f55514cb704e378e41ab83, type: 3}
       propertyPath: m_Name
       value: Stone_005 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471899685099740717, guid: 2695a01f49f55514cb704e378e41ab83, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 2751239473728902311}
   - component: {fileID: 2025058182332609545}
   - component: {fileID: 3547321244786561522}
+  - component: {fileID: 5056399909410945292}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -215,6 +216,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 0
+--- !u!114 &5056399909410945292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743866299003007809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &870164314474016693
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +354,7 @@ GameObject:
   - component: {fileID: 7777987917323221311}
   - component: {fileID: 4406065334876404457}
   - component: {fileID: 4754420646359032570}
+  - component: {fileID: 4808905669370639264}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -396,6 +412,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 1
+--- !u!114 &4808905669370639264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077913727492445768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &1292912543698967405
 GameObject:
   m_ObjectHideFlags: 0
@@ -6446,6 +6476,7 @@ GameObject:
   - component: {fileID: 4113246011171494627}
   - component: {fileID: 6330617403544998878}
   - component: {fileID: 3644042015136976125}
+  - component: {fileID: 6704488842461083366}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -6503,6 +6534,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 2
+--- !u!114 &6704488842461083366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015017759201383916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &6143554992013982736
 GameObject:
   m_ObjectHideFlags: 0
@@ -6550,6 +6595,7 @@ GameObject:
   - component: {fileID: 5262812739860731089}
   - component: {fileID: 3338402319387042287}
   - component: {fileID: 569380834611127637}
+  - component: {fileID: 1604217690241466720}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -6607,6 +6653,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 3
+--- !u!114 &1604217690241466720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6614216939472772763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &6689343086664725008
 GameObject:
   m_ObjectHideFlags: 0
@@ -9062,6 +9122,10 @@ PrefabInstance:
     - target: {fileID: 1941094041277940872, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_Name
       value: Platform_nav
+      objectReference: {fileID: 0}
+    - target: {fileID: 1941094041277940872, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
