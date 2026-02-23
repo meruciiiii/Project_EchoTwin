@@ -18,8 +18,8 @@ public class DoorTrigger : MonoBehaviour
         {
             switch (selectedDoorDirection)
             {
-                case MoveDirection.Right: return 1;
-                case MoveDirection.Left: return 0;
+                case MoveDirection.Right: return 0;
+                case MoveDirection.Left: return 1;
                 case MoveDirection.Down: return 2;
                 case MoveDirection.Up: return 3;
                 default: return -1;
@@ -42,17 +42,29 @@ public class DoorTrigger : MonoBehaviour
     }
     public Action<Vector2Int> onPlayerEnter;
 
+    private bool isLocked = false;
+
     private void OnTriggerEnter(Collider other)
     {
+        if (isLocked) return;
         if (!other.CompareTag("Player")) return;
-        Debug.Log("Door Triger is started");
+        //Debug.Log("Door Triger is started");
         if(Direction== Vector2Int.zero)
         {
             Debug.Log("Direction is not selected");
             return;
         }
-        Debug.Log("Invoke from: " + gameObject.name + " / " + GetInstanceID());
-        Debug.Log("Invoke : " + this.GetInstanceID());
         onPlayerEnter?.Invoke(Direction);
+    }
+    public void Lock(float duration)
+    {
+        StartCoroutine(LockRoutine(duration));
+    }
+
+    private IEnumerator LockRoutine(float duration)
+    {
+        isLocked = true;
+        yield return new WaitForSeconds(duration);
+        isLocked = false;
     }
 }

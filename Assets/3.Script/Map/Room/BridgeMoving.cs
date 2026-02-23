@@ -6,43 +6,23 @@ using UnityEngine;
 
 public class BridgeMoving : MonoBehaviour
 {
-    [SerializeField] private float moveDistance = 5f;
+    [SerializeField] private float moveDistance = 7f;
     [SerializeField] private float moveDuration = 1.5f;
 
-    private bool isDropping = false;
+    private bool isUp = true;
     private Vector3 startPos;
     private Vector3 targetPos;
-
-    public void StartMoving(GameObject door, bool doorState)
+    public void SetState(bool doorState)
     {
-        if (doorState)
-        {
-            if (!isDropping) return;
-            startPos = door.transform.position;
-            targetPos = startPos + Vector3.up * moveDistance;
-            StartCoroutine(MoveBridge());
-        }
-        else
-        {
-            if (isDropping) return;
-            startPos = door.transform.position;
-            targetPos = startPos + Vector3.down * moveDistance;
-            StartCoroutine(MoveBridge());
-        }
+        if (doorState == isUp) return;
+        Debug.Log(this.name +" is bridge move");
+        StartCoroutine(MoveBridge(doorState));
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (isDropping) return;
-
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        StartCoroutine(DropBridge());
-    //    }
-    //}
-    private IEnumerator MoveBridge()
+    private IEnumerator MoveBridge(bool targetState)
     {
-        isDropping = !isDropping;
+        isUp = targetState;
+        startPos = transform.position;
+        targetPos = startPos + (isUp ? Vector3.up : Vector3.down) * moveDistance;
         float elapsed = 0f;
 
         while (elapsed < moveDuration)
@@ -53,7 +33,6 @@ public class BridgeMoving : MonoBehaviour
             transform.position = Vector3.Lerp(startPos, targetPos, t);
             yield return null;
         }
-
         transform.position = targetPos;
     }
 }

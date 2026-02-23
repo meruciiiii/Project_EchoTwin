@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 9210013778191534476}
   - component: {fileID: 5034222591969504501}
   - component: {fileID: 5371227543879810684}
+  - component: {fileID: 8027176392582134390}
   m_Layer: 0
   m_Name: EP_U
   m_TagString: Untagged
@@ -164,6 +165,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 3
+--- !u!114 &8027176392582134390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862986712865296118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &2110115914691400646
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +226,7 @@ GameObject:
   - component: {fileID: 8418305680812848170}
   - component: {fileID: 3055160570528892036}
   - component: {fileID: 6732813936406302325}
+  - component: {fileID: 5472250058145788855}
   m_Layer: 0
   m_Name: EP_R
   m_TagString: Untagged
@@ -268,6 +284,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 0
+--- !u!114 &5472250058145788855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2537034311108009086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &3756741651082505817
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +380,7 @@ GameObject:
   - component: {fileID: 6634072167516051372}
   - component: {fileID: 692342472366750240}
   - component: {fileID: 4184945328927423633}
+  - component: {fileID: 8131978122954837729}
   m_Layer: 0
   m_Name: EP_L
   m_TagString: Untagged
@@ -407,6 +438,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 1
+--- !u!114 &8131978122954837729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4602436357067025849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1 &5529265943528177654
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,6 +733,7 @@ GameObject:
   - component: {fileID: 5522814704440923138}
   - component: {fileID: 8196268195200408879}
   - component: {fileID: 5707861315227359836}
+  - component: {fileID: 7000052566560422907}
   m_Layer: 0
   m_Name: EP_D
   m_TagString: Untagged
@@ -745,6 +791,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   selectedDoorDirection: 2
+--- !u!114 &7000052566560422907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8087747148679657703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
+  moveDistance: 5
+  moveDuration: 1.5
 --- !u!1001 &100731301012589289
 PrefabInstance:
   m_ObjectHideFlags: 0

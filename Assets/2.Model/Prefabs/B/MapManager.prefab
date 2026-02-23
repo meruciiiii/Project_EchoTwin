@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5735330567159493000}
   - component: {fileID: 2178281676673928355}
   - component: {fileID: 1889884188218712742}
+  - component: {fileID: 6098375801763410194}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
@@ -89,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba276877121b66d41959d8277a54e852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapRoomPopulator
+  floorScriptable: {fileID: 11400000, guid: 43de0d0dbf37ebe4091b3ac676bc8fea, type: 2}
 --- !u!114 &5735330567159493000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +156,16 @@ MonoBehaviour:
   physicalRewardRoom: {fileID: 0}
   physicalFirstBossRoom: {fileID: 0}
   physicalSecondBossRoom: {fileID: 0}
+--- !u!114 &6098375801763410194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2550577737934242994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb28b74839c0a034995d7e81e054e209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  monsterPackList: {fileID: 11400000, guid: fffc66b48b0d11e438cdabc0f3722af9, type: 2}

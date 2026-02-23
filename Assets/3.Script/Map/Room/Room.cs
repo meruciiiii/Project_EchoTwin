@@ -38,4 +38,8 @@ public class Room
     {
         return roomType;
     }
+    public int GetMonsterPackID()
+    {
+        return monsterPackID;
+    }
 }
