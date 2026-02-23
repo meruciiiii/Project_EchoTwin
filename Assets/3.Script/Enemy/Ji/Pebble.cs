@@ -6,25 +6,52 @@ using UnityEngine;
 public class Pebble : EnemyStateAbstract
 {
     [SerializeField] private GameObject projectile;
+    [SerializeField] float buffer = 0.5f;
+    [SerializeField] float duration = 1f;
+    private SpriteRenderer spriteRenderer;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     protected override void Update()
     {
-        base.Update();
+        if (GameManager.instance.isStop)
+        {
+            TurnOffNavmesh();
+            return;
+        }
         if (state == EnemyState.dead) return;
+
+        // 속도가 있으면 Run, 없으면 Idle
+        if (ani != null)
+        {
+            ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
+        }
+
+        if ((player.transform.position - transform.position).normalized.x > 0.01)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+        }
+
         Move();
     }
 
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
+        if (coroutine != null) return;
 
-        Vector3 targetPos = player.transform.position;
-        Vector3 startPos = transform.position;
-
-        coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
+        coroutine = StartCoroutine(Attack_Co());
     }
 
-    private IEnumerator Attack_Co(Vector3 targetPos, Vector3 startPos)
+    private IEnumerator Attack_Co()
     {
         state = EnemyState.attack;
 
@@ -37,11 +64,17 @@ public class Pebble : EnemyStateAbstract
 
         checkAttackTime();
 
+        Vector3 targetPos = player.transform.position;
+        Vector3 startPos = transform.position;
+
         float timer = 0f;
-        float duration = 1f;
 
         projectile.transform.position = startPos;
         projectile.SetActive(true);
+        if(spriteRenderer.flipX)
+        {
+            projectile.GetComponentInChildren<SpriteRenderer>().flipX = true;
+        }
 
         while (timer < duration)
         {
@@ -61,27 +94,28 @@ public class Pebble : EnemyStateAbstract
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        float buffer = 0.5f;
 
         if (distance > enemyData.attackRange + buffer)
         {
-            state = EnemyState.chase;
             setPlayerPos();
         }
         else if (distance < enemyData.attackRange - buffer)
         {
-            state = EnemyState.chase;
             Runaway();
         }
         else
@@ -99,7 +133,7 @@ public class Pebble : EnemyStateAbstract
         Vector3 runPos = transform.position + dir.normalized * 2f;
 
         UnityEngine.AI.NavMeshHit hit;
-        if(UnityEngine.AI.NavMesh.SamplePosition(runPos, out hit, 1f, UnityEngine.AI.NavMesh.AllAreas))
+        if (UnityEngine.AI.NavMesh.SamplePosition(runPos, out hit, 1f, UnityEngine.AI.NavMesh.AllAreas))
         {
             navMesh.SetDestination(hit.position);
         }

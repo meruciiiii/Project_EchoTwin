@@ -19,7 +19,6 @@ public class Skeleton : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
     public override void takeDamage(float damage)
@@ -31,10 +30,10 @@ public class Skeleton : EnemyStateAbstract
         {
             ani.ResetTrigger("Attack 2");
 
-            if (ani != null) ani.SetTrigger("Hit"); // 공격 중 맞으면 피격 모션만
             effect.Flash(1, 0.5f);
             currentHP -= damage;
             checkOnDie();
+            if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit"); // 공격 중 맞으면 피격 모션만
             return; // 여기서 함수 종료 (아래의 방패 막기 로직 실행 안 함)
         }
 
@@ -58,19 +57,22 @@ public class Skeleton : EnemyStateAbstract
         {
             // 방패 막기
             damage *= 1 - reduceRatio;
-            if (ani != null) ani.SetTrigger("Attack 2");
+            currentHP -= damage;
             effect.Flash(1, 0.5f);
+            checkOnDie();
+            if (ani != null && state != EnemyState.dead) ani.SetTrigger("Attack 2");
         }
         else
         {
             // 일반 피격
-            if (ani != null) ani.SetTrigger("Hit");
+            currentHP -= damage;
             effect.Flash(1, 0.5f);
-            state = EnemyState.knockback;
+            checkOnDie();
+            if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit");
         }
 
-        currentHP -= damage;
-        checkOnDie();
+        //currentHP -= damage;
+        //checkOnDie();
     }
     private IEnumerator Attack_Co()
     {
@@ -89,7 +91,11 @@ public class Skeleton : EnemyStateAbstract
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Attack()
@@ -102,7 +108,7 @@ public class Skeleton : EnemyStateAbstract
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(standardRange);
@@ -112,7 +118,6 @@ public class Skeleton : EnemyStateAbstract
 
         if (distance > enemyData.attackRange + buffer)
         {
-            state = EnemyState.chase;
             setPlayerPos();
         }
         else

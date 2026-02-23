@@ -83,6 +83,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             TurnOffNavmesh();
             return;
         }
+        if (state == EnemyState.dead) return;
 
         // 속도가 있으면 Run, 없으면 Idle
         if (ani != null)
@@ -105,19 +106,25 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         currentHP -= damage;
         Debug.Log(state);
-        //if (ani != null) 
-        ani.SetTrigger("Hit");
-
         checkOnDie();
+        //if (ani != null) 
+        if (state != EnemyState.dead) ani.SetTrigger("Hit");
     }
 
     protected virtual void checkOnDie()
     {
         if (currentHP <= 0)
         {
+            StopAllCoroutines();
             state = EnemyState.dead;
-            Debug.Log(state);
+
+
             TurnOffNavmesh();
+            rb.isKinematic = true;
+            boxCol.enabled = false;
+
+            enabled = false;
+
             //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
             StartCoroutine(DeathRoutine());
         }
@@ -144,6 +151,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     public void applyKnockback(Vector3 dir, float power)
     {
+        if (state == EnemyState.dead) return;
         StartCoroutine(knockback_Co(dir, power));
     }
 
@@ -189,9 +197,16 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected virtual void TurnOffNavmesh()
     {
-        //navMesh.isStopped = true;
-
-        navMesh.enabled = false;
+        if (navMesh.enabled && navMesh.isOnNavMesh)
+        {
+            navMesh.isStopped = true;
+            navMesh.ResetPath();
+            navMesh.enabled = false;
+        }
+        else
+        {
+            navMesh.enabled = false;
+        }
 
         rb.isKinematic = false;
         rb.linearVelocity = Vector3.zero;
@@ -199,8 +214,10 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected virtual void TurnOnNavmesh()
     {
+        if (state == EnemyState.dead) return;
         //navMesh.isStopped = false;
 
+        rb.isKinematic = false;
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 
@@ -208,9 +225,11 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             navMesh.enabled = true;
             navMesh.Warp(hit.position);
+            navMesh.isStopped = false;
         }
         else
         {
+            navMesh.enabled = false;
             state = EnemyState.dead;
         }
     }

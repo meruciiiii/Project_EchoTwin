@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class SpikeSlime : EnemyStateAbstract
 {
+    [SerializeField] private float duration = 0.5f;
+    [SerializeField] private float jumpHeight = 2f;
+
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
 
@@ -37,8 +39,6 @@ public class SpikeSlime : EnemyStateAbstract
         if (ani != null) ani.SetTrigger("Attack");
         checkAttackTime();
 
-        float duration = 0.5f;
-        float jumpHeight = 2f;
         float timer = 0f;
 
         //bool isAttacked = false;
@@ -69,12 +69,16 @@ public class SpikeSlime : EnemyStateAbstract
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(standardRange);
@@ -84,7 +88,6 @@ public class SpikeSlime : EnemyStateAbstract
 
         if (distance > enemyData.attackRange + buffer)
         {
-            state = EnemyState.chase;
             setPlayerPos();
         }
         else
