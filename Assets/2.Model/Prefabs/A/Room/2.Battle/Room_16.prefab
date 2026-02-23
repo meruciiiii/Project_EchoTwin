@@ -44,7 +44,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7302852461599187741}
   - component: {fileID: 5282952113558240705}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform_nav
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 1da722ce7af1afb48bb91a9bc2b43219, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: cde201f82de330f4e9c6c038f8f2c640, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1313694494674773280
 GameObject:
@@ -6982,7 +6982,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1277885483427274290, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6908129
+      value: 0.7916025
       objectReference: {fileID: 0}
     - target: {fileID: 1277885483427274290, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_LocalScale.y
@@ -6990,7 +6990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1277885483427274290, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6908129
+      value: 0.95204914
       objectReference: {fileID: 0}
     - target: {fileID: 1277885483427274290, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7035,6 +7035,10 @@ PrefabInstance:
     - target: {fileID: 1941094041277940872, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
       propertyPath: m_Name
       value: PlatformSmall_002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1941094041277940872, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

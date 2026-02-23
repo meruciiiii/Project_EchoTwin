@@ -103,14 +103,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spear
   weaponData: {fileID: 11400000, guid: fa80ad8387aa4f143ae0bcd87de25d1c, type: 2}
-  characterData: {fileID: 0}
   stats: {fileID: 0}
   animator: {fileID: 0}
   equipment:
     MainWeapon: {fileID: 0}
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
-  weaponType: 0
+  attackAngle: 90
+  weaponType: 1
   weaponID: 3
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: d9e3763dbc7cd7f4ea74e2b3b389f8b7, type: 2}
+  echoLengthMultiple: 2

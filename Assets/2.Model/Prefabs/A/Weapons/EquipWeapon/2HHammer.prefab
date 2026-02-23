@@ -103,14 +103,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hammer
   weaponData: {fileID: 11400000, guid: 0d72f05b4cb5793498e3346de9c1fc06, type: 2}
-  characterData: {fileID: 0}
   stats: {fileID: 0}
   animator: {fileID: 0}
   equipment:
     MainWeapon: {fileID: 0}
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
-  weaponType: 0
+  attackAngle: 90
+  weaponType: 1
   weaponID: 1
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: 756658ccdfece8e4f81bcf2086716bc2, type: 2}

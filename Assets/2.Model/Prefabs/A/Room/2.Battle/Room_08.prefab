@@ -9063,6 +9063,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform_nav
       objectReference: {fileID: 0}
+    - target: {fileID: 1941094041277940872, guid: 3aa055d818eab234bb9fafc921aad4f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
