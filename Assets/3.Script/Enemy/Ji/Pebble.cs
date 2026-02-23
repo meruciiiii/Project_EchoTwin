@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Pebble : EnemyStateAbstract
 {
@@ -75,11 +76,30 @@ public class Pebble : EnemyStateAbstract
         {
             projectile.GetComponentInChildren<SpriteRenderer>().flipX = true;
         }
+        if(!spriteRenderer.flipX)
+        {
+            projectile.GetComponentInChildren<SpriteRenderer>().flipX = false;
+        }
 
         while (timer < duration)
         {
-            if (state == EnemyState.dead || !projectile.activeSelf)
+            if (state == EnemyState.dead)
             {
+                yield break;
+            }
+
+            if (!projectile.activeSelf)
+            {
+                projectile.transform.position = startPos;
+                projectile.SetActive(false);
+
+                coroutine = null;
+
+                if(state != EnemyState.dead)
+                {
+                    state = EnemyState.chase;
+                    TurnOnNavmesh();
+                }
                 yield break;
             }
 
@@ -136,6 +156,36 @@ public class Pebble : EnemyStateAbstract
         if (UnityEngine.AI.NavMesh.SamplePosition(runPos, out hit, 1f, UnityEngine.AI.NavMesh.AllAreas))
         {
             navMesh.SetDestination(hit.position);
+        }
+    }
+
+    protected override void TurnOffNavmesh()
+    {
+        navMesh.isStopped = true;
+        navMesh.ResetPath();
+        //navMesh.enabled = false;
+
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
+    }
+
+    protected override void TurnOnNavmesh()
+    {
+        if (state == EnemyState.dead) return;
+
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
+        {
+            navMesh.isStopped = false;
+            //navMesh.enabled = true;
+            navMesh.Warp(hit.position);
+        }
+        else
+        {
+            state = EnemyState.dead;
         }
     }
 }
