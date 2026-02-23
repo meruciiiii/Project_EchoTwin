@@ -11,7 +11,6 @@ public class Crab : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
 
@@ -20,19 +19,24 @@ public class Crab : EnemyStateAbstract
         if (state == EnemyState.dead) return;
         if (shieldCount > 0)
         {
-            if (ani != null) ani.SetTrigger("Ability");
             damage *= 1 - reduceRatio;
             effect.Flash(1, 0.5f);
+            currentHP -= damage;
+            shieldCount--;
+            checkOnDie();
+            if (ani != null && state != EnemyState.dead) ani.SetTrigger("Ability");
         }
         else
         {
             // 껍데기가 깨진 후에는 일반적인 피격 애니메이션 실행
-            if (ani != null) ani.SetTrigger("Hit");
+            currentHP -= damage;
+            checkOnDie();
+            if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit");
         }
 
-        currentHP -= damage;
-        shieldCount--;
-        checkOnDie();
+        //currentHP -= damage;
+        //shieldCount--;
+        //checkOnDie();
     }
 
     public override void Attack()
@@ -60,12 +64,16 @@ public class Crab : EnemyStateAbstract
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(standardRange);
@@ -75,7 +83,6 @@ public class Crab : EnemyStateAbstract
 
         if (distance > enemyData.attackRange + buffer)
         {
-            state = EnemyState.chase;
             setPlayerPos();
         }
         else

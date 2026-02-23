@@ -8,7 +8,6 @@ public class Mushroom : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
 
@@ -37,12 +36,16 @@ public class Mushroom : EnemyStateAbstract
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(standardRange);
@@ -52,7 +55,6 @@ public class Mushroom : EnemyStateAbstract
 
         if (distance > enemyData.attackRange - buffer)
         {
-            state = EnemyState.chase;
             setPlayerPos();
         }
         else

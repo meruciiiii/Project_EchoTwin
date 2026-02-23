@@ -86,7 +86,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         //Debug.Log(animator.IsInTransition(0) + "animator");
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime < 0.5f || stateInfo.normalizedTime > 0.9f)
+            if (stateInfo.normalizedTime < 0.65f)// || stateInfo.normalizedTime > 0.9f)
             {
                 return false;
             }
@@ -95,20 +95,20 @@ public abstract class WeaponAbstract : MonoBehaviour
         return true;
     }
 
-    public virtual bool CanRotate()
-    {
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+    //public virtual bool CanRotate()
+    //{
+    //    AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (stateInfo.IsTag("Attack"))
-        {
-            if (stateInfo.normalizedTime < 0.65f)
-            {
-                return false;
-            }
-        }
+    //    if (stateInfo.IsTag("Attack"))
+    //    {
+    //        if (stateInfo.normalizedTime < 0.65f)
+    //        {
+    //            return false;
+    //        }
+    //    }
 
-        return true;
-    }
+    //    return true;
+    //}
 
     private void SetAttackTime()
     {

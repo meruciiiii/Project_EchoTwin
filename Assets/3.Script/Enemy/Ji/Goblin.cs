@@ -9,11 +9,38 @@ public class Goblin : EnemyStateAbstract
     [SerializeField] float attackSpeed = 10f;
     [SerializeField] float dashDuration = 0.5f;
     [SerializeField] float buffer = 0.5f;
+    private SpriteRenderer spriteRenderer;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     protected override void Update()
     {
-        base.Update();
+        if (GameManager.instance.isStop)
+        {
+            TurnOffNavmesh();
+            return;
+        }
         if (state == EnemyState.dead) return;
+
+        // 속도가 있으면 Run, 없으면 Idle
+        if (ani != null)
+        {
+            ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
+        }
+
+        if((player.transform.position - transform.position ).normalized.x>0.01)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+        }
+
         Move();
     }
 
@@ -38,8 +65,6 @@ public class Goblin : EnemyStateAbstract
         yield return new WaitForSeconds(enemyData.attackSpeed);
         checkAttackTime();
 
-        bool isAttacked = false;
-
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
 
@@ -53,16 +78,21 @@ public class Goblin : EnemyStateAbstract
 
             transform.position += dir * attackSpeed * Time.deltaTime;
 
-            if (!isAttacked)
+            if (dir.x > 0.01f)
             {
-                Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange - buffer);
-                foreach (Collider hit in hits)
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                spriteRenderer.flipX = true;
+            }
+
+            Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.attackRange - buffer);
+            foreach (Collider hit in hits)
+            {
+                if (hit.CompareTag("Player"))
                 {
-                    if (hit.CompareTag("Player"))
-                    {
-                        AreaAttack(enemyData.attackRange, 180f);
-                        isAttacked = true;
-                    }
+                    AreaAttack(enemyData.attackRange, 180f);
                 }
             }
 
@@ -72,12 +102,17 @@ public class Goblin : EnemyStateAbstract
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
+        if (coroutine != null) return;
 
         //BodyAttack(standardRange);
 
@@ -85,12 +120,10 @@ public class Goblin : EnemyStateAbstract
 
         if (distance > enemyData.attackRange + buffer)
         {
-            state = EnemyState.chase;
             setPlayerPos();
         }
         else if (distance < enemyData.attackRange - buffer)
         {
-            state = EnemyState.chase;
             Runaway();
         }
         else
@@ -117,7 +150,7 @@ public class Goblin : EnemyStateAbstract
     protected override void TurnOffNavmesh()
     {
         navMesh.isStopped = true;
-
+        navMesh.ResetPath();
         //navMesh.enabled = false;
 
         rb.isKinematic = false;
@@ -126,7 +159,9 @@ public class Goblin : EnemyStateAbstract
 
     protected override void TurnOnNavmesh()
     {
+        if (state == EnemyState.dead) return;
 
+        rb.isKinematic = false;
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 

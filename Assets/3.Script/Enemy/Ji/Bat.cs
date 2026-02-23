@@ -16,7 +16,6 @@ public class Bat : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
 
@@ -68,12 +67,16 @@ public class Bat : EnemyStateAbstract
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(enemyData.attackRange);
@@ -85,8 +88,7 @@ public class Bat : EnemyStateAbstract
 
         if (distance > enemyData.attackRange + buffer)
         {
-            state = EnemyState.chase;
-            setPlayerPos();
+            navMesh.SetDestination(player.transform.position + zigzag);
         }
         else
         {
@@ -126,21 +128,39 @@ public class Bat : EnemyStateAbstract
 
     private IEnumerator ReturnToField_Co()
     {
+        state = EnemyState.knockback;
         float returnSpeed = enemyData.moveSpeed * 1.5f;
 
-        while (true)
+        if(navMesh.enabled && navMesh.isOnNavMesh)
         {
-            Vector3 dir = (player.transform.position = transform.position).normalized;
+            navMesh.isStopped = true;
+            navMesh.ResetPath();
+        }
+        navMesh.enabled = false;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        while (state != EnemyState.dead)
+        {
+            Vector3 dir = (player.transform.position - transform.position).normalized;
+            dir.y = 0f;
             transform.position += dir * returnSpeed * Time.deltaTime;
 
-            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 10.0f, NavMesh.AllAreas))
             {
                 navMesh.enabled = true;
                 navMesh.Warp(hit.position);
+                navMesh.isStopped = false;
                 state = EnemyState.chase;
                 yield break;
             }
             yield return null;
         }
+    }
+
+    protected override bool isItOnTheGround()
+    {
+        return true;
     }
 }
