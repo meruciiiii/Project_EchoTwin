@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8266173774048266806}
   - component: {fileID: 8604992827790879147}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform_nav
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7062,6 +7062,10 @@ PrefabInstance:
     - target: {fileID: 5471899685099740717, guid: 2695a01f49f55514cb704e378e41ab83, type: 3}
       propertyPath: m_Name
       value: Stone_005
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471899685099740717, guid: 2695a01f49f55514cb704e378e41ab83, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

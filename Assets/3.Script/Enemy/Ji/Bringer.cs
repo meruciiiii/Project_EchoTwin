@@ -41,9 +41,11 @@ public class Bringer : EnemyStateAbstract
         state = EnemyState.attack;
         TurnOffNavmesh();
 
+        //animator
+        if (ani != null) ani.SetTrigger("Attack 2");
+
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
-        //animator
 
         checkAttackTime();
 
@@ -63,9 +65,11 @@ public class Bringer : EnemyStateAbstract
 
         TurnOffNavmesh();
 
+        //animator
+        if (ani != null) ani.SetTrigger("Attack");
+
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
-        //animator
         checkAttackTime();
 
         AreaAttack(enemyData.attackRange, 270f);
@@ -79,7 +83,7 @@ public class Bringer : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
-        BodyAttack(standardRange);
+        //BodyAttack(standardRange);
 
         setPlayerPos();
     }

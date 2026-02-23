@@ -30,16 +30,18 @@ public class SpikeSlime : EnemyStateAbstract
 
         TurnOffNavmesh();
 
+
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        if (ani != null) ani.SetTrigger("Attack");
         checkAttackTime();
 
         float duration = 0.5f;
         float jumpHeight = 2f;
         float timer = 0f;
 
-        bool isAttacked = false;
+        //bool isAttacked = false;
 
         while (timer < duration)
         {
@@ -53,13 +55,13 @@ public class SpikeSlime : EnemyStateAbstract
 
             transform.position = pos;
 
-            if(!isAttacked)
-            {
-                if (BodyAttack(enemyData.attackRange))
-                {
-                    isAttacked = true;
-                }
-            }
+            //if(!isAttacked)
+            //{
+            //    if (BodyAttack(enemyData.attackRange))
+            //    {
+            //        isAttacked = true;
+            //    }
+            //}
 
             yield return null;
         }
@@ -75,7 +77,7 @@ public class SpikeSlime : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
-        BodyAttack(standardRange);
+        //BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;

@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//public enum WeaponType
-//{
-//    onehand,
-//    twohand,
-//    dual,
-//}
+public enum WeaponType
+{
+    onehand,
+    twohand,
+    dual,
+}
 
 public enum WeaponID
 {
@@ -28,12 +28,11 @@ public abstract class WeaponAbstract : MonoBehaviour
     [SerializeField] protected PlayerEquipment equipment;
     [SerializeField] protected InputManager input;
 
-    [SerializeField] protected float radius;
-    [SerializeField] protected float angle;
-  
+    [SerializeField] protected float attackAngle = 90f;
+
     protected PlayerAction action;
 
-    //public WeaponType weaponType;
+    public WeaponType weaponType;
     public WeaponID weaponID;
     public GameObject DualWeapon;
     [SerializeField] public AnimatorOverrideController overrideController;
@@ -41,11 +40,15 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected int resonanceCount;
 
     protected float lastAttackTime;
-    protected int comboCount;
+    protected int comboCount = 0;
     protected bool isComboCooltime = false;
+    protected bool isAttackReserved = false;
 
     protected float comboExpireTime;
     protected bool isCancelled = false;
+    protected bool isCharging = false;
+    public bool IsCharging => isCharging;
+
 
     protected AttackDebugInfo lastAttackInfo;
     protected bool hasDebugInfo;
@@ -58,7 +61,6 @@ public abstract class WeaponAbstract : MonoBehaviour
     private void Awake()
     {
         action = stats.GetComponent<PlayerAction>();
-        comboCount = 0;
         SetResonance(10);
         SetAttackTime();
     }
@@ -66,6 +68,10 @@ public abstract class WeaponAbstract : MonoBehaviour
     public void Initialize(Animator playerAni)
     {
         this.animator = playerAni;
+
+        float groupValue = (float)weaponType;
+        animator.SetFloat("WeaponGroup", groupValue);
+
         animator.SetInteger("WeaponType", weaponData.ID);
         animator.SetFloat("AttackSpeed", weaponData.attackSpeed);
     }
@@ -77,9 +83,10 @@ public abstract class WeaponAbstract : MonoBehaviour
         if (animator.IsInTransition(0)) return false;
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
+        //Debug.Log(animator.IsInTransition(0) + "animator");
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime < 0.65f)
+            if (stateInfo.normalizedTime < 0.5f || stateInfo.normalizedTime > 0.9f)
             {
                 return false;
             }
@@ -94,7 +101,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime <  0.65f)
+            if (stateInfo.normalizedTime < 0.65f)
             {
                 return false;
             }
@@ -102,7 +109,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
         return true;
     }
-    
+
     private void SetAttackTime()
     {
         lastAttackTime = Time.time;
@@ -110,7 +117,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void AttackTimeChecker()
     {
-        if(Time.time > lastAttackTime + 1 /weaponData.attackSpeed)
+        if (Time.time > lastAttackTime + 2f / weaponData.attackSpeed)
         {
             comboCount = 0;
         }
@@ -127,7 +134,21 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void SetAnimator()
     {
+        //animator.SetInteger("ComboState", comboCount);
+        //if (comboCount == 0)
+        //{
+        //    animator.SetTrigger("Attack");
+        //}
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (!stateInfo.IsTag("Attack"))
+        {
+            comboCount = 0;
+        }
+
         animator.SetInteger("ComboState", comboCount);
+
         if (comboCount == 0)
         {
             animator.SetTrigger("Attack");

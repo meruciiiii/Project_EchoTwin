@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1500222037847732299}
   - component: {fileID: 6028054692264545905}
   - component: {fileID: 9070587743961033223}
+  - component: {fileID: 7332976394667194989}
   m_Layer: 0
   m_Name: 202_Bringer_Bullet
   m_TagString: Untagged
@@ -47,7 +48,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -67,6 +68,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4943e9d6b353db046b3d2c43d2922c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BringerProjectile
+--- !u!114 &7332976394667194989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213063058649400304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98c8d34c6681e94e849d9a160342bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackDebugGizmo
+  mainWeapon: {fileID: 0}
+  subWeapon: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &1687781744588780627
 GameObject:
   m_ObjectHideFlags: 0

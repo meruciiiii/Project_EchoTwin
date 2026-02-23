@@ -5185,7 +5185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8662436168677363628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7232,6 +7232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_001 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9179041542745047514, guid: 3a7d37c9d478d364492cdfdb40489610, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7384,6 +7388,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_005
       objectReference: {fileID: 0}
+    - target: {fileID: 5471899685099740717, guid: 2695a01f49f55514cb704e378e41ab83, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7483,6 +7491,10 @@ PrefabInstance:
     - target: {fileID: 7270920734366573070, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
       propertyPath: m_Name
       value: Stone_004
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270920734366573070, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8046999384069601460, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
       propertyPath: m_LocalScale.x
@@ -7766,6 +7778,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_006 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1030543210910813294, guid: a80936f3e0ebc564689c598da1fcbeaa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7918,6 +7934,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone_006
       objectReference: {fileID: 0}
+    - target: {fileID: 1030543210910813294, guid: a80936f3e0ebc564689c598da1fcbeaa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7939,6 +7959,10 @@ PrefabInstance:
     - target: {fileID: 7270920734366573070, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
       propertyPath: m_Name
       value: Stone_004 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270920734366573070, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8046999384069601460, guid: 23b40b2eefc1b5647b43d5eef20c2430, type: 3}
       propertyPath: m_LocalScale.x
@@ -8065,6 +8089,10 @@ PrefabInstance:
     - target: {fileID: 9179041542745047514, guid: 3a7d37c9d478d364492cdfdb40489610, type: 3}
       propertyPath: m_Name
       value: Stone_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179041542745047514, guid: 3a7d37c9d478d364492cdfdb40489610, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8217,6 +8245,10 @@ PrefabInstance:
     - target: {fileID: 5471899685099740717, guid: 2695a01f49f55514cb704e378e41ab83, type: 3}
       propertyPath: m_Name
       value: Stone_005 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471899685099740717, guid: 2695a01f49f55514cb704e378e41ab83, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

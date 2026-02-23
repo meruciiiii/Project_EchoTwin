@@ -5,27 +5,62 @@ using UnityEngine;
 
 public class Hammer : WeaponAbstract
 {
-    private bool isCharging = false;
-    public bool IsCharging => isCharging;
     private float time = 0f;
     private Coroutine coroutine;
 
-    private Collider[] getTargetInRange()
+    private List<Collider> getTargetInSector()
     {
-        GameObject player = stats.gameObject;
+        List<Collider> Targets = new List<Collider>();
 
+        GameObject player = stats.gameObject;
         Vector3 forward = player.transform.forward;
         Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
+        float range = weaponData.attackRange;
 
-        Vector3 targetPos = new Vector3(weaponData.attackRange * 0.5f, 1f, weaponData.attackRange * 0.5f);
+        Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
-        Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
+        foreach (Collider hit in hits)
+        {
+            if (!hit.CompareTag("Enemy")) continue;
 
-        lastAttackInfo = new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.red };//gizmo
-        hasDebugInfo = true;//gizmo
+            Vector3 dirToTarget = (hit.transform.position - centerPos).normalized;
 
-        return hits;
+            if (Vector3.Angle(forward, dirToTarget) < attackAngle * 0.5f)
+            {
+                Targets.Add(hit);
+            }
+        }
+
+        lastAttackInfo = new AttackDebugInfo
+        {
+            shape = AttackShape.sphere,
+            center = centerPos,
+            size = Vector3.one * range,
+            rotation = player.transform.rotation,
+            color = Color.red,
+            direction = forward,
+            ratio = 1f
+        };
+        hasDebugInfo = true;
+
+        return Targets;
     }
+    //private Collider[] getTargetInRange()
+    //{
+    //    GameObject player = stats.gameObject;
+
+    //    Vector3 forward = player.transform.forward;
+    //    Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
+
+    //    Vector3 targetPos = new Vector3(weaponData.attackRange * 0.5f, 1f, weaponData.attackRange * 0.5f);
+
+    //    Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
+
+    //    lastAttackInfo = new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.red };//gizmo
+    //    hasDebugInfo = true;//gizmo
+
+    //    return hits;
+    //}
 
     public override void Attack(AttackContext context)
     {
@@ -33,54 +68,69 @@ public class Hammer : WeaponAbstract
         if (isCharging) return;
         coroutine = StartCoroutine(Attack_Co(context));
     }
-
     private IEnumerator Attack_Co(AttackContext context)
     {
         isCharging = true;
+        action.GetComponent<Rigidbody>().isKinematic = true;
 
-        SetAnimator();//무기 든 모션
+        SetAnimator(); // 공격 애니메이션 트리거 (Trigger "Attack")
 
-        time = 0f;
-        yield return new WaitForSeconds(0.1f);
-        AniSpeed(0f);
+        // 애니메이션 상태가 바뀔 때까지 한 프레임 대기
+        yield return null;
 
-        while (time < 0.3f)
-        {
-            if (!input.isAttackPressed)
-            {
-                cancleCharging();
-                yield break;
-            }
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        time = 0f;
-
+        // [핵심 로직] 버튼을 누르고 있는 동안 무한 루프
         while (input.isAttackPressed)
         {
-            time += Time.deltaTime;
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (stateInfo.IsTag("Attack"))
+            {
+                // 애니메이션이 0.5f(절반)에 도달하면 속도를 0으로 만들어 멈춤 (차징 대기)
+                if (stateInfo.normalizedTime >= 0.3f)
+                {
+                    AniSpeed(0f);
+                }
+            }
             yield return null;
         }
 
-        time = Mathf.Min(time, 3f);
+        AnimatorStateInfo finalState = animator.GetCurrentAnimatorStateInfo(0);
 
+        // 1. 0.5f 미만에서 뗐다면 공격 취소
+        if (finalState.normalizedTime < 0.3f)
+        {
+            cancleCharging();
+            yield break;
+        }
+
+        // 2. 0.5f 이상에서 뗐다면 공격 실행
+        // 멈췄던 애니메이션 속도를 다시 1로 복구
         AniSpeed(1f);
 
+        // 버튼을 뗀 후부터 추가 차징 시간 측정 (기존 로직 유지)
+        time = 0f;
+        
+        /*
+        while (input.isAttackPressed) // 이미 위에서 뗐으므로 이 루프는 스킵될 것임
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        */
+
+        // 공격 타격 시점까지 대기 (애니메이션의 남은 부분 재생 시간)
         yield return new WaitForSeconds(0.2f / weaponData.attackSpeed);
 
-        Collider[] targets = getTargetInRange();
-
+        // 타격 판정
+        List<Collider> targets = getTargetInSector();
         foreach (Collider target in targets)
         {
-            if (!target.CompareTag("Enemy")) continue;
-
             context.hitTargets.Add(target);
             target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
-
             enemyKnockback(target);
         }
 
+        action.GetComponent<Rigidbody>().isKinematic = false;
         coroutine = null;
         isCharging = false;
         isCancelled = false;
@@ -122,12 +172,19 @@ public class Hammer : WeaponAbstract
 
         Vector3 forward = player.transform.forward;
         Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
+        float range = weaponData.attackRange;
 
-        Vector3 targetPos = new Vector3(weaponData.attackRange * 0.5f, 1f, weaponData.attackRange * 0.5f);
+        echoAttackInfos.Add(new AttackDebugInfo
+        {
+            shape = AttackShape.sphere,
+            center = centerPos,
+            size = new Vector3(range, 0, 0),
+            rotation = player.transform.rotation,
+            color = Color.cyan,
+            ratio = 1f
+        });
 
-        echoAttackInfos.Add(new AttackDebugInfo { center = centerPos, halfExtents = targetPos, rotation = player.transform.rotation, color = Color.cyan });//gizmo
-
-        Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
+        Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
         foreach (Collider hit in hits)
         {

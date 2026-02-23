@@ -103,13 +103,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dagger
   weaponData: {fileID: 11400000, guid: 2ed954927ece2f14b99beef142fe825a, type: 2}
-  characterData: {fileID: 0}
   stats: {fileID: 0}
   animator: {fileID: 0}
   equipment:
     MainWeapon: {fileID: 0}
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
+  attackAngle: 90
   weaponType: 0
   weaponID: 2
   DualWeapon: {fileID: 0}

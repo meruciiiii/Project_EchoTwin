@@ -31,6 +31,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected float lastAttackTime;
     protected float currentHP;
     protected float radius;
+    protected Vector3 lookDir = Vector3.zero;
 
     protected float standardRange = 0.2f;
     public float Damage => enemyData.damage;
@@ -40,11 +41,17 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected Coroutine coroutine;
 
-    protected AttackDebugInfo lastAttackInfo;
-    protected bool hasDebugInfo;
+    protected AttackDebugInfo bodyAttackInfo;
+    protected bool hasBodyAttackDebug;
+    protected AttackDebugInfo areaAttackInfo;
+    protected bool hasAreaAttackDebug;
 
-    public AttackDebugInfo DebugInfo => lastAttackInfo;
-    public bool HasDebugInfo => hasDebugInfo;
+    private List<AttackDebugInfo> debugInfoList = new List<AttackDebugInfo>();
+
+    public AttackDebugInfo BodyAttackInfo => bodyAttackInfo;
+    public bool HasBodyAttackDebug => hasBodyAttackDebug;
+    public AttackDebugInfo AreaAttackInfo => areaAttackInfo;
+    public bool HasAreaAttackDebug => hasAreaAttackDebug;
 
     protected virtual void Awake()
     {
@@ -83,13 +90,12 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
         }
 
-        if (navMesh.desiredVelocity.x > 0.1f)
+        if (navMesh.enabled && navMesh.desiredVelocity.sqrMagnitude > 0.01f)
         {
-            GetComponentInChildren<SpriteRenderer>().flipX = false;
-        }
-        else if (navMesh.desiredVelocity.x < -0.1f)
-        {
-            GetComponentInChildren<SpriteRenderer>().flipX = true;
+            lookDir = navMesh.desiredVelocity.normalized;
+            lookDir.y = 0f;
+
+            GetComponentInChildren<SpriteRenderer>().flipX = (lookDir.x < -0.1f);
         }
     }
 
@@ -98,8 +104,9 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (state == EnemyState.dead) return;
 
         currentHP -= damage;
-
-        if (ani != null) ani.SetTrigger("Hit");
+        Debug.Log(state);
+        //if (ani != null) 
+        ani.SetTrigger("Hit");
 
         checkOnDie();
     }
@@ -109,6 +116,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (currentHP <= 0)
         {
             state = EnemyState.dead;
+            Debug.Log(state);
             TurnOffNavmesh();
             //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
             StartCoroutine(DeathRoutine());
@@ -116,7 +124,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     }
     private IEnumerator DeathRoutine()
     {
-        if (ani != null) ani.SetTrigger("doDeath");
+        if (ani != null) ani.SetTrigger("Death");
 
         // 애니메이션 길이에 맞춰 대기 (예: 1.5초)
         yield return new WaitForSeconds(1.5f);
@@ -193,8 +201,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         //navMesh.isStopped = false;
 
-        rb.isKinematic = true;
         rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
 
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
@@ -240,47 +248,83 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     #endregion
 
     #region attack
-    protected bool BodyAttack(float range)
+
+    public List<AttackDebugInfo> getAllDebugInfo()
     {
-        float checkRadius = radius + range;
+        debugInfoList.Clear();
+        if (hasBodyAttackDebug) debugInfoList.Add(bodyAttackInfo);
+        if (hasAreaAttackDebug) debugInfoList.Add(areaAttackInfo);
 
-        lastAttackInfo = new AttackDebugInfo
+        return debugInfoList;
+    }
+
+    protected void updateBossCharging(float currentTime, float maxTime, float range, float angle)
+    {
+        float progress = Mathf.Clamp01(currentTime / maxTime);
+
+        areaAttackInfo = new AttackDebugInfo
         {
+            shape = AttackShape.sector,
             center = transform.position,
-            halfExtents = Vector3.one * checkRadius,
-            rotation = Quaternion.identity,
-            color = Color.gray,
-            angle = 0f,
-            direction = transform.forward
+            size = new Vector3(range, 0, 0),
+            direction = transform.forward,
+            color = Color.Lerp(Color.yellow, Color.red, progress),
+            ratio = progress
         };
-        hasDebugInfo = true;
+        hasAreaAttackDebug = true;
+    }
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
-        foreach (Collider hit in hits)
+    //protected bool BodyAttack(float range)
+    //{
+    //    float checkRadius = radius + range;
+
+    //    bodyAttackInfo = new AttackDebugInfo
+    //    {
+    //        shape = AttackShape.sphere,
+    //        center = transform.position,
+    //        size = Vector3.one * checkRadius,
+    //        rotation = Quaternion.identity,
+    //        color = Color.gray,
+    //        ratio = 1f
+    //    };
+    //    hasBodyAttackDebug = true;
+
+    //    Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
+    //    foreach (Collider hit in hits)
+    //    {
+    //        if (hit.CompareTag("Player"))
+    //        {
+    //            player.takeDamage(enemyData.damage, transform.position);
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
+
+    protected void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("Player"))
         {
-            if (hit.CompareTag("Player"))
-            {
-                player.takeDamage(enemyData.damage, transform.position);
-                return true;
-            }
+            player.takeDamage(enemyData.damage, transform.position);
         }
-        return false;
     }
 
     protected void AreaAttack(float range, float angle)
     {
         Vector3 dir = (player.transform.position - transform.position).normalized;
         dir.y = 0f;
-        lastAttackInfo = new AttackDebugInfo
+        areaAttackInfo = new AttackDebugInfo
         {
+            shape = AttackShape.sector,
             center = transform.position,
-            halfExtents = Vector3.one * range,
+            size = new Vector3(range, 0, 0),
             rotation = Quaternion.identity,
             color = Color.magenta,
             angle = angle,
-            direction = dir
+            direction = lookDir,
+            ratio = 1f
         };
-        hasDebugInfo = true;
+        hasAreaAttackDebug = true;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, range);
         foreach (Collider hit in hits)
@@ -289,11 +333,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             {
                 Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
                 dirToTarget.y = 0f;
-                //Vector3 forward = transform.forward;
-                Vector3 forward = navMesh.desiredVelocity;
-                forward.y = 0f;
 
-                if (Vector3.Angle(forward, dirToTarget) <= angle * 0.5f)
+                if (Vector3.Angle(lookDir, dirToTarget) <= angle * 0.5f)
                 {
                     player.takeDamage(enemyData.damage, transform.position);
                 }

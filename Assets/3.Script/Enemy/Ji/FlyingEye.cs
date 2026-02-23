@@ -31,11 +31,12 @@ public class FlyingEye : EnemyStateAbstract
         TurnOffNavmesh();
 
         float timer = 0f;
-        bool isAttacked = false;
+        //bool isAttacked = false;
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        if (ani != null) ani.SetTrigger("Attack");
         checkAttackTime();
 
         while (timer < duration)
@@ -44,13 +45,13 @@ public class FlyingEye : EnemyStateAbstract
             float t = timer / duration;
 
             transform.position = Vector3.Lerp(startPos, destPos, t);
-            if (!isAttacked)
-            {
-                if (BodyAttack(enemyData.attackRange))
-                {
-                    isAttacked = true;
-                }
-            }
+            //if (!isAttacked)
+            //{
+            //    if (BodyAttack(enemyData.attackRange))
+            //    {
+            //        isAttacked = true;
+            //    }
+            //}
 
             yield return null;
         }
@@ -67,7 +68,7 @@ public class FlyingEye : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
-        BodyAttack(enemyData.attackRange);
+        //BodyAttack(enemyData.attackRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         float buffer = 0.5f;

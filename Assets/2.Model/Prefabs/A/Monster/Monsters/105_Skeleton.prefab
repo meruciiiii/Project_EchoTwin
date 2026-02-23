@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5593693520980240853}
   - component: {fileID: 6013494834920012744}
   - component: {fileID: 5562637877164477727}
+  - component: {fileID: 811826627832013015}
   m_Layer: 0
   m_Name: 105_Skeleton_mesh
   m_TagString: Untagged
@@ -27,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 1920117872358145203}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.12, y: 1.06, z: -0.24608898}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: -0.12, y: 1.4, z: -0.24608898}
+  m_LocalScale: {x: 5.23, y: 5.23, z: 5.23}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7896927778183466402}
@@ -113,6 +114,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &811826627832013015
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920117872358145203}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.43, y: 0.39, z: 0.2}
+  m_Center: {x: 0.05, y: -0.07, z: 0}
 --- !u!1 &7863740108398017675
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,11 +152,11 @@ GameObject:
   - component: {fileID: 7067308601848118468}
   m_Layer: 0
   m_Name: 105_Skeleton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7896927778183466402
 Transform:
   m_ObjectHideFlags: 0
@@ -164,14 +186,14 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9343162, y: 2.1845791, z: 1}
-  m_Center: {x: 0.16684222, y: 1.0761317, z: 0}
+  m_Size: {x: 1.7622299, y: 2.1845791, z: 1}
+  m_Center: {x: 0.0807991, y: 1.0761317, z: 0}
 --- !u!54 &6581001133547217133
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -266,6 +288,6 @@ MonoBehaviour:
   knockbackTime: 0.2
   ground:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   shieldDgree: 0.3
   reduceRatio: 0.9

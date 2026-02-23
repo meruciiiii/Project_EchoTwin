@@ -39,9 +39,10 @@ public class Bat : EnemyStateAbstract
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
+        if (ani != null) ani.SetTrigger("Attack");
         checkAttackTime();
 
-        bool isAttacked = false;
+        //bool isAttacked = false;
         Vector3 dir = (destPos - startPos).normalized;
         float distance = Vector3.Distance(startPos, destPos);
 
@@ -53,17 +54,17 @@ public class Bat : EnemyStateAbstract
 
             distance -= enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime;
 
-            if (!isAttacked)
-            {
-                if(BodyAttack(enemyData.attackRange))
-                {
-                    isAttacked = true;
-                }
-            }
+            //if (!isAttacked)
+            //{
+            //    if(BodyAttack(enemyData.attackRange))
+            //    {
+            //        isAttacked = true;
+            //    }
+            //}
             yield return null;
         }
         yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
-        transform.position = startPos;
+        transform.position = destPos;
 
         coroutine = null;
 
@@ -75,7 +76,7 @@ public class Bat : EnemyStateAbstract
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
 
-        BodyAttack(enemyData.attackRange);
+        //BodyAttack(enemyData.attackRange);
 
         makeZigzag();
 
