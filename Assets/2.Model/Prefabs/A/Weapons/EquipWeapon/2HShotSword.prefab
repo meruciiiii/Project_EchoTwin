@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1106712987536409661}
   - component: {fileID: 3238062246419117069}
   - component: {fileID: 5560303928278231072}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 2HShotSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2433183401127699998}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6240201, y: -0.53953636, z: -0.30443075, w: -0.47625768}
+  m_LocalRotation: {x: -0.62401944, y: -0.5395352, z: -0.30442858, w: -0.47626114}
   m_LocalPosition: {x: 0.066, y: 0.032, z: 0.046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -114,4 +114,4 @@ MonoBehaviour:
   weaponID: 2
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: c0433ce0149a58b459c698cba84a556a, type: 2}
-  daggerPrefab: {fileID: 2851257711647736367, guid: f8900ae3b61048a41b1a08c8bfcaf2d2, type: 3}
+  daggerPrefab: {fileID: 2433183401127699998, guid: 4dc3785c478b7e2439709c8cb0ee5e55, type: 3}

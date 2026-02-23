@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3181704122509884024}
   - component: {fileID: 4624023212287633580}
   - component: {fileID: 127832049259052222}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 2HHammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676580046644239857}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.53992665, y: -0.09709759, z: -0.70348847, w: -0.45183557}
+  m_LocalRotation: {x: -0.5399241, y: -0.097095564, z: -0.7034905, w: -0.4518357}
   m_LocalPosition: {x: 0.146, y: 0.134, z: -0.071}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 1
