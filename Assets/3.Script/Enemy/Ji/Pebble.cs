@@ -1,14 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Pebble : EnemyStateAbstract
 {
     [SerializeField] private GameObject projectile;
-    [SerializeField] float buffer = 0.5f;
-    [SerializeField] float duration = 1f;
+    [SerializeField] private float buffer = 0.5f;
+    [SerializeField] private float duration = 1f;
     private SpriteRenderer spriteRenderer;
+
+    [SerializeField] private float sideWalkTime = 0.5f;
+    private float sideTimer;
+    private int sign = 1;
 
     protected override void Awake()
     {
@@ -71,15 +75,34 @@ public class Pebble : EnemyStateAbstract
 
         projectile.transform.position = startPos;
         projectile.SetActive(true);
-        if(spriteRenderer.flipX)
+        if (spriteRenderer.flipX)
         {
             projectile.GetComponentInChildren<SpriteRenderer>().flipX = true;
+        }
+        if (!spriteRenderer.flipX)
+        {
+            projectile.GetComponentInChildren<SpriteRenderer>().flipX = false;
         }
 
         while (timer < duration)
         {
-            if (state == EnemyState.dead || !projectile.activeSelf)
+            if (state == EnemyState.dead)
             {
+                yield break;
+            }
+
+            if (!projectile.activeSelf)
+            {
+                projectile.transform.position = startPos;
+                projectile.SetActive(false);
+
+                coroutine = null;
+
+                if (state != EnemyState.dead)
+                {
+                    state = EnemyState.chase;
+                    TurnOnNavmesh();
+                }
                 yield break;
             }
 
@@ -120,10 +143,36 @@ public class Pebble : EnemyStateAbstract
         }
         else
         {
-            if (!canAttack()) return;
-            navMesh.ResetPath();
+            if (!canAttack())
+            {
+                SideWalk();
+            }
+            else
+            {
+                navMesh.ResetPath();
 
-            Attack();
+                Attack();
+            }
+        }
+    }
+
+    private void SideWalk()
+    {
+        sideTimer -= Time.deltaTime;
+        if (sideTimer > 0f) return;
+        sideTimer = sideWalkTime;
+
+        sign *= -1;
+
+        Vector3 sideDir = Vector3.Cross(Vector3.up, (transform.position - player.transform.position).normalized) * sign;
+        sideDir.y = 0;
+        Vector3 sidePos = transform.position + sideDir * 2f;
+        sidePos.y = 0;
+
+        UnityEngine.AI.NavMeshHit hit;
+        if (UnityEngine.AI.NavMesh.SamplePosition(sidePos, out hit, 5f, UnityEngine.AI.NavMesh.AllAreas))
+        {
+            navMesh.SetDestination(hit.position);
         }
     }
 
@@ -133,9 +182,73 @@ public class Pebble : EnemyStateAbstract
         Vector3 runPos = transform.position + dir.normalized * 2f;
 
         UnityEngine.AI.NavMeshHit hit;
-        if (UnityEngine.AI.NavMesh.SamplePosition(runPos, out hit, 1f, UnityEngine.AI.NavMesh.AllAreas))
+        if (UnityEngine.AI.NavMesh.SamplePosition(runPos, out hit, 5f, UnityEngine.AI.NavMesh.AllAreas))
         {
             navMesh.SetDestination(hit.position);
         }
+    }
+
+    protected override void TurnOffNavmesh()
+    {
+        navMesh.isStopped = true;
+        navMesh.ResetPath();
+        //navMesh.enabled = false;
+
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
+    }
+
+    protected override void TurnOnNavmesh()
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
+        {
+            navMesh.enabled = true;
+            navMesh.Warp(hit.position);
+        }
+        else
+        {
+            StartCoroutine(ReturnToField_Co());
+        }
+    }
+
+    private IEnumerator ReturnToField_Co()
+    {
+        state = EnemyState.knockback;
+        float returnSpeed = enemyData.moveSpeed * 1.5f;
+
+        if (navMesh.enabled && navMesh.isOnNavMesh)
+        {
+            navMesh.isStopped = true;
+            navMesh.ResetPath();
+        }
+        navMesh.enabled = false;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        while (state != EnemyState.dead)
+        {
+            Vector3 dir = (player.transform.position - transform.position).normalized;
+            dir.y = 0f;
+            transform.position += dir * returnSpeed * Time.deltaTime;
+
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
+            {
+                navMesh.enabled = true;
+                navMesh.Warp(hit.position);
+                navMesh.isStopped = false;
+                state = EnemyState.chase;
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    protected override bool isItOnTheGround()
+    {
+        return true;
     }
 }

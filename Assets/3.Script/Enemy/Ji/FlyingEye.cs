@@ -94,7 +94,7 @@ public class FlyingEye : EnemyStateAbstract
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 
-        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
         {
             navMesh.enabled = true;
             navMesh.Warp(hit.position);
@@ -114,7 +114,7 @@ public class FlyingEye : EnemyStateAbstract
             Vector3 dir = (player.transform.position = transform.position).normalized;
             transform.position += dir * returnSpeed * Time.deltaTime;
 
-            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 10.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
             {
                 navMesh.enabled = true;
                 navMesh.Warp(hit.position);
@@ -124,7 +124,6 @@ public class FlyingEye : EnemyStateAbstract
             yield return null;
         }
     }
-
 
     protected override bool isItOnTheGround()
     {
