@@ -110,6 +110,15 @@ MonoBehaviour:
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
   attackAngle: 90
+  attackEffects:
+  - prefab: {fileID: 7300826812160552309, guid: d328a95abdf362f4db02aac07d651a05, type: 3}
+    forwardOffset: 1.46
+    upOffset: 0
+    scale: 1
+  - prefab: {fileID: 6014195184020266117, guid: a16ac4748cd1c494495012b20edd2ff2, type: 3}
+    forwardOffset: 1.5
+    upOffset: 0
+    scale: 1
   weaponType: 1
   weaponID: 3
   DualWeapon: {fileID: 0}

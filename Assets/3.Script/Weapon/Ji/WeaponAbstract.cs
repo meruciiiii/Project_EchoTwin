@@ -33,10 +33,10 @@ public abstract class WeaponAbstract : MonoBehaviour
     [Serializable]
     public class AttackEffectData
     {
-        public GameObject prefab;      // 이펙트 프리팹
-        public float forwardOffset = 1.0f; // 이 이펙트만의 앞뒤 위치
-        public float upOffset = 1.0f;      // 이 이펙트만의 높이
-        public float scale = 1.0f;         // 이 이펙트만의 크기
+        public GameObject prefab; 
+        public float forwardOffset = 1.0f; 
+        public float upOffset = 1.0f;     
+        public float scale = 1.0f;         
     }
     [Header("Effects Settings")]
     [SerializeField] protected AttackEffectData[] attackEffects;
@@ -210,7 +210,6 @@ public abstract class WeaponAbstract : MonoBehaviour
     {
         if (index >= 100)
         {
-            // 100 이상이면: (인덱스 - 100)번 이펙트를 반전해서 실행
             PlayEffect(index - 100, true);
         }
         else
@@ -227,14 +226,20 @@ public abstract class WeaponAbstract : MonoBehaviour
         AttackEffectData data = attackEffects[index];
 
         Vector3 pos = stats.transform.position + (stats.transform.forward * data.forwardOffset) + (Vector3.up * data.upOffset);
-        Quaternion rot = stats.transform.rotation;
-
-        GameObject effect = Instantiate(data.prefab, pos, rot);
+        GameObject effect = Instantiate(data.prefab, pos, stats.transform.rotation);
 
         Vector3 finalScale = Vector3.one * data.scale;
+
         if (isFlip)
         {
-            finalScale.x *= -1;
+            if (Mathf.Abs(stats.transform.forward.z) > Mathf.Abs(stats.transform.forward.x))
+            {
+                finalScale.x *= -1;
+            }
+            else
+            {
+                finalScale.z *= -1;
+            }
         }
 
         effect.transform.localScale = finalScale;

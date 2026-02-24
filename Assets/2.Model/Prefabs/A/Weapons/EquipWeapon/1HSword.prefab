@@ -115,10 +115,16 @@ MonoBehaviour:
     forwardOffset: 1
     upOffset: 0.3
     scale: 3
+    flipX: 1
+    flipY: 0
+    flipZ: 0
   - prefab: {fileID: 6014195184020266117, guid: a16ac4748cd1c494495012b20edd2ff2, type: 3}
     forwardOffset: 1
     upOffset: 0.3
     scale: 1
+    flipX: 0
+    flipY: 0
+    flipZ: 0
   weaponType: 0
   weaponID: 0
   DualWeapon: {fileID: 0}
