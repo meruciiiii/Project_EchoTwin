@@ -19,7 +19,11 @@ public class GameManager : MonoBehaviour
     public GameState gamestate => gameState;
 
     public int lastStage = 0;
-    
+    public event Action<Vector3, Vector2Int> whenGoNextMap;
+    private Vector2Int currentCell;
+    private IReadOnlyDictionary<Vector2Int, List<GameObject>> enemieDic;
+
+
     public static GameManager instance = null;
 
     private void Awake()
@@ -31,6 +35,40 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void setDic(IReadOnlyDictionary<Vector2Int, List<GameObject>> dic)
+    {
+        enemieDic = dic;
+    }
+
+    public void whenMapChange(Vector3 destDir, Vector2Int dicKey)
+    {
+        currentCell = dicKey;
+        ChangeState(GameState.Loading);
+
+        whenGoNextMap?.Invoke(destDir, dicKey);
+    }
+
+    public void whenPlayerArrived()
+    {
+        setEnemyActive(currentCell);
+        ChangeState(GameState.Playing);
+    }
+
+    private void setEnemyActive(Vector2Int currentCell)
+    {
+        if (enemieDic == null) return;
+        if (!enemieDic.TryGetValue(currentCell, out List<GameObject> list) || list == null) return;
+
+        for(int i=0; i<list.Count;i++)
+        {
+            if(list[i] != null)
+            {
+                EnemyStateAbstract enemy = list[i].GetComponent<EnemyStateAbstract>();
+                enemy.state = EnemyState.chase;
+            }
         }
     }
 
@@ -46,9 +84,7 @@ public class GameManager : MonoBehaviour
         }
         else if(gameState == GameState.Die)
         {
-            //lastStage = currentStage;
             isDead = true;
-            //SceneChangeManager.instance.SceneChange(SceneChangeManager.SceneType.Die); 뒤지는 씬으로 넘기기
         }
         else if(gameState == GameState.Playing)
         {

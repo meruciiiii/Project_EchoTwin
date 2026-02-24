@@ -27,7 +27,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected BoxCollider boxCol;
 
     protected FlashEffect effect;
-    protected EnemyState state;
+    public EnemyState state;
 
     protected float lastAttackTime;
     protected float currentHP;
