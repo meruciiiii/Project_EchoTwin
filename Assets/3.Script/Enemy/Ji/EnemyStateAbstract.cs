@@ -64,7 +64,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         gizmo.enemy = this;
         setMoveSpeed();
         radius = boxCol.size.x * 0.5f;
-        boxCol.isTrigger = false;
+        boxCol.isTrigger = true;
 
         ani = GetComponentInChildren<Animator>();
         TryGetComponent(out rb);
@@ -73,6 +73,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         player = FindAnyObjectByType<PlayerAction>();
         state = EnemyState.idle;
+        //state = EnemyState.chase;
     }
 
     protected virtual void OnEnable()

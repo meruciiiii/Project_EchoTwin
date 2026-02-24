@@ -7,11 +7,17 @@ public class GolemProjectile : MonoBehaviour
 {
     private EnemyStateAbstract enemy;
     private bool hasHit;
+    private Collider col;
 
     private void Awake()
     {
         enemy = GetComponentInParent<EnemyStateAbstract>();
         gameObject.SetActive(false);
+        TryGetComponent<Collider>(out col);
+        if (col != null)
+        {
+            col.isTrigger = true;
+        }
     }
 
     private void OnEnable()

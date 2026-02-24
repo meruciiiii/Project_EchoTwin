@@ -9,6 +9,7 @@ public class Pebble : EnemyStateAbstract
     [SerializeField] private float buffer = 0.5f;
     [SerializeField] private float duration = 1f;
     private SpriteRenderer spriteRenderer;
+    [SerializeField] private float attackSpeed = 10f;
 
     [SerializeField] private float sideWalkTime = 0.5f;
     private float sideTimer;
@@ -44,13 +45,18 @@ public class Pebble : EnemyStateAbstract
             spriteRenderer.flipX = true;
         }
 
-        Move();
+        Attack();
     }
 
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
         if (coroutine != null) return;
+        if (!canAttack())
+        {
+            Move();
+            return;
+        }
 
         coroutine = StartCoroutine(Attack_Co());
     }
@@ -69,7 +75,10 @@ public class Pebble : EnemyStateAbstract
         checkAttackTime();
 
         Vector3 targetPos = player.transform.position;
+        targetPos.y = 0f;
         Vector3 startPos = transform.position;
+        startPos.y = 0f;
+        Vector3 dir = (targetPos - startPos).normalized;
 
         float timer = 0f;
 
@@ -108,7 +117,7 @@ public class Pebble : EnemyStateAbstract
 
             timer += Time.deltaTime;
             float t = timer / duration;
-            projectile.transform.position = Vector3.Lerp(startPos, targetPos, t);
+            projectile.transform.position += dir * attackSpeed * Time.deltaTime;
 
             yield return null;
         }
@@ -143,16 +152,7 @@ public class Pebble : EnemyStateAbstract
         }
         else
         {
-            if (!canAttack())
-            {
-                SideWalk();
-            }
-            else
-            {
-                navMesh.ResetPath();
-
-                Attack();
-            }
+            SideWalk();
         }
     }
 

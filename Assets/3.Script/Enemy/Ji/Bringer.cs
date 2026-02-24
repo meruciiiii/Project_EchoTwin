@@ -10,14 +10,18 @@ public class Bringer : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Attack();
     }
 
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
-        if (!canAttack()) Move();
+        if (coroutine != null) return;
+        if (!canAttack())
+        {
+            Move();
+            return;
+        }
 
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
@@ -41,11 +45,10 @@ public class Bringer : EnemyStateAbstract
         state = EnemyState.attack;
         TurnOffNavmesh();
 
-        //animator
-        if (ani != null) ani.SetTrigger("Attack 2");
-
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
+
+        if (ani != null) ani.SetTrigger("Attack 2");
 
         checkAttackTime();
 
@@ -56,7 +59,11 @@ public class Bringer : EnemyStateAbstract
         projectile.SetActive(false);
 
         coroutine = null;
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     private IEnumerator Attack_Co()
@@ -65,25 +72,28 @@ public class Bringer : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-        //animator
-        if (ani != null) ani.SetTrigger("Attack");
-
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
+
+        if (ani != null) ani.SetTrigger("Attack");
+
         checkAttackTime();
 
         AreaAttack(enemyData.attackRange, 270f);
 
         coroutine = null;
-        TurnOnNavmesh();
+
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
         if (state == EnemyState.knockback) return;
         if (coroutine != null) return;
-
-        //BodyAttack(standardRange);
 
         setPlayerPos();
     }
