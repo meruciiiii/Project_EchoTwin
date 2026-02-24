@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 mousePosition;
     public float rotationSpeed = 10f;
 
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float distance = 10f;
+    private Coroutine coroutine;
+
     private void Awake()
     {
         TryGetComponent(out Input);
@@ -23,6 +27,22 @@ public class PlayerMovement : MonoBehaviour
         TryGetComponent(out action);
         animator = GetComponentInChildren<Animator>();
         weapon = GetComponentInChildren<WeaponAbstract>(true);
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.whenGoNextMap += movePlayerOverBridge;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.whenGoNextMap -= movePlayerOverBridge;
+        }
     }
 
     private void FixedUpdate()
@@ -35,8 +55,11 @@ public class PlayerMovement : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
 
             // 멈췄을 때 애니메이션 파라미터를 즉시 0으로 (댐핑 인자 제거)
-            animator.SetFloat("MoveX", 0);
-            animator.SetFloat("MoveZ", 0);
+            if (coroutine == null)
+            {
+                animator.SetFloat("MoveX", 0);
+                animator.SetFloat("MoveZ", 0);
+            }
             return; // 이후 Move(), FocusOnMouse() 실행 안 함
         }
 
@@ -132,12 +155,66 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 dir = (mousePosition - transform.position).normalized;
 
-            if(dir != Vector3.zero)
+            if (dir != Vector3.zero)
             {
                 Quaternion mouseRotation = Quaternion.LookRotation(dir);
 
                 transform.rotation = Quaternion.Slerp(transform.rotation, mouseRotation, Time.deltaTime * rotationSpeed * weapon.weaponData.attackSpeed);
             }
         }
+    }
+
+    private void movePlayerOverBridge(Vector3 destDir, Vector2Int dicKey)
+    {
+        if (coroutine != null) return;
+
+        coroutine = StartCoroutine(movePlayer_Co(destDir, distance, moveSpeed));
+    }
+
+    private IEnumerator movePlayer_Co(Vector3 dir, float distance, float speed)
+    {
+        dir.y = 0;
+        dir = dir.normalized;
+
+        Vector3 startPos = transform.position;
+        Vector3 destPos = startPos + dir * distance;
+
+        action.forStopMove = true;
+        action.forStopRotate = true;
+
+        while ((transform.position - destPos).sqrMagnitude > 0.1f)
+        {
+            Vector3 before = transform.position;
+            Vector3 after = Vector3.MoveTowards(before, destPos, speed * Time.deltaTime);
+
+            rb.MovePosition(after);
+
+            Vector3 delta = after - before;
+            Vector3 moveDir = delta.sqrMagnitude > 0.01f ? delta.normalized : Vector3.zero;
+
+            if (moveDir != Vector3.zero)
+            {
+                Vector3 localMoveDir = transform.InverseTransformDirection(moveDir);
+                animator.SetFloat("MoveX", localMoveDir.x, 0.1f, Time.deltaTime);
+                animator.SetFloat("MoveZ", localMoveDir.z, 0.1f, Time.deltaTime);
+
+            }
+            else
+            {
+                animator.SetFloat("MoveX", 0, 0.1f, Time.deltaTime);
+                animator.SetFloat("MoveZ", 0, 0.1f, Time.deltaTime);
+            }
+            yield return null;
+        }
+        rb.MovePosition(destPos);
+
+        animator.SetFloat("MoveX", 0);
+        animator.SetFloat("MoveZ", 0);
+
+        action.forStopMove = false;
+        action.forStopRotate = false;
+
+        GameManager.instance.whenPlayerArrived();
+        coroutine = null;
     }
 }
