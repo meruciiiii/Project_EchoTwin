@@ -23,7 +23,7 @@ public class PlayerAction : MonoBehaviour
 
     public bool isKnockback = false;
     public bool hasDamaged = false;
-    [SerializeField] public bool forStopMove = false;
+    public bool forStopMove = false;
     public bool forStopRotate = false;
 
     public AttackDebugGizmo gizmo;
