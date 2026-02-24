@@ -30,11 +30,16 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     [SerializeField] protected float attackAngle = 90f;
 
-    [Header("Effects")]
-    [SerializeField] protected GameObject[] attackEffects;
-    [SerializeField] protected float forwardOffset = 1.0f; // 앞뒤 거리
-    [SerializeField] protected float upOffset = 1.0f;      // 높이
-    [SerializeField] protected float effectScale = 1.0f;    // 크기
+    [Serializable]
+    public class AttackEffectData
+    {
+        public GameObject prefab;      // 이펙트 프리팹
+        public float forwardOffset = 1.0f; // 이 이펙트만의 앞뒤 위치
+        public float upOffset = 1.0f;      // 이 이펙트만의 높이
+        public float scale = 1.0f;         // 이 이펙트만의 크기
+    }
+    [Header("Effects Settings")]
+    [SerializeField] protected AttackEffectData[] attackEffects;
 
     protected PlayerAction action;
 
@@ -201,17 +206,38 @@ public abstract class WeaponAbstract : MonoBehaviour
         return weaponData.baseDamage + stats.PlayerDMG;// + characterData.valuePerLv 이 부분 정리
     }
 
-    protected void PlayEffect(int index)
+    public void AnimationEventEffect(int index)
     {
-        if (attackEffects == null || index >= attackEffects.Length || attackEffects[index] == null) return;
+        if (index >= 100)
+        {
+            // 100 이상이면: (인덱스 - 100)번 이펙트를 반전해서 실행
+            PlayEffect(index - 100, true);
+        }
+        else
+        {
+            // 100 미만이면: 정방향으로 실행
+            PlayEffect(index, false);
+        }
+    }
 
-        Vector3 pos = stats.transform.position + (stats.transform.forward * forwardOffset) + (Vector3.up * upOffset);
+    protected void PlayEffect(int index, bool isFlip)
+    {
+        if (attackEffects == null || index >= attackEffects.Length || attackEffects[index].prefab == null) return;
 
+        AttackEffectData data = attackEffects[index];
+
+        Vector3 pos = stats.transform.position + (stats.transform.forward * data.forwardOffset) + (Vector3.up * data.upOffset);
         Quaternion rot = stats.transform.rotation;
 
-        GameObject effect = Instantiate(attackEffects[index], pos, rot);
+        GameObject effect = Instantiate(data.prefab, pos, rot);
 
-        effect.transform.localScale = Vector3.one * effectScale;
+        Vector3 finalScale = Vector3.one * data.scale;
+        if (isFlip)
+        {
+            finalScale.x *= -1;
+        }
+
+        effect.transform.localScale = finalScale;
     }
 
     public abstract void Attack(AttackContext context);
