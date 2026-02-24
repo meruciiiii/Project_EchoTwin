@@ -110,6 +110,11 @@ MonoBehaviour:
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
   attackAngle: 90
+  attackEffects:
+  - {fileID: 6014195184020266117, guid: a16ac4748cd1c494495012b20edd2ff2, type: 3}
+  forwardOffset: 1
+  upOffset: 1
+  effectScale: 1
   weaponType: 0
   weaponID: 0
   DualWeapon: {fileID: 0}

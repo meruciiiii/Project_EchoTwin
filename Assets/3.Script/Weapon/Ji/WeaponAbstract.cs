@@ -30,6 +30,12 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     [SerializeField] protected float attackAngle = 90f;
 
+    [Header("Effects")]
+    [SerializeField] protected GameObject[] attackEffects;
+    [SerializeField] protected float forwardOffset = 1.0f; // 앞뒤 거리
+    [SerializeField] protected float upOffset = 1.0f;      // 높이
+    [SerializeField] protected float effectScale = 1.0f;    // 크기
+
     protected PlayerAction action;
 
     public WeaponType weaponType;
@@ -193,6 +199,19 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected virtual float calcDamage()
     {
         return weaponData.baseDamage + stats.PlayerDMG;// + characterData.valuePerLv 이 부분 정리
+    }
+
+    protected void PlayEffect(int index)
+    {
+        if (attackEffects == null || index >= attackEffects.Length || attackEffects[index] == null) return;
+
+        Vector3 pos = stats.transform.position + (stats.transform.forward * forwardOffset) + (Vector3.up * upOffset);
+
+        Quaternion rot = stats.transform.rotation;
+
+        GameObject effect = Instantiate(attackEffects[index], pos, rot);
+
+        effect.transform.localScale = Vector3.one * effectScale;
     }
 
     public abstract void Attack(AttackContext context);
