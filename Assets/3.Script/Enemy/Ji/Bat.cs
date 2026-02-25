@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class Bat : EnemyStateAbstract
 {
-    [SerializeField] private int bodyAttackMultiple = 3;
-
+    [SerializeField] private float dashSpeed = 2f;
     [SerializeField] private float zigzagRadius = 2f;
     [SerializeField] private float zigzagTime = 0.3f;
 
@@ -37,33 +36,36 @@ public class Bat : EnemyStateAbstract
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
-        //animator
         if (ani != null) ani.SetTrigger("Attack");
+        //animator
         checkAttackTime();
 
         //bool isAttacked = false;
         Vector3 dir = (destPos - startPos).normalized;
         float distance = Vector3.Distance(startPos, destPos);
+        Vector3 targetPos = Vector3.zero;
 
         while (distance > 0f)
         {
             //navMesh.Move(dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
-            Vector3 targetPos = transform.position + (dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
+            targetPos = transform.position + (dir * enemyData.attackSpeed * Time.deltaTime);
             transform.position = targetPos;
 
-            distance -= enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime;
+            distance -= enemyData.attackSpeed * Time.deltaTime;
 
-            //if (!isAttacked)
-            //{
-            //    if(BodyAttack(enemyData.attackRange))
-            //    {
-            //        isAttacked = true;
-            //    }
-            //}
+            if (dir.x > 0.01f)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                spriteRenderer.flipX = true;
+            }
+
             yield return null;
         }
         yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
-        transform.position = destPos;
+        transform.position = targetPos;
 
         coroutine = null;
 

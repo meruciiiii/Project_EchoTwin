@@ -7,19 +7,12 @@ public class Pebble : EnemyStateAbstract
 {
     [SerializeField] private GameObject projectile;
     [SerializeField] private float buffer = 0.5f;
-    [SerializeField] private float duration = 1f;
-    private SpriteRenderer spriteRenderer;
-    [SerializeField] private float attackSpeed = 10f;
+    [SerializeField] private float projectileDuration = 1f;
+    [SerializeField] private float projectileSpeed = 10f;
 
     [SerializeField] private float sideWalkTime = 0.5f;
     private float sideTimer;
     private int sign = 1;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
 
     protected override void Update()
     {
@@ -93,7 +86,7 @@ public class Pebble : EnemyStateAbstract
             projectile.GetComponentInChildren<SpriteRenderer>().flipX = false;
         }
 
-        while (timer < duration)
+        while (timer < projectileDuration)
         {
             if (state == EnemyState.dead)
             {
@@ -116,8 +109,8 @@ public class Pebble : EnemyStateAbstract
             }
 
             timer += Time.deltaTime;
-            float t = timer / duration;
-            projectile.transform.position += dir * attackSpeed * Time.deltaTime;
+            float t = timer / projectileDuration;
+            projectile.transform.position += dir * projectileSpeed * Time.deltaTime;
 
             yield return null;
         }
@@ -179,6 +172,7 @@ public class Pebble : EnemyStateAbstract
     private void Runaway()
     {
         Vector3 dir = transform.position - player.transform.position;
+        dir.y = transform.position.y;
         Vector3 runPos = transform.position + dir.normalized * 2f;
 
         UnityEngine.AI.NavMeshHit hit;

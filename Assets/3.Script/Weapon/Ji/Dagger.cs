@@ -22,7 +22,14 @@ public class Dagger : WeaponAbstract
         {
             if (!hit.CompareTag("Enemy")) continue;
 
-            Vector3 dirToTarget = (hit.transform.position - centerPos).normalized;
+            Vector3 dirToPivot = (hit.transform.position - centerPos).normalized;
+            if (Vector3.Dot(forward, dirToPivot) < -0.2f) continue;
+
+            Vector3 closePoint = hit.ClosestPoint(centerPos);
+            closePoint.y = centerPos.y;
+
+            Vector3 dirToTarget = (closePoint - centerPos).normalized;
+            if (dirToTarget == Vector3.zero) dirToTarget = forward;
 
             if (Vector3.Angle(forward, dirToTarget) < attackAngle * 0.5f)
             {

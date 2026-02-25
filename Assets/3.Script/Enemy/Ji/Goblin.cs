@@ -9,13 +9,6 @@ public class Goblin : EnemyStateAbstract
     [SerializeField] float attackSpeed = 10f;
     [SerializeField] float dashDuration = 0.5f;
     [SerializeField] float buffer = 0.5f;
-    private SpriteRenderer spriteRenderer;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
 
     protected override void Update()
     {
@@ -147,34 +140,34 @@ public class Goblin : EnemyStateAbstract
         }
     }
 
-    protected override void TurnOffNavmesh()
-    {
-        navMesh.isStopped = true;
-        navMesh.ResetPath();
-        //navMesh.enabled = false;
+    //protected override void TurnOffNavmesh()
+    //{
+    //    navMesh.isStopped = true;
+    //    navMesh.ResetPath();
+    //    //navMesh.enabled = false;
 
-        rb.isKinematic = false;
-        rb.linearVelocity = Vector3.zero;
-    }
+    //    rb.isKinematic = false;
+    //    rb.linearVelocity = Vector3.zero;
+    //}
 
-    protected override void TurnOnNavmesh()
-    {
-        if (state == EnemyState.dead) return;
+    //protected override void TurnOnNavmesh()
+    //{
+    //    if (state == EnemyState.dead) return;
 
-        rb.isKinematic = false;
-        rb.linearVelocity = Vector3.zero;
-        rb.isKinematic = true;
+    //    rb.isKinematic = false;
+    //    rb.linearVelocity = Vector3.zero;
+    //    rb.isKinematic = true;
 
-        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
-        {
-            navMesh.isStopped = false;
-            //navMesh.enabled = true;
-            navMesh.Warp(hit.position);
-        }
-        else
-        {
-            state = EnemyState.dead;
-        }
-    }
+    //    if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 3.0f, NavMesh.AllAreas))
+    //    {
+    //        navMesh.isStopped = false;
+    //        //navMesh.enabled = true;
+    //        navMesh.Warp(hit.position);
+    //    }
+    //    else
+    //    {
+    //        state = EnemyState.dead;
+    //    }
+    //}
 }
 

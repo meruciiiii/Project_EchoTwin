@@ -7,13 +7,11 @@ public class Skeleton : EnemyStateAbstract
 {
     [SerializeField] private float shieldDgree = 0.3f;
     [SerializeField] private float reduceRatio = 0.9f;
-    private SpriteRenderer spriteRenderer;
 
     protected override void Awake()
     {
         base.Awake();
         navMesh.updateRotation = true;
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     protected override void Update()
@@ -30,7 +28,6 @@ public class Skeleton : EnemyStateAbstract
         {
             ani.ResetTrigger("Attack 2");
 
-            effect.Flash(1, 0.5f);
             currentHP -= damage;
             checkOnDie();
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit"); // 공격 중 맞으면 피격 모션만
@@ -58,7 +55,7 @@ public class Skeleton : EnemyStateAbstract
             // 방패 막기
             damage *= 1 - reduceRatio;
             currentHP -= damage;
-            effect.Flash(1, 0.5f);
+
             checkOnDie();
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Attack 2");
         }
@@ -66,7 +63,7 @@ public class Skeleton : EnemyStateAbstract
         {
             // 일반 피격
             currentHP -= damage;
-            effect.Flash(1, 0.5f);
+
             checkOnDie();
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit");
         }

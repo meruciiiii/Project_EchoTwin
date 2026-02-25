@@ -23,12 +23,7 @@ public class Hammer : WeaponAbstract
         {
             if (!hit.CompareTag("Enemy")) continue;
 
-            Vector3 dirToTarget = (hit.transform.position - centerPos).normalized;
-
-            if (Vector3.Angle(forward, dirToTarget) < attackAngle * 0.5f)
-            {
-                Targets.Add(hit);
-            }
+            Targets.Add(hit);
         }
 
         lastAttackInfo = new AttackDebugInfo
@@ -109,7 +104,7 @@ public class Hammer : WeaponAbstract
 
         // 버튼을 뗀 후부터 추가 차징 시간 측정 (기존 로직 유지)
         time = 0f;
-        
+
         /*
         while (input.isAttackPressed) // 이미 위에서 뗐으므로 이 루프는 스킵될 것임
         {

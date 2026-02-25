@@ -9,7 +9,37 @@ public class Bringer : EnemyStateAbstract
 
     protected override void Update()
     {
-        base.Update();
+        if (GameManager.instance.isStop)
+        {
+            TurnOffNavmesh();
+            return;
+        }
+        if (state == EnemyState.dead) return;
+
+        // 속도가 있으면 Run, 없으면 Idle
+        if (ani != null)
+        {
+            ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
+        }
+
+        if (navMesh.enabled && navMesh.desiredVelocity.sqrMagnitude > 0.01f)
+        {
+            lookDir = navMesh.desiredVelocity.normalized;
+            lookDir.y = 0f;
+
+            //GetComponentInChildren<SpriteRenderer>().flipX = (lookDir.x < -0.1f);
+
+            if(lookDir.x > 0.01f)
+            {
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+            if(lookDir.x < 0.01f)
+            {
+                transform.rotation = Quaternion.identity;
+            }
+
+        }
+
         Attack();
     }
 
@@ -92,7 +122,7 @@ public class Bringer : EnemyStateAbstract
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         setPlayerPos();
