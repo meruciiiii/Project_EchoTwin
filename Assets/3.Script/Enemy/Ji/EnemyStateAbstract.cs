@@ -19,7 +19,9 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 {
     [SerializeField] protected EnemyData enemyData;
     [SerializeField] protected NavMeshAgent navMesh;
-    [SerializeField] protected PlayerAction player;
+
+    protected PlayerAction player;
+    private PlayerStats stats;
 
     protected AttackDebugGizmo gizmo;
     protected Animator ani;
@@ -75,6 +77,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         player = FindAnyObjectByType<PlayerAction>();
+        stats = player.GetComponent<PlayerStats>();
+
         //state = EnemyState.idle;
         state = EnemyState.chase;
     }
@@ -142,6 +146,39 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         yield return new WaitForSeconds(1.5f);
 
         Destroy(gameObject);
+    }
+
+    private void makeDropItem()
+    {
+        ItemDataBase db = ItemDataBase.Instance;
+        if (db == null) return;
+
+        Vector3 spawnPos = transform.position;
+
+        int goldAmount = enemyData.dropGold;
+        if(db.goldPrefab != null)
+        {
+            GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity);
+            GetCurrency gold = goldObj.GetComponent<GetCurrency>();
+            gold.amount = goldAmount;
+        }
+
+        int cristalAmount = enemyData.dropEXP;
+        if(db.cristalPrefab != null)
+        {
+            GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity);
+            GetCurrency cristal = cristalObj.GetComponent<GetCurrency>();
+            cristal.amount = cristalAmount;
+        }
+
+        if(db.heartPrefab != null)
+        {
+            int temp = Random.Range(0, 10);
+            if(temp == 0)
+            {
+                Instantiate(db.heartPrefab, spawnPos, Quaternion.identity);
+            }
+        }
     }
 
     protected virtual bool canAttack()

@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private int maxHP = 6; //반칸이 체력 1로 기준을 설정
+    [SerializeField] private int maxHP = 6; //한칸이 체력 1로 기준을 설정
     private int currentHP;
     public bool isDead => currentHP <= 0;
     [SerializeField] private float playerDMG = 1f;
@@ -30,6 +30,10 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float knockBackForce = 2f;
 
 
+    [Header("Player Currency")]
+    [SerializeField] private int gold = 0;
+    [SerializeField] private int cristal = 0;
+
     public int MaxHP => maxHP;
     public int CurrentHP => currentHP;
     public float PlayerDMG => playerDMG;
@@ -42,6 +46,8 @@ public class PlayerStats : MonoBehaviour
     public float TimeBetweenAttack => timeBetweenAttack;
     public float InvincibilityTime => invincibilityTime;
     public float KnockBackForce => knockBackForce;
+    public int Gold => gold;
+    public int Cristal => cristal;
 
     private void Awake()
     {
@@ -52,6 +58,21 @@ public class PlayerStats : MonoBehaviour
     {
         if (isDash) return;
         Debug.Log(currentHP);
-        currentHP -= damage;
+        currentHP -= 1;
+    }
+
+    public void getGold(int amount)
+    {
+        gold += amount;
+    }
+
+    public void getCristal(int amount)
+    {
+        cristal += amount;
+    }
+
+    public void getHeart()
+    {
+        currentHP += 1;
     }
 }

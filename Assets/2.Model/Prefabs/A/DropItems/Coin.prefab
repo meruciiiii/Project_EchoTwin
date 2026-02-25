@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 6164068008608628646}
   - component: {fileID: 2151403905594677788}
   - component: {fileID: 8760026125513009578}
+  - component: {fileID: -3261864058433201262}
   m_Layer: 7
   m_Name: Coin
   m_TagString: Untagged
@@ -209,3 +210,15 @@ MonoBehaviour:
   rotateSpeed: 30
   floatHeight: 0
   floatSpeed: 1
+--- !u!114 &-3261864058433201262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6435046582986727712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a5b73405888e147a9d5dad7a9d120e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GetCurrency
