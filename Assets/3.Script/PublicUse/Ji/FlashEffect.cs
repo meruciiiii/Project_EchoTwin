@@ -7,21 +7,43 @@ public class FlashEffect : MonoBehaviour
 {
     private Coroutine flashCoroutine;
 
-    private Color originalColor;
     private Renderer targetRenderer;
+    private MaterialPropertyBlock mpb;
+
+    private static readonly int emissionColorID = Shader.PropertyToID("_EmissionColor");
+
+    private Color originalColor;
 
     private void Awake()
     {
-        TryGetComponent(out targetRenderer);
-        if (targetRenderer == null)
+        targetRenderer = GetComponent<Renderer>();
+        
+        if(targetRenderer == null)
         {
             targetRenderer = GetComponentInChildren<Renderer>();
         }
 
-        if (targetRenderer != null)
+        mpb = new MaterialPropertyBlock();
+
+        if(targetRenderer.sharedMaterial != null && targetRenderer.sharedMaterial.HasProperty(emissionColorID))
         {
-            originalColor = targetRenderer.material.color;
+            originalColor = targetRenderer.sharedMaterial.GetColor(emissionColorID);
         }
+        else
+        {
+            originalColor = Color.black;
+        }
+
+        targetRenderer.GetPropertyBlock(mpb);
+        Color blockColor = mpb.GetColor(emissionColorID);
+        if(blockColor.r != 0f || blockColor.g != 0f || blockColor.b != 0f || blockColor.a != 0f)
+        {
+            originalColor = blockColor;
+        }
+
+        mpb.Clear();
+
+        targetRenderer.SetPropertyBlock(mpb);
     }
 
     public void Flash(int count, float duration)
@@ -29,32 +51,38 @@ public class FlashEffect : MonoBehaviour
         if (targetRenderer == null) return;
 
         if (flashCoroutine != null) StopCoroutine(flashCoroutine);
-
         flashCoroutine = StartCoroutine(Blink_Co(count, duration));
     }
 
     public void ChargeEffect(float duration)
     {
         if (targetRenderer == null) return;
-
+            
         if (flashCoroutine != null) StopCoroutine(flashCoroutine);
 
         flashCoroutine = StartCoroutine(FadeIn_Co(duration));
     }
 
+    private void SetColor(Color color)
+    {
+        if (targetRenderer == null) return;
+
+        targetRenderer.GetPropertyBlock(mpb);
+        mpb.SetColor(emissionColorID, color);
+        targetRenderer.SetPropertyBlock(mpb);
+    }
+
     private IEnumerator Blink_Co(int count, float duration)
     {
-        float halfDuration = duration / 2f;
-        WaitForSeconds wfs = new WaitForSeconds(halfDuration);
+        float flashDuration = duration / (count * 2f);
+        WaitForSeconds wfs = new WaitForSeconds(flashDuration);
 
         for (int i = 0; i < count; i++)
         {
-            targetRenderer.material.color = Color.white;
-
+            SetColor(Color.white);
             yield return wfs;
 
-            targetRenderer.material.color = originalColor;
-
+            SetColor(originalColor);
             yield return wfs;
         }
 
@@ -69,16 +97,11 @@ public class FlashEffect : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            targetRenderer.material.color = Color.Lerp(originalColor, Color.white, timer / duration);
+            SetColor(Color.Lerp(originalColor, Color.white, timer / duration));
             yield return null;
         }
-        targetRenderer.material.color = originalColor;
-    }
 
-    public void RestColor()
-    {
-        if (flashCoroutine != null) StopCoroutine(flashCoroutine);
-        targetRenderer.material.color = originalColor;
+        SetColor(originalColor);
         flashCoroutine = null;
     }
 }

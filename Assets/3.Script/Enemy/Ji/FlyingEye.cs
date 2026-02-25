@@ -19,6 +19,7 @@ public class FlyingEye : EnemyStateAbstract
 
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
+        targetPos.y = startPos.y;
 
         coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
     }
@@ -44,13 +45,17 @@ public class FlyingEye : EnemyStateAbstract
             float t = timer / duration;
 
             transform.position = Vector3.Lerp(startPos, destPos, t);
-            //if (!isAttacked)
-            //{
-            //    if (BodyAttack(enemyData.attackRange))
-            //    {
-            //        isAttacked = true;
-            //    }
-            //}
+
+            Vector3 dir = (destPos - startPos).normalized;
+
+            if (dir.x > 0.01f)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                spriteRenderer.flipX = true;
+            }
 
             yield return null;
         }

@@ -25,6 +25,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected Animator ani;
     protected Rigidbody rb;
     protected BoxCollider boxCol;
+    protected SpriteRenderer spriteRenderer;
 
     protected FlashEffect effect;
     public EnemyState state;
@@ -61,10 +62,12 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         TryGetComponent(out effect);
         TryGetComponent(out gizmo);
         TryGetComponent(out boxCol);
+        TryGetComponent(out spriteRenderer);
+        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         gizmo.enemy = this;
         setMoveSpeed();
         radius = boxCol.size.x * 0.5f;
-        boxCol.isTrigger = false;
+        boxCol.isTrigger = true;
 
         ani = GetComponentInChildren<Animator>();
         TryGetComponent(out rb);
@@ -72,7 +75,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         player = FindAnyObjectByType<PlayerAction>();
-        state = EnemyState.idle;
+        //state = EnemyState.idle;
+        state = EnemyState.chase;
     }
 
     protected virtual void OnEnable()
@@ -109,7 +113,6 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (state == EnemyState.dead) return;
 
         currentHP -= damage;
-        Debug.Log(state);
         checkOnDie();
         //if (ani != null) 
         if (state != EnemyState.dead) ani.SetTrigger("Hit");
@@ -260,6 +263,14 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             player.takeDamage(enemyData.damage, transform.position);
         }
     }
+
+    //protected virtual void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        player.takeDamage(enemyData.damage, transform.position);
+    //    }
+    //}
     #endregion
 
     #region attack

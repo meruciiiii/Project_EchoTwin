@@ -20,7 +20,7 @@ public class Crab : EnemyStateAbstract
         if (shieldCount > 0)
         {
             damage *= 1 - reduceRatio;
-            effect.Flash(1, 0.5f);
+
             currentHP -= damage;
             shieldCount--;
             checkOnDie();

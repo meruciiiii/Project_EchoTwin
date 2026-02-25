@@ -6,42 +6,41 @@ using UnityEngine.AI;
 
 public class Golem : EnemyStateAbstract
 {
-    [SerializeField] private float duration = 0.5f;
-    [SerializeField] private int bodyAttackMultiple = 3;
-    [SerializeField] private int rangeMultiple = 2;
+    [SerializeField] float dashSpeed = 10f;
+    [SerializeField] float dashDuration = 0.5f;
+
+    [SerializeField] float projectileSpeed = 10f;
+    [SerializeField] private float projectileDuration = 1f;
+
     [SerializeField] private GameObject projectile;
 
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Attack();
     }
 
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
-        if (!canAttack()) Move();
+        if (coroutine != null) return;
+        if (!canAttack())
+        {
+            Move();
+            return;
+        }
 
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
 
         float distance = Vector3.Distance(targetPos, startPos);
 
-        if (distance > enemyData.attackRange * rangeMultiple)
+        if (distance > enemyData.attackRange)
         {
-            Move();
-        }
-        else if (distance < enemyData.attackRange * rangeMultiple && distance > enemyData.attackRange)
-        {
-            if (coroutine != null) return;
-            if (ani != null) ani.SetTrigger("Attack");
             coroutine = StartCoroutine(ProjectileAttack_Co(targetPos, startPos));
         }
-        else
+        else if(distance < enemyData.attackRange)
         {
-            if (coroutine != null) return;
-            if (ani != null) ani.SetTrigger("Attack 2");
             coroutine = StartCoroutine(DashAttack_Co(targetPos, startPos));
         }
 
@@ -51,28 +50,49 @@ public class Golem : EnemyStateAbstract
     private IEnumerator ProjectileAttack_Co(Vector3 targetPos, Vector3 startPos)
     {
         state = EnemyState.attack;
+
         TurnOffNavmesh();
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
+        if (ani != null) ani.SetTrigger("Attack");
+
         checkAttackTime();
 
+        targetPos.y = 0f;
+        startPos.y = 0f;
+        Vector3 dir = (targetPos - startPos).normalized;
+
         float timer = 0f;
-        float duration = 1f;
 
         projectile.transform.position = startPos;
         projectile.SetActive(true);
 
-        while (timer < duration)
+        while (timer < projectileDuration)
         {
-            if (state == EnemyState.dead || !projectile.activeSelf)
+            if (state == EnemyState.dead)
             {
                 yield break;
             }
 
+            if (!projectile.activeSelf)
+            {
+                projectile.transform.position = startPos;
+                projectile.SetActive(false);
+
+                coroutine = null;
+
+                if (state != EnemyState.dead)
+                {
+                    state = EnemyState.chase;
+                    TurnOnNavmesh();
+                }
+                yield break;
+            }
+
             timer += Time.deltaTime;
-            float t = timer / duration;
-            projectile.transform.position = Vector3.Lerp(startPos, targetPos, t);
+            float t = timer / projectileDuration;
+            projectile.transform.position += dir * projectileSpeed * Time.deltaTime;
 
             yield return null;
         }
@@ -80,59 +100,66 @@ public class Golem : EnemyStateAbstract
         projectile.SetActive(false);
 
         coroutine = null;
-        TurnOnNavmesh();
+
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     private IEnumerator DashAttack_Co(Vector3 targetPos, Vector3 startPos)
     {
         state = EnemyState.attack;
+
         TurnOffNavmesh();
+        if (ani != null) ani.SetTrigger("Attack 2");
+
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
+        checkAttackTime();
 
-        //bool isAttacked = false;
+
         Vector3 dir = (targetPos - startPos).normalized;
         dir.y = 0f;
 
-        float distance = Vector3.Distance(startPos, targetPos);
-
-        while (distance > 0f)
+        float timer = dashDuration;
+        while (timer > 0f)
         {
-            //navMesh.Move(dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
-            Vector3 destPos = transform.position + (dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
-            destPos.y = 0f;
-            transform.position = destPos;
+            //navMesh.Move(dir * attackSpeed * Time.deltaTime);
 
-            distance -= enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime;
+            transform.position += dir * dashSpeed * Time.deltaTime;
 
-            //if (!isAttacked)
-            //{
-            //    if (BodyAttack(enemyData.attackRange))
-            //    {
-            //        isAttacked = true;
-            //    }
-            //}
+            timer -= Time.deltaTime;
             yield return null;
         }
-        yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
-        targetPos.y = 0f;
-        transform.position = targetPos;
-
-        checkAttackTime();
 
         coroutine = null;
-        TurnOnNavmesh();
+
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
-        //BodyAttack(standardRange);
+        setPlayerPos();
+    }
 
-        //setPlayerPos();
+    protected override void TurnOffNavmesh()
+    {
+        navMesh.isStopped = true;
+        navMesh.ResetPath();
+        //navMesh.enabled = false;
+
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
     }
 
     protected override void TurnOnNavmesh()
@@ -140,11 +167,10 @@ public class Golem : EnemyStateAbstract
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 
-        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
         {
             navMesh.enabled = true;
             navMesh.Warp(hit.position);
-            state = EnemyState.chase;
         }
         else
         {
@@ -154,21 +180,39 @@ public class Golem : EnemyStateAbstract
 
     private IEnumerator ReturnToField_Co()
     {
+        state = EnemyState.knockback;
         float returnSpeed = enemyData.moveSpeed * 1.5f;
 
-        while (true)
+        if (navMesh.enabled && navMesh.isOnNavMesh)
+        {
+            navMesh.isStopped = true;
+            navMesh.ResetPath();
+        }
+        navMesh.enabled = false;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        while (state != EnemyState.dead)
         {
             Vector3 dir = (player.transform.position - transform.position).normalized;
+            dir.y = 0f;
             transform.position += dir * returnSpeed * Time.deltaTime;
 
-            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
             {
                 navMesh.enabled = true;
                 navMesh.Warp(hit.position);
+                navMesh.isStopped = false;
                 state = EnemyState.chase;
                 yield break;
             }
             yield return null;
         }
+    }
+
+    protected override bool isItOnTheGround()
+    {
+        return true;
     }
 }

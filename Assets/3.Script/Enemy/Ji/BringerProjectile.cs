@@ -9,26 +9,71 @@ public class BringerProjectile : MonoBehaviour
     private bool hasHit;
 
     private Collider col;
+    private Animator ani;
+
+    [SerializeField]
+    [Range(0f, 1f)] private float hitStart = 0.3f;
+    [SerializeField]
+    [Range(0f, 1f)] private float hitEnd = 0.8f;
+
+    private Coroutine coroutine;
 
     private void Awake()
     {
         enemy = GetComponentInParent<EnemyStateAbstract>();
-        gameObject.SetActive(false);
         TryGetComponent<Collider>(out col);
+        ani = GetComponentInChildren<Animator>();
+        gameObject.SetActive(false);
+        if (col != null)
+        {
+            col.enabled = false;
+            col.isTrigger = true;
+        }
     }
 
     private void OnEnable()
     {
         hasHit = false;
-        col.enabled = false;
-        StartCoroutine(Attack_Co());
+        if (col != null) col.enabled = false;
+
+        if (coroutine != null) StopCoroutine(coroutine);
+        coroutine = StartCoroutine(Attack_Co());
     }
 
     private void OnDisable()
     {
         hasHit = false;
-        col.enabled = false;
-        StopAllCoroutines();
+        if (col != null) col.enabled = false;
+
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+    }
+
+    private IEnumerator Attack_Co()
+    {
+        while(true)
+        {
+            if (ani == null) yield break;
+
+            AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+
+            float time = info.normalizedTime;
+            time = time - Mathf.Floor(time);
+
+            bool canDamage = (time >= hitStart && time <= hitEnd);
+            if (col != null) col.enabled = canDamage;
+
+            if(time > 0.99f)
+            {
+                col.enabled = false;
+                gameObject.SetActive(false);
+                yield break;
+            }
+            yield return name;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,16 +85,5 @@ public class BringerProjectile : MonoBehaviour
             hasHit = true;
             other.GetComponent<PlayerAction>().takeDamage((int)enemy.Damage, transform.position);
         }
-    }
-
-    private IEnumerator Attack_Co()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        col.enabled = true;
-
-        yield return new WaitForSeconds(1.2f);
-
-        col.enabled = false;
     }
 }

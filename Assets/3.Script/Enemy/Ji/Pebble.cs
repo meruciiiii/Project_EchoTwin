@@ -7,18 +7,12 @@ public class Pebble : EnemyStateAbstract
 {
     [SerializeField] private GameObject projectile;
     [SerializeField] private float buffer = 0.5f;
-    [SerializeField] private float duration = 1f;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private float projectileDuration = 1f;
+    [SerializeField] private float projectileSpeed = 10f;
 
     [SerializeField] private float sideWalkTime = 0.5f;
     private float sideTimer;
     private int sign = 1;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
 
     protected override void Update()
     {
@@ -44,13 +38,18 @@ public class Pebble : EnemyStateAbstract
             spriteRenderer.flipX = true;
         }
 
-        Move();
+        Attack();
     }
 
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
         if (coroutine != null) return;
+        if (!canAttack())
+        {
+            Move();
+            return;
+        }
 
         coroutine = StartCoroutine(Attack_Co());
     }
@@ -69,7 +68,10 @@ public class Pebble : EnemyStateAbstract
         checkAttackTime();
 
         Vector3 targetPos = player.transform.position;
+        targetPos.y = 0f;
         Vector3 startPos = transform.position;
+        startPos.y = 0f;
+        Vector3 dir = (targetPos - startPos).normalized;
 
         float timer = 0f;
 
@@ -84,7 +86,7 @@ public class Pebble : EnemyStateAbstract
             projectile.GetComponentInChildren<SpriteRenderer>().flipX = false;
         }
 
-        while (timer < duration)
+        while (timer < projectileDuration)
         {
             if (state == EnemyState.dead)
             {
@@ -107,8 +109,8 @@ public class Pebble : EnemyStateAbstract
             }
 
             timer += Time.deltaTime;
-            float t = timer / duration;
-            projectile.transform.position = Vector3.Lerp(startPos, targetPos, t);
+            float t = timer / projectileDuration;
+            projectile.transform.position += dir * projectileSpeed * Time.deltaTime;
 
             yield return null;
         }
@@ -143,16 +145,7 @@ public class Pebble : EnemyStateAbstract
         }
         else
         {
-            if (!canAttack())
-            {
-                SideWalk();
-            }
-            else
-            {
-                navMesh.ResetPath();
-
-                Attack();
-            }
+            SideWalk();
         }
     }
 
@@ -179,6 +172,7 @@ public class Pebble : EnemyStateAbstract
     private void Runaway()
     {
         Vector3 dir = transform.position - player.transform.position;
+        dir.y = transform.position.y;
         Vector3 runPos = transform.position + dir.normalized * 2f;
 
         UnityEngine.AI.NavMeshHit hit;
