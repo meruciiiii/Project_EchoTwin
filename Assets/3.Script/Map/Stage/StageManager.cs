@@ -6,15 +6,25 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private StageMap stageMap;
+    private StageCreater stageCreater;
+    private StageNodePopulator stageNodePopulator;
+    [SerializeField] private StageNodeView stageNodeView;
+    private void Awake()
     {
-        
+        if(!TryGetComponent(out stageCreater))
+        {
+            Debug.Log("TryGetComponent StageCreater is fail");
+        }
+        if(!TryGetComponent(out stageNodePopulator))
+        {
+            Debug.Log("TryGetComponent StageNodePopulator is fail");
+        }
     }
-
-    // Update is called once per frame
-    void Update()
+    public void GenerateStage()
     {
-        
+        stageMap = stageCreater.StageCreat();
+        stageNodePopulator.SetETCNode(stageMap.floors);
+        stageNodeView.DrawConnections(stageMap.floors);
     }
 }
