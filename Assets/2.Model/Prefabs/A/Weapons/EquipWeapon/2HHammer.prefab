@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3181704122509884024}
   - component: {fileID: 4624023212287633580}
   - component: {fileID: 127832049259052222}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 2HHammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676580046644239857}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.53992665, y: -0.09709759, z: -0.70348847, w: -0.45183557}
+  m_LocalRotation: {x: -0.5399241, y: -0.097095564, z: -0.7034905, w: -0.4518357}
   m_LocalPosition: {x: 0.146, y: 0.134, z: -0.071}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 1
@@ -110,6 +110,15 @@ MonoBehaviour:
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
   attackAngle: 90
+  attackEffects:
+  - prefab: {fileID: 7874442978109765607, guid: 1c7348bd7a41f924a86935d98254eb4e, type: 3}
+    forwardOffset: 1.3
+    upOffset: 1
+    scale: 3
+  - prefab: {fileID: 531033404617538009, guid: ecd7fe9219414de43803efe2199713fe, type: 3}
+    forwardOffset: 1.4
+    upOffset: -1
+    scale: 0.8
   weaponType: 1
   weaponID: 1
   DualWeapon: {fileID: 0}

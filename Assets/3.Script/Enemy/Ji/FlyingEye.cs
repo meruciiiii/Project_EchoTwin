@@ -11,7 +11,6 @@ public class FlyingEye : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
     public override void Attack()
@@ -20,6 +19,7 @@ public class FlyingEye : EnemyStateAbstract
 
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
+        targetPos.y = startPos.y;
 
         coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
     }
@@ -45,27 +45,35 @@ public class FlyingEye : EnemyStateAbstract
             float t = timer / duration;
 
             transform.position = Vector3.Lerp(startPos, destPos, t);
-            //if (!isAttacked)
-            //{
-            //    if (BodyAttack(enemyData.attackRange))
-            //    {
-            //        isAttacked = true;
-            //    }
-            //}
+
+            Vector3 dir = (destPos - startPos).normalized;
+
+            if (dir.x > 0.01f)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                spriteRenderer.flipX = true;
+            }
 
             yield return null;
         }
         yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
-        transform.position = startPos;
+        transform.position = destPos;
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(enemyData.attackRange);
@@ -75,7 +83,6 @@ public class FlyingEye : EnemyStateAbstract
 
         if (distance > enemyData.attackRange + buffer)
         {
-            state = EnemyState.chase;
             setPlayerPos();
         }
         else
@@ -92,7 +99,7 @@ public class FlyingEye : EnemyStateAbstract
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 
-        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
         {
             navMesh.enabled = true;
             navMesh.Warp(hit.position);
@@ -112,7 +119,7 @@ public class FlyingEye : EnemyStateAbstract
             Vector3 dir = (player.transform.position = transform.position).normalized;
             transform.position += dir * returnSpeed * Time.deltaTime;
 
-            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
             {
                 navMesh.enabled = true;
                 navMesh.Warp(hit.position);
@@ -121,5 +128,10 @@ public class FlyingEye : EnemyStateAbstract
             }
             yield return null;
         }
+    }
+
+    protected override bool isItOnTheGround()
+    {
+        return true;
     }
 }

@@ -8,7 +8,6 @@ public class Rat : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
 
@@ -19,7 +18,7 @@ public class Rat : EnemyStateAbstract
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
 
         //BodyAttack(enemyData.attackRange);
 

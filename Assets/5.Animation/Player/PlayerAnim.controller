@@ -194,7 +194,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 10829884498932648ae2799d2fab9659, type: 3}
+  m_Motion: {fileID: 7400000, guid: c9091752d377e5b4195117408893edf2, type: 2}
   m_Tag: Attack
   m_SpeedParameter: AttackSpeed
   m_MirrorParameter: 
@@ -302,6 +302,33 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 2
+--- !u!1102 &-4268949495101870921
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Attack1 0
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 3668098709010880751}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 1
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 8503dedbf209a9747900828720a2f7a1, type: 2}
+  m_Tag: Attack
+  m_SpeedParameter: AttackSpeed
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &-4163837399501440215
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -340,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
   unlockRotationTime: 0.6
+  unlockMoveTime: 0.8
   lastAttackRotationTime: 0.95
 --- !u!1102 &-2125509911183930182
 AnimatorState:
@@ -349,7 +377,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Roll
-  m_Speed: 1.4
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8542417454956166605}
@@ -362,7 +390,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b95e62cd66b249b49b606e3baf8fcb55, type: 3}
+  m_Motion: {fileID: 7400000, guid: a57ac3f83414fb440b6c52cb6be60350, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -578,6 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
   unlockRotationTime: 0.6
+  unlockMoveTime: 0.8
   lastAttackRotationTime: 0.95
 --- !u!206 &1323689861665328247
 BlendTree:
@@ -658,7 +687,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a9731abc39db8ab4dabb3da7e70d04d9, type: 3}
+  m_Motion: {fileID: 7400000, guid: 2f55c9eae1e309e47988d4e067855da1, type: 2}
   m_Tag: Attack
   m_SpeedParameter: AttackSpeed
   m_MirrorParameter: 
@@ -714,6 +743,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &3668098709010880751
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6721f68e7cee94098c2827ff6edddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
+  unlockRotationTime: 0.6
+  unlockMoveTime: 0.5
+  lastAttackRotationTime: 0.95
 --- !u!1101 &4737314514735656708
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -760,6 +804,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -6508442158778477759}
     m_Position: {x: 350, y: 50, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -4268949495101870921}
+    m_Position: {x: 590, y: -170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -837,6 +884,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
   unlockRotationTime: 0.6
+  unlockMoveTime: 0.8
   lastAttackRotationTime: 0.95
 --- !u!1101 &6394414240563188995
 AnimatorStateTransition:
@@ -855,9 +903,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.3613637
-  m_TransitionOffset: 0.0041453834
-  m_ExitTime: 0.79483706
+  m_TransitionDuration: 0.46736458
+  m_TransitionOffset: 0
+  m_ExitTime: 0.6888362
   m_HasExitTime: 0
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
@@ -930,7 +978,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c2376c31c00539f45864cba61cacaf35, type: 3}
+  m_Motion: {fileID: 7400000, guid: 2f55c9eae1e309e47988d4e067855da1, type: 2}
   m_Tag: Attack
   m_SpeedParameter: AttackSpeed
   m_MirrorParameter: 
@@ -967,9 +1015,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.4292531
-  m_TransitionOffset: 0.0047704675
-  m_ExitTime: 0.57366395
+  m_TransitionDuration: 0.40971974
+  m_TransitionOffset: 0
+  m_ExitTime: 0.59319717
   m_HasExitTime: 0
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
@@ -988,6 +1036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
   unlockRotationTime: 0.6
+  unlockMoveTime: 0.8
   lastAttackRotationTime: 0.95
 --- !u!1102 &8395308048049882297
 AnimatorState:
@@ -1012,7 +1061,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 3558db8e6c045c3418d8e7593f8a88de, type: 3}
+  m_Motion: {fileID: 7400000, guid: 938e7117d9c9a654a8c326a790a5d146, type: 2}
   m_Tag: Attack
   m_SpeedParameter: AttackSpeed
   m_MirrorParameter: 

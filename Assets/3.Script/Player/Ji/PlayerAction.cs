@@ -23,7 +23,7 @@ public class PlayerAction : MonoBehaviour
 
     public bool isKnockback = false;
     public bool hasDamaged = false;
-    [SerializeField] public bool forStopMove = false;
+    public bool forStopMove = false;
     public bool forStopRotate = false;
 
     public AttackDebugGizmo gizmo;
@@ -85,6 +85,7 @@ public class PlayerAction : MonoBehaviour
     public void takeDamage(int damage, Vector3 damagePos)
     {
         if (hasDamaged) return;
+        if (stats.isDash) return;
         if (ani != null) ani.SetTrigger("TakeDamage");
 
         stats.takeDamage(damage);
@@ -177,4 +178,5 @@ public class PlayerAction : MonoBehaviour
             command = new ComboAttackCommand(mainAttack, subEcho, this);
         }
     }
+
 }

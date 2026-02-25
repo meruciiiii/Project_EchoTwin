@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public enum EnemyState
 {
+    idle,
     chase,
     attack,
     knockback,
@@ -24,9 +25,10 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected Animator ani;
     protected Rigidbody rb;
     protected BoxCollider boxCol;
+    protected SpriteRenderer spriteRenderer;
 
     protected FlashEffect effect;
-    protected EnemyState state = EnemyState.chase;
+    public EnemyState state;
 
     protected float lastAttackTime;
     protected float currentHP;
@@ -60,15 +62,21 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         TryGetComponent(out effect);
         TryGetComponent(out gizmo);
         TryGetComponent(out boxCol);
+        TryGetComponent(out spriteRenderer);
+        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         gizmo.enemy = this;
         setMoveSpeed();
         radius = boxCol.size.x * 0.5f;
-        boxCol.isTrigger = false;
+        boxCol.isTrigger = true;
 
         ani = GetComponentInChildren<Animator>();
         TryGetComponent(out rb);
         rb.isKinematic = true;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        player = FindAnyObjectByType<PlayerAction>();
+        //state = EnemyState.idle;
+        state = EnemyState.chase;
     }
 
     protected virtual void OnEnable()
@@ -83,6 +91,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             TurnOffNavmesh();
             return;
         }
+        if (state == EnemyState.dead) return;
 
         // 속도가 있으면 Run, 없으면 Idle
         if (ani != null)
@@ -104,20 +113,23 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (state == EnemyState.dead) return;
 
         currentHP -= damage;
-        Debug.Log(state);
-        //if (ani != null) 
-        ani.SetTrigger("Hit");
-
         checkOnDie();
+        //if (ani != null) 
+        if (state != EnemyState.dead) ani.SetTrigger("Hit");
     }
 
     protected virtual void checkOnDie()
     {
         if (currentHP <= 0)
         {
+            StopAllCoroutines();
             state = EnemyState.dead;
-            Debug.Log(state);
+
+
             TurnOffNavmesh();
+            rb.isKinematic = true;
+            boxCol.enabled = false;
+
             //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
             StartCoroutine(DeathRoutine());
         }
@@ -144,28 +156,20 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     public void applyKnockback(Vector3 dir, float power)
     {
+        if (state == EnemyState.dead) return;
+        if (state == EnemyState.knockback) return;
         StartCoroutine(knockback_Co(dir, power));
     }
 
     protected virtual IEnumerator knockback_Co(Vector3 dir, float power)
     {
-        //turnOffNavmesh();
-        //state = EnemyState.knockback;
-
-        //float timer = knockbackTime;
-        //while (timer > 0f)
-        //{
-        //    navMesh.Move(dir * power * Time.deltaTime);
-        //    timer -= Time.deltaTime;
-        //    yield return null;
-        //}
-        //yield return new WaitForSeconds(knockbackTime);
-        //turnOnNavmesh();
-        //state = EnemyState.chase;
-
         state = EnemyState.knockback;
 
         TurnOffNavmesh();
+        navMesh.enabled = false;
+
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
 
         Vector3 force = dir * power;
         force.y = 0f;
@@ -176,6 +180,9 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         if (isItOnTheGround())
         {
+            rb.linearVelocity = Vector3.zero;
+            rb.isKinematic = true;
+
             TurnOnNavmesh();
             state = EnemyState.chase;
         }
@@ -189,28 +196,39 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected virtual void TurnOffNavmesh()
     {
-        //navMesh.isStopped = true;
+        if (navMesh.enabled && navMesh.isOnNavMesh)
+        {
+            navMesh.isStopped = true;
+            navMesh.ResetPath();
+            //navMesh.enabled = false;
+        }
+        //else
+        //{
+        //    navMesh.enabled = false;
+        //}
 
-        navMesh.enabled = false;
-
-        rb.isKinematic = false;
-        rb.linearVelocity = Vector3.zero;
+        //rb.isKinematic = false;
+        //rb.linearVelocity = Vector3.zero;
     }
 
     protected virtual void TurnOnNavmesh()
     {
+        if (state == EnemyState.dead) return;
         //navMesh.isStopped = false;
 
-        rb.linearVelocity = Vector3.zero;
-        rb.isKinematic = true;
+        //rb.isKinematic = false;
+        //rb.linearVelocity = Vector3.zero;
+        //rb.isKinematic = true;
 
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
             navMesh.enabled = true;
             navMesh.Warp(hit.position);
+            navMesh.isStopped = false;
         }
         else
         {
+            //navMesh.enabled = false;
             state = EnemyState.dead;
         }
     }
@@ -245,6 +263,14 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             player.takeDamage(enemyData.damage, transform.position);
         }
     }
+
+    //protected virtual void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        player.takeDamage(enemyData.damage, transform.position);
+    //    }
+    //}
     #endregion
 
     #region attack

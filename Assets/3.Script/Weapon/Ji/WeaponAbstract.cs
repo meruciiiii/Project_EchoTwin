@@ -30,6 +30,17 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     [SerializeField] protected float attackAngle = 90f;
 
+    [Serializable]
+    public class AttackEffectData
+    {
+        public GameObject prefab; 
+        public float forwardOffset = 1.0f; 
+        public float upOffset = 1.0f;     
+        public float scale = 1.0f;         
+    }
+    [Header("Effects Settings")]
+    [SerializeField] protected AttackEffectData[] attackEffects;
+
     protected PlayerAction action;
 
     public WeaponType weaponType;
@@ -86,7 +97,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         //Debug.Log(animator.IsInTransition(0) + "animator");
         if (stateInfo.IsTag("Attack"))
         {
-            if (stateInfo.normalizedTime < 0.5f || stateInfo.normalizedTime > 0.9f)
+            if (stateInfo.normalizedTime < 0.65f)// || stateInfo.normalizedTime > 0.9f)
             {
                 return false;
             }
@@ -95,20 +106,20 @@ public abstract class WeaponAbstract : MonoBehaviour
         return true;
     }
 
-    public virtual bool CanRotate()
-    {
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+    //public virtual bool CanRotate()
+    //{
+    //    AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (stateInfo.IsTag("Attack"))
-        {
-            if (stateInfo.normalizedTime < 0.65f)
-            {
-                return false;
-            }
-        }
+    //    if (stateInfo.IsTag("Attack"))
+    //    {
+    //        if (stateInfo.normalizedTime < 0.65f)
+    //        {
+    //            return false;
+    //        }
+    //    }
 
-        return true;
-    }
+    //    return true;
+    //}
 
     private void SetAttackTime()
     {
@@ -193,6 +204,45 @@ public abstract class WeaponAbstract : MonoBehaviour
     protected virtual float calcDamage()
     {
         return weaponData.baseDamage + stats.PlayerDMG;// + characterData.valuePerLv 이 부분 정리
+    }
+
+    public void AnimationEventEffect(int index)
+    {
+        if (index >= 100)
+        {
+            PlayEffect(index - 100, true);
+        }
+        else
+        {
+            // 100 미만이면: 정방향으로 실행
+            PlayEffect(index, false);
+        }
+    }
+
+    protected void PlayEffect(int index, bool isFlip)
+    {
+        if (attackEffects == null || index >= attackEffects.Length || attackEffects[index].prefab == null) return;
+
+        AttackEffectData data = attackEffects[index];
+
+        Vector3 pos = stats.transform.position + (stats.transform.forward * data.forwardOffset) + (Vector3.up * data.upOffset);
+        GameObject effect = Instantiate(data.prefab, pos, stats.transform.rotation);
+
+        Vector3 finalScale = Vector3.one * data.scale;
+
+        if (isFlip)
+        {
+            if (Mathf.Abs(stats.transform.forward.z) > Mathf.Abs(stats.transform.forward.x))
+            {
+                finalScale.x *= -1;
+            }
+            else
+            {
+                finalScale.z *= -1;
+            }
+        }
+
+        effect.transform.localScale = finalScale;
     }
 
     public abstract void Attack(AttackContext context);

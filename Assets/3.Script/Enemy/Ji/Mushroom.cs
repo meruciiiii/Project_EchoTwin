@@ -8,7 +8,6 @@ public class Mushroom : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
 
@@ -25,11 +24,11 @@ public class Mushroom : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-        //animator
         if (ani != null) ani.SetTrigger("Attack");
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
+
 
         checkAttackTime();
 
@@ -37,22 +36,25 @@ public class Mushroom : EnemyStateAbstract
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(standardRange);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        float buffer = 0.2f;
+        float buffer = 0.1f;
 
         if (distance > enemyData.attackRange - buffer)
         {
-            state = EnemyState.chase;
             setPlayerPos();
         }
         else

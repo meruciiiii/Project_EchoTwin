@@ -12,8 +12,10 @@ public class RewardChest : MonoBehaviour
     [Header("드롭 아이템")]
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject heartPrefab;
+    [SerializeField] private GameObject crystalPrefab; 
     [SerializeField] private int coinCount = 5;
     [SerializeField] private int heartCount = 1;
+    [SerializeField] private int crystalCount = 3;     
     [SerializeField] private float jumpForce = 7f;
 
     private Quaternion closedRotation;
@@ -71,9 +73,10 @@ public class RewardChest : MonoBehaviour
 
         DropItems(coinPrefab, coinCount);
         DropItems(heartPrefab, heartCount);
+        DropItems(crystalPrefab, crystalCount); 
     }
 
-    private void DropItems(GameObject prefab, int count)
+        private void DropItems(GameObject prefab, int count)
     {
         if (prefab == null) return;
 

@@ -9,7 +9,8 @@ public class AttackStateForAnimator : StateMachineBehaviour
     private WeaponAbstract weapon;
 
     private bool isLastAttack = false;
-    [Range(0f, 1f)] public float unlockRotationTime = 0.6f;
+    [Range(0f, 1f)] public float unlockRotationTime = 0.5f;
+    [Range(0f, 1f)] public float unlockMoveTime = 0.8f;
     [Range(0f, 1f)] public float lastAttackRotationTime = 0.95f;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -71,6 +72,12 @@ public class AttackStateForAnimator : StateMachineBehaviour
         {
             action.forStopRotate = false;
         }
+        if (stateInfo.normalizedTime >= unlockMoveTime)
+        {
+            action.forStopMove = false;
+        }
+
+
         //if (isLastAttack) return;
         //
         //if (stateInfo.normalizedTime >= unlockRotationTime && !animator.IsInTransition(layerIndex))

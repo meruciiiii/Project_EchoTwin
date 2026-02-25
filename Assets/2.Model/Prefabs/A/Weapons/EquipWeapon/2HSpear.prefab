@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7909209539117941935}
   - component: {fileID: 2267889726079860172}
   - component: {fileID: 9028144344288759285}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 2HSpear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921278514771966014}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.52738607, y: -0.077849664, z: -0.7058778, w: -0.46641186}
+  m_LocalRotation: {x: -0.5273863, y: -0.07785139, z: -0.7058756, w: -0.46641457}
   m_LocalPosition: {x: -0.332, y: -0.326, z: 0.431}
   m_LocalScale: {x: 1.3, y: 2.03, z: 1.3}
   m_ConstrainProportionsScale: 0
@@ -110,6 +110,15 @@ MonoBehaviour:
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
   attackAngle: 90
+  attackEffects:
+  - prefab: {fileID: 7300826812160552309, guid: d328a95abdf362f4db02aac07d651a05, type: 3}
+    forwardOffset: 1.46
+    upOffset: 0
+    scale: 1
+  - prefab: {fileID: 6014195184020266117, guid: a16ac4748cd1c494495012b20edd2ff2, type: 3}
+    forwardOffset: 1.5
+    upOffset: 0
+    scale: 1
   weaponType: 1
   weaponID: 3
   DualWeapon: {fileID: 0}

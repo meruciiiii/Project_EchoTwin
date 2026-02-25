@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class Bat : EnemyStateAbstract
 {
-    [SerializeField] private int bodyAttackMultiple = 3;
-
+    [SerializeField] private float dashSpeed = 2f;
     [SerializeField] private float zigzagRadius = 2f;
     [SerializeField] private float zigzagTime = 0.3f;
 
@@ -16,7 +15,6 @@ public class Bat : EnemyStateAbstract
     protected override void Update()
     {
         base.Update();
-        if (state == EnemyState.dead) return;
         Move();
     }
 
@@ -38,42 +36,49 @@ public class Bat : EnemyStateAbstract
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
-        //animator
         if (ani != null) ani.SetTrigger("Attack");
+        //animator
         checkAttackTime();
 
         //bool isAttacked = false;
         Vector3 dir = (destPos - startPos).normalized;
         float distance = Vector3.Distance(startPos, destPos);
+        Vector3 targetPos = Vector3.zero;
 
         while (distance > 0f)
         {
             //navMesh.Move(dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
-            Vector3 targetPos = transform.position + (dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);
+            targetPos = transform.position + (dir * enemyData.attackSpeed * Time.deltaTime);
             transform.position = targetPos;
 
-            distance -= enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime;
+            distance -= enemyData.attackSpeed * Time.deltaTime;
 
-            //if (!isAttacked)
-            //{
-            //    if(BodyAttack(enemyData.attackRange))
-            //    {
-            //        isAttacked = true;
-            //    }
-            //}
+            if (dir.x > 0.01f)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                spriteRenderer.flipX = true;
+            }
+
             yield return null;
         }
         yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
-        transform.position = destPos;
+        transform.position = targetPos;
 
         coroutine = null;
 
-        TurnOnNavmesh();
+        if (state != EnemyState.dead)
+        {
+            state = EnemyState.chase;
+            TurnOnNavmesh();
+        }
     }
 
     public override void Move()
     {
-        if (state == EnemyState.knockback) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         //BodyAttack(enemyData.attackRange);
@@ -85,8 +90,7 @@ public class Bat : EnemyStateAbstract
 
         if (distance > enemyData.attackRange + buffer)
         {
-            state = EnemyState.chase;
-            setPlayerPos();
+            navMesh.SetDestination(player.transform.position + zigzag);
         }
         else
         {
@@ -113,7 +117,7 @@ public class Bat : EnemyStateAbstract
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 
-        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
         {
             navMesh.enabled = true;
             navMesh.Warp(hit.position);
@@ -126,21 +130,39 @@ public class Bat : EnemyStateAbstract
 
     private IEnumerator ReturnToField_Co()
     {
+        state = EnemyState.knockback;
         float returnSpeed = enemyData.moveSpeed * 1.5f;
 
-        while (true)
+        if(navMesh.enabled && navMesh.isOnNavMesh)
         {
-            Vector3 dir = (player.transform.position = transform.position).normalized;
+            navMesh.isStopped = true;
+            navMesh.ResetPath();
+        }
+        navMesh.enabled = false;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        while (state != EnemyState.dead)
+        {
+            Vector3 dir = (player.transform.position - transform.position).normalized;
+            dir.y = 0f;
             transform.position += dir * returnSpeed * Time.deltaTime;
 
-            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
             {
                 navMesh.enabled = true;
                 navMesh.Warp(hit.position);
+                navMesh.isStopped = false;
                 state = EnemyState.chase;
                 yield break;
             }
             yield return null;
         }
+    }
+
+    protected override bool isItOnTheGround()
+    {
+        return true;
     }
 }

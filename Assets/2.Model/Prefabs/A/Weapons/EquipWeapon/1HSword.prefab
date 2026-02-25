@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 7747624598791719384}
   - component: {fileID: 6988491572044179818}
   - component: {fileID: 5900695499678589400}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 1HSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9090150735967343617
 Transform:
   m_ObjectHideFlags: 0
@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3080971189016318417}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.62402016, y: 0.53953636, z: 0.30443072, w: 0.47625762}
+  m_LocalRotation: {x: 0.6240196, y: 0.53953505, z: 0.30442873, w: 0.47626105}
   m_LocalPosition: {x: 0.066, y: 0.032, z: 0.046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 54.658, y: -36.351, z: -20.952}
+  m_LocalEulerAnglesHint: {x: 164.58, y: -68.007996, z: -92.13098}
 --- !u!33 &7747624598791719384
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -103,13 +103,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   weaponData: {fileID: 11400000, guid: b960c433b371d064f8359da2f7c9a95e, type: 2}
-  characterData: {fileID: 0}
   stats: {fileID: 0}
   animator: {fileID: 0}
   equipment:
     MainWeapon: {fileID: 0}
     SubWeapon: {fileID: 0}
   input: {fileID: 0}
+  attackAngle: 90
+  attackEffects:
+  - prefab: {fileID: 7874442978109765607, guid: 62ec63ba3a60cc7448f4059704a237b5, type: 3}
+    forwardOffset: 1
+    upOffset: 0.3
+    scale: 3
+    flipX: 1
+    flipY: 0
+    flipZ: 0
+  - prefab: {fileID: 6014195184020266117, guid: a16ac4748cd1c494495012b20edd2ff2, type: 3}
+    forwardOffset: 1
+    upOffset: 0.3
+    scale: 1
+    flipX: 0
+    flipY: 0
+    flipZ: 0
   weaponType: 0
   weaponID: 0
   DualWeapon: {fileID: 0}
