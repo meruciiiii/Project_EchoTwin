@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class HpUI : MonoBehaviour
 {
     [SerializeField] private PlayerStats stats;
 
@@ -13,6 +13,12 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         if(stats == null) stats = FindAnyObjectByType<PlayerStats>();
+
+        buttons.Clear();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            buttons.Add(transform.GetChild(i).GetComponent<Button>());
+        }
     }
 
     private void OnEnable()
@@ -44,7 +50,7 @@ public class UIManager : MonoBehaviour
     {
         for(int i=0;i<buttons.Count;i++)
         {
-            if (i > maxHP) continue;
+            if (i >= maxHP) continue;
             bool isItFull = (i < currentHP);
             buttons[i].interactable = isItFull;
         }
