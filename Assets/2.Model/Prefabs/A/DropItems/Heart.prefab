@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2014596805947347225}
   - component: {fileID: 8633324678992044094}
   - component: {fileID: 5828555863916645297}
-  - component: {fileID: 2816012979738491920}
   m_Layer: 7
   m_Name: FX_Pickup_Beams_01
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 184546343181183977}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.218, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4907,27 +4906,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!65 &2816012979738491920
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 184546343181183977}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.84013367, y: 0.8928304, z: 0.8271179}
-  m_Center: {x: -0.0008544922, y: 0.18281376, z: -0.001663208}
 --- !u!1 &2267649956660991186
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,7 +4933,7 @@ Transform:
   m_GameObject: {fileID: 2267649956660991186}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.218, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9861,7 +9839,7 @@ Transform:
   m_GameObject: {fileID: 6077683184612307138}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.218, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14740,7 +14718,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!1 &7462146097232442813
+--- !u!1 &6771083873417728410
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14748,44 +14726,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7374698290810178055}
-  - component: {fileID: 6667229132733047074}
-  - component: {fileID: 8919277530732524837}
-  - component: {fileID: -7184059717342890093}
-  - component: {fileID: -3416470460299936265}
-  - component: {fileID: -4480916037330691038}
-  m_Layer: 7
-  m_Name: Heart
+  - component: {fileID: 211786647425283488}
+  - component: {fileID: 7913054786822541367}
+  - component: {fileID: 4270075790476114032}
+  m_Layer: 0
+  m_Name: heart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7374698290810178055
+--- !u!4 &211786647425283488
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7462146097232442813}
+  m_GameObject: {fileID: 6771083873417728410}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 98.18, y: -0.86, z: -189.83131}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.218, z: -0.32896423}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2014596805947347225}
-  - {fileID: 360665871333153952}
-  - {fileID: 818016002186094431}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 7374698290810178055}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!198 &6667229132733047074
+--- !u!198 &7913054786822541367
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7462146097232442813}
+  m_GameObject: {fileID: 6771083873417728410}
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
@@ -19509,14 +19481,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &8919277530732524837
+--- !u!199 &4270075790476114032
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7462146097232442813}
+  m_GameObject: {fileID: 6771083873417728410}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 0
@@ -19589,6 +19561,44 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &7462146097232442813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7374698290810178055}
+  - component: {fileID: -7184059717342890093}
+  - component: {fileID: -3416470460299936265}
+  - component: {fileID: -4480916037330691038}
+  m_Layer: 7
+  m_Name: Heart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7374698290810178055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7462146097232442813}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 98.18, y: -0.86, z: -189.83131}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2014596805947347225}
+  - {fileID: 360665871333153952}
+  - {fileID: 818016002186094431}
+  - {fileID: 211786647425283488}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &-7184059717342890093
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19609,7 +19619,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.6512375, y: 0.7956346, z: 0.67855835}
-  m_Center: {x: -0.012256622, y: 0.10218269, z: 0.010314941}
+  m_Center: {x: -0.012256622, y: 0.35, z: 0.010314941}
 --- !u!54 &-3416470460299936265
 Rigidbody:
   m_ObjectHideFlags: 0
