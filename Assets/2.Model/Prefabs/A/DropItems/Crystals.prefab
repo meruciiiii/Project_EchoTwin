@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4391403934243192}
   - component: {fileID: 108084971651631006}
   - component: {fileID: 6323579019413122684}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Point light (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 4853374626246242}
   - component: {fileID: 33792149954687226}
   - component: {fileID: 23718988959857120}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BetterCrystal01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 3549065914357626623}
   - component: {fileID: 751507801373421425}
   - component: {fileID: 5713342935027841465}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Crystals
   m_TagString: Untagged
   m_Icon: {fileID: 0}

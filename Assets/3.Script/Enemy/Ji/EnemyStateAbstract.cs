@@ -79,8 +79,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         player = FindAnyObjectByType<PlayerAction>();
         stats = player.GetComponent<PlayerStats>();
 
-        //state = EnemyState.idle;
-        state = EnemyState.chase;
+        state = EnemyState.idle;
+        //state = EnemyState.chase;
     }
 
     protected virtual void OnEnable()
@@ -145,19 +145,29 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         // 애니메이션 길이에 맞춰 대기 (예: 1.5초)
         yield return new WaitForSeconds(1.5f);
 
+        makeDropItem();
+
         Destroy(gameObject);
     }
 
     private void makeDropItem()
     {
         ItemDataBase db = ItemDataBase.Instance;
-        if (db == null) return;
+        if (db == null)
+        {
+            Debug.Log("db null");
+            return;
+        }
 
-        Vector3 spawnPos = transform.position;
-
+        //Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
+        //Vector3 spawnPos = transform.position + Vector3.up * 1.8f + randomOffset;
+        Vector3 floorPos = new Vector3(transform.position.x, 0, transform.position.z);
         int goldAmount = enemyData.dropGold;
         if(db.goldPrefab != null)
         {
+            Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
+            Vector3 spawnPos = floorPos + randomOffset;
+
             GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity);
             GetCurrency gold = goldObj.GetComponent<GetCurrency>();
             gold.amount = goldAmount;
@@ -166,6 +176,9 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         int cristalAmount = enemyData.dropEXP;
         if(db.cristalPrefab != null)
         {
+            Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
+            Vector3 spawnPos = floorPos + randomOffset;
+
             GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity);
             GetCurrency cristal = cristalObj.GetComponent<GetCurrency>();
             cristal.amount = cristalAmount;
@@ -173,10 +186,13 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         if(db.heartPrefab != null)
         {
+            Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
+            Vector3 spawnPos = floorPos + randomOffset;
+
             int temp = Random.Range(0, 10);
             if(temp == 0)
             {
-                Instantiate(db.heartPrefab, spawnPos, Quaternion.identity);
+            Instantiate(db.heartPrefab, spawnPos, Quaternion.identity);
             }
         }
     }

@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] private int maxHP = 6; //한칸이 체력 1로 기준을 설정
-    private int currentHP;
-    public bool isDead => currentHP <= 0;
+    private int currentHP = 0;
+    public bool isDead => (currentHP <= 0);
     [SerializeField] private float playerDMG = 1f;
     [SerializeField] private float moveSpeed = 1f;
 
@@ -34,6 +35,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int gold = 0;
     [SerializeField] private int cristal = 0;
 
+    public event Action<int, int> onHpChanged;
+    public event Action<int> onMaxHpChanged;
+
     public int MaxHP => maxHP;
     public int CurrentHP => currentHP;
     public float PlayerDMG => playerDMG;
@@ -51,28 +55,62 @@ public class PlayerStats : MonoBehaviour
 
     private void Awake()
     {
+        //currentHP = GameManager.instance.currentHP;
+        //maxHP = GameManager.instance.maxHP;
+        //gold = GameManager.instance.playerGold;
+        //cristal = GameManager.instance.playerCristal;
+    }
+
+    private void Start()
+    {
+        setHP();
+    }
+
+    private void setHP()
+    {
+        if (currentHP != 0)
+        {
+            onMaxHpChanged?.Invoke(maxHP);
+            onHpChanged?.Invoke(currentHP, maxHP);
+            return;
+        }
+
         currentHP = maxHP;
+        onMaxHpChanged?.Invoke(maxHP);
+        onHpChanged?.Invoke(currentHP, maxHP);
     }
 
     public void takeDamage(int damage)
     {
         if (isDash) return;
-        Debug.Log(currentHP);
+
         currentHP -= 1;
+        onHpChanged?.Invoke(currentHP,maxHP);
     }
 
     public void getGold(int amount)
     {
         gold += amount;
+        Debug.Log($"{gold} gold");
     }
 
     public void getCristal(int amount)
     {
         cristal += amount;
+        Debug.Log($"{cristal} cristal");
     }
 
     public void getHeart()
     {
         currentHP += 1;
+        onHpChanged?.Invoke(currentHP, maxHP);
+
+        Debug.Log($"{currentHP} after HP");
+    }
+
+    public void getMaxHP()
+    {
+        maxHP += 1;
+        onMaxHpChanged?.Invoke(maxHP);
     }
 }

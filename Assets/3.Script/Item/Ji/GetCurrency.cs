@@ -19,10 +19,17 @@ public class GetCurrency : MonoBehaviour
     private int getheringTime = 5;
     private int duration = 2;
 
+    private int groundLayer = 8;
+    [SerializeField] private bool isOnGround = false;
+
+    //private ItemFloating floating;
     private void Awake()
     {
         TryGetComponent(out col);
         col.isTrigger = true;
+        player = FindAnyObjectByType<PlayerStats>();
+        //TryGetComponent(out floating);
+        //floating.enabled = false;
     }
 
     private void OnEnable()
@@ -53,26 +60,30 @@ public class GetCurrency : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer == groundLayer)
+        {
+            //floating.enabled = true;
+            isOnGround = true;
+        }
+            
+
         if (other.CompareTag("Player"))
         {
-            player = other.GetComponent<PlayerStats>();
+            if (!isOnGround) return;
             if (item == Item.gold)
             {
                 player.getGold(amount);
-                Destroy(this);
                 Destroy(gameObject);
             }
             if (item == Item.cristal)
             {
                 player.getCristal(amount);
-                Destroy(this);
                 Destroy(gameObject);
             }
             if (player.CurrentHP == player.MaxHP) return;
             if (item == Item.heart)
             {
                 player.getHeart();
-                Destroy(this);
                 Destroy(gameObject);
             }
         }

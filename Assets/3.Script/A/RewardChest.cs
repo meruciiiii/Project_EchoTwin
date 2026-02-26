@@ -89,15 +89,15 @@ public class RewardChest : MonoBehaviour
             GameObject item = Instantiate(prefab, spawnPos, Quaternion.identity);
 
             // [핵심] 새로 생성된 아이템과 기존 아이템들 간의 충돌 무시
-            Collider currentCollider = item.GetComponent<Collider>();
-            if (currentCollider != null)
-            {
-                foreach (Collider other in spawnedColliders)
-                {
-                    if (other != null) Physics.IgnoreCollision(currentCollider, other);
-                }
-                spawnedColliders.Add(currentCollider);
-            }
+            //Collider currentCollider = item.GetComponent<Collider>();
+            //if (currentCollider != null)
+            //{
+            //    foreach (Collider other in spawnedColliders)
+            //    {
+            //        if (other != null) Physics.IgnoreCollision(currentCollider, other);
+            //    }
+            //    spawnedColliders.Add(currentCollider);
+            //}
 
             if (item.TryGetComponent(out ItemFloating floating))
             {
