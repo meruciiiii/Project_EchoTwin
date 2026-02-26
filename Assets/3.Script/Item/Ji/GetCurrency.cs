@@ -17,19 +17,23 @@ public class GetCurrency : MonoBehaviour
 
     public int amount = 0;
     private int getheringTime = 5;
-    private int duration = 2;
+    private int duration = 1;
 
     private int groundLayer = 8;
+    private int structure = 9;
     [SerializeField] private bool isOnGround = false;
 
-    //private ItemFloating floating;
+    private ItemFloating floating;
+    private Rigidbody rb;
+
     private void Awake()
     {
         TryGetComponent(out col);
         col.isTrigger = true;
         player = FindAnyObjectByType<PlayerStats>();
-        //TryGetComponent(out floating);
-        //floating.enabled = false;
+        TryGetComponent(out floating);
+        floating.enabled = false;
+        TryGetComponent(out rb);
     }
 
     private void OnEnable()
@@ -40,18 +44,18 @@ public class GetCurrency : MonoBehaviour
     private IEnumerator getAllCurrency_Co()
     {
         yield return new WaitForSeconds(getheringTime);
-        if(player == null)
-        {
-            player = FindAnyObjectByType<PlayerStats>();
-        }
+        isOnGround = true;
         if (item != Item.heart)
         {
+            Vector3 startPos = transform.position;
             float timer = 0;
+            floating.enabled = false;
+
             while (true)
             {
                 timer += Time.deltaTime;
                 float t = timer / duration;
-                transform.position = Vector3.Lerp(transform.position, player.transform.position, t);
+                transform.position = Vector3.Lerp(startPos, player.transform.position, t);
 
                 yield return null;
             }
@@ -62,10 +66,10 @@ public class GetCurrency : MonoBehaviour
     {
         if (other.gameObject.layer == groundLayer)
         {
-            //floating.enabled = true;
+            rb.isKinematic = true;
+            floating.enabled = true;
             isOnGround = true;
         }
-            
 
         if (other.CompareTag("Player"))
         {

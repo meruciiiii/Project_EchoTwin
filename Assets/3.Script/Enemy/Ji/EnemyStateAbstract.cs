@@ -74,6 +74,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         ani = GetComponentInChildren<Animator>();
         TryGetComponent(out rb);
         rb.isKinematic = true;
+        rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         player = FindAnyObjectByType<PlayerAction>();
@@ -165,7 +166,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         int goldAmount = enemyData.dropGold;
         if(db.goldPrefab != null)
         {
-            Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
+            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
             Vector3 spawnPos = floorPos + randomOffset;
 
             GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity);
@@ -176,7 +177,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         int cristalAmount = enemyData.dropEXP;
         if(db.cristalPrefab != null)
         {
-            Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
+            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
             Vector3 spawnPos = floorPos + randomOffset;
 
             GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity);
@@ -186,14 +187,14 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         if(db.heartPrefab != null)
         {
-            Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
+            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
             Vector3 spawnPos = floorPos + randomOffset;
 
-            int temp = Random.Range(0, 10);
-            if(temp == 0)
-            {
+            //int temp = Random.Range(0, 10);
+            //if(temp == 0)
+            //{
             Instantiate(db.heartPrefab, spawnPos, Quaternion.identity);
-            }
+            //}
         }
     }
 
@@ -238,6 +239,10 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
             TurnOnNavmesh();
             state = EnemyState.chase;
+        }
+        else
+        {
+            rb.useGravity = true;
         }
     }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8704064829813610024}
   - component: {fileID: 7807521577373615714}
   - component: {fileID: 1405159398738630345}
+  - component: {fileID: 1472950917013002834}
   m_Layer: 7
   m_Name: Coin_mesh
   m_TagString: Untagged
@@ -89,6 +90,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1472950917013002834
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115501707075613656}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 192
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3215977, y: 0.3058575, z: 0.102446295}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6435046582986727712
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,6 +123,7 @@ GameObject:
   - component: {fileID: 6164068008608628646}
   - component: {fileID: 2151403905594677788}
   - component: {fileID: 8760026125513009578}
+  - component: {fileID: 6769499947403654244}
   m_Layer: 7
   m_Name: Coin
   m_TagString: Untagged
@@ -185,5 +208,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemFloating
   rotateSpeed: 30
-  floatHeight: 0
+  floatHeight: 0.1
   floatSpeed: 1
+--- !u!114 &6769499947403654244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6435046582986727712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a5b73405888e147a9d5dad7a9d120e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GetCurrency
+  item: 0
+  amount: 0
+  isOnGround: 0

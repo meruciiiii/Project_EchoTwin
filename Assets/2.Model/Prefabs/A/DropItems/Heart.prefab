@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 184546343181183977}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.218, z: 0}
+  m_LocalPosition: {x: 0, y: 0.368, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14729,6 +14729,7 @@ GameObject:
   - component: {fileID: 211786647425283488}
   - component: {fileID: 7913054786822541367}
   - component: {fileID: 4270075790476114032}
+  - component: {fileID: 1670241943178664850}
   m_Layer: 0
   m_Name: heart
   m_TagString: Untagged
@@ -14745,7 +14746,7 @@ Transform:
   m_GameObject: {fileID: 6771083873417728410}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.218, z: -0.32896423}
+  m_LocalPosition: {x: 0, y: 0.203, z: -0.018}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19561,6 +19562,27 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!65 &1670241943178664850
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6771083873417728410}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 192
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.47951508, y: 0.47028285, z: 0.5050354}
+  m_Center: {x: -0.004840851, y: 0.0033432543, z: 0.01499939}
 --- !u!1 &7462146097232442813
 GameObject:
   m_ObjectHideFlags: 0
@@ -19573,6 +19595,7 @@ GameObject:
   - component: {fileID: -7184059717342890093}
   - component: {fileID: -3416470460299936265}
   - component: {fileID: -4480916037330691038}
+  - component: {fileID: 1897386745086097466}
   m_Layer: 7
   m_Name: Heart
   m_TagString: Untagged
@@ -19662,3 +19685,18 @@ MonoBehaviour:
   rotateSpeed: 30
   floatHeight: 0.1
   floatSpeed: 1
+--- !u!114 &1897386745086097466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7462146097232442813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a5b73405888e147a9d5dad7a9d120e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GetCurrency
+  item: 2
+  amount: 0
+  isOnGround: 0
