@@ -32,7 +32,7 @@ public class Mushroom : EnemyStateAbstract
 
         checkAttackTime();
 
-        AreaAttack(enemyData.attackRange + radius, 180f);
+        AreaAttack(enemyData.attackRange , 180f);
 
         coroutine = null;
 
