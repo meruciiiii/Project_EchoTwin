@@ -196,6 +196,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     {
         if (target.TryGetComponent<Iknockback>(out Iknockback kb))
         {
+            if (target.gameObject.layer == 9) return;
             Vector3 dir = (target.transform.position - transform.position).normalized;
             kb.applyKnockback(dir, weaponData.knockback);
         }

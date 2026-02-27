@@ -34,7 +34,6 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected float lastAttackTime;
     protected float currentHP;
-    protected float radius;
     protected Vector3 lookDir = Vector3.zero;
 
     protected float standardRange = 0.2f;
@@ -68,7 +67,6 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         gizmo.enemy = this;
         setMoveSpeed();
-        radius = boxCol.size.x * 0.5f;
         boxCol.isTrigger = true;
 
         ani = GetComponentInChildren<Animator>();
