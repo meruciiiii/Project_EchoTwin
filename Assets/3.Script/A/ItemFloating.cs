@@ -28,7 +28,8 @@ public class ItemFloating : MonoBehaviour
 
         // 2. 둥둥 뜨게 만들기
         // Sin 함수를 사용하면 값이 1에서 -1 사이로 부드럽게 왔다 갔다 합니다.
-        float newY = Mathf.Sin(Time.time * floatSpeed) * floatHeight;
+        float pi = Mathf.PI * 2f * Time.time * floatSpeed;
+        float newY = (Mathf.Sin(pi) + 1) * 0.5f * floatHeight;
 
         // 처음 시작 위치에서 Sin 값만큼 Y축 위치를 더해줍니다.
         transform.position = new Vector3(startPos.x, startPos.y + newY, startPos.z);

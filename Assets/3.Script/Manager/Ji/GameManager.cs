@@ -18,11 +18,17 @@ public class GameManager : MonoBehaviour
     private GameState gameState = GameManager.GameState.Playing;
     public GameState gamestate => gameState;
 
+    //저장될 정보들----------------
     public int lastStage = 0;
+    public int playerGold = 0;
+    public int playerCristal = 0;
+    public int maxHP = 0;
+    public int currentHP = 0;
+    //-----------------------------
+
     public event Action<Vector3, Vector2Int> whenGoNextMap;
     private Vector2Int currentCell;
     private IReadOnlyDictionary<Vector2Int, List<GameObject>> enemieDic;
-
 
     public static GameManager instance = null;
 

@@ -9,5 +9,5 @@ AnimatorOverrideController:
   m_Name: Hammer_Override
   m_Controller: {fileID: 9100000, guid: bc9a12416d9aaa94b90a31d9ccb740b5, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: 938e7117d9c9a654a8c326a790a5d146, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2f55c9eae1e309e47988d4e067855da1, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: bd5edf4579a949542b920572ead58ae1, type: 2}
