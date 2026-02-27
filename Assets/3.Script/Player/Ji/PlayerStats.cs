@@ -32,11 +32,13 @@ public class PlayerStats : MonoBehaviour
 
 
     [Header("Player Currency")]
-    [SerializeField] private int gold = 0;
+    [SerializeField] private int gold = 1000;
     [SerializeField] private int cristal = 0;
 
     public event Action<int, int> onHpChanged;
     public event Action<int> onMaxHpChanged;
+
+    public event Action<int> onCoinChanged;
 
     public int MaxHP => maxHP;
     public int CurrentHP => currentHP;
@@ -64,6 +66,7 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         setHP();
+        setGold();
     }
 
     private void setHP()
@@ -74,10 +77,17 @@ public class PlayerStats : MonoBehaviour
             onHpChanged?.Invoke(currentHP, maxHP);
             return;
         }
+        else
+        {
+            currentHP = maxHP;
+            onMaxHpChanged?.Invoke(maxHP);
+            onHpChanged?.Invoke(currentHP, maxHP);
+        }
+    }
 
-        currentHP = maxHP;
-        onMaxHpChanged?.Invoke(maxHP);
-        onHpChanged?.Invoke(currentHP, maxHP);
+    private void setGold()
+    {
+        onCoinChanged?.Invoke(gold);
     }
 
     public void takeDamage(int damage)
@@ -85,12 +95,14 @@ public class PlayerStats : MonoBehaviour
         if (isDash) return;
 
         currentHP -= 1;
-        onHpChanged?.Invoke(currentHP,maxHP);
+        onHpChanged?.Invoke(currentHP, maxHP);
     }
 
     public void getGold(int amount)
     {
         gold += amount;
+        onCoinChanged?.Invoke(gold);
+
         Debug.Log($"{gold} gold");
     }
 
