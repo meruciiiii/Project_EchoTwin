@@ -27,11 +27,7 @@ public class StageCreater : MonoBehaviour
         {
             stageMap = new StageMap();
             StageNodeCreate(stageMap);
-            List<int[]> paths = CreatePaths();
-            foreach (int[] path in paths)
-            {
-                ConnectNodes(path, stageMap.floors);
-            }
+            CreatePaths(stageMap.floors);
             safety++;
             if (safety > 50)
             {
@@ -68,92 +64,119 @@ public class StageCreater : MonoBehaviour
             stageMap.floors.Add(stageNodes);
         }
     }
-    private void ConnectNodes(int[] path, List<List<StageNode>> floors)
+    private void CreatePaths(List<List<StageNode>> floors)
     {
-        //stageMap.floors = new List<List<StageNode>>();
-        /*  StageNode
-            public int floorIndex;
-            public int nodeIndex;
-            public List<StageNode> nextNodes;
-         */
-
-        for (int floor = 0; floor < path.Length - 1; floor++)
+        for (int floor = 0; floor < floors.Count - 2; floor++)
         {
-            StageNode currentNode = floors[floor][path[floor]];
-            StageNode nextNode = floors[floor + 1][path[floor + 1]];
-            currentNode.nextNodes.Add(nextNode);
+            Debug.Log($"\n====== FLOOR {floor} → {floor + 1} ======");
+            List<StageNode> current = floors[floor];
+            List<StageNode> next = floors[floor + 1];
+            int currentCount = current.Count;
+            int nextCount = next.Count;
+            int[] hasPrev = new int[nextCount];
+            int hasNext = 0;
+            Connect(floors, floor, 0, floor + 1, 0);
+            hasPrev[0]++;
+            Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
+            hasNext++;
+            Connect(floors, floor, currentCount - 1, floor + 1, nextCount - 1);
+            hasPrev[nextCount - 1]++;
+            Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
+            hasNext++;
+            int branchFrom = UnityEngine.Random.Range(0, currentCount);
+            Debug.Log($"branchFrom = {branchFrom}");
+            if (branchFrom.Equals(0))
+            {
+                Connect(floors, floor, 0, floor + 1, 1);
+                hasPrev[1]++;
+                Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
+            }
+            else if (branchFrom.Equals(currentCount - 1))
+            {
+                Connect(floors, floor, currentCount - 1, floor + 1, nextCount - 2);
+                hasPrev[nextCount - 2]++;
+                Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
+            }
+            else
+            {
+                int branchTo = UnityEngine.Random.Range(branchFrom - 1, branchFrom + 1);
+                Debug.Log($"branchTo = {branchTo}");
+                if (currentCount - 2 < nextCount - 2)// currentCount - 2 : nextCount -2
+                {
+                    branchTo = branchFrom;
+                }
+                Connect(floors, floor, branchFrom, floor + 1, branchTo);
+                Connect(floors, floor, branchFrom, floor + 1, branchTo + 1);
+                hasPrev[branchTo]++;
+                hasPrev[branchTo + 1]++;
+                hasNext++;
+                Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
+            }
+            for (int i = 1; i < currentCount - 1; i++)
+            {
+                if (i.Equals(branchFrom))
+                {
+                    continue;
+                }
+                int hasPrevCount = 0;
+                int nullContectPoint = 0;
+                for(int j = 0; j < hasPrev.Length; j++)
+                {
+                    if (hasPrev[j] > 0)
+                    {
+                        hasPrevCount++;
+                    }
+                    else
+                    {
+                        if (nullContectPoint.Equals(0))
+                            nullContectPoint = j;
+                    }
+                }
+                Debug.Log($"[CHECK] currentCount: {currentCount}");
+                Debug.Log($"[CHECK] hasNext: {hasNext}");
+                Debug.Log($"[CHECK] currentCount - hasNext: {currentCount - hasNext}");
+                Debug.Log($"[CHECK] hasPrevCount: {hasPrevCount}");
+                if ((currentCount - hasNext).Equals(nextCount-hasPrevCount))
+                {
+                    Connect(floors, floor, i, floor + 1, nullContectPoint);
+                    hasPrev[nullContectPoint]++;
+                    hasNext++;
+                    Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
+                    continue;
+                }
+                List<int> canNext = new List<int>();
+                canNext.Add(i);
+                if (!floors[floor][i - 1].nextNodes.Contains(floors[floor + 1][i])&& floors[floor][i - 1].nextNodes.Count>0)
+                {
+                    canNext.Add(i-1);
+                }
+                if (!floors[floor][i + 1].nextNodes.Contains(floors[floor + 1][i]) && floors[floor][i + 1].nextNodes.Count > 0)
+                {
+                    canNext.Add(i+1);
+                }
+                int findPoint = UnityEngine.Random.Range(0, canNext.Count);
+                Connect(floors, floor, i, floor + 1, canNext[findPoint]);
+                hasPrev[canNext[findPoint]]++;
+                hasNext++;
+                Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
+            }
+        }
+        int lastConectFloor = totalFloor - 2;
+        for (int i = 0; i < counts[lastConectFloor]; i++)
+        {
+            Connect(floors, lastConectFloor, i, lastConectFloor + 1, 0);
         }
     }
-    private List<int[]> CreatePaths()
+    private void Connect(List<List<StageNode>> floors, int fromFloor, int fromIndex, int toFloor, int toIndex)
     {
-        int totalFloor = counts.Length;
-        List<int[]> paths = new List<int[]>();
-        HashSet<string> pathSet = new HashSet<string>();
-        bool[][] visited = new bool[totalFloor][];
-        for (int i = 0; i < totalFloor; i++)
-            visited[i] = new bool[counts[i]];
-        int safety = 0;
-        int safetyLimit = 100;
-        while (!AllNodesCovered(visited) && safety < safetyLimit)
-        {
-            safety++;
-            int[] path = new int[totalFloor];
-            path[0] = 0;
-            int prevIndex = path[0];
-            for (int floor = 1; floor < totalFloor - 1; floor++)
-            {
-                List<int> candidates = new List<int>();
-                for (int offset = 0; offset <= 1; offset++)
-                {
-                    int idx = prevIndex + offset;
-                    if (idx >= 0 && idx < counts[floor])
-                        candidates.Add(idx);
-                }
-                List<int> unvisited = new List<int>();
-                foreach (int idx in candidates)
-                {
-                    if (!visited[floor][idx])
-                        unvisited.Add(idx);
-                }
-                int nextIndex;
-                if (unvisited.Count > 0)
-                {
-                    nextIndex = unvisited[UnityEngine.Random.Range(0, unvisited.Count)];
-                }
-                else
-                {
-                    nextIndex = candidates[UnityEngine.Random.Range(0, candidates.Count)];
-                }
-                path[floor] = nextIndex;
-                prevIndex = nextIndex;
-            }
-            path[totalFloor - 1] = 0;
-            string key = string.Join(",", path);
-            if (pathSet.Add(key))
-            {
-                paths.Add(path);
-                for (int floor = 0; floor < totalFloor; floor++)
-                {
-                    visited[floor][path[floor]] = true;
-                }
-            }
-        }
+        StageNode fromNode = floors[fromFloor][fromIndex];
+        StageNode toNode = floors[toFloor][toIndex];
 
-        if (safety >= safetyLimit)
-            Debug.LogWarning("모든 노드를 방문하기 전에 안전 제한에 도달했습니다.");
-
-        return paths;
-    }
-    private bool AllNodesCovered(bool[][] visited)
-    {
-        for (int floor = 0; floor < visited.Length; floor++)
+        if (!fromNode.nextNodes.Contains(toNode))
         {
-            for (int i = 0; i < visited[floor].Length; i++)
-            {
-                if (!visited[floor][i])
-                    return false;
-            }
+            fromNode.nextNodes.Add(toNode);
+            Debug.Log($"[CONNECT] Floor {fromFloor} : {fromIndex} -> Floor {toFloor} : {toIndex}");
         }
-        return true;
     }
 }
+  

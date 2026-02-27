@@ -11,6 +11,7 @@ public class StageNode
     public int nodeIndex;
 
     public HashSet<StageNode> nextNodes;
+
 }
 public enum NodeType
 {
