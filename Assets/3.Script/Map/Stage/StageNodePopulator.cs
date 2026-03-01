@@ -23,6 +23,7 @@ public class StageNodePopulator : MonoBehaviour
         candidates[0].nodeType = NodeType.Resource;
         candidates[1].nodeType = NodeType.Altar;
         candidates[2].nodeType = NodeType.Recovery;
+        floors[5][0].nodeType = NodeType.Boss;
     }
     private void Shuffle(List<StageNode> list)
     {

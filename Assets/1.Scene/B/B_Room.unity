@@ -396,6 +396,10 @@ MonoBehaviour:
   isStop: 0
   isDead: 0
   lastStage: 0
+  playerGold: 0
+  playerCristal: 0
+  maxHP: 0
+  currentHP: 0
 --- !u!4 &435573433
 Transform:
   m_ObjectHideFlags: 0
@@ -570,6 +574,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6437771569706511892, guid: fa9cc2a8a817c8d4f97a52e0ff0d53bb, type: 3}
   m_PrefabInstance: {fileID: 1062439072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1113139033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2083849654647248419, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+  m_PrefabInstance: {fileID: 1747022935}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1409285738
 GameObject:
@@ -1009,7 +1018,39 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7590567855153689521, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+    - target: {fileID: 5929512353691182285, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: node.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929512353691182285, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: floors.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929512353691182285, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: 'node.Array.data[0]'
+      value: 
+      objectReference: {fileID: 5497867594757696336, guid: e54ecf27d6398ac4f8a994725057f870, type: 3}
+    - target: {fileID: 5929512353691182285, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: 'node.Array.data[1]'
+      value: 
+      objectReference: {fileID: 5497867594757696336, guid: 06853dceb9cca9942bec0bc62570481d, type: 3}
+    - target: {fileID: 5929512353691182285, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: 'node.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5497867594757696336, guid: c043998b684a161498eff48ae271e610, type: 3}
+    - target: {fileID: 5929512353691182285, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: 'node.Array.data[3]'
+      value: 
+      objectReference: {fileID: 5497867594757696336, guid: 6c57a198962c55f498a98b31a746d1e8, type: 3}
+    - target: {fileID: 5929512353691182285, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: 'node.Array.data[4]'
+      value: 
+      objectReference: {fileID: 5497867594757696336, guid: a2373c982176cc642b82fc0bc129eab6, type: 3}
+    - target: {fileID: 5929512353691182285, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: 'node.Array.data[5]'
+      value: 
+      objectReference: {fileID: 5497867594757696336, guid: 254b8bf5ae394b54384e38f9da9b1307, type: 3}
+    - target: {fileID: 5986278865617940066, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1454717892}
@@ -1096,19 +1137,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2083849654647248419, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1747022940}
   m_SourcePrefab: {fileID: 100100000, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
 --- !u!114 &1747022936 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 275083216011018617, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
   m_PrefabInstance: {fileID: 1747022935}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1113139033}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c48edabcd48b966408c59658e60c72d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNodeView
+--- !u!114 &1747022940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113139033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42da30d3efb49c24e8485b951db07437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageDrawer
+  nodeContainer: {fileID: 0}
 --- !u!1 &1773239561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,7 +1507,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Mushroom
   enemyData: {fileID: 11400000, guid: 997c1ba193a43e1449b2ecc3c1ddc3a4, type: 2}
   navMesh: {fileID: 2024108246}
-  player: {fileID: 6946189258287470682}
   state: 0
   knockbackTime: 0.2
   ground:
@@ -3980,6 +4036,8 @@ MonoBehaviour:
   timeBetweenAttack: 0.5
   invincibilityTime: 1
   knockBackForce: 2
+  gold: 1000
+  cristal: 0
 --- !u!114 &4602781452908951482
 MonoBehaviour:
   m_ObjectHideFlags: 0

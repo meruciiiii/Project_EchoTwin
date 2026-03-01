@@ -1,6 +1,3 @@
-
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,7 +65,6 @@ public class StageCreater : MonoBehaviour
     {
         for (int floor = 0; floor < floors.Count - 2; floor++)
         {
-            Debug.Log($"\n====== FLOOR {floor} ¡æ {floor + 1} ======");
             List<StageNode> current = floors[floor];
             List<StageNode> next = floors[floor + 1];
             int currentCount = current.Count;
@@ -77,30 +73,24 @@ public class StageCreater : MonoBehaviour
             int hasNext = 0;
             Connect(floors, floor, 0, floor + 1, 0);
             hasPrev[0]++;
-            Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
             hasNext++;
             Connect(floors, floor, currentCount - 1, floor + 1, nextCount - 1);
             hasPrev[nextCount - 1]++;
-            Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
             hasNext++;
             int branchFrom = UnityEngine.Random.Range(0, currentCount);
-            Debug.Log($"branchFrom = {branchFrom}");
             if (branchFrom.Equals(0))
             {
                 Connect(floors, floor, 0, floor + 1, 1);
                 hasPrev[1]++;
-                Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
             }
             else if (branchFrom.Equals(currentCount - 1))
             {
                 Connect(floors, floor, currentCount - 1, floor + 1, nextCount - 2);
                 hasPrev[nextCount - 2]++;
-                Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
             }
             else
             {
                 int branchTo = UnityEngine.Random.Range(branchFrom - 1, branchFrom + 1);
-                Debug.Log($"branchTo = {branchTo}");
                 if (currentCount - 2 < nextCount - 2)// currentCount - 2 : nextCount -2
                 {
                     branchTo = branchFrom;
@@ -110,7 +100,6 @@ public class StageCreater : MonoBehaviour
                 hasPrev[branchTo]++;
                 hasPrev[branchTo + 1]++;
                 hasNext++;
-                Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
             }
             for (int i = 1; i < currentCount - 1; i++)
             {
@@ -132,16 +121,11 @@ public class StageCreater : MonoBehaviour
                             nullContectPoint = j;
                     }
                 }
-                Debug.Log($"[CHECK] currentCount: {currentCount}");
-                Debug.Log($"[CHECK] hasNext: {hasNext}");
-                Debug.Log($"[CHECK] currentCount - hasNext: {currentCount - hasNext}");
-                Debug.Log($"[CHECK] hasPrevCount: {hasPrevCount}");
                 if ((currentCount - hasNext).Equals(nextCount-hasPrevCount))
                 {
                     Connect(floors, floor, i, floor + 1, nullContectPoint);
                     hasPrev[nullContectPoint]++;
                     hasNext++;
-                    Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
                     continue;
                 }
                 List<int> canNext = new List<int>();
@@ -158,7 +142,6 @@ public class StageCreater : MonoBehaviour
                 Connect(floors, floor, i, floor + 1, canNext[findPoint]);
                 hasPrev[canNext[findPoint]]++;
                 hasNext++;
-                Debug.Log($"[RESULT] hasPrev: {string.Join(",", hasPrev)}");
             }
         }
         int lastConectFloor = totalFloor - 2;
@@ -175,7 +158,6 @@ public class StageCreater : MonoBehaviour
         if (!fromNode.nextNodes.Contains(toNode))
         {
             fromNode.nextNodes.Add(toNode);
-            Debug.Log($"[CONNECT] Floor {fromFloor} : {fromIndex} -> Floor {toFloor} : {toIndex}");
         }
     }
 }

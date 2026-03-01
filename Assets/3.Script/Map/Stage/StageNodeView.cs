@@ -7,15 +7,16 @@ public class StageNodeView : MonoBehaviour
     [SerializeField] private NodeContainer nodeContainer;
     [SerializeField] private RectTransform linePrefab;
     [SerializeField] private RectTransform lineContainer;
+    private StageDrawer stageDrawer;
 
     [SerializeField] private float lineThickness = 5f;
-    //private void Awake()
-    //{
-    //    if (!TryGetComponent(out nodeContainer))
-    //    {
-    //        Debug.Log("TryGetComponent NodeContainer is fail");
-    //    }
-    //}
+    private void Awake()
+    {
+        if (!TryGetComponent(out stageDrawer))
+        {
+            Debug.Log("TryGetComponent StageDrawer is fail");
+        }
+    }
     public void DrawConnections(List<List<StageNode>> floors)
     {
         ClearLines();
@@ -27,12 +28,12 @@ public class StageNodeView : MonoBehaviour
                 foreach (StageNode next in node.nextNodes)
                 {
                     RectTransform from;
-                    if (!nodeContainer.floors[node.floorIndex].Floor[node.nodeIndex].TryGetComponent(out from))
+                    if (!nodeContainer.floors[node.floorIndex].Floor[node.nodeIndex].positionTarget.TryGetComponent(out from))
                     {
                         Debug.Log("TryGetComponent RectTransform from is fail");
                     }
                     RectTransform to;
-                    if (!nodeContainer.floors[next.floorIndex].Floor[next.nodeIndex].TryGetComponent(out to))
+                    if (!nodeContainer.floors[next.floorIndex].Floor[next.nodeIndex].positionTarget.TryGetComponent(out to))
                     {
                         Debug.Log("TryGetComponent RectTransform to is fail");
                     }
@@ -40,6 +41,7 @@ public class StageNodeView : MonoBehaviour
                 }
             }
         }
+        stageDrawer.Matching(floors, nodeContainer);
     }
     private void DrawLine(RectTransform from, RectTransform to)
     {

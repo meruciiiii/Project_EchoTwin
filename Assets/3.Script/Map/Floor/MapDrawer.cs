@@ -62,7 +62,8 @@ public class MapDrawer : MonoBehaviour
 
             rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
 
-            rt.anchoredPosition = drawMap.Key * 100;
+            rt.anchoredPosition = new Vector2(drawMap.Key.x * 100, drawMap.Key.y * 70);
+
         }
     }
     public void AlreadyStep(Vector2Int playerFootprint)

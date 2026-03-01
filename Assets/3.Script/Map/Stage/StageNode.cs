@@ -15,5 +15,5 @@ public class StageNode
 }
 public enum NodeType
 {
-    Battle, Resource, Altar, Recovery
+    Altar, Battle, Boss, Resource, Recovery, Start
 }
