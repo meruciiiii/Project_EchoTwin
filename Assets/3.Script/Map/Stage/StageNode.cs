@@ -12,8 +12,10 @@ public class StageNode
 
     public HashSet<StageNode> nextNodes;
 
+    public bool isCleared = false;
+    public bool isReachable = false;
 }
 public enum NodeType
 {
-    Altar, Battle, Boss, Resource, Recovery, Start
+    Altar, Battle, Boss, Resource, Recovery, Clear
 }

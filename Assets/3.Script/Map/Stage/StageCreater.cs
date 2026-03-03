@@ -77,7 +77,7 @@ public class StageCreater : MonoBehaviour
             Connect(floors, floor, currentCount - 1, floor + 1, nextCount - 1);
             hasPrev[nextCount - 1]++;
             hasNext++;
-            int branchFrom = UnityEngine.Random.Range(0, currentCount);
+            int branchFrom = Random.Range(0, currentCount);
             if (branchFrom.Equals(0))
             {
                 Connect(floors, floor, 0, floor + 1, 1);
@@ -90,7 +90,7 @@ public class StageCreater : MonoBehaviour
             }
             else
             {
-                int branchTo = UnityEngine.Random.Range(branchFrom - 1, branchFrom + 1);
+                int branchTo = Random.Range(branchFrom - 1, branchFrom + 1);
                 if (currentCount - 2 < nextCount - 2)// currentCount - 2 : nextCount -2
                 {
                     branchTo = branchFrom;
@@ -138,7 +138,7 @@ public class StageCreater : MonoBehaviour
                 {
                     canNext.Add(i+1);
                 }
-                int findPoint = UnityEngine.Random.Range(0, canNext.Count);
+                int findPoint = Random.Range(0, canNext.Count);
                 Connect(floors, floor, i, floor + 1, canNext[findPoint]);
                 hasPrev[canNext[findPoint]]++;
                 hasNext++;

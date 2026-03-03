@@ -462,7 +462,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2202565616874807011}
-  - component: {fileID: 7991958050823319781}
   m_Layer: 5
   m_Name: LineContainer
   m_TagString: Untagged
@@ -489,22 +488,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7991958050823319781
+--- !u!1 &733504923163091529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8552333563259479033}
+  - component: {fileID: 2523536071610918956}
+  - component: {fileID: 6851896473860163386}
+  m_Layer: 5
+  m_Name: PinPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8552333563259479033
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733504923163091529}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 890636412361381615}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: 60, y: 75}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2523536071610918956
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733504923163091529}
+  m_CullTransparentMesh: 1
+--- !u!114 &6851896473860163386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667774170804599570}
-  m_Enabled: 0
+  m_GameObject: {fileID: 733504923163091529}
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c48edabcd48b966408c59658e60c72d5, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StageNodeView
-  nodeContainer: {fileID: 0}
-  linePrefab: {fileID: 0}
-  lineContainer: {fileID: 0}
-  lineThickness: 5
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: a2055b4106a3be744987137d18eab5d2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &855758183624610768
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,7 +1055,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 890636412361381615}
-  - component: {fileID: 5929512353691182285}
   m_Layer: 5
   m_Name: NodeContainer
   m_TagString: Untagged
@@ -1023,6 +1080,7 @@ RectTransform:
   - {fileID: 8865016023923003105}
   - {fileID: 292299075248305267}
   - {fileID: 5210881639951805728}
+  - {fileID: 8552333563259479033}
   m_Father: {fileID: 3164891967077660107}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1030,92 +1088,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5929512353691182285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1264538181262304978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4355e8f82e1d7a64e96f4780022f6762, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NodeContainer
-  floors:
-  - Floor:
-    - positionTarget: {fileID: 4622541693677576527}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-  - Floor:
-    - positionTarget: {fileID: 5927875976540367200}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 7307100326135789936}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-  - Floor:
-    - positionTarget: {fileID: 4476017881923468860}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 8609814629918829586}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 7714586788924242859}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-  - Floor:
-    - positionTarget: {fileID: 318996762553043827}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 5206566995150771644}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 5448889910574636183}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 3712861178005530974}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-  - Floor:
-    - positionTarget: {fileID: 3890333165972440260}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 7651853447423472333}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 3783602463000285795}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-    - positionTarget: {fileID: 4143273438769639355}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-  - Floor:
-    - positionTarget: {fileID: 908325299906543014}
-      type: 0
-      nodeOnType: {fileID: 0}
-      clear: 0
-  node:
-  - {fileID: 5497867594757696336, guid: e54ecf27d6398ac4f8a994725057f870, type: 3}
-  - {fileID: 5497867594757696336, guid: 06853dceb9cca9942bec0bc62570481d, type: 3}
-  - {fileID: 5497867594757696336, guid: c043998b684a161498eff48ae271e610, type: 3}
-  - {fileID: 5497867594757696336, guid: 6c57a198962c55f498a98b31a746d1e8, type: 3}
-  - {fileID: 5497867594757696336, guid: a2373c982176cc642b82fc0bc129eab6, type: 3}
-  - {fileID: 5497867594757696336, guid: 254b8bf5ae394b54384e38f9da9b1307, type: 3}
 --- !u!1 &1285156881352697127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,7 +1583,7 @@ GameObject:
   - component: {fileID: 275083216011018617}
   m_Layer: 5
   m_Name: Stage
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1688,10 +1660,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48edabcd48b966408c59658e60c72d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageNodeView
-  nodeContainer: {fileID: 5929512353691182285}
+  positionTargets:
+  - targets:
+    - {fileID: 5462487311760198260}
+  - targets:
+    - {fileID: 5220384841865983964}
+    - {fileID: 1490466892560264905}
+  - targets:
+    - {fileID: 958702331675625171}
+    - {fileID: 1429097801698040732}
+    - {fileID: 1595656459265588980}
+  - targets:
+    - {fileID: 9083965683863224179}
+    - {fileID: 6791021459982431169}
+    - {fileID: 2276768784744397007}
+    - {fileID: 4646769684566901695}
+  - targets:
+    - {fileID: 6432771583285841302}
+    - {fileID: 4064929856274523340}
+    - {fileID: 4481147447949267410}
+    - {fileID: 3097852130138322965}
+  - targets:
+    - {fileID: 5710520612967286147}
+  nodePrefabs:
+  - {fileID: 5497867594757696336, guid: e54ecf27d6398ac4f8a994725057f870, type: 3}
+  - {fileID: 5497867594757696336, guid: 06853dceb9cca9942bec0bc62570481d, type: 3}
+  - {fileID: 5497867594757696336, guid: c043998b684a161498eff48ae271e610, type: 3}
+  - {fileID: 5497867594757696336, guid: 6c57a198962c55f498a98b31a746d1e8, type: 3}
+  - {fileID: 5497867594757696336, guid: a2373c982176cc642b82fc0bc129eab6, type: 3}
+  - {fileID: 5497867594757696336, guid: 254b8bf5ae394b54384e38f9da9b1307, type: 3}
   linePrefab: {fileID: 1922595369335875251, guid: 65fb832c29cb536448c7d855fef2f355, type: 3}
   lineContainer: {fileID: 2202565616874807011}
   lineThickness: 5
+  playerPin: {fileID: 733504923163091529}
 --- !u!1 &2094733030120565340
 GameObject:
   m_ObjectHideFlags: 0

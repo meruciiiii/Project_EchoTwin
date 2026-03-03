@@ -24203,7 +24203,7 @@ GameObject:
   - component: {fileID: 6860361657504293963}
   m_Layer: 0
   m_Name: EnterP
-  m_TagString: Untagged
+  m_TagString: P_SP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

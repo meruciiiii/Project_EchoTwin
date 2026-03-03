@@ -122,4 +122,8 @@ public class MapManager : MonoBehaviour
             }
         }
     }
+    public void StageMoving(Vector3 enterPosition)
+    {
+        mapMoving.MovePlayer(enterPosition);
+    }
 }

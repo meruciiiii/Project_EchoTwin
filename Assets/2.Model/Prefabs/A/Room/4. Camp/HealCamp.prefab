@@ -11317,6 +11317,8 @@ MonoBehaviour:
   timeBetweenAttack: 0.5
   invincibilityTime: 1
   knockBackForce: 2
+  gold: 1000
+  cristal: 0
 --- !u!114 &4657068423251980313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11910,7 +11912,7 @@ GameObject:
   - component: {fileID: 1457536380287058121}
   m_Layer: 0
   m_Name: EnterP
-  m_TagString: Untagged
+  m_TagString: P_SP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
