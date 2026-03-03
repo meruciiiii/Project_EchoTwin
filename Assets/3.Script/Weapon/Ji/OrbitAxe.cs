@@ -9,6 +9,7 @@ public class OrbitAxe : MonoBehaviour
     private float angle;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float radius = 2f;
+    [SerializeField] private float rotateSpeed = 180f;
     private float damage;
 
     public void Init(Transform player, float damage)
@@ -23,6 +24,8 @@ public class OrbitAxe : MonoBehaviour
         angle += Time.deltaTime * speed;
 
         transform.position = player.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+
+        transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f, Space.Self);
 
         if(angle >= Mathf.PI * 2f)
         {
