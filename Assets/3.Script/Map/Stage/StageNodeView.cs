@@ -1,4 +1,4 @@
-
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +10,18 @@ public class StageNodeView : MonoBehaviour
     private StageDrawer stageDrawer;
 
     [SerializeField] private float lineThickness = 5f;
+    public Action<NodeData> OnNodeClicked;
+
     private void Awake()
     {
         if (!TryGetComponent(out stageDrawer))
         {
             Debug.Log("TryGetComponent StageDrawer is fail");
         }
+        stageDrawer.OnNodeClicked += node =>
+        {
+            OnNodeClicked?.Invoke(node);
+        };
     }
     public void DrawConnections(List<List<StageNode>> floors)
     {

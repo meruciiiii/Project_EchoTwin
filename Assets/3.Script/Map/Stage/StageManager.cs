@@ -10,6 +10,8 @@ public class StageManager : MonoBehaviour
     private StageCreater stageCreater;
     private StageNodePopulator stageNodePopulator;
     [SerializeField] private StageNodeView stageNodeView;
+    private NodeData currentNode;
+    private StagePin stagePin;
     private void Awake()
     {
         if(!TryGetComponent(out stageCreater))
@@ -20,6 +22,23 @@ public class StageManager : MonoBehaviour
         {
             Debug.Log("TryGetComponent StageNodePopulator is fail");
         }
+        stageNodeView.OnNodeClicked += SelectNode;
+        if (!TryGetComponent(out stagePin))
+        {
+            Debug.Log("TryGetComponent StagePin is fail");
+        }
+    }
+
+    public void SelectNode(NodeData node)
+    {
+        //if (!CanMove(node)) return;
+
+        currentNode = node;
+        MovePlayerIcon(node);
+    }
+    private void MovePlayerIcon(NodeData node)
+    {
+        // playerIcon 이동 처리
     }
     public void GenerateStage()
     {

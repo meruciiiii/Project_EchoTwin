@@ -1,11 +1,11 @@
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageDrawer : MonoBehaviour
 {
+    public Action<NodeData> OnNodeClicked;
     public void Matching(List<List<StageNode>> floors, NodeContainer nodeContainer)
     {
         for (int i = 0; i < floors.Count; i++)
@@ -19,6 +19,7 @@ public class StageDrawer : MonoBehaviour
                 Vector3 spawnPosition = parentTransform.position;
                 Quaternion spawnRotation = parentTransform.rotation;
                 NodeType nodeType = stageNode.nodeType;
+                Button btn;
                 if (nodeType.Equals(NodeType.Altar))
                 {
                     nodeData.nodeOnType = Instantiate(nodeContainer.node[0], spawnPosition, spawnRotation, parentTransform);
@@ -48,8 +49,16 @@ public class StageDrawer : MonoBehaviour
                     Debug.Log("This is unMatched....it is big isue.");
                 }
                 nodeData.type = nodeType;
+                if(!nodeData.nodeOnType.TryGetComponent(out btn))
+                {
+                    Debug.Log("TryGetComponent Button is fail");
+                }
+                btn.onClick.AddListener(() =>
+                {
+                    OnNodeClicked?.Invoke(nodeData);
+                });
+                nodeData.exploreNode = stageNode.nextNodes;
             }
         }
-        
     }
 }

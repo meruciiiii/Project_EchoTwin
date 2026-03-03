@@ -54,5 +54,5 @@ public class NodeData
     public NodeType type;
     public GameObject nodeOnType;
     public bool clear;
-    public List<StageNode> exploreNode;
+    public HashSet<StageNode> exploreNode;
 }
