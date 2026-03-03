@@ -130,7 +130,7 @@ public class Spear : WeaponAbstract
         float player_XSize = player.GetComponent<CapsuleCollider>().radius;
 
         Vector3 forward = player.transform.forward;
-        Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange);
+        Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange) * echoLengthMultiple * 0.5f;
 
         Vector3 targetPos = new Vector3(player_XSize * 0.25f, 1f, weaponData.attackRange * echoLengthMultiple);
 

@@ -137,7 +137,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             StartCoroutine(DeathRoutine());
         }
     }
-    private IEnumerator DeathRoutine()
+    protected virtual IEnumerator DeathRoutine()
     {
         if (ani != null) ani.SetTrigger("Death");
 
@@ -149,7 +149,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         Destroy(gameObject);
     }
 
-    private void makeDropItem()
+    protected virtual void makeDropItem()
     {
         ItemDataBase db = ItemDataBase.Instance;
         if (db == null)

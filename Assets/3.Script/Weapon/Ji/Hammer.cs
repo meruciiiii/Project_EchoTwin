@@ -185,8 +185,8 @@ public class Hammer : WeaponAbstract
         {
             if (!hit.CompareTag("Enemy")) continue;
 
-            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
             StartCoroutine(EnemyGatherng(centerPos, hit));
+            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
         }
     }
 

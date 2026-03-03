@@ -28,6 +28,7 @@ public class PlayerEquipment
 
             MainWeapon = newWeapon;
             MainWeapon.gameObject.SetActive(true);
+            if (MainWeapon.weaponID == WeaponID.Dagger) MainWeapon.DualWeapon.SetActive(true);
         }
         else
         {
