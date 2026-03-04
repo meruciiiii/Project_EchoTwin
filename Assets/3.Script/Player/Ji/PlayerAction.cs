@@ -87,6 +87,7 @@ public class PlayerAction : MonoBehaviour
         if (hasDamaged) return;
         if (stats.isDash) return;
         if (ani != null) ani.SetTrigger("TakeDamage");
+        SoundManager.SendEvent(SoundType.SFX_PlayerHit);
 
         stats.takeDamage(damage);
 

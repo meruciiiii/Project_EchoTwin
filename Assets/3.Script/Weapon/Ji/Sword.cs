@@ -58,6 +58,15 @@ public class Sword : WeaponAbstract
         AttackTimeChecker();
 
         SetAnimator();
+        if (comboCount == 0)
+        {
+            SoundManager.SendEvent(SoundType.SFX_SwordAttack2);
+        }
+        else
+        {
+            SoundManager.SendEvent(SoundType.SFX_SwordAttack1);
+        }
+
         Debug.Log($"combo count = {comboCount}");
 
         List<Collider> targets = getTargetInSector();

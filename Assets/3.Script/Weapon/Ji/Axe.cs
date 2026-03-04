@@ -84,6 +84,14 @@ public class Axe : WeaponAbstract
         AttackTimeChecker();
 
         SetAnimator();
+        if (comboCount == 1)
+        {
+            SoundManager.SendEvent(SoundType.SFX_AxeAttack1);
+        }
+        else
+        {
+            SoundManager.SendEvent(SoundType.SFX_AxeAttack2);
+        }
         Debug.Log($"combo count = {comboCount}");
 
         List<Collider> targets = getTargetInSector();

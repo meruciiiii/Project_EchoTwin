@@ -69,6 +69,7 @@ public class Hammer : WeaponAbstract
         action.GetComponent<Rigidbody>().isKinematic = true;
 
         SetAnimator(); // 공격 애니메이션 트리거 (Trigger "Attack")
+        SoundManager.SendEvent(SoundType.SFX_HammerAttack1);
 
         // 애니메이션 상태가 바뀔 때까지 한 프레임 대기
         yield return null;
@@ -104,6 +105,7 @@ public class Hammer : WeaponAbstract
 
         // 버튼을 뗀 후부터 추가 차징 시간 측정 (기존 로직 유지)
         time = 0f;
+        SoundManager.SendEvent(SoundType.SFX_HammerAttack2);
 
         /*
         while (input.isAttackPressed) // 이미 위에서 뗐으므로 이 루프는 스킵될 것임

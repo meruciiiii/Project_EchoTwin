@@ -114,6 +114,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     public virtual void takeDamage(float damage)
     {
         if (state == EnemyState.dead) return;
+        SoundManager.SendEvent(SoundType.SFX_MonsterHit);
 
         currentHP -= damage;
         checkOnDie();

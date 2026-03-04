@@ -85,6 +85,18 @@ public class Dagger : WeaponAbstract
         AttackTimeChecker();
 
         SetAnimator();
+        if (comboCount == weaponData.comboCount - 1)
+        {
+            SoundManager.SendEvent(SoundType.SFX_DaggerAttack2);
+        }
+        else if (comboCount == 0)
+        {
+            
+        }
+        else
+        {
+            SoundManager.SendEvent(SoundType.SFX_DaggerAttack1);
+        }
         Debug.Log($"combo count = {comboCount}");
 
         List<Collider> targets = getTargetInSector();
