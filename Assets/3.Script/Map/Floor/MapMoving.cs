@@ -30,6 +30,7 @@ public class MapMoving : MonoBehaviour
     }
     public void MovePlayer(Vector3 position)
     {
+        Debug.Log(position + " : enter this position");
         player.position = position;
     }
     //public void PlayerPush(Vector2Int direction)
