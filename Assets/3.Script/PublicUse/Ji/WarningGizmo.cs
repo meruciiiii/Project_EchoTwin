@@ -61,6 +61,23 @@ public class WarningGizmo : MonoBehaviour
         playInternal(worldPos, Quaternion.identity, attackRadius, 360f, duration, warningColor);
     }
 
+    public void showCircle(Vector3 worldPos, float attackRadius, Color warningColor)
+    {
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
+        gameObject.SetActive(true);
+
+        transform.position = new Vector3(worldPos.x, worldPos.y + yOffset, worldPos.z);
+        transform.rotation = Quaternion.identity;
+
+        setRadius(attackRadius);
+        ApplyProperties(warningColor, 360f, 0);
+    }
+
     public void playSector(Vector3 worldPos, Vector3 forward, float attackRadius, float angle, float duration, Color warningColor)
     {
         forward.y = 0f;

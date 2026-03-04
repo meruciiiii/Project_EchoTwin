@@ -28,6 +28,11 @@ public class Sentinel : EnemyStateAbstract
     [SerializeField] private float coolTime = 0f;
     private bool isPhase2nd = false;
 
+    [Header("Warning")]
+    [SerializeField] private WarningGizmo warningPrefab;
+    [SerializeField] private Color warningColor = new Color(1f, 0f, 0f, 0.4f);
+    private Queue<WarningGizmo> warningPool;
+
     protected override void Awake()
     {
         base.Awake();
@@ -39,6 +44,7 @@ public class Sentinel : EnemyStateAbstract
         rockPool = new Queue<SentinelProjectile>();
         rangeMobPool = new Queue<PebbleForBoss>();
         meleeMobPool = new Queue<RatForBoss>();
+        warningPool = new Queue<WarningGizmo>();
 
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
@@ -63,6 +69,14 @@ public class Sentinel : EnemyStateAbstract
             meleeMob.transform.localPosition = Vector3.zero;
             meleeMob.gameObject.SetActive(false);
             meleeMobPool.Enqueue(meleeMob);
+        }
+        for (int i = 0; i < (rangeAttackCount + 2) * 2; i++)
+        {
+            WarningGizmo warning = Instantiate(warningPrefab, PoolsPos.transform);
+            warning.init(returnWarning);
+            warning.transform.localPosition = Vector3.zero;
+            warning.gameObject.SetActive(false);
+            warningPool.Enqueue(warning);
         }
     }
 
@@ -177,7 +191,17 @@ public class Sentinel : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-        //effect.ChargeEffect(attackSpeed);
+        Vector3 dir = player.transform.position - transform.position;
+        dir.y = 0;
+
+        if (dir.sqrMagnitude < 0.001f) dir = transform.forward;
+
+        WarningGizmo warning = getWarning();
+        if(warning != null)
+        {
+            warning.playSector(transform.position, dir.normalized, enemyData.attackRange, 270f, attackSpeed, warningColor);
+        }
+
         yield return new WaitForSeconds(attackSpeed);
 
         //if (ani != null) ani.SetTrigger("Attack");
@@ -201,8 +225,8 @@ public class Sentinel : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-        //effect.ChargeEffect(rangeAttackSpeed);
         yield return new WaitForSeconds(rangeAttackSpeed);
+
 
         //ani
 
@@ -226,7 +250,10 @@ public class Sentinel : EnemyStateAbstract
             Vector3 targetPos = player.transform.position + randomPos + Vector3.up * 10f;
 
             SentinelProjectile rock = rockPool.Dequeue();
+            WarningGizmo warning = getWarning();
+
             rock.transform.position = targetPos;
+            rock.setWarning(warning);
             rock.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(0.3f);
@@ -350,5 +377,18 @@ public class Sentinel : EnemyStateAbstract
     protected override void setMoveSpeed()
     {
         navMesh.speed = moveSpeed;
+    }
+
+    private WarningGizmo getWarning()
+    {
+        if (warningPool.Count == 0) return null;
+        return warningPool.Dequeue();
+    }
+
+    private void returnWarning(WarningGizmo warning)
+    {
+        warning.transform.SetParent(PoolsPos.transform);
+        warning.transform.localPosition = Vector3.zero;
+        warningPool.Enqueue(warning);
     }
 }

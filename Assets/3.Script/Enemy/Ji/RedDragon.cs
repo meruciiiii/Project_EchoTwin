@@ -43,6 +43,11 @@ public class RedDragon : EnemyStateAbstract
     [SerializeField] private float coolTime = 0f;
     private bool isPhase2 = false;
 
+    [Header("Warning")]
+    [SerializeField] private WarningGizmo warningPrefab;
+    [SerializeField] private Color warningColor = new Color(1f, 0f, 0f, 0.4f);
+    private Queue<WarningGizmo> warningPool;
+
     private int meleeWeight = 40;
     private int breathWeight = 40;
     private int reflectWeight = 20;
@@ -69,6 +74,7 @@ public class RedDragon : EnemyStateAbstract
 
         rockPool = new Queue<DragonProjectile>();
         areaPool = new Queue<DragonFireArea>();
+        warningPool = new Queue<WarningGizmo>();
 
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
@@ -85,6 +91,14 @@ public class RedDragon : EnemyStateAbstract
             area.transform.localPosition = Vector3.zero;
             area.gameObject.SetActive(false);
             areaPool.Enqueue(area);
+        }
+        for(int i=0; i< (rangeAttackCount+2)*4; i++)
+        {
+            WarningGizmo warning = Instantiate(warningPrefab, PoolsPos.transform);
+            warning.init(returnWarning);
+            warning.transform.localPosition = Vector3.zero;
+            warning.gameObject.SetActive(false);
+            warningPool.Enqueue(warning);
         }
     }
 
@@ -254,6 +268,19 @@ public class RedDragon : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
+        WarningGizmo leftWarning = getWarning();
+        WarningGizmo rightWarning = getWarning();
+
+        if(leftWarning != null)
+        {
+            leftWarning.playCircle(leftArm.transform.position, attackRange, attackSpeed, warningColor);
+        }
+
+        if(rightWarning != null)
+        {
+            rightWarning.playCircle(rightArm.transform.position, attackRange, attackSpeed, warningColor);
+        }
+
         yield return new WaitForSeconds(attackSpeed);
 
         checkAttackTime();
@@ -277,6 +304,9 @@ public class RedDragon : EnemyStateAbstract
             target.takeDamage(enemyData.damage, rightArm.transform.position, 2);
             break;
         }
+
+        if (leftWarning != null) leftWarning.Hide();
+        if (rightWarning != null) rightWarning.Hide();
 
         coroutine = null;
 
@@ -427,7 +457,10 @@ public class RedDragon : EnemyStateAbstract
             Vector3 targetPos = player.transform.position + randomPos + Vector3.up * 10f;
 
             DragonProjectile rock = rockPool.Dequeue();
+            WarningGizmo warning = getWarning();
+
             rock.transform.position = targetPos;
+            rock.setWarning(warning);
             rock.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(0.3f);
@@ -468,6 +501,19 @@ public class RedDragon : EnemyStateAbstract
         area.transform.localPosition = Vector3.zero;
         area.gameObject.SetActive(false);
         areaPool.Enqueue(area);
+    }
+
+    private WarningGizmo getWarning()
+    {
+        if (warningPool.Count == 0) return null;
+        return warningPool.Dequeue();
+    }
+
+    private void returnWarning(WarningGizmo warning)
+    {
+        warning.transform.SetParent(PoolsPos.transform);
+        warning.transform.localPosition = Vector3.zero;
+        warningPool.Enqueue(warning);
     }
 
     protected override void OnTriggerEnter(Collider other)
