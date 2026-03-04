@@ -6,6 +6,7 @@ using UnityEngine;
 public class FlashEffect : MonoBehaviour
 {
     private Coroutine flashCoroutine;
+    private Coroutine chargeCoroutine;
 
     private Renderer targetRenderer;
     private MaterialPropertyBlock mpb;
@@ -58,9 +59,9 @@ public class FlashEffect : MonoBehaviour
     {
         if (targetRenderer == null) return;
             
-        if (flashCoroutine != null) StopCoroutine(flashCoroutine);
+        if (chargeCoroutine != null) StopCoroutine(chargeCoroutine);
 
-        flashCoroutine = StartCoroutine(FadeIn_Co(duration));
+        chargeCoroutine = StartCoroutine(FadeIn_Co(duration));
     }
 
     private void SetColor(Color color)
@@ -102,6 +103,6 @@ public class FlashEffect : MonoBehaviour
         }
 
         SetColor(originalColor);
-        flashCoroutine = null;
+        chargeCoroutine = null;
     }
 }

@@ -19,20 +19,22 @@ public class Sentinel : EnemyStateAbstract
     [SerializeField] private int meleeCount = 0;
     private Queue<RatForBoss> meleeMobPool;
     [SerializeField] private GameObject PoolsPos;
+
     [Header("2ndPhaseStart")]
     [Range(0f, 1f)]
     [SerializeField] private float phaseStartHP = 0.4f;
     [SerializeField] private float moveSpeed = 0f;
     [SerializeField] private float attackSpeed = 0f;
-    [SerializeField] private float coolTIme = 0f;
+    [SerializeField] private float coolTime = 0f;
     private bool isPhase2nd = false;
 
     protected override void Awake()
     {
         base.Awake();
+        if (ani == null) TryGetComponent(out ani);
         moveSpeed = enemyData.moveSpeed;
         attackSpeed = enemyData.attackSpeed;
-        coolTIme = enemyData.coolTime;
+        coolTime = enemyData.coolTime;
 
         rockPool = new Queue<SentinelProjectile>();
         rangeMobPool = new Queue<PebbleForBoss>();
@@ -109,14 +111,17 @@ public class Sentinel : EnemyStateAbstract
         attackSpeed *= 0.5f;
         moveSpeed *= 1.5f;
         setMoveSpeed();
-        coolTIme *= 0.5f;
+        coolTime *= 0.5f;
         rangeAttackSpeed *= 0.5f;
         rangeAttackCount *= 2;
     }
 
+    protected override IEnumerator knockback_Co(Vector3 dir, float power)
+    { yield return null; }
+
     protected override bool canAttack()
     {
-        return Time.time >= lastAttackTime + coolTIme;
+        return Time.time >= lastAttackTime + coolTime;
     }
 
     public override void Attack()
@@ -150,14 +155,18 @@ public class Sentinel : EnemyStateAbstract
             }
             else if (temp == 1)
             {
-                if (rangeMobPool.Count != rangeCount || meleeMobPool.Count != meleeCount)
+                if (!isPhase2nd && (rangeMobPool.Count != rangeCount || meleeMobPool.Count != meleeCount))
                 {
                     coroutine = StartCoroutine(RangeAttack_Co());
+                }
+                else if(!isPhase2nd && rangeMobPool.Count == rangeCount && meleeMobPool.Count == meleeCount)
+                {
+                    coroutine = StartCoroutine(MobSpawn_Co());
                 }
                 else
                 {
                     coroutine = StartCoroutine(MobSpawn_Co());
-                }
+                }    
             }
         }
     }
@@ -168,10 +177,10 @@ public class Sentinel : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-        effect.ChargeEffect(attackSpeed);
+        //effect.ChargeEffect(attackSpeed);
         yield return new WaitForSeconds(attackSpeed);
 
-        if (ani != null) ani.SetTrigger("Attack");
+        //if (ani != null) ani.SetTrigger("Attack");
 
         checkAttackTime();
 
@@ -192,12 +201,24 @@ public class Sentinel : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-        effect.ChargeEffect(rangeAttackSpeed);
+        //effect.ChargeEffect(rangeAttackSpeed);
         yield return new WaitForSeconds(rangeAttackSpeed);
 
         //ani
 
         checkAttackTime();
+
+        if (rangeAttackCount - rockPool.Count > 0)
+        {
+            for (int i = 0; i < rangeAttackCount - rockPool.Count; i++)
+            {
+                SentinelProjectile rock = Instantiate(projectilePrefab, PoolsPos.transform);
+                rock.sentinel = this;
+                rock.transform.localPosition = Vector3.zero;
+                rock.gameObject.SetActive(false);
+                rockPool.Enqueue(rock);
+            }
+        }
 
         for (int i = 0; i < rangeAttackCount; i++)
         {
@@ -205,8 +226,8 @@ public class Sentinel : EnemyStateAbstract
             Vector3 targetPos = player.transform.position + randomPos + Vector3.up * 10f;
 
             SentinelProjectile rock = rockPool.Dequeue();
-            rock.gameObject.SetActive(true);
             rock.transform.position = targetPos;
+            rock.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(0.3f);
         }

@@ -316,7 +316,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         if (other.CompareTag("Player"))
         {
-            player.takeDamage(enemyData.damage, transform.position);
+            player.takeDamage(enemyData.damage, transform.position, 1);
         }
     }
 
@@ -387,7 +387,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         if (collision.transform.CompareTag("Player"))
         {
-            player.takeDamage(enemyData.damage, transform.position);
+            player.takeDamage(enemyData.damage, transform.position, 1);
         }
     }
 
@@ -418,7 +418,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
                 if (Vector3.Angle(lookDir, dirToTarget) <= angle * 0.5f)
                 {
-                    player.takeDamage(enemyData.damage, transform.position);
+                    player.takeDamage(enemyData.damage, transform.position, 1);
                 }
             }
         }
