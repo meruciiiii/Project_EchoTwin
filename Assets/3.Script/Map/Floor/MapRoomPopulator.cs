@@ -12,7 +12,7 @@ public class MapRoomPopulator : MonoBehaviour
     private int nextRoomIDNum;
     private int stage;
     private int floor;
-    private Room.RoomType roomType;
+    private RoomType roomType;
     private RoomObjects roomObjects;
     [SerializeField] private FloorScriptableObject floorScriptable;
     private System.Random rnd = new System.Random();
@@ -44,31 +44,31 @@ public class MapRoomPopulator : MonoBehaviour
     private int DecisionRoomID()
     {
         int choice = 0;
-        if (roomType.Equals(Room.RoomType.Start))
+        if (roomType.Equals(RoomType.Start))
         {
             choice = 101;
         }
-        else if (roomType.Equals(Room.RoomType.Battle))
+        else if (roomType.Equals(RoomType.Battle))
         {
             choice = batteRoomID[nextRoomIDNum];
         }
-        else if (roomType.Equals(Room.RoomType.Shop))
+        else if (roomType.Equals(RoomType.Shop))
         {
             choice = 102;
         }
-        else if (roomType.Equals(Room.RoomType.Forge))
+        else if (roomType.Equals(RoomType.Forge))
         {
             choice = 103;
         }
-        else if (roomType.Equals(Room.RoomType.Elite))
+        else if (roomType.Equals(RoomType.Elite))
         {
             choice = UnityEngine.Random.Range(19, 20);
         }
-        else if (roomType.Equals(Room.RoomType.Reward))
+        else if (roomType.Equals(RoomType.Reward))
         {
             choice = 104;
         }
-        else if (roomType.Equals(Room.RoomType.Boss))
+        else if (roomType.Equals(RoomType.Boss))
         {
             if (stage.Equals(1))
                 choice = 21;
@@ -104,7 +104,7 @@ public class MapRoomPopulator : MonoBehaviour
     }
     private void DecisionType(FloorData floor)
     {
-        int choice = UnityEngine.Random.Range(1, ((int)Room.RoomType.count) - 3);
+        int choice = UnityEngine.Random.Range(1, ((int)RoomType.count) - 3);
         if (choice.Equals(2) || choice.Equals(3))
         {
             if (eventRoomCount > 0)
@@ -140,7 +140,7 @@ public class MapRoomPopulator : MonoBehaviour
             choice = 0;
         if (floor.getBoolEndRoom())
             choice = 5;
-        roomType = (Room.RoomType)choice;
+        roomType = (RoomType)choice;
     }//Start, Battle, Shop, Forge, Elite, Reward, Boss, count
     private void RoomCondition()
     {
@@ -150,34 +150,34 @@ public class MapRoomPopulator : MonoBehaviour
     }
     private GameObject MappingRoom(Room room)
     {
-        if (room.GetRoomType().Equals(Room.RoomType.Start))
+        if (room.GetRoomType().Equals(RoomType.Start))
         {
             return roomObjects.physicalStartRoom;
         }
-        else if (room.GetRoomType().Equals(Room.RoomType.Battle))
+        else if (room.GetRoomType().Equals(RoomType.Battle))
         {
             return roomObjects.physicalBattleRoom[room.GetRoomID()-1];
         }
-        else if (room.GetRoomType().Equals(Room.RoomType.Shop))
+        else if (room.GetRoomType().Equals(RoomType.Shop))
         {
             return roomObjects.physicalShopRoom;
         }
-        else if (room.GetRoomType().Equals(Room.RoomType.Forge))
+        else if (room.GetRoomType().Equals(RoomType.Forge))
         {
             return roomObjects.physicalForgeRoom;
         }
-        else if (room.GetRoomType().Equals(Room.RoomType.Elite))
+        else if (room.GetRoomType().Equals(RoomType.Elite))
         {
             if (room.GetRoomID().Equals(19))
                 return roomObjects.physicalEliteRoom[0];
             else if (room.GetRoomID().Equals(20))
                 return roomObjects.physicalEliteRoom[1];
         }
-        else if (room.GetRoomType().Equals(Room.RoomType.Reward))
+        else if (room.GetRoomType().Equals(RoomType.Reward))
         {
             return roomObjects.physicalRewardRoom;
         }
-        else if (room.GetRoomType().Equals(Room.RoomType.Boss))
+        else if (room.GetRoomType().Equals(RoomType.Boss))
         {
             if (stage.Equals(1))
             {

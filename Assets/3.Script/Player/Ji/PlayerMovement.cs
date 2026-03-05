@@ -211,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
         action.forStopMove = true;
         action.forStopRotate = true;
 
-        while ((rb.position - destPos).sqrMagnitude > 0.01f)
+        while ((rb.position - destPos).sqrMagnitude > 0.1f)
         {
             Vector3 before = transform.position;
             Vector3 after = Vector3.MoveTowards(before, destPos, speed * Time.deltaTime);

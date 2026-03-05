@@ -21,13 +21,13 @@ public class BridgeMoving : MonoBehaviour
     }
     public void SetState(bool doorState)
     {
-        if (doorState == isUp) return;
+        if (!doorState) return;
         //Debug.Log(this.name +" is bridge move");
-        StartCoroutine(MoveBridge(doorState));
+        StartCoroutine(MoveBridge());
     }
-    private IEnumerator MoveBridge(bool targetState)
+    private IEnumerator MoveBridge()
     {
-        isUp = targetState;
+        isUp = !isUp;
         startPos = transform.position;
         targetPos = startPos + (isUp ? Vector3.up : Vector3.down) * moveDistance;
         float elapsed = 0f;

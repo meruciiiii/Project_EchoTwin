@@ -62,7 +62,7 @@ public class RoomView : MonoBehaviour
             //bridgeMoving.SetState(floor.GetDoorState(door.doorIntDirection));
         }
     }
-    public void DoorResetting(FloorData floor)
+    public void DoorResetting()
     {
         foreach (DoorTrigger door in doors)
         {
@@ -75,7 +75,21 @@ public class RoomView : MonoBehaviour
             if (!door.TryGetComponent(out bridgeMoving))
                 Debug.Log("TryGetComponent BridgeMoving is fail");
             bridgeMoving.ResetBridge();
-            //bridgeMoving.SetState(floor.GetDoorState(door.doorIntDirection));
+        }
+    }
+    public void BridgeisMove(FloorData floor)
+    {
+        foreach (DoorTrigger door in doors)
+        {
+            if (door == null)
+            {
+                Debug.Log("DoorTrigger Setting is failed");
+                continue;
+            }
+            BridgeMoving bridgeMoving;
+            if (!door.TryGetComponent(out bridgeMoving))
+                Debug.Log("TryGetComponent BridgeMoving is fail");
+            bridgeMoving.SetState(floor.GetDoorState(door.doorIntDirection));
         }
     }
 }

@@ -81,6 +81,7 @@ public class MapManager : MonoBehaviour
         mapDrawer.EnterDraw(GetMap(), currentCoord);
         roomView.DoorAccordingState(floor);
         roomView.OnDoorUsed += PlayerTryMove;
+        GameManager.instance.whenArriveNextMap += PlayerInBattle;
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
     {
@@ -100,7 +101,7 @@ public class MapManager : MonoBehaviour
             Debug.Log("currentCoord is Error");
             return;
         }
-        roomView.DoorResetting(oldFloor);
+        roomView.DoorResetting();
         currentCoord = target;
         //해당 오브젝트 가져오기
         if(!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
@@ -114,7 +115,7 @@ public class MapManager : MonoBehaviour
         roomView.DoorAccordingState(newFloor);
         Vector3 playerSpawnPosition = roomView.GetDoor(direction);
         microMap[currentCoord].SetVisit();
-        Vector3 targetPosition = playerSpawnPosition + 50 * direction.x * Vector3.left + 50 * direction.y * Vector3.forward;
+        Vector3 targetPosition = playerSpawnPosition + 4 * direction.x * Vector3.right + 4 * direction.y * Vector3.forward;
         Debug.Log("start position : "+playerSpawnPosition);
         Debug.Log("end position : "+ targetPosition);
         GameManager.instance.whenMapChange(targetPosition, currentCoord);
@@ -161,5 +162,12 @@ public class MapManager : MonoBehaviour
     {
         if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
             return;
+        if (!microMap.TryGetValue(currentCoord, out FloorData Floor))
+        {
+            Debug.Log("oldFloor TryGetValue is Error");
+            return;
+        }
+        roomView.BridgeisMove(Floor);
+
     }
 }
