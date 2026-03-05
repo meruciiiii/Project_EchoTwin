@@ -75,17 +75,24 @@ public class SoundManager : MonoBehaviour
     {
         public SoundType type;
         public AudioClip clip;
+        [Range(0f, 1f)] public float volume;
     }
 
     public List<SoundData> soundList;
-    private Dictionary<SoundType, AudioClip> soundDict = new Dictionary<SoundType, AudioClip>();
+    private Dictionary<SoundType, SoundData> soundDict = new Dictionary<SoundType, SoundData>();
+    
     void Start()
     {
         SendEvent(SoundType.BGM_Main);
     }
     void Awake()
     {
-        foreach (var data in soundList) soundDict[data.type] = data.clip;
+        soundDict.Clear();
+        foreach (var data in soundList)
+        {
+            if (!soundDict.ContainsKey(data.type))
+                soundDict[data.type] = data;
+        }
         UpdateVolumes();
     }
 
@@ -106,16 +113,23 @@ public class SoundManager : MonoBehaviour
     private void PlaySound(SoundType type)
     {
         if (!soundDict.ContainsKey(type)) return;
-        AudioClip clip = soundDict[type];
+
+        SoundData data = soundDict[type];
+        if (data.clip == null) return;
+
+        // 개별 볼륨이 0일 경우 소리가 안 들리므로, 기본적으로 1(100%)로 취급하게 방어 코드 추가
+        float individualVol = data.volume <= 0.001f ? 1f : data.volume;
 
         if (type.ToString().StartsWith("BGM"))
         {
-            bgmSource.clip = clip;
+            bgmSource.clip = data.clip;
+            bgmSource.volume = bgmVolume * individualVol;
             bgmSource.Play();
         }
         else
         {
-            sfxSource.PlayOneShot(clip, sfxVolume);
+            // 최종 볼륨 = 마스터 SFX 볼륨 * 해당 소리의 개별 볼륨
+            sfxSource.PlayOneShot(data.clip, sfxVolume * individualVol);
         }
     }
 
