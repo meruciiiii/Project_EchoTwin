@@ -71,12 +71,7 @@ public class StageNodeView : MonoBehaviour
 
                 Transform target = positionTargets[i].targets[j];
 
-                GameObject obj = Instantiate(
-                    nodePrefabs[(int)node.nodeType],
-                    target.position,
-                    target.rotation,
-                    target
-                );
+                GameObject obj = Instantiate(nodePrefabs[(int)node.nodeType], target.position, target.rotation, target );
 
                 nodeViews.Add(node, obj);
 
@@ -146,6 +141,7 @@ public class StageNodeView : MonoBehaviour
     private IEnumerator MoveRoutine(StageNode targetNode)
     {
         StageNode startNode = currentNode;
+        Debug.Log("next floor is " + targetNode.floorIndex);
         currentNode = targetNode;
 
         Vector3 startPos = nodeViews[startNode].transform.position - 20 * Vector3.down;
@@ -159,7 +155,7 @@ public class StageNodeView : MonoBehaviour
             time += Time.deltaTime;
             float t = time / duration;
 
-            // 何靛矾款 啊加/皑加
+            
             t = Mathf.SmoothStep(0, 1, t);
 
             playerPin.transform.position = Vector3.Lerp(startPos, endPos, t);

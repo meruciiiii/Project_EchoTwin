@@ -44,11 +44,16 @@ public class DoorTrigger : MonoBehaviour
 
     private bool isLocked = false;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (isLocked) return;
         if (!other.CompareTag("Player")) return;
         //Debug.Log("Door Triger is started");
+        if(!other.TryGetComponent(out PlayerStats playerStats))
+        {
+            Debug.Log("TryGetComponent PlayerStats is fail");
+        }
+        if (playerStats.isDash) return;
         if(Direction== Vector2Int.zero)
         {
             Debug.Log("Direction is not selected");

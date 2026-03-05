@@ -97,6 +97,7 @@ public class FloorData
     private List<Vector2Int> connectedRoom;
     private bool isEnd = false;
     private bool isStart = false;
+    private bool isVisit = false;
     private Room room;
     public FloorData()
     {
@@ -164,5 +165,13 @@ public class FloorData
     public bool getBoolEndRoom()
     {
         return isEnd;
+    }
+    public void SetVisit()
+    {
+        isVisit = true;
+    }
+    public bool GetVisit()
+    {
+        return isVisit;
     }
 }

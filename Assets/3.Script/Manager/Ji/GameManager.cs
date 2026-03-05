@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
         Loading,
         UI,
         Die,
+        Clear
     }
 
     public bool isStop = false;

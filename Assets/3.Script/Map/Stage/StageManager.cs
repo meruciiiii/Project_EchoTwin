@@ -10,8 +10,10 @@ public class StageManager : MonoBehaviour
     private StageCreater stageCreater;
     private StageNodePopulator stageNodePopulator;
     [SerializeField] private StageNodeView stageNodeView;
+    [SerializeField] private PortalController portalController;
 
     public event Action<StageNode> onNodeEntered;
+    public event Action onPortalEntered;
     private void Awake()
     {
         if(!TryGetComponent(out stageCreater))
@@ -23,6 +25,7 @@ public class StageManager : MonoBehaviour
             Debug.Log("TryGetComponent StageNodePopulator is fail");
         }
         stageNodeView.onNodeEntered += OnNodeEntered;
+        portalController.onPortalEntered += OnPortalEntered;
     }
     public void GenerateStage()
     {
@@ -33,5 +36,10 @@ public class StageManager : MonoBehaviour
     private void OnNodeEntered(StageNode node)
     {
         onNodeEntered?.Invoke(node);
+    }
+    private void OnPortalEntered()
+    {
+        onPortalEntered?.Invoke();
+        stageNodeView.gameObject.SetActive(true);
     }
 }
