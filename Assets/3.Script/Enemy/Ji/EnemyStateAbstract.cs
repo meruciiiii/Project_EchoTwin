@@ -117,12 +117,12 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         SoundManager.SendEvent(SoundType.SFX_MonsterHit);
 
         currentHP -= damage;
-        checkOnDie();
+        checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
         //if (ani != null) 
         if (state != EnemyState.dead) ani.SetTrigger("Hit");
     }
 
-    protected virtual void checkOnDie()
+    protected virtual void checkOnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
         if (currentHP <= 0)
         {
@@ -135,22 +135,22 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             boxCol.enabled = false;
 
             //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
-            StartCoroutine(DeathRoutine());
+            StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
         }
     }
-    protected virtual IEnumerator DeathRoutine()
+    protected virtual IEnumerator DeathRoutine(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
         if (ani != null) ani.SetTrigger("Death");
 
         // 애니메이션 길이에 맞춰 대기 (예: 1.5초)
         yield return new WaitForSeconds(1.5f);
 
-        makeDropItem();
+        makeDropItem(goldAmount, minCristal, maxCristal, minWeight, maxWeight);
 
         Destroy(gameObject);
     }
 
-    protected virtual void makeDropItem()
+    protected virtual void makeDropItem(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
         ItemDataBase db = ItemDataBase.Instance;
         if (db == null)
@@ -162,38 +162,65 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         //Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
         //Vector3 spawnPos = transform.position + Vector3.up * 1.8f + randomOffset;
         Vector3 floorPos = new Vector3(transform.position.x, 0, transform.position.z);
-        int goldAmount = enemyData.dropGold;
-        if(db.goldPrefab != null)
-        {
-            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
-            Vector3 spawnPos = floorPos + randomOffset;
+        //int goldAmount = enemyData.dropGold;
 
-            GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity);
-            GetCurrency gold = goldObj.GetComponent<GetCurrency>();
-            gold.amount = goldAmount;
+        if (db.goldPrefab != null)
+        {
+            for (int i = 0; i < goldAmount; i++)
+            {
+                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
+                Vector3 spawnPos = floorPos + randomOffset;
+
+                GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity);
+                GetCurrency gold = goldObj.GetComponent<GetCurrency>();
+                gold.amount = 50;
+            }
         }
 
-        int cristalAmount = enemyData.dropEXP;
-        if(db.cristalPrefab != null)
-        {
-            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
-            Vector3 spawnPos = floorPos + randomOffset;
 
-            GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity);
-            GetCurrency cristal = cristalObj.GetComponent<GetCurrency>();
-            cristal.amount = cristalAmount;
+        int cristalAmount = 0;
+
+        int random = Random.Range(0, 100);
+        if (random < minWeight)
+        {
+            cristalAmount = minCristal;
+        }
+        else
+        {
+            random -= minWeight;
+            if (random > 100 - minWeight - maxWeight)
+            {
+                cristalAmount = maxCristal;
+            }
+            else
+            {
+                cristalAmount = minCristal + 1;
+            }
         }
 
-        if(db.heartPrefab != null)
+        if (db.cristalPrefab != null)
+        {
+            for (int i = 0; i < cristalAmount; i++)
+            {
+                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
+                Vector3 spawnPos = floorPos + randomOffset;
+
+                GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity);
+                GetCurrency cristal = cristalObj.GetComponent<GetCurrency>();
+                cristal.amount = 3;
+            }
+        }
+
+        if (db.heartPrefab != null)
         {
             Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
             Vector3 spawnPos = floorPos + randomOffset;
 
-            //int temp = Random.Range(0, 10);
-            //if(temp == 0)
-            //{
-            Instantiate(db.heartPrefab, spawnPos, Quaternion.identity);
-            //}
+            int temp = Random.Range(0, 10);
+            if (temp == 0)
+            {
+                Instantiate(db.heartPrefab, spawnPos, Quaternion.identity);
+            }
         }
     }
 

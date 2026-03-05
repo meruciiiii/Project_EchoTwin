@@ -14,7 +14,10 @@ public class EnemyRow
     public float attackSpeed;
     public float attackRange;
     public float coolTime;
-    public int dropEXP;
     public int dropGold;
+    public int minCristal;
+    public int maxCristal;
+    public int minWeight;
+    public int maxWeight;
     public string prefabPath;
 }

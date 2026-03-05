@@ -31,7 +31,7 @@ public class RatForBoss : EnemyStateAbstract
 
     }
 
-    protected override IEnumerator DeathRoutine()
+    protected override IEnumerator DeathRoutine(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
         if (ani != null) ani.SetTrigger("Death");
 

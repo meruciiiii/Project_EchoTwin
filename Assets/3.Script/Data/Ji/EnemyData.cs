@@ -19,8 +19,11 @@ public class EnemyData : ScriptableObject
     public float coolTime;
 
     [Header("Drop")]
-    public int dropEXP;
     public int dropGold;
+    public int minCristal;
+    public int maxCristal;
+    public int minWeight;
+    public int maxWeight;
 
     [Header("Prefab")]
     public GameObject prefab;

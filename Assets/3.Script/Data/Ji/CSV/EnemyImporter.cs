@@ -21,9 +21,9 @@ public class EnemyImporter
         //웹에 게시(csv) 후 주소 복사
         string url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCOFUo881ztQ7xKLKM40k5Iknve3HbzmoJyxDXw7pxoeeqJzU0Ws0gU2YMCQM2pNfcfS2vbg8UBjQW/pub?gid=0&single=true&output=csv";
         string localPath = "Assets/Data/EnemyDataTable.csv";
-    
+
         ConnectGoogle.DownloaCSV(url, localPath);
-    
+
         Import();
     }
 
@@ -57,9 +57,12 @@ public class EnemyImporter
             attackSpeed = ParseFloat(c[6]),
             attackRange = ParseFloat(c[7]),
             coolTime = ParseFloat(c[8]),
-            dropEXP = ParseInt(c[9]),
-            dropGold = ParseInt(c[10]),
-            prefabPath = c[11]
+            dropGold = ParseInt(c[9]),
+            minCristal = ParseInt(c[10]),
+            maxCristal = ParseInt(c[11]),
+            minWeight = ParseInt(c[12]),
+            maxWeight = ParseInt(c[13]),
+            prefabPath = c[14]
         };
     }
     private static float ParseFloat(string value)
@@ -92,8 +95,11 @@ public class EnemyImporter
         data.attackSpeed = rows.attackSpeed;
         data.attackRange = rows.attackRange;
         data.coolTime = rows.coolTime;
-        data.dropEXP = rows.dropEXP;
         data.dropGold = rows.dropGold;
+        data.minCristal = rows.minCristal;
+        data.maxCristal = rows.maxCristal;
+        data.minWeight = rows.minWeight;
+        data.maxWeight = rows.maxWeight;
 
         data.prefab = LoadPrefab(rows.prefabPath);
 

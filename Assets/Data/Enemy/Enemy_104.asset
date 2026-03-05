@@ -21,6 +21,6 @@ MonoBehaviour:
   attackSpeed: 0.8
   attackRange: 3
   coolTime: 4
-  dropEXP: 20
-  dropGold: 3
+  dropEXP: 3
+  dropGold: 0
   prefab: {fileID: 0}

@@ -23,14 +23,14 @@ public class Crab : EnemyStateAbstract
 
             currentHP -= damage;
             shieldCount--;
-            checkOnDie();
+            checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Ability");
         }
         else
         {
             // 껍데기가 깨진 후에는 일반적인 피격 애니메이션 실행
             currentHP -= damage;
-            checkOnDie();
+            checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit");
         }
 
