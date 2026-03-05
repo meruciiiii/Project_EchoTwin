@@ -12,6 +12,7 @@ public class WeaponRow
     public float attackRange;
     public float knockback;
     public float echoDMGRatio;
+    public int resonanceCount;
     public string iconPath;
     public int comboCount;
     public float comboCooltime;

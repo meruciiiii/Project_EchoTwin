@@ -11,13 +11,15 @@ public enum Item
 }
 public class GetCurrency : MonoBehaviour
 {
+    public static List<GetCurrency> activeHeart = new List<GetCurrency>();
+
     [SerializeField] private Item item;
     private Collider col;
     private PlayerStats player;
 
     public int amount = 0;
     private int getheringTime = 5;
-    private int duration = 1;
+    private float duration = 1f;
 
     private int groundLayer = 8;
     private int structure = 9;
@@ -38,7 +40,13 @@ public class GetCurrency : MonoBehaviour
 
     private void OnEnable()
     {
+        if(item == Item.heart) activeHeart.Add(this);
         StartCoroutine(getAllCurrency_Co());
+    }
+
+    private void OnDisable()
+    {
+        if (item == Item.heart) activeHeart.Remove(this);
     }
 
     private IEnumerator getAllCurrency_Co()
@@ -51,7 +59,7 @@ public class GetCurrency : MonoBehaviour
             float timer = 0;
             floating.enabled = false;
 
-            while (true)
+            while (timer<duration)
             {
                 timer += Time.deltaTime;
                 float t = timer / duration;
@@ -60,6 +68,18 @@ public class GetCurrency : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    public static void destroyAllHeart()
+    {
+        for(int i=activeHeart.Count -1;i>=0;i--)
+        {
+            if(activeHeart[i] != null)
+            {
+                Destroy(activeHeart[i].gameObject);
+            }
+        }
+        activeHeart.Clear();
     }
 
     private void OnTriggerEnter(Collider other)

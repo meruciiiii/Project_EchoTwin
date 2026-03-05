@@ -44,6 +44,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected Coroutine coroutine;
 
+    private bool reportToGamemanager = false;
+
     protected AttackDebugInfo bodyAttackInfo;
     protected bool hasBodyAttackDebug;
     protected AttackDebugInfo areaAttackInfo;
@@ -85,6 +87,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected virtual void OnEnable()
     {
         FixedRotation();
+        reportToGamemanager = false;
     }
 
     protected virtual void Update()
@@ -128,7 +131,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             StopAllCoroutines();
             state = EnemyState.dead;
-
+            reportDeadToManager();
 
             TurnOffNavmesh();
             rb.isKinematic = true;
@@ -148,6 +151,17 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         makeDropItem(goldAmount, minCristal, maxCristal, minWeight, maxWeight);
 
         Destroy(gameObject);
+    }
+
+    protected void reportDeadToManager()
+    {
+        if (reportToGamemanager) return;
+        reportToGamemanager = true;
+
+        if(GameManager.instance != null)
+        {
+            GameManager.instance.checkCountInRoom();
+        }
     }
 
     protected virtual void makeDropItem(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
