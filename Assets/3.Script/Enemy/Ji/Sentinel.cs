@@ -117,27 +117,25 @@ public class Sentinel : EnemyStateAbstract
 
         currentHP -= damage;
         if (!isPhase2nd) checkPhaseTransition();
-        checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
+        if (currentHP <= 0) OnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
         //if (ani != null) 
         if (state != EnemyState.dead) ani.SetTrigger("Hit");
     }
 
-    protected override void checkOnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
+    protected override void OnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
-        if (currentHP <= 0)
-        {
-            StopAllCoroutines();
-            state = EnemyState.dead;
-            returnAllToPool();
-            reportDeadToManager();
 
-            TurnOffNavmesh();
-            rb.isKinematic = true;
-            boxCol.enabled = false;
+        StopAllCoroutines();
+        state = EnemyState.dead;
+        returnAllToPool();
+        reportDeadToManager();
 
-            //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
-            StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
-        }
+        TurnOffNavmesh();
+        rb.isKinematic = true;
+        boxCol.enabled = false;
+
+        //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
+        StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
     }
 
     private void checkPhaseTransition()
@@ -202,14 +200,14 @@ public class Sentinel : EnemyStateAbstract
                 {
                     coroutine = StartCoroutine(RangeAttack_Co());
                 }
-                else if(!isPhase2nd && rangeMobPool.Count == rangeCount && meleeMobPool.Count == meleeCount)
+                else if (!isPhase2nd && rangeMobPool.Count == rangeCount && meleeMobPool.Count == meleeCount)
                 {
                     coroutine = StartCoroutine(MobSpawn_Co());
                 }
                 else
                 {
                     coroutine = StartCoroutine(MobSpawn_Co());
-                }    
+                }
             }
         }
     }
@@ -226,7 +224,7 @@ public class Sentinel : EnemyStateAbstract
         if (dir.sqrMagnitude < 0.001f) dir = transform.forward;
 
         WarningGizmo warning = getWarning();
-        if(warning != null)
+        if (warning != null)
         {
             warning.playSector(transform.position, dir.normalized, enemyData.attackRange, 270f, attackSpeed, warningColor);
         }
@@ -404,7 +402,7 @@ public class Sentinel : EnemyStateAbstract
         if (PoolsPos == null) return;
         isClearPool = true;
 
-        for(int i=0;i<rangeMobList.Count;i++)
+        for (int i = 0; i < rangeMobList.Count; i++)
         {
             PebbleForBoss rangeMob = rangeMobList[i];
             if (rangeMob == null) return;
@@ -412,8 +410,8 @@ public class Sentinel : EnemyStateAbstract
             rangeMob.transform.localPosition = Vector3.zero;
             if (rangeMob.gameObject.activeSelf) rangeMob.gameObject.SetActive(false);
         }
-        
-        for (int i=0;i<meleeMobList.Count;i++)
+
+        for (int i = 0; i < meleeMobList.Count; i++)
         {
             RatForBoss meleeMob = meleeMobList[i];
             if (meleeMob == null) return;
@@ -425,7 +423,7 @@ public class Sentinel : EnemyStateAbstract
         rangeMobList.Clear();
         meleeMobList.Clear();
 
-        for(int i=0;i<rangeMobList.Count;i++)
+        for (int i = 0; i < rangeMobList.Count; i++)
         {
             if (rangeMobList[i] != null) rangeMobPool.Enqueue(rangeMobList[i]);
         }
