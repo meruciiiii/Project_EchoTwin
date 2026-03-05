@@ -408,26 +408,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974555b01473f4445a2e02d899da338b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sentinel
-  enemyData: {fileID: 0}
-  navMesh: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: 917a10de492fa1d40b0ecbf61c4ea02f, type: 2}
+  navMesh: {fileID: -5351674212969224671}
   state: 0
   knockbackTime: 0.2
   ground:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   rangeAttackSpeed: 1
   rangeAttackCount: 1
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 5582182970674763002, guid: e5f0f3a7e255e3743ba9a6a283d95f54, type: 3}
   spawnSpeed: 1
-  rangeMobPrefab: {fileID: 0}
+  rangeMobPrefab: {fileID: -7166901915518952276, guid: 781662e9efe398c41bc8c55e81248ebd, type: 3}
   rangeCount: 0
-  meleeMobPrefab: {fileID: 0}
+  meleeMobPrefab: {fileID: -8663169181080948165, guid: 95d7b10eb61641543b99493e98dee176, type: 3}
   meleeCount: 0
   PoolsPos: {fileID: 0}
   phaseStartHP: 0.4
   moveSpeed: 0
   attackSpeed: 0
   coolTime: 0
+  warningPrefab: {fileID: -5044647909206370799, guid: bb7642abe139c7040a1ffb0a0812481b, type: 3}
+  warningColor: {r: 1, g: 0, b: 0, a: 0.4}
 --- !u!1 &1457912190622302
 GameObject:
   m_ObjectHideFlags: 0

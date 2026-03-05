@@ -4598,6 +4598,7 @@ GameObject:
   - component: {fileID: 6273506979838546087}
   - component: {fileID: 1979819332999611973}
   - component: {fileID: 3893724562298373970}
+  - component: {fileID: -1119336568008231330}
   m_Layer: 0
   m_Name: 302_RedDragon_FireJangpan
   m_TagString: Untagged
@@ -9175,3 +9176,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-1119336568008231330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9033785013911281325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de17e02f3f3ffc64f883fae8225528cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DragonFireArea
+  dragon: {fileID: 969585414813496067, guid: 646c69e6b3e6d0c41a0523052589204a, type: 3}
+  existTime: 3
+  timePerDMG: 1
+  minTimeForDMG: 0.5

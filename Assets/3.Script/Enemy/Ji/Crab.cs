@@ -52,7 +52,7 @@ public class Crab : EnemyStateAbstract
         state = EnemyState.attack;
 
         TurnOffNavmesh();
-
+        SoundManager.SendEvent(SoundType.SFX_Crab);
         //animator
         if (ani != null) ani.SetTrigger("Attack");
 

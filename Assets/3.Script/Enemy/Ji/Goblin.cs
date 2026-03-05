@@ -63,6 +63,7 @@ public class Goblin : EnemyStateAbstract
 
         Vector3 dir = (targetPos - startPos).normalized;
         dir.y = 0f;
+        SoundManager.SendEvent(SoundType.SFX_SwordAttack2);
 
         float timer = dashDuration;
         while (timer > 0f)
