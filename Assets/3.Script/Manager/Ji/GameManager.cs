@@ -11,15 +11,17 @@ public class GameManager : MonoBehaviour
         Loading,
         UI,
         Die,
-        Clear
+        Clear,
+        RoomClear,
     }
 
     public bool isStop = false;
     public bool isDead = false;
+    public bool isGetWeapon = false;
     private GameState gameState = GameManager.GameState.Playing;
     public GameState gamestate => gameState;
 
-    //ÀúÀåµÉ Á¤º¸µé----------------
+    //Ã€ÃºÃ€Ã¥ÂµÃ‰ ÃÂ¤ÂºÂ¸ÂµÃ©----------------
     public int lastStage = 0;
     public int playerGold = 0;
     public int playerCristal = 0;

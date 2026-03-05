@@ -25,7 +25,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     //[SerializeField] protected CharacterData characterData;
     [SerializeField] protected PlayerStats stats;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected PlayerEquipment equipment;
+    //[SerializeField] protected PlayerEquipment equipment;
     [SerializeField] protected InputManager input;
 
     [SerializeField] protected float attackAngle = 90f;
@@ -48,7 +48,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     public GameObject DualWeapon;
     [SerializeField] public AnimatorOverrideController overrideController;
 
-    protected int resonanceCount;
+    public int resonanceCount = 0;
 
     protected float lastAttackTime;
     protected int comboCount = 0;
