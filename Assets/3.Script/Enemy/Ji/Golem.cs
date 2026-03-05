@@ -52,11 +52,12 @@ public class Golem : EnemyStateAbstract
         state = EnemyState.attack;
 
         TurnOffNavmesh();
-        SoundManager.SendEvent(SoundType.SFX_Golem2);
+        SoundManager.SendEvent(SoundType.SFX_Skul);
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         if (ani != null) ani.SetTrigger("Attack");
 
+        SoundManager.SendEvent(SoundType.SFX_Golem1);
         checkAttackTime();
         float shootHeight = 1.1f; 
 
@@ -125,7 +126,7 @@ public class Golem : EnemyStateAbstract
         Vector3 dir = (targetPos - startPos).normalized;
         dir.y = 0f;
 
-        SoundManager.SendEvent(SoundType.SFX_Golem1);
+        SoundManager.SendEvent(SoundType.SFX_Golem2);
         float timer = dashDuration;
         while (timer > 0f)
         {

@@ -128,7 +128,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             StopAllCoroutines();
             state = EnemyState.dead;
-
+            SoundManager.SendEvent(SoundType.SFX_MonsterDie);
 
             TurnOffNavmesh();
             rb.isKinematic = true;
