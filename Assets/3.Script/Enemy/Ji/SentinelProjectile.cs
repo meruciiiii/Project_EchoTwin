@@ -18,9 +18,40 @@ public class SentinelProjectile : MonoBehaviour
     [Space(3f)]
     [SerializeField] private float attackRadius = 3f;
 
+    private WarningGizmo warning;
+    [SerializeField] private Color warningColor = new Color(1f, 0f, 0f, 0.4f);
+
+    private float startY = 0f;
+    private float groundY = 0f;
+
     private void OnEnable()
     {
         velocityY = 0f;
+
+        startY = transform.position.y;
+        groundY = transform.position.y;
+
+        if(Physics.Raycast(transform.position,Vector3.down,out RaycastHit hit, 100f, ground))
+        {
+            groundY = hit.point.y;
+
+            if(warning != null)
+            {
+                warning.showCircle(hit.point, attackRadius, warningColor);
+                warning.setRatio(0f);
+            }
+        }
+        else
+        {
+            if (warning != null)
+            {
+                Vector3 warningPos = transform.position;
+                warningPos.y = 0f;
+
+                warning.showCircle(warningPos, attackRadius, warningColor);
+                warning.setRatio(0f);
+            }
+        }
     }
 
     private void Update()
@@ -30,6 +61,7 @@ public class SentinelProjectile : MonoBehaviour
         Vector3 move = Vector3.up * velocityY * Time.deltaTime;
         transform.position += move;
 
+        updateWarningRatio();
         checkOnGround(move.y);
     }
 
@@ -45,11 +77,35 @@ public class SentinelProjectile : MonoBehaviour
                 PlayerAction target = col.GetComponentInParent<PlayerAction>();
                 if (target == null) continue;
 
-                target.takeDamage(1, sentinel.transform.position);
+                target.takeDamage(1, hit.point, 1);
                 break;
+            }
+
+            if(warning != null)
+            {
+                warning.setRatio(1f);
+                warning.Hide();
+                warning = null;
             }
 
             sentinel.returnRock(this);
         }
+    }
+
+    public void setWarning(WarningGizmo warning)
+    {
+        this.warning = warning;
+    }
+
+    private void updateWarningRatio()
+    {
+        if (warning == null) return;
+
+        float totalHeight = Mathf.Max(0.01f, startY - groundY);
+        float currentHeight = Mathf.Clamp(transform.position.y - groundY, 0f, totalHeight);
+
+        float progress = 1f - (currentHeight / totalHeight);
+
+        warning.setRatio(progress);
     }
 }

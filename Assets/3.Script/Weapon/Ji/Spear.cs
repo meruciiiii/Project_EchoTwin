@@ -85,6 +85,14 @@ public class Spear : WeaponAbstract
         AttackTimeChecker();
 
         SetAnimator();
+        if (comboCount == 0)
+        {
+            SoundManager.SendEvent(SoundType.SFX_SpearAttack2);
+        }
+        else
+        {
+            SoundManager.SendEvent(SoundType.SFX_SpearAttack1);
+        }
         Debug.Log($"combo count = {comboCount}");
 
         if (comboCount != 0)

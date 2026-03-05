@@ -21,7 +21,7 @@ public class BringerProjectile : MonoBehaviour
     private void Awake()
     {
         enemy = GetComponentInParent<EnemyStateAbstract>();
-        TryGetComponent<Collider>(out col);
+        TryGetComponent(out col);
         ani = GetComponentInChildren<Animator>();
         gameObject.SetActive(false);
         if (col != null)
@@ -56,7 +56,7 @@ public class BringerProjectile : MonoBehaviour
     {
         while(true)
         {
-            if (ani == null) yield break;
+            if (ani == null) break;
 
             AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
 
@@ -70,9 +70,9 @@ public class BringerProjectile : MonoBehaviour
             {
                 col.enabled = false;
                 gameObject.SetActive(false);
-                yield break;
+                break;
             }
-            yield return name;
+            yield return null;
         }
     }
 
@@ -83,7 +83,7 @@ public class BringerProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             hasHit = true;
-            other.GetComponent<PlayerAction>().takeDamage((int)enemy.Damage, transform.position);
+            other.GetComponent<PlayerAction>().takeDamage((int)enemy.Damage, transform.position,1);
         }
     }
 }

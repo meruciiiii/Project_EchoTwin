@@ -19,24 +19,32 @@ public class Sentinel : EnemyStateAbstract
     [SerializeField] private int meleeCount = 0;
     private Queue<RatForBoss> meleeMobPool;
     [SerializeField] private GameObject PoolsPos;
+
     [Header("2ndPhaseStart")]
     [Range(0f, 1f)]
     [SerializeField] private float phaseStartHP = 0.4f;
     [SerializeField] private float moveSpeed = 0f;
     [SerializeField] private float attackSpeed = 0f;
-    [SerializeField] private float coolTIme = 0f;
+    [SerializeField] private float coolTime = 0f;
     private bool isPhase2nd = false;
+
+    [Header("Warning")]
+    [SerializeField] private WarningGizmo warningPrefab;
+    [SerializeField] private Color warningColor = new Color(1f, 0f, 0f, 0.4f);
+    private Queue<WarningGizmo> warningPool;
 
     protected override void Awake()
     {
         base.Awake();
+        if (ani == null) TryGetComponent(out ani);
         moveSpeed = enemyData.moveSpeed;
         attackSpeed = enemyData.attackSpeed;
-        coolTIme = enemyData.coolTime;
+        coolTime = enemyData.coolTime;
 
         rockPool = new Queue<SentinelProjectile>();
         rangeMobPool = new Queue<PebbleForBoss>();
         meleeMobPool = new Queue<RatForBoss>();
+        warningPool = new Queue<WarningGizmo>();
 
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
@@ -61,6 +69,14 @@ public class Sentinel : EnemyStateAbstract
             meleeMob.transform.localPosition = Vector3.zero;
             meleeMob.gameObject.SetActive(false);
             meleeMobPool.Enqueue(meleeMob);
+        }
+        for (int i = 0; i < (rangeAttackCount + 2) * 2; i++)
+        {
+            WarningGizmo warning = Instantiate(warningPrefab, PoolsPos.transform);
+            warning.init(returnWarning);
+            warning.transform.localPosition = Vector3.zero;
+            warning.gameObject.SetActive(false);
+            warningPool.Enqueue(warning);
         }
     }
 
@@ -109,14 +125,17 @@ public class Sentinel : EnemyStateAbstract
         attackSpeed *= 0.5f;
         moveSpeed *= 1.5f;
         setMoveSpeed();
-        coolTIme *= 0.5f;
+        coolTime *= 0.5f;
         rangeAttackSpeed *= 0.5f;
         rangeAttackCount *= 2;
     }
 
+    protected override IEnumerator knockback_Co(Vector3 dir, float power)
+    { yield return null; }
+
     protected override bool canAttack()
     {
-        return Time.time >= lastAttackTime + coolTIme;
+        return Time.time >= lastAttackTime + coolTime;
     }
 
     public override void Attack()
@@ -150,14 +169,18 @@ public class Sentinel : EnemyStateAbstract
             }
             else if (temp == 1)
             {
-                if (rangeMobPool.Count != rangeCount || meleeMobPool.Count != meleeCount)
+                if (!isPhase2nd && (rangeMobPool.Count != rangeCount || meleeMobPool.Count != meleeCount))
                 {
                     coroutine = StartCoroutine(RangeAttack_Co());
+                }
+                else if(!isPhase2nd && rangeMobPool.Count == rangeCount && meleeMobPool.Count == meleeCount)
+                {
+                    coroutine = StartCoroutine(MobSpawn_Co());
                 }
                 else
                 {
                     coroutine = StartCoroutine(MobSpawn_Co());
-                }
+                }    
             }
         }
     }
@@ -168,10 +191,20 @@ public class Sentinel : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-        effect.ChargeEffect(attackSpeed);
+        Vector3 dir = player.transform.position - transform.position;
+        dir.y = 0;
+
+        if (dir.sqrMagnitude < 0.001f) dir = transform.forward;
+
+        WarningGizmo warning = getWarning();
+        if(warning != null)
+        {
+            warning.playSector(transform.position, dir.normalized, enemyData.attackRange, 270f, attackSpeed, warningColor);
+        }
+
         yield return new WaitForSeconds(attackSpeed);
 
-        if (ani != null) ani.SetTrigger("Attack");
+        //if (ani != null) ani.SetTrigger("Attack");
 
         checkAttackTime();
 
@@ -192,12 +225,24 @@ public class Sentinel : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-        effect.ChargeEffect(rangeAttackSpeed);
         yield return new WaitForSeconds(rangeAttackSpeed);
+
 
         //ani
 
         checkAttackTime();
+
+        if (rangeAttackCount - rockPool.Count > 0)
+        {
+            for (int i = 0; i < rangeAttackCount - rockPool.Count; i++)
+            {
+                SentinelProjectile rock = Instantiate(projectilePrefab, PoolsPos.transform);
+                rock.sentinel = this;
+                rock.transform.localPosition = Vector3.zero;
+                rock.gameObject.SetActive(false);
+                rockPool.Enqueue(rock);
+            }
+        }
 
         for (int i = 0; i < rangeAttackCount; i++)
         {
@@ -205,8 +250,11 @@ public class Sentinel : EnemyStateAbstract
             Vector3 targetPos = player.transform.position + randomPos + Vector3.up * 10f;
 
             SentinelProjectile rock = rockPool.Dequeue();
-            rock.gameObject.SetActive(true);
+            WarningGizmo warning = getWarning();
+
             rock.transform.position = targetPos;
+            rock.setWarning(warning);
+            rock.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(0.3f);
         }
@@ -329,5 +377,18 @@ public class Sentinel : EnemyStateAbstract
     protected override void setMoveSpeed()
     {
         navMesh.speed = moveSpeed;
+    }
+
+    private WarningGizmo getWarning()
+    {
+        if (warningPool.Count == 0) return null;
+        return warningPool.Dequeue();
+    }
+
+    private void returnWarning(WarningGizmo warning)
+    {
+        warning.transform.SetParent(PoolsPos.transform);
+        warning.transform.localPosition = Vector3.zero;
+        warningPool.Enqueue(warning);
     }
 }

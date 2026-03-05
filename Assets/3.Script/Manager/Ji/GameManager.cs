@@ -50,17 +50,17 @@ public class GameManager : MonoBehaviour
         enemieDic = dic;
     }
 
-    public void whenMapChange(Vector3 destDir, Vector2Int dicKey)
+    public void whenMapChange(Vector3 destPos, Vector2Int dicKey)
     {
         currentCell = dicKey;
         ChangeState(GameState.Loading);
 
-        whenGoNextMap?.Invoke(destDir, dicKey);
+        whenGoNextMap?.Invoke(destPos, dicKey);
     }
 
-    public void whenPlayerArrived()
+    public void whenPlayerArrived(Vector2Int dicKey)
     {
-        setEnemyActive(currentCell);
+        setEnemyActive(dicKey);
         ChangeState(GameState.Playing);
     }
 
@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
         if(gameState == GameState.UI)
         {
             isStop = true;
+            //Time.timeScale = 0f;
         }
         else if(gameState == GameState.Die)
         {

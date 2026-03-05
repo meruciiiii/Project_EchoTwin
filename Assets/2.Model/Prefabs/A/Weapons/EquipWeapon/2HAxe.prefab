@@ -123,4 +123,4 @@ MonoBehaviour:
   weaponID: 4
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: 7ab0cc44807572a4faa5e6fd4a3089b4, type: 2}
-  axePrefab: {fileID: 2418499675567049797, guid: 563e3b50349673844a73bda6e20c8c02, type: 3}
+  axePrefab: {fileID: 2418499675567049797, guid: a83f70b875fbb1a4694ece9ced0666b2, type: 3}

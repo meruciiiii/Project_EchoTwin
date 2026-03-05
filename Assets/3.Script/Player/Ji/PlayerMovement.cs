@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float rotationSpeed = 10f;
 
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float distance = 10f;
+    //[SerializeField] private float distance = 10f;
     private Coroutine coroutine;
 
     private void Awake()
@@ -164,25 +164,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void movePlayerOverBridge(Vector3 destDir, Vector2Int dicKey)
+    private void movePlayerOverBridge(Vector3 destPos, Vector2Int dicKey)
     {
         if (coroutine != null) return;
 
-        coroutine = StartCoroutine(movePlayer_Co(destDir, distance, moveSpeed));
+        //coroutine = StartCoroutine(movePlayer_Co(destDir, distance, moveSpeed));
+        coroutine = StartCoroutine(movePlayer_Co(destPos, moveSpeed, dicKey));
     }
 
-    private IEnumerator movePlayer_Co(Vector3 dir, float distance, float speed)
+    private IEnumerator movePlayer_Co(Vector3 destPos, float speed, Vector2Int dicKey)
     {
-        dir.y = 0;
-        dir = dir.normalized;
+        //dir.y = 0;
+        //dir = dir.normalized;
 
         Vector3 startPos = transform.position;
-        Vector3 destPos = startPos + dir * distance;
+        //Vector3 destPos = startPos + dir * distance;
 
         action.forStopMove = true;
         action.forStopRotate = true;
 
-        while ((transform.position - destPos).sqrMagnitude > 0.1f)
+        while ((rb.position - destPos).sqrMagnitude > 0.01f)
         {
             Vector3 before = transform.position;
             Vector3 after = Vector3.MoveTowards(before, destPos, speed * Time.deltaTime);
@@ -214,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
         action.forStopMove = false;
         action.forStopRotate = false;
 
-        GameManager.instance.whenPlayerArrived();
+        GameManager.instance.whenPlayerArrived(dicKey);
         coroutine = null;
     }
 }

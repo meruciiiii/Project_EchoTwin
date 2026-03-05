@@ -18,9 +18,9 @@ MonoBehaviour:
   maxHP: 25
   damage: 6
   moveSpeed: 5
-  attackSpeed: 0.1
+  attackSpeed: 2
   attackRange: 1.2
   coolTime: 1
   dropEXP: 12
-  dropGold: 8
+  dropGold: 2
   prefab: {fileID: 0}
