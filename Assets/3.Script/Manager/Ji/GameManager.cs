@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     //-----------------------------
 
     public event Action<Vector3, Vector2Int> whenGoNextMap;
+    public event Action whenArriveNextMap;
     private Vector2Int currentCell;
     private IReadOnlyDictionary<Vector2Int, List<GameObject>> enemieDic;
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(this);
         }
         else
         {
@@ -61,6 +63,8 @@ public class GameManager : MonoBehaviour
     {
         setEnemyActive(dicKey);
         ChangeState(GameState.Playing);
+
+        whenArriveNextMap?.Invoke();
     }
 
     private void setEnemyActive(Vector2Int currentCell)
