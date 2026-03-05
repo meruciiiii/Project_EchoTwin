@@ -21,6 +21,9 @@ public class RedDragon : EnemyStateAbstract
     [Range(0f, 1f)] private float hitStart = 0.3f;
     [SerializeField]
     [Range(0f, 1f)] private float hitEnd = 0.8f;
+    [SerializeField] private float breathTotalAngle = 180f;
+    [SerializeField] private Color breathBaseColor = new Color(1f, 0f, 0f, 0.2f);
+    [SerializeField] private Color breathFillColor = new Color(1f, 0f, 0f, 0.45f);
 
     [Header("Reflection")]
     [SerializeField] private float reflectionTime = 1f;
@@ -320,6 +323,19 @@ public class RedDragon : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
+        WarningGizmo baseWarning = getWarning();
+        WarningGizmo fillWwarning = getWarning();
+
+        if(baseWarning != null)
+        {
+            baseWarning.playSector(head.transform.position, transform.forward, breathDistance, breathTotalAngle, attackSpeed, breathBaseColor);
+        }
+
+        if(fillWwarning != null)
+        {
+            fillWwarning.playSector(head.transform.position, head.transform.forward, breathDistance, breathAngle * 2f, attackSpeed, breathFillColor);
+        }
+
         yield return new WaitForSeconds(attackSpeed);
         //ani
         yield return null;
@@ -328,6 +344,9 @@ public class RedDragon : EnemyStateAbstract
         {
             if (ani == null)
             {
+                if (baseWarning != null) baseWarning.Hide();
+                if (fillWwarning != null) fillWwarning.Hide();
+
                 coroutine = null;
 
                 if (state != EnemyState.dead) state = EnemyState.idle;
@@ -354,8 +373,21 @@ public class RedDragon : EnemyStateAbstract
 
             Vector3 headPos = head.transform.position;
             Vector3 centerDir = head.transform.forward;
+            centerDir.y = 0f;
+            if (centerDir.sqrMagnitude < 0.001f) centerDir = transform.forward;
+
             Vector3 leftDir = Quaternion.AngleAxis(-breathAngle, Vector3.up) * centerDir;
             Vector3 rightDir = Quaternion.AngleAxis(breathAngle, Vector3.up) * centerDir;
+
+            if(baseWarning != null)
+            {
+                baseWarning.showSector(headPos, transform.forward, breathDistance, breathTotalAngle, breathBaseColor);
+            }
+
+            if(fillWwarning != null)
+            {
+                fillWwarning.showSector(headPos, centerDir, breathDistance, breathAngle * 2f, breathFillColor);
+            }
 
             float time = info.normalizedTime;
             time = time - Mathf.Floor(time);
@@ -398,6 +430,9 @@ public class RedDragon : EnemyStateAbstract
             }
             yield return new WaitForSeconds(0.05f);
         }
+
+        if (baseWarning != null) baseWarning.Hide();
+        if (fillWwarning != null) fillWwarning.Hide();
 
         coroutine = null;
 

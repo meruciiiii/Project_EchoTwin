@@ -10,7 +10,7 @@ public class DragonFireArea : MonoBehaviour
     private Coroutine coroutine;
     private Coroutine existCoroutine;
 
-    [SerializeField] private float existTime = 10f;
+    [SerializeField] private float existTime = 3f;
     [SerializeField] private float timePerDMG = 1f;
     [SerializeField] private float minTimeForDMG = 0.5f;
 
