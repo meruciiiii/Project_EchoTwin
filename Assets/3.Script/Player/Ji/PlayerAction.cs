@@ -176,6 +176,11 @@ public class PlayerAction : MonoBehaviour
             gizmo.subWeapon = gizmo.mainWeapon;
             gizmo.mainWeapon = target;
         }
+
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.TurnWeaponUI(Equipment.MainWeapon, Equipment.SubWeapon);
+        }
     }
 
     private void RebuildAttackCmd()

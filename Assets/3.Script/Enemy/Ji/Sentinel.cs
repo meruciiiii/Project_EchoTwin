@@ -33,6 +33,10 @@ public class Sentinel : EnemyStateAbstract
     [SerializeField] private Color warningColor = new Color(1f, 0f, 0f, 0.4f);
     private Queue<WarningGizmo> warningPool;
 
+    private List<PebbleForBoss> rangeMobList;
+    private List<RatForBoss> meleeMobList;
+    private bool isClearPool = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -45,6 +49,9 @@ public class Sentinel : EnemyStateAbstract
         rangeMobPool = new Queue<PebbleForBoss>();
         meleeMobPool = new Queue<RatForBoss>();
         warningPool = new Queue<WarningGizmo>();
+
+        rangeMobList = new List<PebbleForBoss>();
+        meleeMobList = new List<RatForBoss>();
 
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
@@ -61,6 +68,8 @@ public class Sentinel : EnemyStateAbstract
             rangeMob.transform.localPosition = Vector3.zero;
             rangeMob.gameObject.SetActive(false);
             rangeMobPool.Enqueue(rangeMob);
+
+            rangeMobList.Add(rangeMob);
         }
         for (int i = 0; i < meleeCount; i++)
         {
@@ -69,6 +78,8 @@ public class Sentinel : EnemyStateAbstract
             meleeMob.transform.localPosition = Vector3.zero;
             meleeMob.gameObject.SetActive(false);
             meleeMobPool.Enqueue(meleeMob);
+
+            meleeMobList.Add(meleeMob);
         }
         for (int i = 0; i < (rangeAttackCount + 2) * 2; i++)
         {
@@ -109,6 +120,24 @@ public class Sentinel : EnemyStateAbstract
         checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
         //if (ani != null) 
         if (state != EnemyState.dead) ani.SetTrigger("Hit");
+    }
+
+    protected override void checkOnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
+    {
+        if (currentHP <= 0)
+        {
+            StopAllCoroutines();
+            state = EnemyState.dead;
+            returnAllToPool();
+            reportDeadToManager();
+
+            TurnOffNavmesh();
+            rb.isKinematic = true;
+            boxCol.enabled = false;
+
+            //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
+            StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
+        }
     }
 
     private void checkPhaseTransition()
@@ -354,6 +383,8 @@ public class Sentinel : EnemyStateAbstract
 
     public void returnRangeMob(PebbleForBoss rangeMob)
     {
+        if (isClearPool || state == EnemyState.dead) return;
+
         rangeMob.transform.localPosition = Vector3.zero;
         rangeMob.gameObject.SetActive(false);
         rangeMobPool.Enqueue(rangeMob);
@@ -361,9 +392,49 @@ public class Sentinel : EnemyStateAbstract
 
     public void returnMeleeMob(RatForBoss meleeMob)
     {
+        if (isClearPool || state == EnemyState.dead) return;
+
         meleeMob.transform.localPosition = Vector3.zero;
         meleeMob.gameObject.SetActive(false);
         meleeMobPool.Enqueue(meleeMob);
+    }
+
+    private void returnAllToPool()
+    {
+        if (PoolsPos == null) return;
+        isClearPool = true;
+
+        for(int i=0;i<rangeMobList.Count;i++)
+        {
+            PebbleForBoss rangeMob = rangeMobList[i];
+            if (rangeMob == null) return;
+            rangeMob.transform.SetParent(PoolsPos.transform);
+            rangeMob.transform.localPosition = Vector3.zero;
+            if (rangeMob.gameObject.activeSelf) rangeMob.gameObject.SetActive(false);
+        }
+        
+        for (int i=0;i<meleeMobList.Count;i++)
+        {
+            RatForBoss meleeMob = meleeMobList[i];
+            if (meleeMob == null) return;
+            meleeMob.transform.SetParent(PoolsPos.transform);
+            meleeMob.transform.localPosition = Vector3.zero;
+            if (meleeMob.gameObject.activeSelf) meleeMob.gameObject.SetActive(false);
+        }
+
+        rangeMobList.Clear();
+        meleeMobList.Clear();
+
+        for(int i=0;i<rangeMobList.Count;i++)
+        {
+            if (rangeMobList[i] != null) rangeMobPool.Enqueue(rangeMobList[i]);
+        }
+        for (int i = 0; i < meleeMobList.Count; i++)
+        {
+            if (meleeMobList[i] != null) meleeMobPool.Enqueue(meleeMobList[i]);
+        }
+
+        isClearPool = false;
     }
 
     public override void Move()

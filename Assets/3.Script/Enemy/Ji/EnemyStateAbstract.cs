@@ -44,6 +44,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
     protected Coroutine coroutine;
 
+    private bool reportToGamemanager = false;
+
     protected AttackDebugInfo bodyAttackInfo;
     protected bool hasBodyAttackDebug;
     protected AttackDebugInfo areaAttackInfo;
@@ -85,6 +87,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected virtual void OnEnable()
     {
         FixedRotation();
+        reportToGamemanager = false;
     }
 
     protected virtual void Update()
@@ -96,7 +99,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         }
         if (state == EnemyState.dead) return;
 
-        // ¼Óµµ°¡ ÀÖÀ¸¸é Run, ¾øÀ¸¸é Idle
+        // ì†ë„ê°€ ìˆìœ¼ë©´ Run, ì—†ìœ¼ë©´ Idle
         if (ani != null)
         {
             ani.SetBool("Run", navMesh.velocity.magnitude > 0.1f);
@@ -128,13 +131,14 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             StopAllCoroutines();
             state = EnemyState.dead;
+            reportDeadToManager();
             SoundManager.SendEvent(SoundType.SFX_MonsterDie);
 
             TurnOffNavmesh();
             rb.isKinematic = true;
             boxCol.enabled = false;
 
-            //»ç¸Á ¾Ö´Ï¸ŞÀÌ¼ÇÀº º°µµ ·çÆ¾À¸·Î ½ÇÇà (¾Ö´Ï¸ŞÀÌ¼Ç ½Ã°£ È®º¸)
+            //ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜ì€ ë³„ë„ ë£¨í‹´ìœ¼ë¡œ ì‹¤í–‰ (ì• ë‹ˆë©”ì´ì…˜ ì‹œê°„ í™•ë³´)
             StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
         }
     }
@@ -142,12 +146,23 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     {
         if (ani != null) ani.SetTrigger("Death");
 
-        // ¾Ö´Ï¸ŞÀÌ¼Ç ±æÀÌ¿¡ ¸ÂÃç ´ë±â (¿¹: 1.5ÃÊ)
+        // ì• ë‹ˆë©”ì´ì…˜ ê¸¸ì´ì— ë§ì¶° ëŒ€ê¸° (ì˜ˆ: 1.5ì´ˆ)
         yield return new WaitForSeconds(1.5f);
 
         makeDropItem(goldAmount, minCristal, maxCristal, minWeight, maxWeight);
 
         Destroy(gameObject);
+    }
+
+    protected void reportDeadToManager()
+    {
+        if (reportToGamemanager) return;
+        reportToGamemanager = true;
+
+        if(GameManager.instance != null)
+        {
+            GameManager.instance.checkCountInRoom();
+        }
     }
 
     protected virtual void makeDropItem(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)

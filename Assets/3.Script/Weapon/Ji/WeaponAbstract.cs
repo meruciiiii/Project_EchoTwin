@@ -72,7 +72,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     private void Awake()
     {
         action = stats.GetComponent<PlayerAction>();
-        SetResonance(10);
+        SetResonance(weaponData.resonanceCount);
         SetAttackTime();
     }
 
