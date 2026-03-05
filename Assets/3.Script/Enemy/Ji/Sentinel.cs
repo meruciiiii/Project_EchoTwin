@@ -106,7 +106,7 @@ public class Sentinel : EnemyStateAbstract
 
         currentHP -= damage;
         if (!isPhase2nd) checkPhaseTransition();
-        checkOnDie();
+        checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
         //if (ani != null) 
         if (state != EnemyState.dead) ani.SetTrigger("Hit");
     }

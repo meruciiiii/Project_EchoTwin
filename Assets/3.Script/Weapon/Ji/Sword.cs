@@ -97,6 +97,17 @@ public class Sword : WeaponAbstract
             Vector3 centerPos = target.transform.position;
             float range = weaponData.attackRange;
 
+            if (attackEffects.Length > 0 && attackEffects[0].prefab != null)
+            {
+                AttackEffectData data = attackEffects[0];
+
+                GameObject effect = Instantiate(data.prefab, centerPos, player.transform.rotation);
+
+                float scaleMultiplier = 1.2f; 
+                effect.transform.localScale = Vector3.one * (data.scale * scaleMultiplier);
+            }
+            SoundManager.SendEvent(SoundType.SFX_SwordAttack1);
+
             Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
             foreach (Collider hit in hits)

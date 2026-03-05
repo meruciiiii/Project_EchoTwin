@@ -140,6 +140,21 @@ public class Spear : WeaponAbstract
         Vector3 forward = player.transform.forward;
         Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange) * echoLengthMultiple * 0.5f;
 
+        if (context.hitTargets.Count > 0 && context.hitTargets[0] != null)
+        {
+            Vector3 dirToTarget = (context.hitTargets[0].transform.position - player.transform.position).normalized;
+            dirToTarget.y = 0; // 수평 유지
+
+            SoundManager.SendEvent(SoundType.SFX_SpearAttack1);
+
+            if (attackEffects.Length > 0 && attackEffects[0].prefab != null)
+            {
+                AttackEffectData data = attackEffects[0];
+                GameObject effect = Instantiate(data.prefab, player.transform.position, Quaternion.LookRotation(dirToTarget));
+                effect.transform.localScale = Vector3.one * (data.scale * 1.2f); // 1.2배 스케일
+            }
+        }
+
         Vector3 targetPos = new Vector3(player_XSize * 0.25f, 1f, weaponData.attackRange * echoLengthMultiple);
 
         echoAttackInfos.Add(new AttackDebugInfo
