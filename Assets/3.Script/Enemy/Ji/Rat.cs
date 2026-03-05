@@ -13,7 +13,7 @@ public class Rat : EnemyStateAbstract
 
     public override void Attack()
     {
-
+        SoundManager.SendEvent(SoundType.SFX_Rat);
     }
 
     public override void Move()

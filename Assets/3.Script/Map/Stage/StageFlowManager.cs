@@ -20,6 +20,7 @@ public class StageFlowManager : MonoBehaviour
             { NodeType.Resource, OnResourceNode },
             { NodeType.Altar, OnAltarNode }};
         stageManager.onNodeEntered += HandleNode;
+        stageManager.onPortalEntered += OnPortalEntered;
         enterTable = new Dictionary<GameObject, Transform>();
         for (int i = 0; i < camp.Length; i++)
         {
@@ -71,5 +72,9 @@ public class StageFlowManager : MonoBehaviour
     {
         Debug.Log("Altar Event");
         mapManager.StageMoving(enterTable[camp[2]].position);
+    }
+    private void OnPortalEntered()
+    {
+        mapManager.MapClear();
     }
 }

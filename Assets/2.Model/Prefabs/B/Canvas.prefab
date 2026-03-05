@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1881432231446834556}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: MapDrawer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -522,8 +522,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 60, y: 75}
+  m_AnchoredPosition: {x: 0, y: -370}
+  m_SizeDelta: {x: 52, y: 68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2523536071610918956
 CanvasRenderer:
@@ -578,7 +578,7 @@ GameObject:
   - component: {fileID: 4324743922386997388}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: MapDrawer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1587,7 +1587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3164891967077660107
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1686,8 +1686,8 @@ MonoBehaviour:
   - {fileID: 5497867594757696336, guid: e54ecf27d6398ac4f8a994725057f870, type: 3}
   - {fileID: 5497867594757696336, guid: 06853dceb9cca9942bec0bc62570481d, type: 3}
   - {fileID: 5497867594757696336, guid: c043998b684a161498eff48ae271e610, type: 3}
-  - {fileID: 5497867594757696336, guid: 6c57a198962c55f498a98b31a746d1e8, type: 3}
   - {fileID: 5497867594757696336, guid: a2373c982176cc642b82fc0bc129eab6, type: 3}
+  - {fileID: 5497867594757696336, guid: 6c57a198962c55f498a98b31a746d1e8, type: 3}
   - {fileID: 5497867594757696336, guid: 254b8bf5ae394b54384e38f9da9b1307, type: 3}
   linePrefab: {fileID: 1922595369335875251, guid: 65fb832c29cb536448c7d855fef2f355, type: 3}
   lineContainer: {fileID: 2202565616874807011}

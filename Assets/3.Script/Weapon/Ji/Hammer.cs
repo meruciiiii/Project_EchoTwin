@@ -161,34 +161,45 @@ public class Hammer : WeaponAbstract
 
     public override void OnEcho(AttackContext context)
     {
-        echoAttackInfos.Clear();//gizmo
-
-        //mainWeapon 공격시 기본공격과 같은 범위와 위치에 추가 데미지
-
+        echoAttackInfos.Clear();
         GameObject player = stats.gameObject;
-
-        Vector3 forward = player.transform.forward;
-        Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
-        float range = weaponData.attackRange;
-
-        echoAttackInfos.Add(new AttackDebugInfo
+        if (context.hitTargets.Count > 0 && context.hitTargets[0] != null)
         {
-            shape = AttackShape.sphere,
-            center = centerPos,
-            size = new Vector3(range, 0, 0),
-            rotation = player.transform.rotation,
-            color = Color.cyan,
-            ratio = 1f
-        });
+            Vector3 dirToTarget = (context.hitTargets[0].transform.position - player.transform.position).normalized;
+            dirToTarget.y = 0; // 수평 유지
 
-        Collider[] hits = Physics.OverlapSphere(centerPos, range);
+            SoundManager.SendEvent(SoundType.SFX_HammerAttack1);
 
-        foreach (Collider hit in hits)
-        {
-            if (!hit.CompareTag("Enemy")) continue;
+            Vector3 centerPos = player.transform.position + dirToTarget * (weaponData.attackRange * 0.5f);
 
-            StartCoroutine(EnemyGatherng(centerPos, hit));
-            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+            if (attackEffects.Length > 0 && attackEffects[0].prefab != null)
+            {
+                AttackEffectData data = attackEffects[1];
+                GameObject effect = Instantiate(data.prefab, centerPos, player.transform.rotation);
+
+                effect.transform.localScale = Vector3.one * (data.scale * 1.0f);
+            }
+
+            float range = weaponData.attackRange;
+            Collider[] hits = Physics.OverlapSphere(centerPos, range);
+
+            foreach (Collider hit in hits)
+            {
+                if (!hit.CompareTag("Enemy")) continue;
+                stats.StartCoroutine(EnemyGatherng(centerPos, hit));
+                hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
+            }
+
+            echoAttackInfos.Add(new AttackDebugInfo
+            {
+                shape = AttackShape.sphere,
+                center = centerPos,
+                size = new Vector3(range, 0, 0),
+                rotation = player.transform.rotation,
+                color = Color.cyan,
+                ratio = 1f
+            });
+            hasDebugInfo = true; // 기즈모 활성화
         }
     }
 

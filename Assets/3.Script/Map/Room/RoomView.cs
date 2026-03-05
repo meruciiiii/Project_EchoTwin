@@ -58,20 +58,38 @@ public class RoomView : MonoBehaviour
             BridgeMoving bridgeMoving;
             if (!door.TryGetComponent(out bridgeMoving))
                 Debug.Log("TryGetComponent BridgeMoving is fail");
+            bridgeMoving.EnterDoor(floor.GetDoorState(door.doorIntDirection));
+            //bridgeMoving.SetState(floor.GetDoorState(door.doorIntDirection));
+        }
+    }
+    public void DoorResetting()
+    {
+        foreach (DoorTrigger door in doors)
+        {
+            if (door == null)
+            {
+                Debug.Log("DoorTrigger Setting is failed");
+                continue;
+            }
+            BridgeMoving bridgeMoving;
+            if (!door.TryGetComponent(out bridgeMoving))
+                Debug.Log("TryGetComponent BridgeMoving is fail");
+            bridgeMoving.ResetBridge();
+        }
+    }
+    public void BridgeisMove(FloorData floor)
+    {
+        foreach (DoorTrigger door in doors)
+        {
+            if (door == null)
+            {
+                Debug.Log("DoorTrigger Setting is failed");
+                continue;
+            }
+            BridgeMoving bridgeMoving;
+            if (!door.TryGetComponent(out bridgeMoving))
+                Debug.Log("TryGetComponent BridgeMoving is fail");
             bridgeMoving.SetState(floor.GetDoorState(door.doorIntDirection));
         }
     }
-    //문 다리 열림/닫힘 시각 처리
-    //몬스터 스폰 위치
-    //플레이어 스폰 위치
-    //이펙트, 애니메이션
-    /*
-        Logical Room의 문 상태 반영
-        DoorTrigger 활성/비활성
-        이벤트 구독
-     */
-    //public void Initialize(Room logicalRoom, Action<Vector2Int> onDoorEnter)
-    //{
-    //}
-    //public Transform[] GetMonsterSpawnPoints()
 }

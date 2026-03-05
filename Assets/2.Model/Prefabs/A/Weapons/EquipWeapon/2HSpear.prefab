@@ -123,4 +123,4 @@ MonoBehaviour:
   weaponID: 3
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: d9e3763dbc7cd7f4ea74e2b3b389f8b7, type: 2}
-  echoLengthMultiple: 2
+  echoLengthMultiple: 1

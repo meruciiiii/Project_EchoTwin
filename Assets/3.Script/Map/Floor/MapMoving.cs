@@ -25,12 +25,12 @@ public class MapMoving : MonoBehaviour
     }
     public void MoveStartRooom()
     {
-        Debug.Log("Entered StartRoom");
+        //Debug.Log("Entered StartRoom");
         player.position = new Vector3(0, 0.5f, -190);
     }
     public void MovePlayer(Vector3 position)
     {
-        Debug.Log(position + " : enter this position");
+        //Debug.Log(position + " : enter this position");
         player.position = position;
     }
     //public void PlayerPush(Vector2Int direction)

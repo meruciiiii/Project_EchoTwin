@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 1134149187177419736}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.86, y: 0, z: -0.09}
+  m_LocalPosition: {x: 12.41, y: 0, z: -0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 5
+  moveDistance: 12
   moveDuration: 1.5
 --- !u!1 &1571401420661942047
 GameObject:
@@ -359,7 +359,7 @@ Transform:
   m_GameObject: {fileID: 2831095619109855102}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -11.09}
+  m_LocalPosition: {x: 0, y: 0, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 5
+  moveDistance: 12
   moveDuration: 1.5
 --- !u!1 &2906707280799269896
 GameObject:
@@ -442,7 +442,7 @@ Transform:
   m_GameObject: {fileID: 2906707280799269896}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.14, y: 0, z: -0.08}
+  m_LocalPosition: {x: -12.73, y: 0, z: -0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 5
+  moveDistance: 12
   moveDuration: 1.5
 --- !u!1 &3247919766385998441
 GameObject:
@@ -1161,7 +1161,7 @@ Transform:
   m_GameObject: {fileID: 5163338353247305518}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.11, y: 0, z: 10.81}
+  m_LocalPosition: {x: -0.11, y: 0, z: 12.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1214,7 +1214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 5
+  moveDistance: 12
   moveDuration: 1.5
 --- !u!1 &5365504856829605803
 GameObject:
@@ -2786,7 +2786,7 @@ Transform:
   m_GameObject: {fileID: 9111703038483053087}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.829, z: 0}
+  m_LocalPosition: {x: 0, y: -5.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

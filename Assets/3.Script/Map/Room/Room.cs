@@ -5,10 +5,7 @@ using UnityEngine;
 public class Room
 {
     private int roomID;
-    public enum RoomType
-    {
-        Start, Battle, Shop, Forge, Elite, Reward, Boss, count
-    }
+    
     private float floor;
     private int monsterPackID;
     private RoomType roomType;
@@ -42,4 +39,8 @@ public class Room
     {
         return monsterPackID;
     }
+}
+public enum RoomType
+{
+    Start, Battle, Shop, Forge, Elite, Reward, Boss, count
 }

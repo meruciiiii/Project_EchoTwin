@@ -7,6 +7,11 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private MonsterPackList monsterPackList;
+    [SerializeField] private Transform enemyPool;
+    private void Awake()
+    {
+        enemyPool = this.transform.GetChild(0);
+    }
     public Dictionary<Vector2Int, List<GameObject>> SpawnMonster(Dictionary<Vector2Int, FloorData> microMap, Dictionary<Vector2Int, GameObject> roomObject)
     {
         Dictionary<Vector2Int, List<GameObject>> enemyPool = new Dictionary<Vector2Int, List<GameObject>>();
@@ -53,7 +58,7 @@ public class EnemySpawner : MonoBehaviour
                     Quaternion spawnRotation = spawnPoint[rnd].transform.rotation;
 
                     // ÇÁ¸®ÆÕ »ý¼º!
-                    monsterPool.Add(Instantiate(monsterData.monsterPrefab, spawnPosition, spawnRotation));
+                    monsterPool.Add(Instantiate(monsterData.monsterPrefab, spawnPosition, spawnRotation, this.enemyPool));
                     spawnPoint.RemoveAt(rnd);
                 }
             }

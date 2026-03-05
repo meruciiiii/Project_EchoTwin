@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private GameState gameState = GameManager.GameState.Playing;
     public GameState gamestate => gameState;
 
-    //ÀúÀåµÉ Á¤º¸µé----------------
+    //Ã€ÃºÃ€Ã¥ÂµÃ‰ ÃÂ¤ÂºÂ¸ÂµÃ©----------------
     public int lastStage = 0;
     public int playerGold = 0;
     public int playerCristal = 0;

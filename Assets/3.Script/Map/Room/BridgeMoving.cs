@@ -6,21 +6,28 @@ using UnityEngine;
 
 public class BridgeMoving : MonoBehaviour
 {
-    [SerializeField] private float moveDistance = 7f;
+    [SerializeField] private float moveDistance = 12f;
     [SerializeField] private float moveDuration = 1.5f;
 
     private bool isUp = true;
     private Vector3 startPos;
     private Vector3 targetPos;
-    public void SetState(bool doorState)
+    public void EnterDoor(bool doorState)
     {
         if (doorState == isUp) return;
-        Debug.Log(this.name +" is bridge move");
-        StartCoroutine(MoveBridge(doorState));
+        Vector3 offset = (isUp ? Vector3.down : Vector3.up) * moveDistance;
+        transform.position += offset;
+        isUp = doorState;
     }
-    private IEnumerator MoveBridge(bool targetState)
+    public void SetState(bool doorState)
     {
-        isUp = targetState;
+        if (!doorState) return;
+        //Debug.Log(this.name +" is bridge move");
+        StartCoroutine(MoveBridge());
+    }
+    private IEnumerator MoveBridge()
+    {
+        isUp = !isUp;
         startPos = transform.position;
         targetPos = startPos + (isUp ? Vector3.up : Vector3.down) * moveDistance;
         float elapsed = 0f;
@@ -34,5 +41,12 @@ public class BridgeMoving : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
+    }
+    public void ResetBridge()
+    {
+        if (isUp) return;
+        Vector3 offset = Vector3.up * moveDistance;
+        transform.position += offset;
+        isUp = true;
     }
 }

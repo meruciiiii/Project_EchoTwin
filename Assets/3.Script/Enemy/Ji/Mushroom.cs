@@ -25,6 +25,7 @@ public class Mushroom : EnemyStateAbstract
         TurnOffNavmesh();
 
         if (ani != null) ani.SetTrigger("Attack");
+        SoundManager.SendEvent(SoundType.SFX_Mushroom);
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
@@ -65,4 +66,5 @@ public class Mushroom : EnemyStateAbstract
             Attack();
         }
     }
+
 }

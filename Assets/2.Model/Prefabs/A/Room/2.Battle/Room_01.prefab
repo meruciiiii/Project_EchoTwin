@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 5
+  moveDistance: 12
   moveDuration: 1.5
 --- !u!1 &759218602851731436
 GameObject:
@@ -1823,7 +1823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 5
+  moveDistance: 12
   moveDuration: 1.5
 --- !u!1 &5868443258730031713
 GameObject:
@@ -8010,7 +8010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 5
+  moveDistance: 12
   moveDuration: 1.5
 --- !u!1 &8607886303743152258
 GameObject:
@@ -8093,7 +8093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 5
+  moveDistance: 12
   moveDuration: 1.5
 --- !u!1 &8709426153725978051
 GameObject:
