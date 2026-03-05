@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SentinelProjectile : MonoBehaviour
+public class DragonProjectile : MonoBehaviour
 {
-    //-y 방향으로 힘을 줘서 가속도 만들고
-    //바닥에 닿으면 particle 이랑 collider 검사해서 player damage
-    public Sentinel sentinel;
+    public RedDragon dragon;
 
     [SerializeField] private float gravityForce = 5f;
     [SerializeField] private float rayDistance = 0.5f;
@@ -31,11 +29,11 @@ public class SentinelProjectile : MonoBehaviour
         startY = transform.position.y;
         groundY = transform.position.y;
 
-        if(Physics.Raycast(transform.position,Vector3.down,out RaycastHit hit, 100f, ground))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 100f, ground))
         {
             groundY = hit.point.y;
 
-            if(warning != null)
+            if (warning != null)
             {
                 warning.showCircle(hit.point, attackRadius, warningColor);
                 warning.setRatio(0f);
@@ -77,7 +75,7 @@ public class SentinelProjectile : MonoBehaviour
                 PlayerAction target = col.GetComponentInParent<PlayerAction>();
                 if (target == null) continue;
 
-                target.takeDamage(1, hit.point, 1);
+                target.takeDamage(1, dragon.transform.position, 1);
                 break;
             }
 
@@ -88,7 +86,8 @@ public class SentinelProjectile : MonoBehaviour
                 warning = null;
             }
 
-            sentinel.returnRock(this);
+            dragon.spawnFireArea(hit.point + Vector3.up * 0.5f);
+            dragon.returnRock(this);
         }
     }
 

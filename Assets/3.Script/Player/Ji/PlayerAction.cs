@@ -82,7 +82,7 @@ public class PlayerAction : MonoBehaviour
         hasDamaged = false;
     }
 
-    public void takeDamage(int damage, Vector3 damagePos)
+    public void takeDamage(int damage, Vector3 damagePos, float knockbackForce)
     {
         if (hasDamaged) return;
         if (stats.isDash) return;
@@ -92,7 +92,7 @@ public class PlayerAction : MonoBehaviour
         stats.takeDamage(damage);
 
         Vector3 dir = (damagePos - transform.position).normalized;
-        knockback(dir);
+        knockback(dir, knockbackForce);
 
         StartCoroutine(superArmor());
 
@@ -104,21 +104,21 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
-    private void knockback(Vector3 dir)
+    private void knockback(Vector3 dir, float knockbackForce)
     {
         if (Equipment.MainWeapon.IsCharging) return;
 
         if (isKnockback) return;
 
-        StartCoroutine(knockBack_Co(dir));
+        StartCoroutine(knockBack_Co(dir, knockbackForce));
     }
 
-    private IEnumerator knockBack_Co(Vector3 dir)
+    private IEnumerator knockBack_Co(Vector3 dir, float knockbackForce)
     {
         isKnockback = true;
 
         rb.linearVelocity = Vector3.zero;
-        rb.AddForce(-dir * stats.KnockBackForce, ForceMode.Impulse);
+        rb.AddForce(-dir * stats.KnockBackForce * knockbackForce, ForceMode.Impulse);
 
         yield return new WaitForFixedUpdate();
 

@@ -32,7 +32,7 @@ public class PebbleProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             hasHit = true;
-            other.GetComponent<PlayerAction>().takeDamage((int)enemy.Damage, transform.position);
+            other.GetComponent<PlayerAction>().takeDamage((int)enemy.Damage, transform.position,1);
             gameObject.SetActive(false);
         }
     }

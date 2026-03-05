@@ -21,6 +21,8 @@ public class WarningGizmo : MonoBehaviour
     private int angleID;
     private int ratioID;
 
+    private bool isReturn = true;
+
     private void Awake()
     {
         if(quadRenderer == null)
@@ -54,11 +56,29 @@ public class WarningGizmo : MonoBehaviour
     public void init(Action<WarningGizmo> returnAction)
     {
         this.returnAction = returnAction;
+        isReturn = false;
     }
 
     public void playCircle(Vector3 worldPos, float attackRadius, float duration, Color warningColor)
     {
         playInternal(worldPos, Quaternion.identity, attackRadius, 360f, duration, warningColor);
+    }
+
+    public void showCircle(Vector3 worldPos, float attackRadius, Color warningColor)
+    {
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
+        gameObject.SetActive(true);
+
+        transform.position = new Vector3(worldPos.x, worldPos.y + yOffset, worldPos.z);
+        transform.rotation = Quaternion.identity;
+
+        setRadius(attackRadius);
+        ApplyProperties(warningColor, 360f, 0);
     }
 
     public void playSector(Vector3 worldPos, Vector3 forward, float attackRadius, float angle, float duration, Color warningColor)
@@ -68,6 +88,26 @@ public class WarningGizmo : MonoBehaviour
 
         Quaternion rotation = Quaternion.LookRotation(forward, Vector3.up);
         playInternal(worldPos, rotation, attackRadius, angle, duration, warningColor);
+    }
+
+    public void showSector(Vector3 worldPos, Vector3 forward, float attackRadius, float angle, Color warningColor)
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
+        forward.y = 0f;
+        if (forward.sqrMagnitude < 0.001f) forward = Vector3.forward;
+
+        gameObject.SetActive(true);
+
+        transform.position = new Vector3(worldPos.x, worldPos.y + yOffset, worldPos.z);
+        transform.rotation = Quaternion.LookRotation(forward,Vector3.up);
+
+        setRadius(attackRadius);
+        ApplyProperties(warningColor, angle, 1f);
     }
 
     private void playInternal(Vector3 worldPos, Quaternion rotation, float attackRadius, float angle, float duration, Color warningColor)
@@ -116,6 +156,7 @@ public class WarningGizmo : MonoBehaviour
 
     public void Hide()
     {
+        if (isReturn) return;
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
@@ -123,7 +164,7 @@ public class WarningGizmo : MonoBehaviour
         }
 
         ApplyProperties(new Color(1f, 0f, 0f, 0.4f), 360f, 0f);
-
+        isReturn = true;
         gameObject.SetActive(false);
 
         if(returnAction != null)
