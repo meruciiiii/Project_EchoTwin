@@ -120,27 +120,25 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         SoundManager.SendEvent(SoundType.SFX_MonsterHit);
 
         currentHP -= damage;
-        checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
+
+        if (currentHP <= 0) OnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
         //if (ani != null) 
         if (state != EnemyState.dead) ani.SetTrigger("Hit");
     }
 
-    protected virtual void checkOnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
+    protected virtual void OnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
-        if (currentHP <= 0)
-        {
-            StopAllCoroutines();
-            state = EnemyState.dead;
-            reportDeadToManager();
-            SoundManager.SendEvent(SoundType.SFX_MonsterDie);
+        StopAllCoroutines();
+        state = EnemyState.dead;
+        reportDeadToManager();
+        SoundManager.SendEvent(SoundType.SFX_MonsterDie);
 
-            TurnOffNavmesh();
-            rb.isKinematic = true;
-            boxCol.enabled = false;
+        TurnOffNavmesh();
+        rb.isKinematic = true;
+        boxCol.enabled = false;
 
-            //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
-            StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
-        }
+        //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
+        StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
     }
     protected virtual IEnumerator DeathRoutine(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
@@ -159,7 +157,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (reportToGamemanager) return;
         reportToGamemanager = true;
 
-        if(GameManager.instance != null)
+        if (GameManager.instance != null)
         {
             GameManager.instance.checkCountInRoom();
         }

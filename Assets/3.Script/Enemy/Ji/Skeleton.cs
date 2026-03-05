@@ -29,7 +29,7 @@ public class Skeleton : EnemyStateAbstract
             ani.ResetTrigger("Attack 2");
 
             currentHP -= damage;
-            checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
+            if (currentHP <= 0) OnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit"); // 공격 중 맞으면 피격 모션만
             return; // 여기서 함수 종료 (아래의 방패 막기 로직 실행 안 함)
         }
@@ -56,7 +56,7 @@ public class Skeleton : EnemyStateAbstract
             damage *= 1 - reduceRatio;
             currentHP -= damage;
 
-            checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
+            if (currentHP <= 0) OnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Attack 2");
         }
         else
@@ -64,7 +64,7 @@ public class Skeleton : EnemyStateAbstract
             // 일반 피격
             currentHP -= damage;
 
-            checkOnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
+            if (currentHP <= 0) OnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit");
         }
 
