@@ -167,25 +167,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1160508695316168342, guid: deb843824c71b684c885283dbf246eb8, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2363070259472296376, guid: deb843824c71b684c885283dbf246eb8, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4825139360630062952, guid: deb843824c71b684c885283dbf246eb8, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 5506315792423036508, guid: deb843824c71b684c885283dbf246eb8, type: 3}
       propertyPath: m_Name
       value: Room_13
-      objectReference: {fileID: 0}
-    - target: {fileID: 8418016112987964678, guid: deb843824c71b684c885283dbf246eb8, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -429,25 +413,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SimpleCameraFollow
   target: {fileID: 583174945}
   offset: {x: 0, y: 15, z: -15}
---- !u!1 &142939938 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2196190320126608597, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
-  m_PrefabInstance: {fileID: 1812179447}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &142939942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 142939938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 12
-  moveDuration: 1.5
 --- !u!1 &159953379
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,14 +500,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 525704983450110253, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 579606244483393612, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 668125198615818456, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
       propertyPath: m_Name
       value: Room_14
@@ -587,21 +544,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3947907963617653008, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8001087220581788090, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1847541425588918207, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1200636026}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
 --- !u!4 &190604042 stripped
 Transform:
@@ -621,21 +567,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 312839324884753181, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 813594790137917868, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
       propertyPath: m_Name
       value: Room_10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2579153011723032401, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8260922801689351039, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8552715132559501065, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
       propertyPath: m_LocalPosition.x
@@ -677,10 +611,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8633800771191331820, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -694,10 +624,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 751563105029996022, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 1209794169291649852, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 500.6
@@ -738,21 +664,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2117886528604234027, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379886636652468999, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 3575594775475109475, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
       propertyPath: m_Name
       value: Room_20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3808525191521384004, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -807,25 +721,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1886642673743180801, guid: 411ecaf639406f141a42d1f8f6384de0, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174099924848822757, guid: 411ecaf639406f141a42d1f8f6384de0, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 2766112134232008238, guid: 411ecaf639406f141a42d1f8f6384de0, type: 3}
       propertyPath: m_Name
       value: Room_05
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267579891084776552, guid: 411ecaf639406f141a42d1f8f6384de0, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7333096304383978169, guid: 411ecaf639406f141a42d1f8f6384de0, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -960,6 +858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   isStop: 0
   isDead: 0
+  isGetWeapon: 0
   lastStage: 0
   playerGold: 0
   playerCristal: 0
@@ -991,10 +890,6 @@ PrefabInstance:
     - target: {fileID: 2360035627749720636, guid: df5a6ee87dac5fc4fb24433b025a6aab, type: 3}
       propertyPath: m_Name
       value: Room_11
-      objectReference: {fileID: 0}
-    - target: {fileID: 3797784210925935243, guid: df5a6ee87dac5fc4fb24433b025a6aab, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4778487121915193878, guid: df5a6ee87dac5fc4fb24433b025a6aab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1036,18 +931,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5854993357082236100, guid: df5a6ee87dac5fc4fb24433b025a6aab, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8263095167256186211, guid: df5a6ee87dac5fc4fb24433b025a6aab, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8939427278591337271, guid: df5a6ee87dac5fc4fb24433b025a6aab, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1061,25 +944,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 92293710226678054, guid: bd6b56a9f2e77464bb3ff842a08231db, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 4824457294683799726, guid: bd6b56a9f2e77464bb3ff842a08231db, type: 3}
       propertyPath: m_Name
       value: Room_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 6906603566863183387, guid: bd6b56a9f2e77464bb3ff842a08231db, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7138501551168315133, guid: bd6b56a9f2e77464bb3ff842a08231db, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7241327742056309491, guid: bd6b56a9f2e77464bb3ff842a08231db, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8881112623934699932, guid: bd6b56a9f2e77464bb3ff842a08231db, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1279,22 +1146,6 @@ PrefabInstance:
     - target: {fileID: 4105652867367149277, guid: 23eea627775bc614fb55053fc2b9eabd, type: 3}
       propertyPath: m_Name
       value: Room_02
-      objectReference: {fileID: 0}
-    - target: {fileID: 5439247431984211232, guid: 23eea627775bc614fb55053fc2b9eabd, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928816048114756376, guid: 23eea627775bc614fb55053fc2b9eabd, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6444277095492951777, guid: 23eea627775bc614fb55053fc2b9eabd, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7976840218535886863, guid: 23eea627775bc614fb55053fc2b9eabd, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1567,25 +1418,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3654641544866364568, guid: 44e2dc516c7577548866b94324128604, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6596375278629177688, guid: 44e2dc516c7577548866b94324128604, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6815215596639228551, guid: 44e2dc516c7577548866b94324128604, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 6973385826831699643, guid: 44e2dc516c7577548866b94324128604, type: 3}
       propertyPath: m_Name
       value: Room_06
-      objectReference: {fileID: 0}
-    - target: {fileID: 7606607426753514125, guid: 44e2dc516c7577548866b94324128604, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1605,14 +1440,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 635849941199550433, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 913561075807234029, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 6180020492486243417, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 439.8
@@ -1653,17 +1480,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6892767610580136021, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 8601509843148786856, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
       propertyPath: m_Name
       value: Room_19
-      objectReference: {fileID: 0}
-    - target: {fileID: 8666165878734372795, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1683,22 +1502,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 2055153355693140690, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2454558228534479865, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433762157692282874, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5556010897967580466, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 7536574127580286889, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 183.4
@@ -1748,25 +1551,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
---- !u!1 &981930684 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7210413800852687596, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
-  m_PrefabInstance: {fileID: 1812179447}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &981930688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 981930684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 12
-  moveDuration: 1.5
 --- !u!4 &986325477 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 524705594750380381, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
@@ -1777,25 +1561,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1437402425186157972, guid: a8946af62d189a344a473b6130b0eb06, type: 3}
   m_PrefabInstance: {fileID: 1240008865}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1027708316 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5014586934754251369, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
-  m_PrefabInstance: {fileID: 1812179447}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1027708320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027708316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 12
-  moveDuration: 1.5
 --- !u!1001 &1050307272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1966,22 +1731,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room_Start
       objectReference: {fileID: 0}
-    - target: {fileID: 7373948781360413366, guid: fa9cc2a8a817c8d4f97a52e0ff0d53bb, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7402249304905476141, guid: fa9cc2a8a817c8d4f97a52e0ff0d53bb, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8670834785714648835, guid: fa9cc2a8a817c8d4f97a52e0ff0d53bb, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8808148375587181356, guid: fa9cc2a8a817c8d4f97a52e0ff0d53bb, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2078,43 +1827,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5928775094051427695, guid: 72b861e71a7401143936dcf83edc0f58, type: 3}
   m_PrefabInstance: {fileID: 1991229108}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1200636024 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1847541425588918207, guid: c2bb204da5a93c54086489857a8a936b, type: 3}
-  m_PrefabInstance: {fileID: 163817235}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1200636026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200636024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
-  m_SerializedVersion: 0
-  m_AgentTypeID: 0
-  m_CollectObjects: 2
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 0124ae814514595479b8be0fed04ee56, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!4 &1206891607 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1209794169291649852, guid: 1c6f376a22f80344cacdda9cbca6204c, type: 3}
@@ -2242,25 +1954,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5472250058145788855, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7000052566560422907, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 7494961653495372047, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
       propertyPath: m_Name
       value: Room_04
-      objectReference: {fileID: 0}
-    - target: {fileID: 8027176392582134390, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8131978122954837729, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2275,21 +1971,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 131856012031368392, guid: 0c7757ca20178d0439c4dcde467e6e4f, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 730826503623565183, guid: 0c7757ca20178d0439c4dcde467e6e4f, type: 3}
       propertyPath: m_Name
       value: Room_07
-      objectReference: {fileID: 0}
-    - target: {fileID: 3760970229326974517, guid: 0c7757ca20178d0439c4dcde467e6e4f, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187308380213961991, guid: 0c7757ca20178d0439c4dcde467e6e4f, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7510247474453542169, guid: 0c7757ca20178d0439c4dcde467e6e4f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2331,10 +2015,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8389133654090228482, guid: 0c7757ca20178d0439c4dcde467e6e4f, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2348,25 +2028,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 2524237091622149665, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000582777018043857, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4696181808423581719, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 6993727797686298436, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
       propertyPath: m_Name
       value: Room_Shop
-      objectReference: {fileID: 0}
-    - target: {fileID: 7876088643530947504, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8367904428848939616, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2574,10 +2238,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 779550437063687400, guid: e7208d7e789263e46b0316b1526d7320, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 1102533105100689396, guid: e7208d7e789263e46b0316b1526d7320, type: 3}
       propertyPath: m_LocalPosition.x
       value: 458.1
@@ -2618,18 +2278,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1121115236909133478, guid: e7208d7e789263e46b0316b1526d7320, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2200117218661015713, guid: e7208d7e789263e46b0316b1526d7320, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2626203843814053665, guid: e7208d7e789263e46b0316b1526d7320, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 6471409362333403402, guid: e7208d7e789263e46b0316b1526d7320, type: 3}
       propertyPath: m_Name
       value: Room_09
@@ -2647,10 +2295,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 2587843682331221539, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 6887119023045404864, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
       propertyPath: m_LocalPosition.x
       value: 95
@@ -2691,21 +2335,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7304519866742465074, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8688570743661546645, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 8841672602562226852, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
       propertyPath: m_Name
       value: Room_Reward
-      objectReference: {fileID: 0}
-    - target: {fileID: 9165682533014456356, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2731,10 +2363,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 1604217690241466720, guid: f92b27038efbd4e4988111b79d501da9, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 1663168719901460171, guid: f92b27038efbd4e4988111b79d501da9, type: 3}
       propertyPath: m_Name
       value: Room_08
@@ -2778,18 +2406,6 @@ PrefabInstance:
     - target: {fileID: 3930644409285044523, guid: f92b27038efbd4e4988111b79d501da9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4808905669370639264, guid: f92b27038efbd4e4988111b79d501da9, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5056399909410945292, guid: f92b27038efbd4e4988111b79d501da9, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6704488842461083366, guid: f92b27038efbd4e4988111b79d501da9, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2885,14 +2501,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 3575712702798374087, guid: ea04c6fd14dab4b4a8159d731f1db129, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5892700648615748407, guid: ea04c6fd14dab4b4a8159d731f1db129, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 6902011655284393243, guid: ea04c6fd14dab4b4a8159d731f1db129, type: 3}
       propertyPath: m_LocalPosition.x
       value: 83.2
@@ -2936,14 +2544,6 @@ PrefabInstance:
     - target: {fileID: 7784566524703635401, guid: ea04c6fd14dab4b4a8159d731f1db129, type: 3}
       propertyPath: m_Name
       value: Room_03
-      objectReference: {fileID: 0}
-    - target: {fileID: 8370067808121261306, guid: ea04c6fd14dab4b4a8159d731f1db129, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8902244770339300313, guid: ea04c6fd14dab4b4a8159d731f1db129, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3002,22 +2602,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5106766047148264661, guid: 7d74a2a405f7c16439dc27fb35345606, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5682933769901739880, guid: 7d74a2a405f7c16439dc27fb35345606, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6543587701735714482, guid: 7d74a2a405f7c16439dc27fb35345606, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7370182658169709145, guid: 7d74a2a405f7c16439dc27fb35345606, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3031,21 +2615,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 49935550104727331, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
-      propertyPath: m_TagString
-      value: MapDrawer
-      objectReference: {fileID: 0}
     - target: {fileID: 855758183624610768, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 855758183624610768, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2083849654647248419, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5986278865617940066, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3306,10 +2878,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375891466}
     m_Modifications:
-    - target: {fileID: 2639739856115982455, guid: 7f57544b978b7d64c965881130d5d976, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 3330172161555134806, guid: 7f57544b978b7d64c965881130d5d976, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54.4
@@ -3350,21 +2918,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5101159293923975997, guid: 7f57544b978b7d64c965881130d5d976, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5411458908159465203, guid: 7f57544b978b7d64c965881130d5d976, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 5750832392251140592, guid: 7f57544b978b7d64c965881130d5d976, type: 3}
       propertyPath: m_Name
       value: Room_12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8533324626777340857, guid: 7f57544b978b7d64c965881130d5d976, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3426,57 +2982,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2196190320126608597, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 142939942}
-    - targetCorrespondingSourceObject: {fileID: 6909029478094308402, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2056558443}
-    - targetCorrespondingSourceObject: {fileID: 7210413800852687596, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 981930688}
-    - targetCorrespondingSourceObject: {fileID: 5014586934754251369, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1027708320}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
---- !u!1 &1866985977 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3884987623581999684, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
-  m_PrefabInstance: {fileID: 2109642209}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1866985979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1866985977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
-  m_SerializedVersion: 0
-  m_AgentTypeID: 0
-  m_CollectObjects: 2
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: c646590a9bfdeb144acb3eeb96e87bb2, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1 &1871163055 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4887585961729286071, guid: b850cfa98f5328c4daef7923ff6cba06, type: 3}
@@ -3769,25 +3276,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6902011655284393243, guid: ea04c6fd14dab4b4a8159d731f1db129, type: 3}
   m_PrefabInstance: {fileID: 1677567554}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2056558439 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6909029478094308402, guid: d60b845a93fd6cc49af5d1c470ea9e0b, type: 3}
-  m_PrefabInstance: {fileID: 1812179447}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2056558443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056558439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b1bf54af3813343ba9c51490e02f51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BridgeMoving
-  moveDistance: 12
-  moveDuration: 1.5
 --- !u!4 &2060701495 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6180020492486243417, guid: 3aa50bb6704a36d44aaa212095755e8f, type: 3}
@@ -3809,18 +3297,6 @@ PrefabInstance:
     - target: {fileID: 628752946531425335, guid: 3a962e217ad66b640a16e1e1108ed7cb, type: 3}
       propertyPath: m_Name
       value: Room_18
-      objectReference: {fileID: 0}
-    - target: {fileID: 919458352623498076, guid: 3a962e217ad66b640a16e1e1108ed7cb, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2709757650406152487, guid: 3a962e217ad66b640a16e1e1108ed7cb, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3727724561691713604, guid: 3a962e217ad66b640a16e1e1108ed7cb, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8334963492416995625, guid: 3a962e217ad66b640a16e1e1108ed7cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3862,10 +3338,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9185918203045593862, guid: 3a962e217ad66b640a16e1e1108ed7cb, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3887,18 +3359,6 @@ PrefabInstance:
     - target: {fileID: 974636698227045581, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
       propertyPath: m_Name
       value: Room_17
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937315475286384272, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343620390208408229, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7486048436078751453, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
-      propertyPath: moveDistance
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7488515414838918403, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3940,17 +3400,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8190541584656060291, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
-      propertyPath: moveDistance
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3884987623581999684, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1866985979}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
 --- !u!4 &78445976970135601
 Transform:
@@ -4095,9 +3548,6 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 0d72f05b4cb5793498e3346de9c1fc06, type: 2}
   stats: {fileID: 4541788095156435608}
   animator: {fileID: 156075459540189942}
-  equipment:
-    MainWeapon: {fileID: 0}
-    SubWeapon: {fileID: 0}
   input: {fileID: 3690637346370928449}
   attackAngle: 90
   attackEffects: []
@@ -4105,6 +3555,7 @@ MonoBehaviour:
   weaponID: 1
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: 756658ccdfece8e4f81bcf2086716bc2, type: 2}
+  resonanceCount: 0
 --- !u!1 &669848576641243825
 GameObject:
   m_ObjectHideFlags: 0
@@ -4531,9 +3982,6 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 9336c94ead8dbef429e91302ca180896, type: 2}
   stats: {fileID: 4541788095156435608}
   animator: {fileID: 156075459540189942}
-  equipment:
-    MainWeapon: {fileID: 0}
-    SubWeapon: {fileID: 0}
   input: {fileID: 3690637346370928449}
   attackAngle: 90
   attackEffects: []
@@ -4541,6 +3989,7 @@ MonoBehaviour:
   weaponID: 4
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: 7ab0cc44807572a4faa5e6fd4a3089b4, type: 2}
+  resonanceCount: 0
   axePrefab: {fileID: 2418499675567049797, guid: 563e3b50349673844a73bda6e20c8c02, type: 3}
 --- !u!1 &1932631391289684760
 GameObject:
@@ -5152,6 +4601,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5858847624971086767, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
+      propertyPath: moveSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6377665199239434944, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -5308,9 +4761,6 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: fa80ad8387aa4f143ae0bcd87de25d1c, type: 2}
   stats: {fileID: 4541788095156435608}
   animator: {fileID: 156075459540189942}
-  equipment:
-    MainWeapon: {fileID: 0}
-    SubWeapon: {fileID: 0}
   input: {fileID: 3690637346370928449}
   attackAngle: 90
   attackEffects: []
@@ -5318,6 +4768,7 @@ MonoBehaviour:
   weaponID: 3
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: d9e3763dbc7cd7f4ea74e2b3b389f8b7, type: 2}
+  resonanceCount: 0
   echoLengthMultiple: 2
 --- !u!4 &4178549271704883598
 Transform:
@@ -5488,9 +4939,6 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: b960c433b371d064f8359da2f7c9a95e, type: 2}
   stats: {fileID: 4541788095156435608}
   animator: {fileID: 156075459540189942}
-  equipment:
-    MainWeapon: {fileID: 0}
-    SubWeapon: {fileID: 0}
   input: {fileID: 3690637346370928449}
   attackAngle: 90
   attackEffects: []
@@ -5498,6 +4946,7 @@ MonoBehaviour:
   weaponID: 0
   DualWeapon: {fileID: 0}
   overrideController: {fileID: 22100000, guid: a5ba9a757088f214ca4f4ad61a020168, type: 2}
+  resonanceCount: 0
 --- !u!4 &4660158094401061743
 Transform:
   m_ObjectHideFlags: 0
@@ -5974,9 +5423,6 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 2ed954927ece2f14b99beef142fe825a, type: 2}
   stats: {fileID: 4541788095156435608}
   animator: {fileID: 156075459540189942}
-  equipment:
-    MainWeapon: {fileID: 0}
-    SubWeapon: {fileID: 0}
   input: {fileID: 3690637346370928449}
   attackAngle: 90
   attackEffects: []
@@ -5984,6 +5430,7 @@ MonoBehaviour:
   weaponID: 2
   DualWeapon: {fileID: 9004888474022183620}
   overrideController: {fileID: 22100000, guid: c0433ce0149a58b459c698cba84a556a, type: 2}
+  resonanceCount: 0
   daggerPrefab: {fileID: 2433183401127699998, guid: 4dc3785c478b7e2439709c8cb0ee5e55, type: 3}
 --- !u!114 &6946189258287470682
 MonoBehaviour:

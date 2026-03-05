@@ -58,7 +58,13 @@ public class RoomView : MonoBehaviour
             BridgeMoving bridgeMoving;
             if (!door.TryGetComponent(out bridgeMoving))
                 Debug.Log("TryGetComponent BridgeMoving is fail");
-            bridgeMoving.EnterDoor(floor.GetDoorState(door.doorIntDirection));
+
+            if (!floor.GetRoomData().GetRoomType().Equals(RoomType.Start))
+                bridgeMoving.EnterDoor(floor.GetDoorState(door.doorIntDirection));
+            else
+            {
+                bridgeMoving.SetStartRoom();
+            }
             //bridgeMoving.SetState(floor.GetDoorState(door.doorIntDirection));
         }
     }

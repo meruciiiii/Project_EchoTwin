@@ -52,7 +52,7 @@ public class StageFlowManager : MonoBehaviour
     private void OnBattleNode(StageNode node)
     {
         Debug.Log("Battle Start!");
-        mapManager.GenerateMap();
+        mapManager.GenerateMap(node.floorIndex);
     }
     private void OnBossNode(StageNode node)
     {

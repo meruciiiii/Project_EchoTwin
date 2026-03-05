@@ -42,9 +42,12 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetComponent EnemySpawner is fail");
         //roomObjects = Resources.Load<RoomObjects>("RoomPrefabsScriptableObject");
     }
-    public void GenerateMap()
+    public void GenerateMap(int floorIndex)
     {
         int safety = 100;
+        bool isBoss = false;
+        if (floorIndex.Equals(5))
+            isBoss = true;
         do
         {
             mapCreater.CreateMap(microMap);
@@ -55,10 +58,11 @@ public class MapManager : MonoBehaviour
                 break;
             }
         }
-        while (mapChecker.LongestCheck(microMap));
+        while (mapChecker.LongestCheck(microMap, isBoss));
         int count = 100 - safety;
         //Debug.Log("Map Create is Finished in " + count + "....................");
-        roomObject = mapRoomPopulator.Populate(microMap, 1, 1, roomObjects);//please edit stage and floor
+        int stage = GameManager.instance.lastStage > 0 ? 2 : 1;
+        roomObject = mapRoomPopulator.Populate(microMap, stage, floorIndex, roomObjects);//please edit stage and floor
         //Debug.Log("Populate is sucess");
         enemyPool = enemySpawner.SpawnMonster(microMap, roomObject);
         GameManager.instance.setDic(enemyPool);
@@ -116,8 +120,6 @@ public class MapManager : MonoBehaviour
         Vector3 playerSpawnPosition = roomView.GetDoor(direction);
         microMap[currentCoord].SetVisit();
         Vector3 targetPosition = playerSpawnPosition + 4 * direction.x * Vector3.right + 4 * direction.y * Vector3.forward;
-        Debug.Log("start position : "+playerSpawnPosition);
-        Debug.Log("end position : "+ targetPosition);
         GameManager.instance.whenMapChange(targetPosition, currentCoord);
         mapDrawer.EnterDraw(GetMap(), currentCoord);
         mapMoving.MovePlayer(playerSpawnPosition);

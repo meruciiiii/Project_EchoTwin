@@ -14,10 +14,16 @@ public class BridgeMoving : MonoBehaviour
     private Vector3 targetPos;
     public void EnterDoor(bool doorState)
     {
-        if (doorState == isUp) return;
+        if (doorState == isUp) 
+            return;
         Vector3 offset = (isUp ? Vector3.down : Vector3.up) * moveDistance;
         transform.position += offset;
         isUp = doorState;
+    }
+    public void SetStartRoom()
+    {
+        transform.position += (Vector3.down * moveDistance);
+        isUp = false;
     }
     public void SetState(bool doorState)
     {

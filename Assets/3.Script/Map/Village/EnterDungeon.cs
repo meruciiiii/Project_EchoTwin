@@ -14,6 +14,6 @@ public class EnterDungeon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        mapManager.GenerateMap();
+        mapManager.GenerateMap(0);
     }
 }
