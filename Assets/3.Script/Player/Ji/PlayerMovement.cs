@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     //[SerializeField] private float distance = 10f;
     private Coroutine coroutine;
+    private Coroutine forSubscribe_Co;
+    private bool isSubscribed = false;
 
     private void Awake()
     {
@@ -31,18 +33,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        if (GameManager.instance != null)
+        if(forSubscribe_Co != null)
         {
-            GameManager.instance.whenGoNextMap += movePlayerOverBridge;
+            StopCoroutine(forSubscribe_Co);
+            forSubscribe_Co = null;
         }
+        forSubscribe_Co = StartCoroutine(subscribe_Co());
     }
 
     private void OnDisable()
     {
-        if (GameManager.instance != null)
+        if(forSubscribe_Co != null)
+        {
+            StopCoroutine(forSubscribe_Co);
+            forSubscribe_Co = null;
+        }
+
+        if(isSubscribed && GameManager.instance != null)
         {
             GameManager.instance.whenGoNextMap -= movePlayerOverBridge;
         }
+        isSubscribed = false;
+
     }
 
     private void FixedUpdate()
@@ -69,6 +81,22 @@ public class PlayerMovement : MonoBehaviour
         if (action.isKnockback) return;
         FocusOnMouse();
         Move();
+    }
+
+    private IEnumerator subscribe_Co()
+    {
+        while(GameManager.instance == null)
+        {
+            yield return null;
+        }
+
+        if(!isSubscribed)
+        {
+            GameManager.instance.whenGoNextMap += movePlayerOverBridge;
+            isSubscribed = true;
+        }
+
+        forSubscribe_Co = null;
     }
 
     public void Move()
