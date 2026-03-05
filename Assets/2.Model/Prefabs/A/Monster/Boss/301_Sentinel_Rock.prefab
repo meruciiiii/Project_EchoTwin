@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33137746954913870}
   - component: {fileID: 23570934334137022}
   - component: {fileID: 95433748489988412}
+  - component: {fileID: 5582182970674763002}
   m_Layer: 0
   m_Name: 301_Sentinel_Rock
   m_TagString: Untagged
@@ -112,3 +113,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5582182970674763002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260152368072798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa0c548b0b1fdd458e9c28bef8741da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SentinelProjectile
+  sentinel: {fileID: 0}
+  gravityForce: 5
+  rayDistance: 0.5
+  ground:
+    serializedVersion: 2
+    m_Bits: 256
+  player:
+    serializedVersion: 2
+    m_Bits: 64
+  attackRadius: 3
+  warningColor: {r: 1, g: 0, b: 0, a: 0.4}

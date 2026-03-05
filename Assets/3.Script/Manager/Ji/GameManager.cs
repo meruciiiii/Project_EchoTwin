@@ -11,10 +11,12 @@ public class GameManager : MonoBehaviour
         Loading,
         UI,
         Die,
+        Clear,
     }
 
     public bool isStop = false;
     public bool isDead = false;
+    public bool isGetWeapon = false;
     private GameState gameState = GameManager.GameState.Playing;
     public GameState gamestate => gameState;
 

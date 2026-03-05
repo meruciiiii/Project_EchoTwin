@@ -58,6 +58,18 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    public void checkWeapon()
+    {
+        if(Equipment.MainWeapon == null)
+        {
+            GameManager.instance.isGetWeapon = false;
+        }
+        else
+        {
+            GameManager.instance.isGetWeapon = true;
+        }
+    }
+
     public void OnAttack()
     {
         context = new AttackContext();
@@ -151,6 +163,7 @@ public class PlayerAction : MonoBehaviour
 
         Equipment.EquipWeapon(target);
         Equipment.MainWeapon.Initialize(this.ani);
+        checkWeapon();
 
         ani.runtimeAnimatorController = target.overrideController;
 
