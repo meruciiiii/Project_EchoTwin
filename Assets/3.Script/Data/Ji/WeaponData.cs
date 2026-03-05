@@ -19,7 +19,7 @@ public class WeaponData : ScriptableObject
 
     [Header("Echo")]
     public float echoDMGRatio;
-    public string echoDescription;
+    public int resonanceCount;
 
     [Header("Image")]
     public Sprite icon;

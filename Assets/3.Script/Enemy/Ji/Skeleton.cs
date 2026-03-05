@@ -79,10 +79,12 @@ public class Skeleton : EnemyStateAbstract
 
         //animator
         if (ani != null) ani.SetTrigger("Attack");
+        SoundManager.SendEvent(SoundType.SFX_Skeleton);
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         checkAttackTime();
+        SoundManager.SendEvent(SoundType.SFX_SwordAttack2);
 
         AreaAttack(enemyData.attackRange, 180f);
 

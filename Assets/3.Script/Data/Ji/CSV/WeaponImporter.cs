@@ -55,10 +55,11 @@ public static class WeaponImporter
             attackRange = ParseFloat(c[4]),
             knockback = ParseFloat(c[5]),
             echoDMGRatio = ParseFloat(c[6]),
-            iconPath = c[7],
-            comboCount = ParseInt(c[8]),
-            comboCooltime = ParseFloat(c[9]),
-            description = c[10]
+            resonanceCount = ParseInt(c[7]),
+            iconPath = c[8],
+            comboCount = ParseInt(c[9]),
+            comboCooltime = ParseFloat(c[10]),
+            description = c[11]
         };
     }
 
@@ -92,6 +93,7 @@ public static class WeaponImporter
         data.knockback = rows.knockback;
 
         data.echoDMGRatio = rows.echoDMGRatio;
+        data.resonanceCount = rows.resonanceCount;
 
         data.icon = LoadSprite(rows.iconPath);
         data.comboCount = rows.comboCount;

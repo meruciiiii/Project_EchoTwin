@@ -33,7 +33,7 @@ public class Bat : EnemyStateAbstract
         state = EnemyState.attack;
 
         TurnOffNavmesh();
-
+        SoundManager.SendEvent(SoundType.SFX_Bat);
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         if (ani != null) ani.SetTrigger("Attack");
@@ -45,6 +45,7 @@ public class Bat : EnemyStateAbstract
         float distance = Vector3.Distance(startPos, destPos);
         Vector3 targetPos = Vector3.zero;
 
+        SoundManager.SendEvent(SoundType.SFX_DaggerThrow);
         while (distance > 0f)
         {
             //navMesh.Move(dir * enemyData.moveSpeed * bodyAttackMultiple * Time.deltaTime);

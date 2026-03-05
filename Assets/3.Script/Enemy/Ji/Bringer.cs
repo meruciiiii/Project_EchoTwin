@@ -79,7 +79,7 @@ public class Bringer : EnemyStateAbstract
         yield return new WaitForSeconds(enemyData.attackSpeed);
 
         if (ani != null) ani.SetTrigger("Attack 2");
-
+        SoundManager.SendEvent(SoundType.SFX_Bringer2);
         checkAttackTime();
 
         projectile.transform.position = targetPos;
@@ -108,7 +108,7 @@ public class Bringer : EnemyStateAbstract
         if (ani != null) ani.SetTrigger("Attack");
 
         checkAttackTime();
-
+        SoundManager.SendEvent(SoundType.SFX_Bringer1);
         AreaAttack(enemyData.attackRange, 270f);
 
         coroutine = null;

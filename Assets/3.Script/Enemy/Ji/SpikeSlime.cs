@@ -41,6 +41,7 @@ public class SpikeSlime : EnemyStateAbstract
         float timer = 0f;
 
         //bool isAttacked = false;
+        SoundManager.SendEvent(SoundType.SFX_DaggerThrow);
 
         while (timer < duration)
         {
