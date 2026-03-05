@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21693edd4f0c19741a2177a0b579b9ff, type: 3}
-  m_Name: Enemy_108
+  m_Name: Enemy_302
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  id: 108
-  name: Bat
-  tier: Normal
-  maxHP: 25
-  damage: 6
-  moveSpeed: 5
-  attackSpeed: 2
-  attackRange: 1.2
-  coolTime: 1
-  dropEXP: 12
-  dropGold: 2
+  id: 302
+  name: RedDragon
+  tier: Boss
+  maxHP: 3000
+  damage: 1
+  moveSpeed: 0
+  attackSpeed: 1
+  attackRange: 8
+  coolTime: 4
+  dropEXP: 1200
+  dropGold: 20
   prefab: {fileID: 0}

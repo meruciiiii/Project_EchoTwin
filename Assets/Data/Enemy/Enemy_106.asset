@@ -15,12 +15,12 @@ MonoBehaviour:
   id: 106
   name: Crab
   tier: Normal
-  maxHP: 100
+  maxHP: 150
   damage: 18
   moveSpeed: 1.5
   attackSpeed: 0.7
   attackRange: 2
   coolTime: 3.5
   dropEXP: 30
-  dropGold: 25
+  dropGold: 5
   prefab: {fileID: 0}
