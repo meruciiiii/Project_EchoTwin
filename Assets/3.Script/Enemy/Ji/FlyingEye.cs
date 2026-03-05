@@ -29,7 +29,7 @@ public class FlyingEye : EnemyStateAbstract
         state = EnemyState.attack;
 
         TurnOffNavmesh();
-
+        SoundManager.SendEvent(SoundType.SFX_FlyingEye);
         float timer = 0f;
         //bool isAttacked = false;
 
@@ -37,6 +37,7 @@ public class FlyingEye : EnemyStateAbstract
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
         if (ani != null) ani.SetTrigger("Attack");
+        SoundManager.SendEvent(SoundType.SFX_Rat);
         checkAttackTime();
 
         while (timer < duration)

@@ -64,27 +64,30 @@ public class Pebble : EnemyStateAbstract
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
         if (ani != null) ani.SetTrigger("Attack");
+        SoundManager.SendEvent(SoundType.SFX_Skul);
 
         checkAttackTime();
 
         Vector3 targetPos = player.transform.position;
-        targetPos.y = 0f;
+        targetPos.y = 1f; // 0f에서 1f로 수정 (플레이어 가슴 높이 조준)
+
         Vector3 startPos = transform.position;
-        startPos.y = 0f;
+        startPos.y = 1f; // 0f에서 1f로 수정 (몬스터 가슴 높이 발사)
+
         Vector3 dir = (targetPos - startPos).normalized;
 
         float timer = 0f;
 
         projectile.transform.position = startPos;
         projectile.SetActive(true);
-        if (spriteRenderer.flipX)
-        {
-            projectile.GetComponentInChildren<SpriteRenderer>().flipX = true;
-        }
-        if (!spriteRenderer.flipX)
-        {
-            projectile.GetComponentInChildren<SpriteRenderer>().flipX = false;
-        }
+        //if (spriteRenderer.flipX)
+        //{
+        //    projectile.GetComponentInChildren<SpriteRenderer>().flipX = true;
+        //}
+        //if (!spriteRenderer.flipX)
+        //{
+        //    projectile.GetComponentInChildren<SpriteRenderer>().flipX = false;
+        //}
 
         while (timer < projectileDuration)
         {
