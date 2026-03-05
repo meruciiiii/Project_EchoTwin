@@ -157,4 +157,9 @@ public class MapManager : MonoBehaviour
         roomObject.Clear();
         enemyPool.Clear();
     }
+    private void PlayerInBattle()
+    {
+        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+            return;
+    }
 }

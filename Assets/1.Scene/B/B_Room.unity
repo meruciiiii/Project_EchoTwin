@@ -5781,7 +5781,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   rotationSpeed: 10
   moveSpeed: 5
-  distance: 10
 --- !u!33 &5938128785125056743
 MeshFilter:
   m_ObjectHideFlags: 0
