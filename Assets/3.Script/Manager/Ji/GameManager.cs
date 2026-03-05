@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         UI,
         Die,
         Clear,
+        RoomClear,
     }
 
     public bool isStop = false;
