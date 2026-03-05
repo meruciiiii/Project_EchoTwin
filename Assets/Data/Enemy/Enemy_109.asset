@@ -21,6 +21,9 @@ MonoBehaviour:
   attackSpeed: 1
   attackRange: 8
   coolTime: 2.5
-  dropEXP: 4
-  dropGold: 0
+  dropGold: 4
+  minCristal: 0
+  maxCristal: 1
+  minWeight: 20
+  maxWeight: 80
   prefab: {fileID: 0}
