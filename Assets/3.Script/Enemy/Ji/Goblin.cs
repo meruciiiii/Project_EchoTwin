@@ -52,7 +52,7 @@ public class Goblin : EnemyStateAbstract
         TurnOffNavmesh();
         //animator
         if (ani != null) ani.SetTrigger("Attack");
-
+        SoundManager.SendEvent(SoundType.SFX_Goblin);
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);

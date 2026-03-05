@@ -32,7 +32,6 @@ public class SpikeSlime : EnemyStateAbstract
 
         TurnOffNavmesh();
 
-
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
         //animator
@@ -65,6 +64,7 @@ public class SpikeSlime : EnemyStateAbstract
 
             yield return null;
         }
+        SoundManager.SendEvent(SoundType.SFX_Slime);
         transform.position = destPos;
 
         coroutine = null;
