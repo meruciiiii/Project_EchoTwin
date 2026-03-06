@@ -98,6 +98,7 @@ public class FloorData
     private bool isEnd = false;
     private bool isStart = false;
     private bool isVisit = false;
+    private bool isClear = false;
     private Room room;
     public FloorData()
     {
@@ -173,5 +174,13 @@ public class FloorData
     public bool GetVisit()
     {
         return isVisit;
+    }
+    public void SetClear()
+    {
+        isClear = true;
+    }
+    public bool GetClear()
+    {
+        return isClear;
     }
 }

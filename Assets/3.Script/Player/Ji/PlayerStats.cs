@@ -115,13 +115,13 @@ public class PlayerStats : MonoBehaviour
         gold += amount;
         onCoinChanged?.Invoke(gold);
 
-        Debug.Log($"{gold} gold");
+        //Debug.Log($"{gold} gold");
     }
 
     public void getCristal(int amount)
     {
         cristal += amount;
-        Debug.Log($"{cristal} cristal");
+        //Debug.Log($"{cristal} cristal");
     }
 
     public void getHeart()

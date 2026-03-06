@@ -14,7 +14,7 @@ public class MapChecker : MonoBehaviour
     private int deepestDistance = 0;
     private bool bossRoomisTop = false;
     private bool checker;
-    public bool LongestCheck(Dictionary<Vector2Int, FloorData> microMap)
+    public bool LongestCheck(Dictionary<Vector2Int, FloorData> microMap, bool isBoss)
     {
         checker = false;
         if(microMap.Count < 15)                                                             // 방 개수 정하기
@@ -25,7 +25,7 @@ public class MapChecker : MonoBehaviour
         //MapCreater와 Dictionary - microMap를 불러오기 위한 작업
         //Dictionary - microMap 중 문 한개인 방 들에 대한 리스트 생성
         //Debug.Log(microMap.Count);
-        SingleDoorRoom(microMap);
+        SingleDoorRoom(microMap, isBoss);
         foreach (Vector2Int singleDoorRoom in singleDoorRoom)
         {
             DepthSerch(microMap, singleDoorRoom);
@@ -75,15 +75,18 @@ public class MapChecker : MonoBehaviour
             furthestNode = current;
         }
     }
-    public void SingleDoorRoom(Dictionary<Vector2Int, FloorData> microMap)
+    public void SingleDoorRoom(Dictionary<Vector2Int, FloorData> microMap, bool isBoss)
     {
         singleDoorRoom.Clear();
         foreach (KeyValuePair<Vector2Int, FloorData> drawMap in microMap)
         {
             if (drawMap.Value.GetOpenDoorCount() < 2)
             {
-                DoorisDown(drawMap);
-                if(bossRoomisTop)
+                if (isBoss)
+                    DoorisDown(drawMap);
+                else
+                    bossRoomisTop = true;
+                if (bossRoomisTop)
                     singleDoorRoom.Add(drawMap.Key);
                 //Debug.Log("Door is one in the room : "+drawMap.Key);
             }

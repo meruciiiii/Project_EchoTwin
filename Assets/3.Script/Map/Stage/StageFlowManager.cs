@@ -27,6 +27,11 @@ public class StageFlowManager : MonoBehaviour
             enterTable.Add(camp[i], FindChildWithTag(camp[i]));
         }
     }
+    public void StartStage()
+    {
+        mapManager.GenerateMap(1);
+        stageManager.GenerateStage();
+    }
     public Transform FindChildWithTag(GameObject parent)
     {
         foreach (Transform child in parent.transform)
@@ -52,7 +57,7 @@ public class StageFlowManager : MonoBehaviour
     private void OnBattleNode(StageNode node)
     {
         Debug.Log("Battle Start!");
-        mapManager.GenerateMap();
+        mapManager.GenerateMap(node.floorIndex);
     }
     private void OnBossNode(StageNode node)
     {

@@ -32,13 +32,12 @@ public class GameManager : MonoBehaviour
     public event Action<Vector3, Vector2Int> whenGoNextMap;
     public event Action whenArriveNextMap;
     public event Action roomClearCheck;
-
-    private IReadOnlyDictionary<Vector2Int, List<GameObject>> enemyDic;
     private Vector2Int currentCell;
-    public int monsterCount = 0;
+    private IReadOnlyDictionary<Vector2Int, List<GameObject>> enemyDic;
 
     public event Action<WeaponAbstract, WeaponAbstract> turnWeaponUI;
-    public event Action playerDie;
+    public event Action GetWeapon;
+    public int monsterCount = 0;
 
     private WeaponAbstract MainWeapon;
     private WeaponAbstract SubWeapon;
@@ -60,7 +59,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 
     public void setCountInRoom()
     {
@@ -104,6 +102,7 @@ public class GameManager : MonoBehaviour
         SubWeapon = subWeapon;
 
         turnWeaponUI?.Invoke(mainWeapon, subWeapon);
+        GetWeapon?.Invoke();
     }
 
     public void setDic(IReadOnlyDictionary<Vector2Int, List<GameObject>> dic)
@@ -159,7 +158,7 @@ public class GameManager : MonoBehaviour
         if (state == gameState) return;
 
         gameState = state;
-        Debug.Log(gameState);
+        //Debug.Log(gameState);
         if (gameState == GameState.UI)
         {
             isStop = true;
@@ -168,9 +167,6 @@ public class GameManager : MonoBehaviour
         else if (gameState == GameState.Die)
         {
             isDead = true;
-            isStop = true;
-
-            playerDie?.Invoke();
         }
         else if (gameState == GameState.Playing)
         {

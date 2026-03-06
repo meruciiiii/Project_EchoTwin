@@ -910,8 +910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   rotationSpeed: 10
-  moveSpeed: 5
-  distance: 10
+  moveSpeed: 20
 --- !u!114 &3690637346300873848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,6 +1092,7 @@ MonoBehaviour:
   onInteraction:
     m_PersistentCalls:
       m_Calls: []
+  dieUI: {fileID: 0}
 --- !u!114 &8973658171197724542
 MonoBehaviour:
   m_ObjectHideFlags: 0

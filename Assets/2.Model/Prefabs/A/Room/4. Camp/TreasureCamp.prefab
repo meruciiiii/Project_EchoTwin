@@ -19382,7 +19382,7 @@ GameObject:
   - component: {fileID: 2756784420509507430}
   - component: {fileID: 6723287740844554171}
   - component: {fileID: 2104727594068780471}
-  - component: {fileID: 4847553546237601144}
+  - component: {fileID: 5164405117479168663}
   m_Layer: 0
   m_Name: EnterDungeon
   m_TagString: Untagged
@@ -19435,7 +19435,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 3, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4847553546237601144
+--- !u!114 &5164405117479168663
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19444,10 +19444,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8251907648776653484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c472df9f5d2a6b7449525dc80df53291, type: 3}
+  m_Script: {fileID: 11500000, guid: feea63350cff2104cb894b4d927cd3b3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnterDungeon
-  mapManager: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::PortalController
+  bossCheck: 1
 --- !u!1 &8320250517963940487
 GameObject:
   m_ObjectHideFlags: 0

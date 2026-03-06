@@ -120,9 +120,9 @@ public class MapRoomPopulator : MonoBehaviour
                 choice = 1;
             else
             {
-                if (this.floor > 4)
+                if (this.floor > 1)
                 {
-                    if (this.floor > 8)
+                    if (this.floor > 3)
                     {
                         choice = 1;
                     }

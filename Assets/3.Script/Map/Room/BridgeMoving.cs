@@ -14,13 +14,23 @@ public class BridgeMoving : MonoBehaviour
     private Vector3 targetPos;
     public void EnterDoor(bool doorState)
     {
-        if (doorState == isUp) return;
+        //Debug.Log(this.name + " is bridge move, doorState is :"+ doorState+ ", isUp is : "+ isUp);
+        if (doorState == isUp) 
+            return;
         Vector3 offset = (isUp ? Vector3.down : Vector3.up) * moveDistance;
         transform.position += offset;
         isUp = doorState;
     }
+    public void SetStartRoom()
+    {
+        //Debug.Log(this.name + " is bridge move, isUp is : " + isUp);
+        if (!isUp) return;
+        transform.position += (Vector3.down * moveDistance);
+        isUp = false;
+    }
     public void SetState(bool doorState)
     {
+        //Debug.Log(this.name + " is bridge move, doorState is :" + doorState + ", isUp is : " + isUp);
         if (!doorState) return;
         //Debug.Log(this.name +" is bridge move");
         StartCoroutine(MoveBridge());
@@ -44,6 +54,7 @@ public class BridgeMoving : MonoBehaviour
     }
     public void ResetBridge()
     {
+        //Debug.Log(this.name + " is bridge move, isUp is : " + isUp);
         if (isUp) return;
         Vector3 offset = Vector3.up * moveDistance;
         transform.position += offset;

@@ -61,27 +61,35 @@ public class Hammer : WeaponAbstract
     {
         if (!CanAttack()) return;
         if (isCharging) return;
+        if (stats.GetComponent<PlayerAction>().isKnockback) return;
         coroutine = StartCoroutine(Attack_Co(context));
     }
     private IEnumerator Attack_Co(AttackContext context)
     {
         isCharging = true;
+        isCancelled = false; 
+        PlayerAction playerAction = stats.GetComponent<PlayerAction>(); // 참조 최적화
         action.GetComponent<Rigidbody>().isKinematic = true;
 
         SetAnimator(); // 공격 애니메이션 트리거 (Trigger "Attack")
         SoundManager.SendEvent(SoundType.SFX_HammerAttack1);
 
-        // 애니메이션 상태가 바뀔 때까지 한 프레임 대기
         yield return null;
 
-        // [핵심 로직] 버튼을 누르고 있는 동안 무한 루프
+        time = 0f;
         while (input.isAttackPressed)
         {
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (playerAction.isKnockback)
+            {
+                cancleCharging();
+                yield break;
+            }
 
+            time += Time.deltaTime; // 버튼 누르는 동안 시간 누적
+
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsTag("Attack"))
             {
-                // 애니메이션이 0.5f(절반)에 도달하면 속도를 0으로 만들어 멈춤 (차징 대기)
                 if (stateInfo.normalizedTime >= 0.3f)
                 {
                     AniSpeed(0f);
@@ -89,36 +97,25 @@ public class Hammer : WeaponAbstract
             }
             yield return null;
         }
-
+        if (playerAction.isKnockback || isCancelled)
+        {
+            if (isCharging) cancleCharging(); // 아직 처리 안 됐다면 처리
+            yield break;
+        }
         AnimatorStateInfo finalState = animator.GetCurrentAnimatorStateInfo(0);
 
-        // 1. 0.5f 미만에서 뗐다면 공격 취소
         if (finalState.normalizedTime < 0.3f)
         {
             cancleCharging();
             yield break;
         }
 
-        // 2. 0.5f 이상에서 뗐다면 공격 실행
-        // 멈췄던 애니메이션 속도를 다시 1로 복구
         AniSpeed(1f);
 
-        // 버튼을 뗀 후부터 추가 차징 시간 측정 (기존 로직 유지)
-        time = 0f;
         SoundManager.SendEvent(SoundType.SFX_HammerAttack2);
 
-        /*
-        while (input.isAttackPressed) // 이미 위에서 뗐으므로 이 루프는 스킵될 것임
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-        */
-
-        // 공격 타격 시점까지 대기 (애니메이션의 남은 부분 재생 시간)
         yield return new WaitForSeconds(0.2f / weaponData.attackSpeed);
 
-        // 타격 판정
         List<Collider> targets = getTargetInSector();
         foreach (Collider target in targets)
         {
@@ -139,6 +136,7 @@ public class Hammer : WeaponAbstract
 
         if (coroutine != null)
         {
+            StopCoroutine(coroutine); 
             coroutine = null;
         }
         isCharging = false;
@@ -146,6 +144,10 @@ public class Hammer : WeaponAbstract
         animator.Play("Move", 0, 0);
         stats.GetComponent<PlayerAction>().forStopMove = false;
         isCancelled = true;
+        if (action != null)
+        {
+            action.GetComponent<Rigidbody>().isKinematic = false;
+        }
     }
 
     private void AniSpeed(float holdSpeed = 1f)
@@ -222,6 +224,10 @@ public class Hammer : WeaponAbstract
 
     protected override float calcDamage()
     {
-        return weaponData.baseDamage * time + stats.PlayerDMG;// + characterData.valuePerLv 이 부분 정리
+        float chargeRatio = Mathf.Clamp01(time / 2.0f);
+
+        float damageMultiplier = Mathf.Lerp(0.2f, 1.0f, chargeRatio);
+
+        return (weaponData.baseDamage * damageMultiplier) + stats.PlayerDMG;
     }
 }

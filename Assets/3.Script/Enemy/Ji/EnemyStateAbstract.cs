@@ -273,7 +273,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         if (isItOnTheGround())
         {
-            rb.linearVelocity = Vector3.zero;
+            if (!rb.isKinematic) rb.linearVelocity = Vector3.zero;
             rb.isKinematic = true;
 
             TurnOnNavmesh();

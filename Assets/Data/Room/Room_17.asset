@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomData
   id: 17
   roomType: Battle
-  monsterPackID: 1
+  monsterPackID: 7
