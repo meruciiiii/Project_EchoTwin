@@ -31,11 +31,11 @@ public class SentinelProjectile : MonoBehaviour
         startY = transform.position.y;
         groundY = transform.position.y;
 
-        if(Physics.Raycast(transform.position,Vector3.down,out RaycastHit hit, 100f, ground))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 100f, ground))
         {
             groundY = hit.point.y;
 
-            if(warning != null)
+            if (warning != null)
             {
                 warning.showCircle(hit.point, attackRadius, warningColor);
                 warning.setRatio(0f);
@@ -76,12 +76,11 @@ public class SentinelProjectile : MonoBehaviour
             {
                 PlayerAction target = col.GetComponentInParent<PlayerAction>();
                 if (target == null) continue;
-
                 target.takeDamage(1, hit.point, 1);
                 break;
             }
 
-            if(warning != null)
+            if (warning != null)
             {
                 warning.setRatio(1f);
                 warning.Hide();
@@ -89,6 +88,19 @@ public class SentinelProjectile : MonoBehaviour
             }
 
             sentinel.returnRock(this);
+            return;
+        }
+
+        if (transform.position.y <= 0)
+        {
+            if (warning != null)
+            {
+                warning.Hide();
+                warning = null;
+            }
+
+            sentinel.returnRock(this);
+            return;
         }
     }
 

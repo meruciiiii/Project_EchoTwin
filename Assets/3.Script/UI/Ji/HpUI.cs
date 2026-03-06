@@ -27,6 +27,7 @@ public class HpUI : MonoBehaviour
 
         stats.onMaxHpChanged += whenMaxHPChanged;
         stats.onHpChanged += whenHPChanged;
+        
     }
 
     private void OnDisable()
@@ -35,6 +36,12 @@ public class HpUI : MonoBehaviour
 
         stats.onMaxHpChanged -= whenMaxHPChanged;
         stats.onHpChanged -= whenHPChanged;
+    }
+
+    private void Start()
+    {
+        whenMaxHPChanged(stats.MaxHP);
+        whenHPChanged(stats.CurrentHP, stats.MaxHP);
     }
 
     private void whenMaxHPChanged(int maxHP)
@@ -48,10 +55,12 @@ public class HpUI : MonoBehaviour
 
     private void whenHPChanged(int currentHP, int maxHP)
     {
-        for(int i=0;i<buttons.Count;i++)
+        Debug.Log($"whenHPChanged È£ÃâµÊ / currentHP={currentHP}, maxHP={maxHP}, stats={stats.name}");
+        for (int i=0;i<buttons.Count;i++)
         {
             if (i >= maxHP) continue;
             bool isItFull = (i < currentHP);
+            Debug.Log($"i : {i}, isItFull : {isItFull}");
             buttons[i].interactable = isItFull;
         }
     }

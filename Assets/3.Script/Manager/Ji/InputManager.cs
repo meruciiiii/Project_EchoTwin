@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 {
     private PlayerMovement Player;
     private PlayerAction Action;
-    private PlayerStats stats;
+    //private PlayerStats stats;
     public Coroutine coroutine;
 
     private Vector2 moveValue;
@@ -23,13 +23,13 @@ public class InputManager : MonoBehaviour
     {
         TryGetComponent(out Player);
         TryGetComponent(out Action);
-        TryGetComponent(out stats);
+        //TryGetComponent(out stats);
     }
     public void Event_Move(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            if (GameManager.instance.isStop) return;
+            if (GameManager.instance != null && GameManager.instance.isStop) return;
             moveValue = context.ReadValue<Vector2>();
         }
         else if (context.phase == InputActionPhase.Canceled)
@@ -42,8 +42,8 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            if (GameManager.instance.isStop) return;
-            if (Action.forStopMove) return;
+            if (GameManager.instance != null && GameManager.instance.isStop) return;
+            //if (Action.forStopMove) return;
             if (coroutine != null) return;
             coroutine = StartCoroutine(Player.Dash());
         }
@@ -91,7 +91,7 @@ public class InputManager : MonoBehaviour
 
     public void Event_MousPos(InputAction.CallbackContext context)
     {
-        if (GameManager.instance.isStop) return;
+        if (GameManager.instance != null && GameManager.instance.isStop) return;
         mousePos = context.ReadValue<Vector2>();
     }
 
@@ -99,7 +99,7 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            if (GameManager.instance.isStop) return;
+            if (GameManager.instance != null && GameManager.instance.isStop) return;
 
             Action.onInteraction?.Invoke();
         }

@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aa0c548b0b1fdd458e9c28bef8741da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SentinelProjectile
-  sentinel: {fileID: 0}
+  sentinel: {fileID: 1227724197054729120, guid: ad5b7a2d0acb2574e95254ee9007fa50, type: 3}
   gravityForce: 5
   rayDistance: 0.5
   ground:

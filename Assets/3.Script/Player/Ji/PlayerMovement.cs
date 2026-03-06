@@ -128,10 +128,22 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator Dash()
     {
         stats.isDash = true;
+
+        action.forStopMove = false;
+        action.forStopRotate = false;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
         // 1. 구르기 애니메이션 실행
         if (animator != null)
         {
-            animator.SetTrigger("Roll");
+            //animator.SetTrigger("Roll");
+
+            animator.ResetTrigger("Attack");
+            animator.SetInteger("ComboState", 0);
+
+            animator.CrossFade("Roll", 0.05f, 0, 0f);
         }
 
         Vector2 moveInput = Input.MoveValue;

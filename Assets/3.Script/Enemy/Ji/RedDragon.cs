@@ -14,7 +14,7 @@ public class RedDragon : EnemyStateAbstract
 
     [Header("Breath")]
     [SerializeField] private GameObject head;
-    [SerializeField] private float breathRadius;
+    [SerializeField] private float breathRadius = 1f;
     [SerializeField] private float breathDistance;
     [SerializeField] private float breathAngle;
     [SerializeField]
@@ -38,6 +38,7 @@ public class RedDragon : EnemyStateAbstract
     [SerializeField] DragonFireArea fireAreaPrefab;
     private Queue<DragonFireArea> areaPool;
     [SerializeField] GameObject PoolsPos;
+    private bool isFlying = false;
 
     [Header("Phase2nd")]
     [Range(0f, 1f)]
@@ -111,6 +112,7 @@ public class RedDragon : EnemyStateAbstract
 
         boxCol.isTrigger = false;
         isReflect = false;
+        isFlying = false;
         isPhase2 = false;
         lastPattern = AttackPattern.none;
     }
@@ -118,6 +120,7 @@ public class RedDragon : EnemyStateAbstract
     public override void takeDamage(float damage)
     {
         if (state == EnemyState.dead) return;
+        if (isFlying) return;
 
         if (isReflect)
         {
@@ -287,7 +290,7 @@ public class RedDragon : EnemyStateAbstract
         yield return new WaitForSeconds(attackSpeed);
 
         checkAttackTime();
-
+        if (ani != null) ani.SetTrigger("Attack01");
         Collider[] lefthits = Physics.OverlapSphere(leftArm.transform.position, attackRange, playerLayer);
         Collider[] righthits = Physics.OverlapSphere(rightArm.transform.position, attackRange, playerLayer);
 
@@ -337,7 +340,7 @@ public class RedDragon : EnemyStateAbstract
         }
 
         yield return new WaitForSeconds(attackSpeed);
-        //ani
+        if (ani != null) ani.SetTrigger("Attack02");
         yield return null;
 
         while (true)
@@ -447,8 +450,7 @@ public class RedDragon : EnemyStateAbstract
         state = EnemyState.attack;
         isReflect = true;
 
-        //ani
-
+        if (ani != null) ani.SetTrigger("Attack03");
         checkAttackTime();
 
         yield return new WaitForSeconds(reflectionTime);
@@ -466,11 +468,12 @@ public class RedDragon : EnemyStateAbstract
     private IEnumerator rangeAttack_Co()
     {
         state = EnemyState.attack;
+        isFlying = true;
 
         //effect.ChargeEffect(rangeAttackSpeed);
         yield return new WaitForSeconds(rangeAttackSpeed);
 
-        //ani
+        if (ani != null) ani.SetTrigger("Attack04");
 
         checkAttackTime();
 
@@ -501,6 +504,7 @@ public class RedDragon : EnemyStateAbstract
             yield return new WaitForSeconds(0.3f);
         }
 
+        isFlying = false;
         coroutine = null;
 
         if (state != EnemyState.dead)
@@ -541,12 +545,16 @@ public class RedDragon : EnemyStateAbstract
     private WarningGizmo getWarning()
     {
         if (warningPool.Count == 0) return null;
-        return warningPool.Dequeue();
+
+        WarningGizmo warning = warningPool.Dequeue();
+        warning.init(returnWarning);
+        return warning;
     }
 
     private void returnWarning(WarningGizmo warning)
     {
-        warning.transform.SetParent(PoolsPos.transform);
+        if (state == EnemyState.dead) return;
+
         warning.transform.localPosition = Vector3.zero;
         warningPool.Enqueue(warning);
     }

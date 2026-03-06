@@ -5,15 +5,24 @@ using UnityEngine;
 
 public class WarningGizmo : MonoBehaviour
 {
-    [SerializeField] private Transform quadTransform;
-    [SerializeField] private MeshRenderer quadRenderer;
+    [SerializeField] private Transform baseQuadTransform;
+    [SerializeField] private MeshRenderer baseQuadRenderer;
+
+    [SerializeField] private Transform fillQuadTransform;
+    [SerializeField] private MeshRenderer fillQuadRenderer;
+
     [SerializeField] private float yOffset = 0.6f;
 
     [SerializeField] private string warningColorProperty = "_WarningColor";
     [SerializeField] private string angleProperty = "_Angle";
     [SerializeField] private string ratioProperty = "_Ratio";
 
-    private MaterialPropertyBlock propertyBlock;
+    [SerializeField] private Color baseColor = new Color(1f, 0f, 0f, 0.15f);
+    [SerializeField] private Color fillColor = new Color(1f, 0f, 0f, 0.4f);
+
+    private MaterialPropertyBlock basePropertyBlock;
+    private MaterialPropertyBlock fillPropertyBlock;
+
     private Coroutine coroutine;
     private Action<WarningGizmo> returnAction;
 
@@ -25,28 +34,32 @@ public class WarningGizmo : MonoBehaviour
 
     private void Awake()
     {
-        if(quadRenderer == null)
+        if (baseQuadTransform == null) baseQuadTransform = transform.GetChild(0);
+        if (fillQuadTransform == null) fillQuadTransform = transform.GetChild(1);
+
+        if (baseQuadRenderer == null && baseQuadTransform != null)
         {
-            quadRenderer = GetComponentInChildren<MeshRenderer>();
+            baseQuadRenderer = baseQuadTransform.GetComponent<MeshRenderer>();
+        }
+        if (fillQuadRenderer == null && fillQuadTransform != null)
+        {
+            fillQuadRenderer = fillQuadTransform.GetComponent<MeshRenderer>();
         }
 
-        if (quadTransform == null)
-        {
-            quadTransform = quadRenderer != null ? quadRenderer.transform : transform;
-        }
-
-        propertyBlock = new MaterialPropertyBlock();
+        basePropertyBlock = new MaterialPropertyBlock();
+        fillPropertyBlock = new MaterialPropertyBlock();
 
         warningColorID = Shader.PropertyToID(warningColorProperty);
         angleID = Shader.PropertyToID(angleProperty);
         ratioID = Shader.PropertyToID(ratioProperty);
 
-        ApplyProperties(new Color(1f, 0f, 0f, 0.4f), 360f, 0f);
+        ApplyBaseProperties(baseColor, 360f, 1f);
+        ApplyFillProperties(fillColor, 360f, 0f);
     }
 
     private void OnDisable()
     {
-        if(coroutine != null)
+        if (coroutine != null)
         {
             StopCoroutine(coroutine);
             coroutine = null;
@@ -66,7 +79,7 @@ public class WarningGizmo : MonoBehaviour
 
     public void showCircle(Vector3 worldPos, float attackRadius, Color warningColor)
     {
-        if(coroutine != null)
+        if (coroutine != null)
         {
             StopCoroutine(coroutine);
             coroutine = null;
@@ -78,7 +91,9 @@ public class WarningGizmo : MonoBehaviour
         transform.rotation = Quaternion.identity;
 
         setRadius(attackRadius);
-        ApplyProperties(warningColor, 360f, 0);
+
+        ApplyBaseProperties(setAlpha(warningColor, warningColor.a * 0.4f), 360f, 1f);
+        ApplyFillProperties(warningColor, 360f, 1f);
     }
 
     public void playSector(Vector3 worldPos, Vector3 forward, float attackRadius, float angle, float duration, Color warningColor)
@@ -104,15 +119,17 @@ public class WarningGizmo : MonoBehaviour
         gameObject.SetActive(true);
 
         transform.position = new Vector3(worldPos.x, worldPos.y + yOffset, worldPos.z);
-        transform.rotation = Quaternion.LookRotation(forward,Vector3.up);
+        transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
 
         setRadius(attackRadius);
-        ApplyProperties(warningColor, angle, 1f);
+
+        ApplyBaseProperties(setAlpha(warningColor, warningColor.a * 0.4f), angle, 1f);
+        ApplyFillProperties(warningColor, angle, 1f);
     }
 
     private void playInternal(Vector3 worldPos, Quaternion rotation, float attackRadius, float angle, float duration, Color warningColor)
     {
-        if(coroutine != null)
+        if (coroutine != null)
         {
             StopCoroutine(coroutine);
             coroutine = null;
@@ -124,33 +141,38 @@ public class WarningGizmo : MonoBehaviour
         transform.rotation = rotation;
 
         setRadius(attackRadius);
-        ApplyProperties(warningColor, angle, 0f);
+
+        ApplyBaseProperties(setAlpha(warningColor, warningColor.a * 0.4f), angle, 1f);
+        ApplyFillProperties(warningColor, angle, 0f);
 
         coroutine = StartCoroutine(showWarning_Co(duration, warningColor, angle));
     }
 
     private IEnumerator showWarning_Co(float duration, Color warningColor, float angle)
     {
-        if(duration <= 0)
+        if (duration <= 0)
         {
-            ApplyProperties(warningColor, angle, 1f);
+            ApplyBaseProperties(setAlpha(warningColor, warningColor.a * 0.4f), angle, 1f);
+            ApplyFillProperties(warningColor, angle, 1f);
             coroutine = null;
             yield break;
         }
 
         float elased = 0f;
 
-        while(elased < duration)
+        while (elased < duration)
         {
             elased += Time.deltaTime;
             float ratio = Mathf.Clamp01(elased / duration);
 
-            ApplyProperties(warningColor, angle, ratio);
+            ApplyBaseProperties(setAlpha(warningColor, warningColor.a * 0.4f), angle, 1f);
+            ApplyFillProperties(warningColor, angle, ratio);
 
             yield return null;
         }
 
-        ApplyProperties(warningColor, angle, 1f);
+        ApplyBaseProperties(setAlpha(warningColor, warningColor.a * 0.4f), angle, 1f);
+        ApplyFillProperties(warningColor, angle, 1f);
         coroutine = null;
     }
 
@@ -163,11 +185,13 @@ public class WarningGizmo : MonoBehaviour
             coroutine = null;
         }
 
-        ApplyProperties(new Color(1f, 0f, 0f, 0.4f), 360f, 0f);
+        ApplyBaseProperties(baseColor, 360f, 1f);
+        ApplyFillProperties(fillColor, 360f, 0f);
+
         isReturn = true;
         gameObject.SetActive(false);
 
-        if(returnAction != null)
+        if (returnAction != null)
         {
             returnAction(this);
         }
@@ -175,49 +199,84 @@ public class WarningGizmo : MonoBehaviour
 
     public void setRatio(float ratio)
     {
-        if (quadRenderer == null) return;
+        if (fillQuadRenderer == null) return;
 
-        quadRenderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetFloat(ratioID, Mathf.Clamp01(ratio));
-        quadRenderer.SetPropertyBlock(propertyBlock);
-    }    
+        fillQuadRenderer.GetPropertyBlock(fillPropertyBlock);
+        fillPropertyBlock.SetFloat(ratioID, Mathf.Clamp01(ratio));
+        fillQuadRenderer.SetPropertyBlock(fillPropertyBlock);
+    }
 
     public void setAngle(float angle)
     {
-        if (quadRenderer == null) return;
+        float clampedAngle = Mathf.Clamp(angle, 0f, 360f);
 
-        quadRenderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetFloat(angleID, Mathf.Clamp(angle, 0f, 360f));
-        quadRenderer.SetPropertyBlock(propertyBlock);
+        if (baseQuadRenderer != null)
+        {
+            baseQuadRenderer.GetPropertyBlock(basePropertyBlock);
+            basePropertyBlock.SetFloat(angleID, clampedAngle);
+            baseQuadRenderer.SetPropertyBlock(basePropertyBlock);
+        }
+
+        if (fillQuadRenderer != null)
+        {
+            fillQuadRenderer.GetPropertyBlock(fillPropertyBlock);
+            fillPropertyBlock.SetFloat(angleID, clampedAngle);
+            fillQuadRenderer.SetPropertyBlock(fillPropertyBlock);
+        }
     }
 
     public void setWarningColor(Color warningColor)
     {
-        if (quadRenderer == null) return;
-
-        quadRenderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetColor(warningColorID,warningColor);
-        quadRenderer.SetPropertyBlock(propertyBlock);
+        ApplyBaseProperties(setAlpha(warningColor, warningColor.a * 0.4f), 360f, 1f);
+        ApplyFillProperties(warningColor, 360f, 1f);
     }
 
     private void setRadius(float attackRadius)
     {
         float diameter = attackRadius * 2f;
 
-        Vector3 localScale = quadTransform.localScale;
-        localScale.x = diameter;
-        localScale.y = diameter;
-        quadTransform.localScale = localScale;
+        if (baseQuadTransform != null)
+        {
+            Vector3 localScale = baseQuadTransform.localScale;
+            localScale.x = diameter;
+            localScale.y = diameter;
+            baseQuadTransform.localScale = localScale;
+        }
+
+        if (fillQuadTransform != null)
+        {
+            Vector3 localScale = fillQuadTransform.localScale;
+            localScale.x = diameter;
+            localScale.y = diameter;
+            fillQuadTransform.localScale = localScale;
+        }
     }
 
-    private void ApplyProperties(Color warningColor, float angle, float ratio)
+    private void ApplyBaseProperties(Color warningColor, float angle, float ratio)
     {
-        if (quadRenderer == null) return;
+        if (baseQuadRenderer == null) return;
 
-        quadRenderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetColor(warningColorID, warningColor);
-        propertyBlock.SetFloat(angleID, Mathf.Clamp(angle, 0f, 360f));
-        propertyBlock.SetFloat(ratioID, Mathf.Clamp01(ratio));
-        quadRenderer.SetPropertyBlock(propertyBlock);
+        baseQuadRenderer.GetPropertyBlock(basePropertyBlock);
+        basePropertyBlock.SetColor(warningColorID, warningColor);
+        basePropertyBlock.SetFloat(angleID, Mathf.Clamp(angle, 0f, 360f));
+        basePropertyBlock.SetFloat(ratioID, Mathf.Clamp01(ratio));
+        baseQuadRenderer.SetPropertyBlock(basePropertyBlock);
+    }
+
+    private void ApplyFillProperties(Color warningColor, float angle, float ratio)
+    {
+        if (fillQuadRenderer == null) return;
+
+        fillQuadRenderer.GetPropertyBlock(fillPropertyBlock);
+        fillPropertyBlock.SetColor(warningColorID, warningColor);
+        fillPropertyBlock.SetFloat(angleID, Mathf.Clamp(angle, 0f, 360f));
+        fillPropertyBlock.SetFloat(ratioID, Mathf.Clamp01(ratio));
+        fillQuadRenderer.SetPropertyBlock(fillPropertyBlock);
+    }
+
+    private Color setAlpha(Color color, float alpha)
+    {
+        color.a = alpha;
+        return color;
     }
 }
