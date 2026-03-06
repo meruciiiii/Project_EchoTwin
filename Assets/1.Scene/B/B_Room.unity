@@ -864,6 +864,7 @@ MonoBehaviour:
   playerCristal: 0
   maxHP: 0
   currentHP: 0
+  monsterCount: 0
 --- !u!4 &435573433
 Transform:
   m_ObjectHideFlags: 0
@@ -2619,10 +2620,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1853042470295095390, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3624531193493299063, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807301606731961796, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880014333289011409, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5986278865617940066, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1454717892}
+    - target: {fileID: 6507157477907835651, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6578235577920869355, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575321787282523610, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8099819673610182843, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_Pivot.x
       value: 0

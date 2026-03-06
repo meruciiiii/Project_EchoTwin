@@ -84,14 +84,39 @@ public class MapManager : MonoBehaviour
         microMap[currentCoord].SetVisit();
         mapDrawer.EnterDraw(GetMap(), currentCoord);
         roomView.DoorAccordingState(floor);
+        roomView.EnterStartRoomFirst(floor);
         roomView.OnDoorUsed += PlayerTryMove;
         GameManager.instance.whenArriveNextMap += PlayerInBattle;
+        GameManager.instance.GetWeapon += GetWeapon;
+        GameManager.instance.roomClearCheck += RoomClear;
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
     {
         return microMap;
     }
-    
+    private void RoomClear()
+    {
+        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
+        {
+            Debug.Log("TryGetValue roomPrefab is Error");
+            return;
+        }
+        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+            return;
+        if (floor.GetClear())
+            return;
+        Debug.Log("RoomClear is Start");
+        roomView.BridgeisMove(floor);
+    }
+    private void GetWeapon()
+    {
+        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
+        {
+            Debug.Log("TryGetValue roomPrefab is Error");
+            return;
+        }
+        roomView.BridgeisMove(floor);
+    }
     public void PlayerTryMove(Vector2Int direction)
     {
         Vector2Int target = currentCoord + direction;
@@ -105,10 +130,15 @@ public class MapManager : MonoBehaviour
             Debug.Log("currentCoord is Error");
             return;
         }
+        if (enemyPool.TryGetValue(currentCoord, out List<GameObject> enemyList))
+        {
+            enemyList.Clear();
+        }
+        oldFloor.SetClear();
         roomView.DoorResetting();
         currentCoord = target;
         //해당 오브젝트 가져오기
-        if(!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
+        if (!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
         {
             Debug.Log("TryGetValue roomPrefab is Error");
             return;
@@ -146,11 +176,11 @@ public class MapManager : MonoBehaviour
     }
     public void MapClear()
     {
-        foreach(KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
+        foreach (KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
         {
             if (enemyList.Value != null)
             {
-                foreach(GameObject enemy in enemyList.Value)
+                foreach (GameObject enemy in enemyList.Value)
                 {
                     Destroy(enemy);
                 }
@@ -162,14 +192,26 @@ public class MapManager : MonoBehaviour
     }
     private void PlayerInBattle()
     {
-        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
-            return;
-        if (!microMap.TryGetValue(currentCoord, out FloorData Floor))
+        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
         {
             Debug.Log("oldFloor TryGetValue is Error");
             return;
         }
-        roomView.BridgeisMove(Floor);
-
+        //if (enemyPool.TryGetValue(currentCoord, out List<GameObject> enemyList))
+        //{
+        //    if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle) && enemyList.Count.Equals(0))
+        //        return;
+        //}
+        //else
+        //{
+        //    if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+        //        return;
+        //}
+        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+            return;
+        if (floor.GetClear())
+            return;
+        Debug.Log("PlayerInBattle is Start");
+        roomView.BridgeisMove(floor);
     }
 }

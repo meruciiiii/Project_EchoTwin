@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     private IReadOnlyDictionary<Vector2Int, List<GameObject>> enemyDic;
 
     public event Action<WeaponAbstract, WeaponAbstract> turnWeaponUI;
+    public event Action GetWeapon;
     public int monsterCount = 0;
 
     private WeaponAbstract MainWeapon;
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour
         SubWeapon = subWeapon;
 
         turnWeaponUI?.Invoke(mainWeapon, subWeapon);
+        GetWeapon?.Invoke();
     }
 
     public void setDic(IReadOnlyDictionary<Vector2Int, List<GameObject>> dic)
@@ -156,7 +158,7 @@ public class GameManager : MonoBehaviour
         if (state == gameState) return;
 
         gameState = state;
-        Debug.Log(gameState);
+        //Debug.Log(gameState);
         if (gameState == GameState.UI)
         {
             isStop = true;
