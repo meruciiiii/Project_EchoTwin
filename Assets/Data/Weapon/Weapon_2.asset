@@ -15,11 +15,11 @@ MonoBehaviour:
   ID: 2
   name: "\uD3B8\uC9D1\uC99D\uC758 \uB2E8\uAC80"
   baseDamage: 5
-  attackSpeed: 0.4
+  attackSpeed: 1.5
   attackRange: 1.5
   knockback: 1
   echoDMGRatio: 0.4
-  resonanceCount: 10
+  resonanceCount: 70
   icon: {fileID: 0}
   comboCount: 5
   comboCooltime: 0.3

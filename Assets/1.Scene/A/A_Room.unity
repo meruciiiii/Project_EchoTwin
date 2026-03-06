@@ -1453,6 +1453,7 @@ MonoBehaviour:
   playerCristal: 0
   maxHP: 0
   currentHP: 0
+  monsterCount: 0
 --- !u!4 &435573433
 Transform:
   m_ObjectHideFlags: 0
@@ -3472,7 +3473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3694530665047699874, guid: 9e8413844b192404a91f23efa574e774, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5174945449037824497, guid: 9e8413844b192404a91f23efa574e774, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3520,7 +3521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8149261924953474889, guid: 9e8413844b192404a91f23efa574e774, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8543995976116137487, guid: 9e8413844b192404a91f23efa574e774, type: 3}
       propertyPath: m_IsActive
@@ -10552,13 +10553,17 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2548321825698336321, guid: 1cbfe6c42d49f5249b01e184dd1cba47, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2661414865479576864, guid: 1cbfe6c42d49f5249b01e184dd1cba47, type: 3}
       propertyPath: m_Name
       value: 202_Bringer
       objectReference: {fileID: 0}
     - target: {fileID: 2661414865479576864, guid: 1cbfe6c42d49f5249b01e184dd1cba47, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4016912172792672820, guid: 1cbfe6c42d49f5249b01e184dd1cba47, type: 3}
       propertyPath: m_FlipX
@@ -11123,6 +11128,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8028336223892555208}
     m_Modifications:
+    - target: {fileID: 116578621360475903, guid: 9ad0a60868eb5c242ad6db5be1008fd9, type: 3}
+      propertyPath: projectileDuration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 751920994904368410, guid: 9ad0a60868eb5c242ad6db5be1008fd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.59
@@ -11181,6 +11190,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1939811182504724917, guid: 9ad0a60868eb5c242ad6db5be1008fd9, type: 3}
       propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2228518123847269972, guid: 9ad0a60868eb5c242ad6db5be1008fd9, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2740674598713461448, guid: 9ad0a60868eb5c242ad6db5be1008fd9, type: 3}
@@ -11762,7 +11775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5535286415238378190, guid: c86f23fb651ab2e46b263772633d28df, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9123616349856709653, guid: c86f23fb651ab2e46b263772633d28df, type: 3}
@@ -12547,7 +12560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8801808766398310614, guid: 43ba11d44c8ad714ba5b9328e08b4341, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1432630192383729508, guid: 43ba11d44c8ad714ba5b9328e08b4341, type: 3}
@@ -12569,7 +12582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692023956345576517, guid: 880b50225e9b11e489e369be6e358fc7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8069767805706790219, guid: 880b50225e9b11e489e369be6e358fc7, type: 3}
       propertyPath: m_LocalPosition.x

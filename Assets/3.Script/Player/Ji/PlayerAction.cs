@@ -30,6 +30,11 @@ public class PlayerAction : MonoBehaviour
 
     public UnityEvent onInteraction;
 
+    [SerializeField] private GameObject dieUI;
+
+    private Coroutine forSubscribe_Co;
+    private bool isSubscribed = false;
+
     private void Awake()
     {
         if (Equipment == null)
@@ -42,6 +47,37 @@ public class PlayerAction : MonoBehaviour
         TryGetComponent(out gizmo);
         TryGetComponent(out rb);
         ani = GetComponentInChildren<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.instance == null) return;
+        GameManager.instance.playerDie += onDie;
+
+        //if (forSubscribe_Co != null)
+        //{
+        //    StopCoroutine(forSubscribe_Co);
+        //    forSubscribe_Co = null;
+        //}
+        //forSubscribe_Co = StartCoroutine(subscribe_Co());
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.instance == null) return;
+        GameManager.instance.playerDie -= onDie;
+
+        //if (forSubscribe_Co != null)
+        //{
+        //    StopCoroutine(forSubscribe_Co);
+        //    forSubscribe_Co = null;
+        //}
+
+        //if (isSubscribed && GameManager.instance != null)
+        //{
+        //    GameManager.instance.whenGoNextMap -= movePlayerOverBridge;
+        //}
+        //isSubscribed = false;
     }
 
     private void Update()
@@ -57,6 +93,22 @@ public class PlayerAction : MonoBehaviour
             }
         }
     }
+
+    //private IEnumerator subscribe_Co()
+    //{
+    //    while (GameManager.instance == null)
+    //    {
+    //        yield return null;
+    //    }
+
+    //    if (!isSubscribed)
+    //    {
+    //        GameManager.instance.whenGoNextMap += movePlayerOverBridge;
+    //        isSubscribed = true;
+    //    }
+
+    //    forSubscribe_Co = null;
+    //}
 
     public void checkWeapon()
     {
@@ -114,6 +166,14 @@ public class PlayerAction : MonoBehaviour
         {
             GameManager.instance.ChangeState(GameManager.GameState.Die);
         }
+    }
+
+    private void onDie()
+    {
+        dieUI.SetActive(true);
+        Equipment.SubWeapon = null;
+        Equipment.MainWeapon = null;
+        stats.resetGold();
     }
 
     private void knockback(Vector3 dir, float knockbackForce)

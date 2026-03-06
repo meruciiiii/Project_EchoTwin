@@ -32,7 +32,7 @@ public class PlayerStats : MonoBehaviour
 
 
     [Header("Player Currency")]
-    [SerializeField] private int gold = 1000;
+    [SerializeField] private int gold = 0;
     [SerializeField] private int cristal = 0;
 
     public event Action<int, int> onHpChanged;
@@ -96,6 +96,11 @@ public class PlayerStats : MonoBehaviour
 
         currentHP -= 1;
         onHpChanged?.Invoke(currentHP, maxHP);
+    }
+
+    public void resetGold()
+    {
+        gold = 0;
     }
 
     public void getGold(int amount)
