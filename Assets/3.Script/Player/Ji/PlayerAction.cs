@@ -52,7 +52,7 @@ public class PlayerAction : MonoBehaviour
     private void OnEnable()
     {
         if (GameManager.instance == null) return;
-        GameManager.instance.playerDie += onDie;
+        //GameManager.instance.playerDie += onDie;
 
         //if (forSubscribe_Co != null)
         //{
@@ -65,7 +65,7 @@ public class PlayerAction : MonoBehaviour
     private void OnDisable()
     {
         if (GameManager.instance == null) return;
-        GameManager.instance.playerDie -= onDie;
+        //GameManager.instance.playerDie -= onDie;
 
         //if (forSubscribe_Co != null)
         //{

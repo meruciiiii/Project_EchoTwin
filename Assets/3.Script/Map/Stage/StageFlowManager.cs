@@ -27,6 +27,11 @@ public class StageFlowManager : MonoBehaviour
             enterTable.Add(camp[i], FindChildWithTag(camp[i]));
         }
     }
+    public void StartStage()
+    {
+        mapManager.GenerateMap(1);
+        stageManager.GenerateStage();
+    }
     public Transform FindChildWithTag(GameObject parent)
     {
         foreach (Transform child in parent.transform)

@@ -19,6 +19,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] private RoomObjects roomObjects;
     [SerializeField] private Vector2Int currentCoord;
 
+    private bool isEventSubscribed = false;
+
     //오브젝트 연결 필요(맵 순서에 맞춰서, 노드들에 입히는것 중복 없게 만들기)
     private void Awake()
     {
@@ -42,6 +44,30 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetComponent EnemySpawner is fail");
         //roomObjects = Resources.Load<RoomObjects>("RoomPrefabsScriptableObject");
     }
+    private void SubscribeEvents()
+    {
+        if (isEventSubscribed) return;
+
+        roomView.OnDoorUsed += PlayerTryMove;
+        GameManager.instance.whenArriveNextMap += PlayerInBattle;
+        GameManager.instance.GetWeapon += GetWeapon;
+        GameManager.instance.roomClearCheck += RoomClear;
+
+        isEventSubscribed = true;
+        Debug.Log("[MapManager] 이벤트 구독 완료");
+    }
+    private void UnsubscribeEvents()
+    {
+        if (!isEventSubscribed) return;
+
+        roomView.OnDoorUsed -= PlayerTryMove;
+        GameManager.instance.whenArriveNextMap -= PlayerInBattle;
+        GameManager.instance.GetWeapon -= GetWeapon;
+        GameManager.instance.roomClearCheck -= RoomClear;
+
+        isEventSubscribed = false;
+        Debug.Log("[MapManager] 이벤트 구독 해제 완료");
+    }
     public void GenerateMap(int floorIndex)
     {
         int safety = 100;
@@ -60,15 +86,11 @@ public class MapManager : MonoBehaviour
         }
         while (mapChecker.LongestCheck(microMap, isBoss));
         int count = 100 - safety;
-        //Debug.Log("Map Create is Finished in " + count + "....................");
         int stage = GameManager.instance.lastStage > 0 ? 2 : 1;
         roomObject = mapRoomPopulator.Populate(microMap, stage, floorIndex, roomObjects);//please edit stage and floor
-        //Debug.Log("Populate is sucess");
         enemyPool = enemySpawner.SpawnMonster(microMap, roomObject);
         GameManager.instance.setDic(enemyPool);
-        //Debug.Log("enemySpawn is sucess");
         SetStartCoord();
-        //Debug.Log("currentCoord is : " + currentCoord);
         mapMoving.MoveStartRooom();
         if (!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
         {
@@ -84,11 +106,9 @@ public class MapManager : MonoBehaviour
         microMap[currentCoord].SetVisit();
         mapDrawer.EnterDraw(GetMap(), currentCoord);
         roomView.DoorAccordingState(floor);
-        roomView.EnterStartRoomFirst(floor);
-        roomView.OnDoorUsed += PlayerTryMove;
-        GameManager.instance.whenArriveNextMap += PlayerInBattle;
-        GameManager.instance.GetWeapon += GetWeapon;
-        GameManager.instance.roomClearCheck += RoomClear;
+        if (GameManager.instance.mainWeapon == null)
+            roomView.EnterStartRoomFirst(floor);
+        SubscribeEvents();
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
     {
@@ -110,6 +130,8 @@ public class MapManager : MonoBehaviour
     }
     private void GetWeapon()
     {
+        if (GameManager.instance.subWeapon != null)
+            return;
         if (!microMap.TryGetValue(currentCoord, out FloorData floor))
         {
             Debug.Log("TryGetValue roomPrefab is Error");
@@ -176,6 +198,7 @@ public class MapManager : MonoBehaviour
     }
     public void MapClear()
     {
+        UnsubscribeEvents();
         foreach (KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
         {
             if (enemyList.Value != null)
@@ -186,7 +209,7 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-        microMap.Clear();
+        mapCreater.RemoveMap(microMap);
         roomObject.Clear();
         enemyPool.Clear();
     }
@@ -213,5 +236,9 @@ public class MapManager : MonoBehaviour
             return;
         Debug.Log("PlayerInBattle is Start");
         roomView.BridgeisMove(floor);
+    }
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }
