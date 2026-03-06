@@ -6,14 +6,10 @@ using UnityEngine;
 
 public class EnterDungeon : MonoBehaviour
 {
-    [SerializeField] private MapManager mapManager;
-    private void Awake()
-    {
-        
-    }
+    [SerializeField] private StageFlowManager stageFlowManager;
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        mapManager.GenerateMap();
+        stageFlowManager.StartStage();
     }
 }

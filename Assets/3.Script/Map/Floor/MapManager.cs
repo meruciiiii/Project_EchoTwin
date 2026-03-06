@@ -19,6 +19,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] private RoomObjects roomObjects;
     [SerializeField] private Vector2Int currentCoord;
 
+    private bool isEventSubscribed = false;
+
     //오브젝트 연결 필요(맵 순서에 맞춰서, 노드들에 입히는것 중복 없게 만들기)
     private void Awake()
     {
@@ -42,9 +44,36 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetComponent EnemySpawner is fail");
         //roomObjects = Resources.Load<RoomObjects>("RoomPrefabsScriptableObject");
     }
-    public void GenerateMap()
+    private void SubscribeEvents()
+    {
+        if (isEventSubscribed) return;
+
+        roomView.OnDoorUsed += PlayerTryMove;
+        GameManager.instance.whenArriveNextMap += PlayerInBattle;
+        GameManager.instance.GetWeapon += GetWeapon;
+        GameManager.instance.roomClearCheck += RoomClear;
+
+        isEventSubscribed = true;
+        Debug.Log("[MapManager] 이벤트 구독 완료");
+    }
+    private void UnsubscribeEvents()
+    {
+        if (!isEventSubscribed) return;
+
+        roomView.OnDoorUsed -= PlayerTryMove;
+        GameManager.instance.whenArriveNextMap -= PlayerInBattle;
+        GameManager.instance.GetWeapon -= GetWeapon;
+        GameManager.instance.roomClearCheck -= RoomClear;
+
+        isEventSubscribed = false;
+        Debug.Log("[MapManager] 이벤트 구독 해제 완료");
+    }
+    public void GenerateMap(int floorIndex)
     {
         int safety = 100;
+        bool isBoss = false;
+        if (floorIndex.Equals(5))
+            isBoss = true;
         do
         {
             mapCreater.CreateMap(microMap);
@@ -55,16 +84,13 @@ public class MapManager : MonoBehaviour
                 break;
             }
         }
-        while (mapChecker.LongestCheck(microMap));
+        while (mapChecker.LongestCheck(microMap, isBoss));
         int count = 100 - safety;
-        //Debug.Log("Map Create is Finished in " + count + "....................");
-        roomObject = mapRoomPopulator.Populate(microMap, 1, 1, roomObjects);//please edit stage and floor
-        //Debug.Log("Populate is sucess");
+        int stage = GameManager.instance.lastStage > 0 ? 2 : 1;
+        roomObject = mapRoomPopulator.Populate(microMap, stage, floorIndex, roomObjects);//please edit stage and floor
         enemyPool = enemySpawner.SpawnMonster(microMap, roomObject);
         GameManager.instance.setDic(enemyPool);
-        //Debug.Log("enemySpawn is sucess");
         SetStartCoord();
-        //Debug.Log("currentCoord is : " + currentCoord);
         mapMoving.MoveStartRooom();
         if (!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
         {
@@ -80,14 +106,39 @@ public class MapManager : MonoBehaviour
         microMap[currentCoord].SetVisit();
         mapDrawer.EnterDraw(GetMap(), currentCoord);
         roomView.DoorAccordingState(floor);
-        roomView.OnDoorUsed += PlayerTryMove;
-        GameManager.instance.whenArriveNextMap += PlayerInBattle;
+        if (GameManager.instance.mainWeapon == null)
+            roomView.EnterStartRoomFirst(floor);
+        SubscribeEvents();
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
     {
         return microMap;
     }
-    
+    private void RoomClear()
+    {
+        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
+        {
+            Debug.Log("TryGetValue roomPrefab is Error");
+            return;
+        }
+        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+            return;
+        if (floor.GetClear())
+            return;
+        Debug.Log("RoomClear is Start");
+        roomView.BridgeisMove(floor);
+    }
+    private void GetWeapon()
+    {
+        if (GameManager.instance.subWeapon != null)
+            return;
+        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
+        {
+            Debug.Log("TryGetValue roomPrefab is Error");
+            return;
+        }
+        roomView.BridgeisMove(floor);
+    }
     public void PlayerTryMove(Vector2Int direction)
     {
         Vector2Int target = currentCoord + direction;
@@ -101,10 +152,15 @@ public class MapManager : MonoBehaviour
             Debug.Log("currentCoord is Error");
             return;
         }
+        if (enemyPool.TryGetValue(currentCoord, out List<GameObject> enemyList))
+        {
+            enemyList.Clear();
+        }
+        oldFloor.SetClear();
         roomView.DoorResetting();
         currentCoord = target;
         //해당 오브젝트 가져오기
-        if(!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
+        if (!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
         {
             Debug.Log("TryGetValue roomPrefab is Error");
             return;
@@ -116,8 +172,6 @@ public class MapManager : MonoBehaviour
         Vector3 playerSpawnPosition = roomView.GetDoor(direction);
         microMap[currentCoord].SetVisit();
         Vector3 targetPosition = playerSpawnPosition + 4 * direction.x * Vector3.right + 4 * direction.y * Vector3.forward;
-        Debug.Log("start position : "+playerSpawnPosition);
-        Debug.Log("end position : "+ targetPosition);
         GameManager.instance.whenMapChange(targetPosition, currentCoord);
         mapDrawer.EnterDraw(GetMap(), currentCoord);
         mapMoving.MovePlayer(playerSpawnPosition);
@@ -144,30 +198,47 @@ public class MapManager : MonoBehaviour
     }
     public void MapClear()
     {
-        foreach(KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
+        UnsubscribeEvents();
+        foreach (KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
         {
             if (enemyList.Value != null)
             {
-                foreach(GameObject enemy in enemyList.Value)
+                foreach (GameObject enemy in enemyList.Value)
                 {
                     Destroy(enemy);
                 }
             }
         }
-        microMap.Clear();
+        mapCreater.RemoveMap(microMap);
         roomObject.Clear();
         enemyPool.Clear();
     }
     private void PlayerInBattle()
     {
-        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
-            return;
-        if (!microMap.TryGetValue(currentCoord, out FloorData Floor))
+        if (!microMap.TryGetValue(currentCoord, out FloorData floor))
         {
             Debug.Log("oldFloor TryGetValue is Error");
             return;
         }
-        roomView.BridgeisMove(Floor);
-
+        //if (enemyPool.TryGetValue(currentCoord, out List<GameObject> enemyList))
+        //{
+        //    if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle) && enemyList.Count.Equals(0))
+        //        return;
+        //}
+        //else
+        //{
+        //    if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+        //        return;
+        //}
+        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+            return;
+        if (floor.GetClear())
+            return;
+        Debug.Log("PlayerInBattle is Start");
+        roomView.BridgeisMove(floor);
+    }
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }

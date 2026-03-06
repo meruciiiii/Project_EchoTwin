@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterPackData
   monsterPackID: 7
   monsters:
-  - monsterID: 105
-    count: 1
   - monsterID: 109
     count: 2
   - monsterID: 108
-    count: 2
+    count: 3
   totalCount: 5
-  description: "\uD574\uACE8 1 + \uD398\uBE14 2 + \uBC15\uC950 2 (\uC6D0\uAC70\uB9AC
-    \uC555\uBC15)"
+  description: "\uD398\uBE14 2 + \uBC15\uC950 3 (\uC6D0\uAC70\uB9AC \uC555\uBC15)"

@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 1
   name: "\uD30C\uAD34\uC790\uC758 \uB9DD\uCE58"
   baseDamage: 25
-  attackSpeed: 2.2
+  attackSpeed: 1
   attackRange: 3
   knockback: 8
   echoDMGRatio: 0.3

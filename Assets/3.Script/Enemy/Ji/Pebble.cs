@@ -45,7 +45,9 @@ public class Pebble : EnemyStateAbstract
     {
         if (state == EnemyState.attack) return;
         if (coroutine != null) return;
-        if (!canAttack())
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+
+        if (!canAttack() || distance > enemyData.attackRange + buffer)
         {
             Move();
             return;
@@ -58,7 +60,10 @@ public class Pebble : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
-        TurnOffNavmesh();
+        if (navMesh.enabled && navMesh.isOnNavMesh)
+        {
+            navMesh.ResetPath();
+        }
 
         effect.ChargeEffect(enemyData.attackSpeed);
         yield return new WaitForSeconds(enemyData.attackSpeed);
@@ -68,11 +73,11 @@ public class Pebble : EnemyStateAbstract
 
         checkAttackTime();
 
-        Vector3 targetPos = player.transform.position;
-        targetPos.y = 1f; // 0f에서 1f로 수정 (플레이어 가슴 높이 조준)
-
         Vector3 startPos = transform.position;
-        startPos.y = 1f; // 0f에서 1f로 수정 (몬스터 가슴 높이 발사)
+        startPos.y -= 0.5f; // 몬스터의 피벗이 발밑이라면 0.5f 정도 올려서 가슴 위치로 잡음
+
+        Vector3 targetPos = player.transform.position;
+        targetPos.y -= 0.5f; // 플레이어도 발밑이 아닌 몸 중심을 조준하도록 수정
 
         Vector3 dir = (targetPos - startPos).normalized;
 
@@ -187,17 +192,22 @@ public class Pebble : EnemyStateAbstract
 
     protected override void TurnOffNavmesh()
     {
-        navMesh.isStopped = true;
-        navMesh.ResetPath();
-        //navMesh.enabled = false;
+        if (navMesh != null && navMesh.enabled && navMesh.isOnNavMesh)
+        {
+            navMesh.isStopped = true;
+            navMesh.ResetPath();
+        }
 
         rb.isKinematic = false;
-        rb.linearVelocity = Vector3.zero;
+        //rb.linearVelocity = Vector3.zero;
     }
 
     protected override void TurnOnNavmesh()
     {
-        rb.linearVelocity = Vector3.zero;
+        if (rb != null && !rb.isKinematic)
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
         rb.isKinematic = true;
 
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))

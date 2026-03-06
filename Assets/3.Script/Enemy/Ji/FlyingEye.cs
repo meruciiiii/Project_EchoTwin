@@ -97,7 +97,10 @@ public class FlyingEye : EnemyStateAbstract
 
     protected override void TurnOnNavmesh()
     {
-        rb.linearVelocity = Vector3.zero;
+        if (rb != null && !rb.isKinematic)
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
         rb.isKinematic = true;
 
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))

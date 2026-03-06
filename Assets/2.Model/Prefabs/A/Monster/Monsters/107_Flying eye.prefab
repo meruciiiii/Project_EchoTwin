@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4254211016768812617
 Transform:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FlyingEye
   enemyData: {fileID: 11400000, guid: 6eeadcc91fc8e144091b743b6c984197, type: 2}
   navMesh: {fileID: 6665188182516167834}
-  player: {fileID: 0}
+  state: 0
   knockbackTime: 0.2
   ground:
     serializedVersion: 2
@@ -166,7 +166,6 @@ GameObject:
   - component: {fileID: 3600704144202355103}
   - component: {fileID: 3098009890568019460}
   - component: {fileID: 3338620949196337132}
-  - component: {fileID: 8134456153045124803}
   m_Layer: 0
   m_Name: 107_Flying eye_mesh
   m_TagString: Untagged
@@ -269,24 +268,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &8134456153045124803
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8005332172015026558}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.37, y: 0.39, z: 0.2}
-  m_Center: {x: 0, y: -0.07, z: 0}

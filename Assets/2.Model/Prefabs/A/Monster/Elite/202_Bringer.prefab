@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9084874780780747145
 Transform:
   m_ObjectHideFlags: 0
@@ -52,7 +52,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bringer
   enemyData: {fileID: 11400000, guid: 30bb8e05c0273d846b15470129aa29a3, type: 2}
   navMesh: {fileID: 449961930774152188}
-  player: {fileID: 0}
+  state: 0
   knockbackTime: 0.2
   ground:
     serializedVersion: 2
@@ -167,7 +167,6 @@ GameObject:
   - component: {fileID: 8648941665842602758}
   - component: {fileID: 1925844173375441879}
   - component: {fileID: 4016912172792672820}
-  - component: {fileID: 2724177631833370820}
   m_Layer: 0
   m_Name: 202_Bringer Of Death
   m_TagString: Untagged
@@ -270,27 +269,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &2724177631833370820
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7246479703544871162}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.39, y: 0.48, z: 0.2}
-  m_Center: {x: 0.36, y: -0.22, z: 0}
 --- !u!1001 &8140967706486751280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -313,7 +291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1500222037847732299, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.008385658
+      value: 0.105
       objectReference: {fileID: 0}
     - target: {fileID: 1500222037847732299, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
       propertyPath: m_LocalPosition.z
@@ -346,6 +324,46 @@ PrefabInstance:
     - target: {fileID: 1500222037847732299, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028054692264545905, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028054692264545905, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_Size.y
+      value: 2.3788218
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028054692264545905, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_Size.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028054692264545905, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_Center.x
+      value: -0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028054692264545905, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_Center.y
+      value: 1.1595175
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028054692264545905, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678161917619067047, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678161917619067047, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678161917619067047, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678161917619067047, guid: 90a65bcc1eac948459e175749f82bb42, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.239
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

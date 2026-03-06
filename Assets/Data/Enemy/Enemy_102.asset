@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 102
   name: Rat
   tier: Normal
-  maxHP: 20
+  maxHP: 30
   damage: 4
   moveSpeed: 4.5
   attackSpeed: 2

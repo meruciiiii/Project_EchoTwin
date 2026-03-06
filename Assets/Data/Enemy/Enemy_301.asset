@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 301
   name: Sentinel
   tier: Boss
-  maxHP: 2000
+  maxHP: 1000
   damage: 1
   moveSpeed: 3
   attackSpeed: 2
