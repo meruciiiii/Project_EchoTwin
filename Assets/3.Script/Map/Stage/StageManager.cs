@@ -10,7 +10,7 @@ public class StageManager : MonoBehaviour
     private StageCreater stageCreater;
     private StageNodePopulator stageNodePopulator;
     [SerializeField] private StageNodeView stageNodeView;
-    [SerializeField] private PortalController portalController;
+    [SerializeField] private PortalManager portalManager;
 
     public event Action<StageNode> onNodeEntered;
     public event Action onPortalEntered;
@@ -25,7 +25,7 @@ public class StageManager : MonoBehaviour
             Debug.Log("TryGetComponent StageNodePopulator is fail");
         }
         stageNodeView.onNodeEntered += OnNodeEntered;
-        portalController.onPortalEntered += OnPortalEntered;
+        portalManager.onPortalEntered += OnPortalEntered;
     }
     public void GenerateStage()
     {
@@ -42,4 +42,4 @@ public class StageManager : MonoBehaviour
         onPortalEntered?.Invoke();
         stageNodeView.gameObject.SetActive(true);
     }
-}
+} 

@@ -616,6 +616,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
+--- !u!114 &344080492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5164405117479168663, guid: b850cfa98f5328c4daef7923ff6cba06, type: 3}
+  m_PrefabInstance: {fileID: 580735367}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feea63350cff2104cb894b4d927cd3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalController
 --- !u!1001 &351391893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1562,6 +1573,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1437402425186157972, guid: a8946af62d189a344a473b6130b0eb06, type: 3}
   m_PrefabInstance: {fileID: 1240008865}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1050220891 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3247815947526159313, guid: 4353eb73e97fc4441875a6cbc4702230, type: 3}
+  m_PrefabInstance: {fileID: 1087630205}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feea63350cff2104cb894b4d927cd3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalController
 --- !u!1001 &1050307272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2078,6 +2100,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
+--- !u!114 &1354730913 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5559599981379605589, guid: 374dca462e32d4344a73ab1370ff4a7a, type: 3}
+  m_PrefabInstance: {fileID: 1050681345}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feea63350cff2104cb894b4d927cd3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalController
 --- !u!4 &1410954691 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7536574127580286889, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
@@ -3562,6 +3595,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1948821004142161006, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
+      propertyPath: portalControllers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948821004142161006, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
+      propertyPath: 'portalControllers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 344080492}
+    - target: {fileID: 1948821004142161006, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
+      propertyPath: 'portalControllers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1354730913}
+    - target: {fileID: 1948821004142161006, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
+      propertyPath: 'portalControllers.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1050220891}
+    - target: {fileID: 1948821004142161006, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
+      propertyPath: 'portalControllers.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1473871622}
     - target: {fileID: 5767707885718543929, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
       propertyPath: stageNodeView
       value: 

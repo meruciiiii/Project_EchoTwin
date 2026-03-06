@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6296333310151396080}
   - component: {fileID: 5410384776595364804}
   - component: {fileID: 3212600562076693336}
-  - component: {fileID: 5209147260249473687}
+  - component: {fileID: 1948821004142161006}
   m_Layer: 0
   m_Name: StageManager
   m_TagString: Untagged
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageManager
   stageNodeView: {fileID: 0}
+  portalManager: {fileID: 1948821004142161006}
 --- !u!114 &6296333310151396080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7da77f79db53c4db0af98aafe03933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageChecker
---- !u!114 &5209147260249473687
+--- !u!114 &1948821004142161006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +95,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6137873694116001214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feea63350cff2104cb894b4d927cd3b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 612d1f61174da7e459ae8acb3dc341d7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PortalController
-  roomTag: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalManager
+  portalControllers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

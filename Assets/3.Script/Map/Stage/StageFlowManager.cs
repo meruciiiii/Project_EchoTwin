@@ -61,7 +61,9 @@ public class StageFlowManager : MonoBehaviour
     }
     private void OnBossNode(StageNode node)
     {
+        mapManager.GenerateMap(node.floorIndex);
         Debug.Log("Boss Battle!");
+        Debug.Log("node.floorIndex = "+ node.floorIndex + "!");
     }
     private void OnRecoveryNode(StageNode node)
     {
