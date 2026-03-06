@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 302
   name: RedDragon
   tier: Boss
-  maxHP: 3000
+  maxHP: 2000
   damage: 1
   moveSpeed: 0
   attackSpeed: 1

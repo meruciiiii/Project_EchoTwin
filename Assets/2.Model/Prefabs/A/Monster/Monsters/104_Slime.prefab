@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5021385528478402775}
   - component: {fileID: 5154097809314369778}
   - component: {fileID: 6631378962070022127}
-  - component: {fileID: 1032985694272700158}
   m_Layer: 0
   m_Name: 104_Slime_mesh
   m_TagString: Untagged
@@ -114,27 +113,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &1032985694272700158
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9206241224328529932}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.25, y: 0.18, z: 0.2}
-  m_Center: {x: 0, y: -0.07, z: 0}
 --- !u!1 &9217113384809659517
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7811979438199234068
 Transform:
   m_ObjectHideFlags: 0
@@ -213,7 +191,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -284,8 +262,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpikeSlime
   enemyData: {fileID: 11400000, guid: f49866b352fd3984780763dd136c58f9, type: 2}
   navMesh: {fileID: 3512221159141086779}
-  player: {fileID: 0}
+  state: 0
   knockbackTime: 0.2
   ground:
     serializedVersion: 2
     m_Bits: 256
+  duration: 0.5
+  jumpHeight: 2

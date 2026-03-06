@@ -178,26 +178,26 @@ public class PlayerAction : MonoBehaviour
 
     private void knockback(Vector3 dir, float knockbackForce)
     {
-        if (Equipment.MainWeapon.IsCharging) return;
+        //if (Equipment.MainWeapon.IsCharging) return;
 
         if (isKnockback) return;
-
+        isKnockback = true; 
         StartCoroutine(knockBack_Co(dir, knockbackForce));
     }
 
     private IEnumerator knockBack_Co(Vector3 dir, float knockbackForce)
     {
-        isKnockback = true;
-
+        rb.isKinematic = false;
         rb.linearVelocity = Vector3.zero;
-        rb.AddForce(-dir * stats.KnockBackForce * knockbackForce, ForceMode.Impulse);
 
-        yield return new WaitForFixedUpdate();
+        Vector3 finalDir = dir;
+        finalDir.y = 0;
 
-        while (rb.linearVelocity.magnitude > stats.KnockBackForce * 0.5f) yield return null;
+        rb.AddForce(finalDir * knockbackForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(0.2f); // 넉백 시간 (필요시 변수로 대체)
 
         isKnockback = false;
-        //transform.GetComponent<Rigidbody>().AddForce(-dir * stats.KnockBackForce, ForceMode.Impulse);
     }
 
     public void OnWeaponAcquire(WeaponID ID)

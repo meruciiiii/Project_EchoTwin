@@ -53,12 +53,10 @@ MonoBehaviour:
       count: 3
   - monsterPackID: 7
     monsterDataList:
-    - monsterPrefab: {fileID: 7863740108398017675, guid: 8933ddfe59a44ee4897c99767e4b20a8, type: 3}
-      count: 1
     - monsterPrefab: {fileID: 2740674598713461448, guid: 9ad0a60868eb5c242ad6db5be1008fd9, type: 3}
       count: 2
     - monsterPrefab: {fileID: 4148811744610283067, guid: dc95558c76165c24c8ccfa15fb3d3705, type: 3}
-      count: 2
+      count: 3
   - monsterPackID: 8
     monsterDataList:
     - monsterPrefab: {fileID: 5535286415238378190, guid: c86f23fb651ab2e46b263772633d28df, type: 3}

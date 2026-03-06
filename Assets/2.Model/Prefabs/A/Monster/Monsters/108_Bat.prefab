@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3462190542002926660
 Transform:
   m_ObjectHideFlags: 0
@@ -51,14 +51,14 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.8228941, y: 1.8423058, z: 1}
-  m_Center: {x: 0.016100526, y: 0.10211438, z: 0}
+  m_Center: {x: 0.016100526, y: 0.92, z: 0}
 --- !u!54 &8268270707996284294
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.82
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &9041892672721342352
@@ -149,12 +149,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bat
   enemyData: {fileID: 11400000, guid: 6c70a8b703d6163428e171e1abe41e11, type: 2}
   navMesh: {fileID: 4403438765111185947}
-  player: {fileID: 0}
+  state: 0
   knockbackTime: 0.2
   ground:
     serializedVersion: 2
     m_Bits: 256
-  bodyAttackMultiple: 3
+  dashSpeed: 2
   zigzagRadius: 2
   zigzagTime: 0.3
 --- !u!1 &9054791597026982467
@@ -168,7 +168,6 @@ GameObject:
   - component: {fileID: 9151023913237517132}
   - component: {fileID: 8798706076896414637}
   - component: {fileID: 4409835539046542359}
-  - component: {fileID: 4499476430659071450}
   m_Layer: 0
   m_Name: 108_Bat_mesh
   m_TagString: Untagged
@@ -185,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 9054791597026982467}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.038, y: 0.605, z: 0}
+  m_LocalPosition: {x: 0.038, y: 1.29, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -271,24 +270,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &4499476430659071450
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9054791597026982467}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.19, y: 0.39, z: 0.2}
-  m_Center: {x: 0, y: -0.07, z: 0}
