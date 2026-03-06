@@ -61,16 +61,23 @@ public class PlayerStats : MonoBehaviour
         //maxHP = GameManager.instance.maxHP;
         //gold = GameManager.instance.playerGold;
         //cristal = GameManager.instance.playerCristal;
-    }
-
-    private void Start()
-    {
         setHP();
         setGold();
     }
 
+    private void Start()
+    {
+
+    }
+
+    private void OnEnable()
+    {
+
+    }
+
     private void setHP()
     {
+        Debug.Log("1");
         if (currentHP != 0)
         {
             onMaxHpChanged?.Invoke(maxHP);

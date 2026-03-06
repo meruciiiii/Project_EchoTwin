@@ -33,8 +33,10 @@ public class Sentinel : EnemyStateAbstract
     [SerializeField] private Color warningColor = new Color(1f, 0f, 0f, 0.4f);
     private Queue<WarningGizmo> warningPool;
 
+    private List<SentinelProjectile> rockList;
     private List<PebbleForBoss> rangeMobList;
     private List<RatForBoss> meleeMobList;
+    private List<WarningGizmo> warningList;
     private bool isClearPool = false;
 
     protected override void Awake()
@@ -44,14 +46,17 @@ public class Sentinel : EnemyStateAbstract
         moveSpeed = enemyData.moveSpeed;
         attackSpeed = enemyData.attackSpeed;
         coolTime = enemyData.coolTime;
+        setMoveSpeed();
 
         rockPool = new Queue<SentinelProjectile>();
         rangeMobPool = new Queue<PebbleForBoss>();
         meleeMobPool = new Queue<RatForBoss>();
         warningPool = new Queue<WarningGizmo>();
 
+        rockList = new List<SentinelProjectile>();
         rangeMobList = new List<PebbleForBoss>();
         meleeMobList = new List<RatForBoss>();
+        warningList = new List<WarningGizmo>();
 
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
@@ -60,6 +65,8 @@ public class Sentinel : EnemyStateAbstract
             rock.transform.localPosition = Vector3.zero;
             rock.gameObject.SetActive(false);
             rockPool.Enqueue(rock);
+
+            rockList.Add(rock);
         }
         for (int i = 0; i < rangeCount; i++)
         {
@@ -88,11 +95,15 @@ public class Sentinel : EnemyStateAbstract
             warning.transform.localPosition = Vector3.zero;
             warning.gameObject.SetActive(false);
             warningPool.Enqueue(warning);
+
+            warningList.Add(warning);
         }
     }
 
     protected override void OnEnable()
-    { }
+    {
+        state = EnemyState.chase;
+    }
 
     protected override void Update()
     {
@@ -231,12 +242,12 @@ public class Sentinel : EnemyStateAbstract
 
         yield return new WaitForSeconds(attackSpeed);
 
-        //if (ani != null) ani.SetTrigger("Attack");
+        if (ani != null) ani.SetTrigger("Attack01");
 
         checkAttackTime();
 
         AreaAttack(enemyData.attackRange, 270f);
-
+        warning.Hide();
         coroutine = null;
 
         if (state != EnemyState.dead)
@@ -255,7 +266,7 @@ public class Sentinel : EnemyStateAbstract
         yield return new WaitForSeconds(rangeAttackSpeed);
 
 
-        //ani
+        if (ani != null) ani.SetTrigger("Attack02");
 
         checkAttackTime();
 
@@ -304,7 +315,7 @@ public class Sentinel : EnemyStateAbstract
         effect.ChargeEffect(spawnSpeed);
         yield return new WaitForSeconds(spawnSpeed);
 
-        //ani
+        if (ani != null) ani.SetTrigger("Attack03");
 
         checkAttackTime();
 
@@ -397,15 +408,41 @@ public class Sentinel : EnemyStateAbstract
         meleeMobPool.Enqueue(meleeMob);
     }
 
+    private WarningGizmo getWarning()
+    {
+        if (warningPool.Count == 0) return null;
+
+        WarningGizmo warning = warningPool.Dequeue();
+        warning.init(returnWarning);
+        return warning;
+    }
+
+    public void returnWarning(WarningGizmo warning)
+    {
+        if (isClearPool || state == EnemyState.dead) return;
+
+        warning.transform.localPosition = Vector3.zero;
+        warningPool.Enqueue(warning);
+    }
+
     private void returnAllToPool()
     {
         if (PoolsPos == null) return;
         isClearPool = true;
 
+        for (int i = 0; i < rockList.Count; i++)
+        {
+            SentinelProjectile rock = rockList[i];
+            if (rock == null) continue;
+            rock.transform.SetParent(PoolsPos.transform);
+            rock.transform.localPosition = Vector3.zero;
+            if (rock.gameObject.activeSelf) rock.gameObject.SetActive(false);
+        }
+
         for (int i = 0; i < rangeMobList.Count; i++)
         {
             PebbleForBoss rangeMob = rangeMobList[i];
-            if (rangeMob == null) return;
+            if (rangeMob == null) continue;
             rangeMob.transform.SetParent(PoolsPos.transform);
             rangeMob.transform.localPosition = Vector3.zero;
             if (rangeMob.gameObject.activeSelf) rangeMob.gameObject.SetActive(false);
@@ -414,23 +451,25 @@ public class Sentinel : EnemyStateAbstract
         for (int i = 0; i < meleeMobList.Count; i++)
         {
             RatForBoss meleeMob = meleeMobList[i];
-            if (meleeMob == null) return;
+            if (meleeMob == null) continue;
             meleeMob.transform.SetParent(PoolsPos.transform);
             meleeMob.transform.localPosition = Vector3.zero;
             if (meleeMob.gameObject.activeSelf) meleeMob.gameObject.SetActive(false);
         }
 
+        for (int i = 0; i < warningList.Count; i++)
+        {
+            WarningGizmo warning = warningList[i];
+            if (warning == null) continue;
+            warning.transform.SetParent(PoolsPos.transform);
+            warning.transform.localPosition = Vector3.zero;
+            if (warning.gameObject.activeSelf) warning.gameObject.SetActive(false);
+        }
+
+        rockList.Clear();
         rangeMobList.Clear();
         meleeMobList.Clear();
-
-        for (int i = 0; i < rangeMobList.Count; i++)
-        {
-            if (rangeMobList[i] != null) rangeMobPool.Enqueue(rangeMobList[i]);
-        }
-        for (int i = 0; i < meleeMobList.Count; i++)
-        {
-            if (meleeMobList[i] != null) meleeMobPool.Enqueue(meleeMobList[i]);
-        }
+        warningList.Clear();
 
         isClearPool = false;
     }
@@ -446,18 +485,5 @@ public class Sentinel : EnemyStateAbstract
     protected override void setMoveSpeed()
     {
         navMesh.speed = moveSpeed;
-    }
-
-    private WarningGizmo getWarning()
-    {
-        if (warningPool.Count == 0) return null;
-        return warningPool.Dequeue();
-    }
-
-    private void returnWarning(WarningGizmo warning)
-    {
-        warning.transform.SetParent(PoolsPos.transform);
-        warning.transform.localPosition = Vector3.zero;
-        warningPool.Enqueue(warning);
     }
 }
