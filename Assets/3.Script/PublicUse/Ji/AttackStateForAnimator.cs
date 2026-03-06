@@ -7,6 +7,7 @@ public class AttackStateForAnimator : StateMachineBehaviour
 {
     private PlayerAction action;
     private WeaponAbstract weapon;
+    private PlayerStats stats;
 
     private bool isLastAttack = false;
     [Range(0f, 1f)] public float unlockRotationTime = 0.5f;
@@ -16,12 +17,24 @@ public class AttackStateForAnimator : StateMachineBehaviour
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (action == null) action = animator.GetComponentInParent<PlayerAction>();
+        if (action == null) stats = animator.GetComponentInParent<PlayerStats>();
+
+        if (stats != null && stats.isDash)
+        {
+            if (action != null)
+            {
+                action.forStopMove = false;
+                action.forStopRotate = false;
+            }
+            return;
+        }
+
         if (action != null)
         {
 
             weapon = action.Equipment.MainWeapon;
 
-            if (weapon.weaponID != WeaponID.Hammer && weapon != null)
+            if (weapon != null && weapon.weaponID != WeaponID.Hammer)
             {
                 int comboIndex = animator.GetInteger("ComboState");
                 int maxCombo = weapon.weaponData.comboCount;
@@ -55,6 +68,15 @@ public class AttackStateForAnimator : StateMachineBehaviour
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (action == null) return;
+
+        if (stats != null && stats.isDash)
+        {
+            action.forStopMove = false;
+            action.forStopRotate = false;
+            return;
+        }
+
+        if (weapon == null) return;
         if (weapon.weaponID == WeaponID.Hammer) return;
 
         if (animator.IsInTransition(layerIndex))
@@ -89,6 +111,13 @@ public class AttackStateForAnimator : StateMachineBehaviour
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (action == null) return;
+
+        if (stats != null && stats.isDash)
+        {
+            action.forStopMove = false;
+            action.forStopRotate = false;
+            return;
+        }
 
         AnimatorStateInfo nextInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
 

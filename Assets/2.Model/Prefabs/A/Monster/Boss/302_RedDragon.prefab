@@ -1359,7 +1359,7 @@ MonoBehaviour:
   rangeAttackCount: 1
   projectilePrefab: {fileID: -6948888520392597196, guid: 0a2ef7e5b6174c84191b716ad097585a, type: 3}
   fireAreaPrefab: {fileID: -1119336568008231330, guid: 39c1ad19277e4a142a58ba9ead597320, type: 3}
-  PoolsPos: {fileID: 0}
+  PoolsPos: {fileID: 9097085945985884280, guid: 79d98e3c30fb8f643b3ec1833957036a, type: 3}
   phaseStartHP: 0.4
   attackSpeed: 0
   coolTime: 0

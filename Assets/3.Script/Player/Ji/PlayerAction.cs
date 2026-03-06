@@ -32,8 +32,8 @@ public class PlayerAction : MonoBehaviour
 
     [SerializeField] private GameObject dieUI;
 
-    private Coroutine forSubscribe_Co;
-    private bool isSubscribed = false;
+    //private Coroutine forSubscribe_Co;
+    //private bool isSubscribed = false;
 
     private void Awake()
     {
@@ -75,7 +75,7 @@ public class PlayerAction : MonoBehaviour
 
         //if (isSubscribed && GameManager.instance != null)
         //{
-        //    GameManager.instance.whenGoNextMap -= movePlayerOverBridge;
+        //    GameManager.instance.playerDie -= onDie;
         //}
         //isSubscribed = false;
     }
@@ -103,7 +103,7 @@ public class PlayerAction : MonoBehaviour
 
     //    if (!isSubscribed)
     //    {
-    //        GameManager.instance.whenGoNextMap += movePlayerOverBridge;
+    //        GameManager.instance.playerDie += onDie;
     //        isSubscribed = true;
     //    }
 

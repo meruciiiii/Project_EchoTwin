@@ -17,7 +17,9 @@ public class RatForBoss : EnemyStateAbstract
     {
         base.OnEnable();
         currentHP = enemyData.maxHP;
-        state = EnemyState.idle;
+        boxCol.enabled = true;
+        rb.isKinematic = false;
+        state = EnemyState.chase;
     }
 
     protected override void Update()
@@ -26,9 +28,19 @@ public class RatForBoss : EnemyStateAbstract
         Move();
     }
 
-    public override void Attack()
+    protected override void OnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
+        StopAllCoroutines();
+        state = EnemyState.dead;
+        //reportDeadToManager();
+        SoundManager.SendEvent(SoundType.SFX_MonsterDie);
 
+        TurnOffNavmesh();
+        rb.isKinematic = true;
+        boxCol.enabled = false;
+
+        //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
+        StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
     }
 
     protected override IEnumerator DeathRoutine(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
@@ -52,5 +64,10 @@ public class RatForBoss : EnemyStateAbstract
         state = EnemyState.chase;
 
         setPlayerPos();
+    }
+
+    public override void Attack()
+    {
+
     }
 }

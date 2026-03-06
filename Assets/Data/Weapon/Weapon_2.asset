@@ -19,7 +19,7 @@ MonoBehaviour:
   attackRange: 1.5
   knockback: 1
   echoDMGRatio: 0.4
-  resonanceCount: 10
+  resonanceCount: 70
   icon: {fileID: 0}
   comboCount: 5
   comboCooltime: 0.3

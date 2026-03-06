@@ -21,7 +21,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     [SerializeField] protected NavMeshAgent navMesh;
 
     protected PlayerAction player;
-    private PlayerStats stats;
+    protected PlayerStats stats;
 
     protected AttackDebugGizmo gizmo;
     protected Animator ani;
@@ -61,7 +61,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     protected virtual void Awake()
     {
         currentHP = enemyData.maxHP;
-        //player = FindAnyObjectByType<PlayerStats>();
+        player = FindAnyObjectByType<PlayerAction>();
         TryGetComponent(out effect);
         TryGetComponent(out gizmo);
         TryGetComponent(out boxCol);
@@ -181,7 +181,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             for (int i = 0; i < goldAmount; i++)
             {
-                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
+                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.7f, Random.Range(-2f, 2f));
                 Vector3 spawnPos = floorPos + randomOffset;
 
                 GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity);
@@ -215,7 +215,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             for (int i = 0; i < cristalAmount; i++)
             {
-                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
+                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.7f, Random.Range(-2f, 2f));
                 Vector3 spawnPos = floorPos + randomOffset;
 
                 GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity);
@@ -226,7 +226,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         if (db.heartPrefab != null)
         {
-            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 1, Random.Range(-2f, 2f));
+            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.7f, Random.Range(-2f, 2f));
             Vector3 spawnPos = floorPos + randomOffset;
 
             int temp = Random.Range(0, 10);
@@ -317,7 +317,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         //rb.linearVelocity = Vector3.zero;
         //rb.isKinematic = true;
 
-        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 3f, NavMesh.AllAreas))
         {
             navMesh.enabled = true;
             navMesh.Warp(hit.position);
