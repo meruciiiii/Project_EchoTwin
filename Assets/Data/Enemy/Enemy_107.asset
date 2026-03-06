@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 107
   name: Flying Eye
   tier: Normal
-  maxHP: 45
+  maxHP: 35
   damage: 10
   moveSpeed: 3.8
   attackSpeed: 1.5

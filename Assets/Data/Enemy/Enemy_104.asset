@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 104
   name: Spiked Slime
   tier: Normal
-  maxHP: 70
+  maxHP: 60
   damage: 15
   moveSpeed: 2.5
   attackSpeed: 0.8

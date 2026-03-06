@@ -79,7 +79,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -157,7 +157,7 @@ MonoBehaviour:
     m_Bits: 256
   projectile: {fileID: 2879538220908575655}
   buffer: 0.5
-  projectileDuration: 1
+  projectileDuration: 2
   projectileSpeed: 10
   sideWalkTime: 0.5
 --- !u!1 &2879538220908575655
@@ -208,13 +208,13 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.8769336, z: 1}
+  m_Size: {x: 0.6, y: 1.8769336, z: 0.6}
   m_Center: {x: 0, y: 0.9614321, z: 0}
 --- !u!114 &2035314058578017164
 MonoBehaviour:
@@ -426,7 +426,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6108878899316037209, guid: c9bebeaca453b3c47a3acf851d53288a, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 0.6
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108878899316037209, guid: c9bebeaca453b3c47a3acf851d53288a, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

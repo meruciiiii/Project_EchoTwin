@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 201
   name: Golem
   tier: Elite
-  maxHP: 380
+  maxHP: 300
   damage: 35
   moveSpeed: 1.2
   attackSpeed: 0.5

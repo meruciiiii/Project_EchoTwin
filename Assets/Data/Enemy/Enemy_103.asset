@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 103
   name: Goblin
   tier: Normal
-  maxHP: 60
+  maxHP: 50
   damage: 12
   moveSpeed: 3.5
   attackSpeed: 1.2
