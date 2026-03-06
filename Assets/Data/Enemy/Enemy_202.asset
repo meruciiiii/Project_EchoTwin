@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 202
   name: Bringer Of Death
   tier: Elite
-  maxHP: 800
+  maxHP: 420
   damage: 50
   moveSpeed: 2.5
   attackSpeed: 1.1

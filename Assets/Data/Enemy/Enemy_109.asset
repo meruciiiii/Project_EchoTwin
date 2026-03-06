@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 109
   name: Pebble
   tier: Normal
-  maxHP: 45
+  maxHP: 50
   damage: 12
   moveSpeed: 2.2
   attackSpeed: 1
