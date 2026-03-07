@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public event Action GetWeapon;
     public int monsterCount = 0;
     public event Action playerDie;
+    public List<GameObject> ItemList = new List<GameObject>();
 
     private WeaponAbstract MainWeapon;
     private WeaponAbstract SubWeapon;
@@ -61,6 +62,34 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void AddItemToList(GameObject obj)
+    {
+        if (obj == null) return;
+        if (!ItemList.Contains(obj))
+        {
+            ItemList.Add(obj);
+        }
+    }
+
+    public void RemoveItemFromList(GameObject obj)
+    {
+        if (obj == null) return;
+        ItemList.Remove(obj);
+    }
+
+    private void ClearItemList()
+    {
+        for (int i = ItemList.Count - 1; i >= 0; i--)
+        {
+            if (ItemList[i] != null)
+            {
+                Destroy(ItemList[i]);
+            }
+        }
+
+        ItemList.Clear();
     }
 
     public void setCountInRoom()

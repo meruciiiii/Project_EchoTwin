@@ -108,6 +108,10 @@ public class GetCurrency : MonoBehaviour
             if (item == Item.heart)
             {
                 player.getHeart();
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.RemoveItemFromList(gameObject);
+                }
                 Destroy(gameObject);
             }
         }
