@@ -174,6 +174,5 @@ public class Spear : WeaponAbstract
 
             hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
         }
-        //hits 에게 데미지
     }
 }

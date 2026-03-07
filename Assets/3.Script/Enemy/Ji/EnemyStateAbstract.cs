@@ -174,14 +174,15 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         //Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
         //Vector3 spawnPos = transform.position + Vector3.up * 1.8f + randomOffset;
-        Vector3 floorPos = new Vector3(transform.position.x, 0, transform.position.z);
+        //Vector3 floorPos = new Vector3(transform.position.x, 0, transform.position.z);
+        Vector3 floorPos = transform.position;
         //int goldAmount = enemyData.dropGold;
 
         if (db.goldPrefab != null)
         {
             for (int i = 0; i < goldAmount; i++)
             {
-                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.7f, Random.Range(-2f, 2f));
+                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.5f, Random.Range(-2f, 2f));
                 Vector3 spawnPos = floorPos + randomOffset;
 
                 GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity);
@@ -215,7 +216,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         {
             for (int i = 0; i < cristalAmount; i++)
             {
-                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.7f, Random.Range(-2f, 2f));
+                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.5f, Random.Range(-2f, 2f));
                 Vector3 spawnPos = floorPos + randomOffset;
 
                 GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity);
@@ -226,7 +227,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
 
         if (db.heartPrefab != null)
         {
-            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.7f, Random.Range(-2f, 2f));
+            Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.5f, Random.Range(-2f, 2f));
             Vector3 spawnPos = floorPos + randomOffset;
 
             int temp = Random.Range(0, 10);

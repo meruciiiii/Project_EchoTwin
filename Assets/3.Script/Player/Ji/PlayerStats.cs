@@ -61,8 +61,10 @@ public class PlayerStats : MonoBehaviour
         //maxHP = GameManager.instance.maxHP;
         //gold = GameManager.instance.playerGold;
         //cristal = GameManager.instance.playerCristal;
-        setHP();
-        setGold();
+        if (currentHP == 0)
+        {
+            currentHP = maxHP;
+        }
     }
 
     private void Start()
@@ -75,27 +77,17 @@ public class PlayerStats : MonoBehaviour
 
     }
 
-    private void setHP()
-    {
-        Debug.Log("1");
-        if (currentHP != 0)
-        {
-            onMaxHpChanged?.Invoke(maxHP);
-            onHpChanged?.Invoke(currentHP, maxHP);
-            return;
-        }
-        else
-        {
-            currentHP = maxHP;
-            onMaxHpChanged?.Invoke(maxHP);
-            onHpChanged?.Invoke(currentHP, maxHP);
-        }
-    }
+    //private void setHP()
+    //{
+    //    currentHP = maxHP;
+    //    onMaxHpChanged?.Invoke(maxHP);
+    //    onHpChanged?.Invoke(currentHP, maxHP);
+    //}
 
-    private void setGold()
-    {
-        onCoinChanged?.Invoke(gold);
-    }
+    //private void setGold()
+    //{
+    //    onCoinChanged?.Invoke(gold);
+    //}
 
     public void takeDamage(int damage)
     {
