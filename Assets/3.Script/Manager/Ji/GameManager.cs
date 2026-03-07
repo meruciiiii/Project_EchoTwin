@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     public event Action<Vector3, Vector2Int> whenGoNextMap;
     public event Action whenArriveNextMap;
+    public event Action whenNodeClear;
     public event Action roomClearCheck;
     private Vector2Int currentCell;
     private IReadOnlyDictionary<Vector2Int, List<GameObject>> enemyDic;
@@ -187,6 +188,7 @@ public class GameManager : MonoBehaviour
         }
         else if (gamestate == GameState.Clear)
         {
+            whenNodeClear?.Invoke();
             GetCurrency.destroyAllHeart();
         }
         else if (gamestate == GameState.RoomClear)

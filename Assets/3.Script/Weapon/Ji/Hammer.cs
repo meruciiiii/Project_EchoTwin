@@ -14,8 +14,8 @@ public class Hammer : WeaponAbstract
 
         GameObject player = stats.gameObject;
         Vector3 forward = player.transform.forward;
-        Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
-        float range = weaponData.attackRange;
+        float range = calcAttackRange(weaponData.attackRange);
+        Vector3 centerPos = player.transform.position + forward * (range * 0.5f);
 
         Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
@@ -114,7 +114,7 @@ public class Hammer : WeaponAbstract
 
         SoundManager.SendEvent(SoundType.SFX_HammerAttack2);
 
-        yield return new WaitForSeconds(0.2f / weaponData.attackSpeed);
+        yield return new WaitForSeconds(0.2f / calcAttackSpeed());
 
         List<Collider> targets = getTargetInSector();
         foreach (Collider target in targets)
@@ -152,7 +152,7 @@ public class Hammer : WeaponAbstract
 
     private void AniSpeed(float holdSpeed = 1f)
     {
-        float finalSpeed = weaponData.attackSpeed * holdSpeed;
+        float finalSpeed = calcAttackSpeed() * holdSpeed;
         animator.SetFloat("AttackSpeed", finalSpeed);
     }
 
@@ -172,7 +172,8 @@ public class Hammer : WeaponAbstract
 
             SoundManager.SendEvent(SoundType.SFX_HammerAttack1);
 
-            Vector3 centerPos = player.transform.position + dirToTarget * (weaponData.attackRange * 0.5f);
+            float range = calcAttackRange(weaponData.attackRange);
+            Vector3 centerPos = player.transform.position + dirToTarget * (range * 0.5f);
 
             if (attackEffects.Length > 0 && attackEffects[0].prefab != null)
             {
@@ -182,21 +183,20 @@ public class Hammer : WeaponAbstract
                 effect.transform.localScale = Vector3.one * (data.scale * 1.0f);
             }
 
-            float range = weaponData.attackRange;
             Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
             foreach (Collider hit in hits)
             {
                 if (!hit.CompareTag("Enemy")) continue;
                 stats.StartCoroutine(EnemyGatherng(centerPos, hit));
-                hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
+                hit.GetComponent<EnemyStateAbstract>().takeDamage(calcEchoDamage());
             }
 
             echoAttackInfos.Add(new AttackDebugInfo
             {
                 shape = AttackShape.sphere,
                 center = centerPos,
-                size = new Vector3(range, 0, 0),
+                size = Vector3.one * range,
                 rotation = player.transform.rotation,
                 color = Color.cyan,
                 ratio = 1f

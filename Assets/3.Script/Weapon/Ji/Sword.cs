@@ -12,7 +12,7 @@ public class Sword : WeaponAbstract
         GameObject player = stats.gameObject;
         Vector3 forward = player.transform.forward;
         Vector3 centerPos = player.transform.position;
-        float range = weaponData.attackRange;
+        float range = calcAttackRange(weaponData.attackRange);
 
         Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
@@ -95,7 +95,7 @@ public class Sword : WeaponAbstract
 
             Vector3 forward = player.transform.forward;
             Vector3 centerPos = target.transform.position;
-            float range = weaponData.attackRange;
+            float range = calcAttackRange(weaponData.attackRange);
 
             if (attackEffects.Length > 0 && attackEffects[0].prefab != null)
             {
@@ -118,7 +118,7 @@ public class Sword : WeaponAbstract
 
                 if (Vector3.Angle(forward, dirToTarget) < attackAngle * 0.5f)
                 {
-                    hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
+                    hit.GetComponent<EnemyStateAbstract>().takeDamage(calcEchoDamage());
                 }
             }
 

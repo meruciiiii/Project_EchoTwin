@@ -14,7 +14,7 @@ public class Spear : WeaponAbstract
         GameObject player = stats.gameObject;
         Vector3 forward = player.transform.forward;
         Vector3 centerPos = player.transform.position;
-        float range = weaponData.attackRange;
+        float range = calcAttackRange(weaponData.attackRange); ;
 
         Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
@@ -52,9 +52,9 @@ public class Spear : WeaponAbstract
         float player_XSize = player.GetComponent<CapsuleCollider>().radius;
 
         Vector3 forward = player.transform.forward;
-        Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange * 0.5f);
-
-        Vector3 targetPos = new Vector3(player_XSize * 0.25f, 1f, weaponData.attackRange * 0.5f);
+        float range = calcAttackRange(weaponData.attackRange);
+        Vector3 centerPos = player.transform.position + forward * (range * 0.5f);
+        Vector3 targetPos = new Vector3(player_XSize * 0.25f, 1f, range * 0.5f);
 
         Collider[] hits = Physics.OverlapBox(centerPos, targetPos, player.transform.rotation);
 
@@ -71,12 +71,12 @@ public class Spear : WeaponAbstract
         return hits;
     }
 
-    private float getDamage()
-    {
-        float totalDamage = stats.PlayerDMG + calcDamage();
+    //private float getDamage()
+    //{
+    //    float totalDamage = stats.PlayerDMG + calcDamage();
 
-        return totalDamage;
-    }
+    //    return totalDamage;
+    //}
 
     public override void Attack(AttackContext context)
     {
@@ -138,7 +138,8 @@ public class Spear : WeaponAbstract
         float player_XSize = player.GetComponent<CapsuleCollider>().radius;
 
         Vector3 forward = player.transform.forward;
-        Vector3 centerPos = player.transform.position + forward * (weaponData.attackRange) * echoLengthMultiple * 0.5f;
+        float range = calcAttackRange(weaponData.attackRange);
+        Vector3 centerPos = player.transform.position + forward * range * echoLengthMultiple * 0.5f;
 
         if (context.hitTargets.Count > 0 && context.hitTargets[0] != null)
         {
@@ -155,7 +156,7 @@ public class Spear : WeaponAbstract
             }
         }
 
-        Vector3 targetPos = new Vector3(player_XSize * 0.25f, 1f, weaponData.attackRange * echoLengthMultiple);
+        Vector3 targetPos = new Vector3(player_XSize * 0.25f, 1f, range * echoLengthMultiple);
 
         echoAttackInfos.Add(new AttackDebugInfo
         {
@@ -172,7 +173,7 @@ public class Spear : WeaponAbstract
         {
             if (!hit.CompareTag("Enemy")) continue;
 
-            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage() * weaponData.echoDMGRatio);
+            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
         }
     }
 }
