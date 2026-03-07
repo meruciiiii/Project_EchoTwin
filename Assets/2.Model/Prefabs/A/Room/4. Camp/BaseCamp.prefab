@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c472df9f5d2a6b7449525dc80df53291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnterDungeon
-  mapManager: {fileID: 0}
+  stageFlowManager: {fileID: 0}
 --- !u!1 &8227902661795374158
 GameObject:
   m_ObjectHideFlags: 0

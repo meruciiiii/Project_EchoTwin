@@ -2990,14 +2990,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseCamp
       objectReference: {fileID: 0}
-    - target: {fileID: 781670783857160007, guid: 72b861e71a7401143936dcf83edc0f58, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4174965189998821682, guid: 72b861e71a7401143936dcf83edc0f58, type: 3}
-      propertyPath: mapManager
-      value: 
-      objectReference: {fileID: 554141150}
     - target: {fileID: 4174965189998821682, guid: 72b861e71a7401143936dcf83edc0f58, type: 3}
       propertyPath: stageFlowManager
       value: 
@@ -3596,10 +3588,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1948821004142161006, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
-      propertyPath: portalControllers.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1948821004142161006, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
       propertyPath: 'portalControllers.Array.data[0]'
       value: 
       objectReference: {fileID: 344080492}
@@ -3619,10 +3607,6 @@ PrefabInstance:
       propertyPath: stageNodeView
       value: 
       objectReference: {fileID: 1747022936}
-    - target: {fileID: 5767707885718543929, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
-      propertyPath: portalController
-      value: 
-      objectReference: {fileID: 1473871622}
     - target: {fileID: 6137873694116001214, guid: f6af0197f0e9dee4791a25e2f6c1b566, type: 3}
       propertyPath: m_Name
       value: StageManager
