@@ -8,6 +8,8 @@ public class StageFlowManager : MonoBehaviour
     [SerializeField] private MapManager mapManager;
     [SerializeField] private StageManager stageManager;
     [SerializeField] private GameObject[] camp;
+    [SerializeField] private SceneTransition sceneTransition;
+
     private Dictionary<GameObject, Transform> enterTable;
     private Dictionary<NodeType, Action<StageNode>> nodeEventTable;
     private void Awake()
@@ -58,27 +60,32 @@ public class StageFlowManager : MonoBehaviour
     {
         Debug.Log("Battle Start!");
         mapManager.GenerateMap(node.floorIndex);
+        sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
     }
     private void OnBossNode(StageNode node)
     {
         mapManager.GenerateMap(node.floorIndex);
         Debug.Log("Boss Battle!");
         Debug.Log("node.floorIndex = "+ node.floorIndex + "!");
+        sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
     }
     private void OnRecoveryNode(StageNode node)
     {
         Debug.Log("Recovered");
         mapManager.StageMoving(enterTable[camp[1]].position);
+        sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
     }
     private void OnResourceNode(StageNode node)
     {
         Debug.Log("Resource Acquired");
         mapManager.StageMoving(enterTable[camp[3]].position);
+        sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
     }
     private void OnAltarNode(StageNode node)
     {
         Debug.Log("Altar Event");
         mapManager.StageMoving(enterTable[camp[2]].position);
+        sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
     }
     private void OnPortalEntered()
     {

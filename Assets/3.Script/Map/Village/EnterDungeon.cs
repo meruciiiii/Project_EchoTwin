@@ -10,6 +10,7 @@ public class EnterDungeon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+        SoundManager.SendEvent(SoundType.SFX_Portal);
         stageFlowManager.StartStage();
     }
 }

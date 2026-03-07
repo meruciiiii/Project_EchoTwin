@@ -25,14 +25,14 @@ public class RewardChest : MonoBehaviour
     // 생성된 모든 아이템의 콜라이더를 담아둘 리스트
     private List<Collider> spawnedColliders = new List<Collider>();
 
-    private void Awake()
-    {
-        if (chestLid != null)
-        {
-            closedRotation = chestLid.localRotation;
-            openedRotation = Quaternion.Euler(-130f, 0f, 0f);
-        }
-    }
+    //private void Awake()
+    //{
+    //    if (chestLid != null)
+    //    {
+    //        closedRotation = chestLid.localRotation;
+    //        openedRotation = Quaternion.Euler(-130f, 0f, 0f);
+    //    }
+    //}
 
     private void Start()
     {
@@ -56,6 +56,7 @@ public class RewardChest : MonoBehaviour
     private IEnumerator OpenChestRoutine()
     {
         isOpened = true;
+        SoundManager.SendEvent(SoundType.SFX_Chest);
 
         float timer = 0f;
         while (timer < 1f)
@@ -88,22 +89,6 @@ public class RewardChest : MonoBehaviour
 
             GameObject item = Instantiate(prefab, spawnPos, Quaternion.identity);
 
-            // [핵심] 새로 생성된 아이템과 기존 아이템들 간의 충돌 무시
-            //Collider currentCollider = item.GetComponent<Collider>();
-            //if (currentCollider != null)
-            //{
-            //    foreach (Collider other in spawnedColliders)
-            //    {
-            //        if (other != null) Physics.IgnoreCollision(currentCollider, other);
-            //    }
-            //    spawnedColliders.Add(currentCollider);
-            //}
-            //
-            //if (item.TryGetComponent(out ItemFloating floating))
-            //{
-            //    floating.enabled = false;
-            //}
-
             Rigidbody rb = item.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -116,30 +101,7 @@ public class RewardChest : MonoBehaviour
                 rb.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
             }
 
-            //StartCoroutine(EnableFloatingAfterLand(item));
         }
     }
 
-    //private IEnumerator EnableFloatingAfterLand(GameObject item)
-    //{
-    //    // 바닥에 떨어질 충분한 시간 대기
-    //    yield return new WaitForSeconds(1.2f);
-
-    //    if (item != null)
-    //    {
-    //        if (item.TryGetComponent(out Rigidbody rb))
-    //        {
-    //            rb.isKinematic = true;
-    //        }
-
-    //        // ItemFloating 스크립트가 있다면 활성화
-    //        if (item.TryGetComponent(out ItemFloating floating))
-    //        {
-    //            // [중요] 바닥에 닿은 현재 위치를 플로팅의 시작 위치로 다시 설정
-    //            // ItemFloating 스크립트 내부에 startPos를 갱신하는 public 메서드가 있으면 좋습니다.
-    //            // 없다면 지금 위치에서 둥둥 뜨기 시작합니다.
-    //            floating.enabled = true;
-    //        }
-    //    }
-    //}
 }

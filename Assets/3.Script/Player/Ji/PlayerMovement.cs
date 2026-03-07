@@ -139,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
         if (animator != null)
         {
             //animator.SetTrigger("Roll");
+            SoundManager.SendEvent(SoundType.SFX_Dash);
 
             animator.ResetTrigger("Attack");
             animator.SetInteger("ComboState", 0);

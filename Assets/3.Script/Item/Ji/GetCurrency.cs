@@ -96,17 +96,20 @@ public class GetCurrency : MonoBehaviour
             if (!isOnGround) return;
             if (item == Item.gold)
             {
+                SoundManager.SendEvent(SoundType.SFX_Coin);
                 player.getGold(amount);
                 Destroy(gameObject);
             }
             if (item == Item.cristal)
             {
+                SoundManager.SendEvent(SoundType.SFX_Crystal);
                 player.getCristal(amount);
                 Destroy(gameObject);
             }
             if (player.CurrentHP == player.MaxHP) return;
             if (item == Item.heart)
             {
+                SoundManager.SendEvent(SoundType.SFX_Heart);
                 player.getHeart();
                 Destroy(gameObject);
             }
