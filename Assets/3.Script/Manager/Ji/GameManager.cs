@@ -36,8 +36,10 @@ public class GameManager : MonoBehaviour
     private IReadOnlyDictionary<Vector2Int, List<GameObject>> enemyDic;
 
     public event Action<WeaponAbstract, WeaponAbstract> turnWeaponUI;
+    public event Action setResonanceUI;
     public event Action GetWeapon;
     public int monsterCount = 0;
+    public event Action playerDie;
 
     private WeaponAbstract MainWeapon;
     private WeaponAbstract SubWeapon;
@@ -105,6 +107,11 @@ public class GameManager : MonoBehaviour
         GetWeapon?.Invoke();
     }
 
+    public void setResonance()
+    {
+        setResonanceUI?.Invoke();
+    }
+
     public void setDic(IReadOnlyDictionary<Vector2Int, List<GameObject>> dic)
     {
         enemyDic = dic;
@@ -167,6 +174,7 @@ public class GameManager : MonoBehaviour
         else if (gameState == GameState.Die)
         {
             isDead = true;
+            playerDie?.Invoke();
         }
         else if (gameState == GameState.Playing)
         {

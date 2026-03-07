@@ -38,6 +38,7 @@ public class WeaponUISet : MonoBehaviour
         if (GameManager.instance == null) return;
 
         GameManager.instance.turnWeaponUI += setWeaponUI;
+        GameManager.instance.setResonanceUI += setSlider;
         setWeaponUI(GameManager.instance.mainWeapon, GameManager.instance.subWeapon);
     }
 
@@ -46,6 +47,7 @@ public class WeaponUISet : MonoBehaviour
         if (GameManager.instance == null) return;
 
         GameManager.instance.turnWeaponUI -= setWeaponUI;
+        GameManager.instance.setResonanceUI -= setSlider;
     }
 
     private void setWeaponUI(WeaponAbstract mainWeapon, WeaponAbstract subWeapon)
