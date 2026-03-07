@@ -111,6 +111,10 @@ public class GetCurrency : MonoBehaviour
             {
                 SoundManager.SendEvent(SoundType.SFX_Heart);
                 player.getHeart();
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.RemoveItemFromList(gameObject);
+                }
                 Destroy(gameObject);
             }
         }
