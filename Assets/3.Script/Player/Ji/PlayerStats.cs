@@ -35,6 +35,10 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int gold = 0;
     [SerializeField] private int cristal = 0;
 
+    [Header("Upgrade Stats")]
+    [SerializeField] private float echoDamage = 0f;
+    [SerializeField] private float attackRange = 0f;
+
     public event Action<int, int> onHpChanged;
     public event Action<int> onMaxHpChanged;
 
@@ -54,6 +58,8 @@ public class PlayerStats : MonoBehaviour
     public float KnockBackForce => knockBackForce;
     public int Gold => gold;
     public int Cristal => cristal;
+    public float EchoDamage => echoDamage; 
+    public float AttackRange => attackRange;
 
     private void Awake()
     {
@@ -76,18 +82,6 @@ public class PlayerStats : MonoBehaviour
     {
 
     }
-
-    //private void setHP()
-    //{
-    //    currentHP = maxHP;
-    //    onMaxHpChanged?.Invoke(maxHP);
-    //    onHpChanged?.Invoke(currentHP, maxHP);
-    //}
-
-    //private void setGold()
-    //{
-    //    onCoinChanged?.Invoke(gold);
-    //}
 
     public void takeDamage(int damage)
     {
@@ -128,5 +122,45 @@ public class PlayerStats : MonoBehaviour
     {
         maxHP += 1;
         onMaxHpChanged?.Invoke(maxHP);
+    }
+
+    public bool TryUseCristal(int amount)
+    {
+        if (cristal < amount) return false;
+
+        cristal -= amount;
+        return true;
+    }
+
+    public void getMaxHP(int amount)
+    {
+        maxHP += amount;
+        onMaxHpChanged?.Invoke(maxHP);
+        onHpChanged?.Invoke(currentHP, maxHP);
+    }
+
+    public void getPlayerDMG(float amount)
+    {
+        playerDMG += amount;
+    }
+
+    public void getMoveSpeed(float amount)
+    {
+        moveSpeed += amount;
+    }
+
+    public void getEchoDamage(float amount)
+    {
+        echoDamage += amount;
+    }
+
+    public void getAttackRange(float amount)
+    {
+        attackRange += amount;
+    }
+
+    public void getAttackSpeed(float amount)
+    {
+        timeBetweenAttack = Mathf.Max(0.05f, timeBetweenAttack - amount);
     }
 }
