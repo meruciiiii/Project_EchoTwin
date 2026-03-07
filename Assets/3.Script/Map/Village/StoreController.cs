@@ -87,7 +87,7 @@ public class StoreController : MonoBehaviour
                 return stats.AttackRange;
 
             case StoreUIController.UpgradeType.AttackSpeed:
-                return stats.TimeBetweenAttack;
+                return stats.AttackSpeed;
         }
 
         return 0f;
@@ -162,6 +162,7 @@ public class StoreController : MonoBehaviour
         state++;
         //playerValue += data.valuePerLv;
         //playerUpgradesState[id] = state;
+        applyUpgradePlayer(id);
         return true;
     }
     private bool CanUpgrade()

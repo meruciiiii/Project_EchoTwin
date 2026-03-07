@@ -12,6 +12,7 @@ public class PlayerStats : MonoBehaviour
     public bool isDead => (currentHP <= 0);
     [SerializeField] private float playerDMG = 1f;
     [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float attackSpeed = 1f;
 
     [Header("Dash Info")]
     [SerializeField] private float dashLength = 1f;
@@ -60,6 +61,7 @@ public class PlayerStats : MonoBehaviour
     public int Cristal => cristal;
     public float EchoDamage => echoDamage; 
     public float AttackRange => attackRange;
+    public float AttackSpeed => attackSpeed;
 
     private void Awake()
     {
@@ -118,12 +120,6 @@ public class PlayerStats : MonoBehaviour
         Debug.Log($"{currentHP} after HP");
     }
 
-    public void getMaxHP()
-    {
-        maxHP += 1;
-        onMaxHpChanged?.Invoke(maxHP);
-    }
-
     public bool TryUseCristal(int amount)
     {
         if (cristal < amount) return false;
@@ -135,6 +131,7 @@ public class PlayerStats : MonoBehaviour
     public void getMaxHP(int amount)
     {
         maxHP += amount;
+        currentHP += amount;
         onMaxHpChanged?.Invoke(maxHP);
         onHpChanged?.Invoke(currentHP, maxHP);
     }
@@ -161,6 +158,6 @@ public class PlayerStats : MonoBehaviour
 
     public void getAttackSpeed(float amount)
     {
-        timeBetweenAttack = Mathf.Max(0.05f, timeBetweenAttack - amount);
+        attackSpeed += amount;
     }
 }

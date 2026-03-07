@@ -14,7 +14,7 @@ public class Axe : WeaponAbstract
         GameObject player = stats.gameObject;
         Vector3 forward = player.transform.forward;
         Vector3 centerPos = player.transform.position;
-        float range = weaponData.attackRange;
+        float range = calcAttackRange(weaponData.attackRange);
 
         Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
@@ -70,12 +70,12 @@ public class Axe : WeaponAbstract
     //    return hits;
     //}
 
-    private float getDamage()
-    {
-        float totalDamage = stats.PlayerDMG + calcDamage();
+    //private float getDamage()
+    //{
+    //    float totalDamage = stats.PlayerDMG + calcDamage();
 
-        return totalDamage;
-    }
+    //    return totalDamage;
+    //}
 
     public override void Attack(AttackContext context)
     {
@@ -117,6 +117,6 @@ public class Axe : WeaponAbstract
         //mainWeapon 공격시 생성되어 플레이어 주변 공전. 닿을 시 데미지
 
         GameObject spawnAxe = Instantiate(axePrefab, stats.transform.position, Quaternion.identity);
-        spawnAxe.GetComponent<OrbitAxe>().Init(stats.transform, calcDamage() * weaponData.echoDMGRatio);
+        spawnAxe.GetComponent<OrbitAxe>().Init(stats.transform, calcEchoDamage());
     }
 }
