@@ -47,6 +47,7 @@ public class PlayerAction : MonoBehaviour
         TryGetComponent(out gizmo);
         TryGetComponent(out rb);
         ani = GetComponentInChildren<Animator>();
+
     }
 
     private void OnEnable()
@@ -123,15 +124,7 @@ public class PlayerAction : MonoBehaviour
         command?.execute();
     }
 
-    public void OnChargingAttack()
-    {
 
-    }
-
-    public void OnCurse()
-    {
-
-    }
 
     public bool TryBuyShopItem(shopItem itemType, int price, int value)
     {
@@ -201,7 +194,10 @@ public class PlayerAction : MonoBehaviour
     {
         if (hasDamaged) return;
         if (stats.isDash) return;
+        if (GameManager.instance.gamestate != GameManager.GameState.Playing) return;
+
         if (ani != null) ani.SetTrigger("TakeDamage");
+        
         SoundManager.SendEvent(SoundType.SFX_PlayerHit);
 
         stats.takeDamage(damage);
@@ -221,14 +217,47 @@ public class PlayerAction : MonoBehaviour
 
     private void onDie()
     {
+        StartCoroutine(DieSequence_Co());
+    }
+    private IEnumerator DieSequence_Co()
+    {
         Debug.Log("ondie");
-        ani.SetTrigger("Die");
-        dieUI.SetActive(true);
+
+        if (ani != null)
+        {
+            ani.updateMode = AnimatorUpdateMode.UnscaledTime;
+            ani.SetTrigger("Die");
+        }
+
+        yield return new WaitForSecondsRealtime(3f);
+
+        if (dieUI != null)
+        {
+            if (!dieUI.TryGetComponent(out CanvasGroup canvasGroup))
+            {
+                canvasGroup = dieUI.AddComponent<CanvasGroup>();
+            }
+
+            canvasGroup.alpha = 0f; // 시작은 투명하게
+            dieUI.SetActive(true);
+
+            float fadeDuration = 1.5f; // 페이드 속도 (1.5초 동안 켜짐)
+            float elapsed = 0f;
+
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.unscaledDeltaTime; // 게임 정지 대비 unscaled 사용
+                canvasGroup.alpha = Mathf.Clamp01(elapsed / fadeDuration);
+                yield return null;
+            }
+            
+            canvasGroup.alpha = 1f; // 확실하게 1로 고정
+        }
+
         Equipment.SubWeapon = null;
         Equipment.MainWeapon = null;
         stats.resetGold();
     }
-
     private void knockback(Vector3 dir, float knockbackForce)
     {
         //if (Equipment.MainWeapon.IsCharging) return;
