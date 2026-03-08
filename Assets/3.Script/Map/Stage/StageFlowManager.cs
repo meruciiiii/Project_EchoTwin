@@ -59,12 +59,12 @@ public class StageFlowManager : MonoBehaviour
     private void OnBattleNode(StageNode node)
     {
         Debug.Log("Battle Start!");
-        mapManager.GenerateMap(node.floorIndex);
+        //mapManager.GenerateMap(node.floorIndex);
         sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
     }
     private void OnBossNode(StageNode node)
     {
-        mapManager.GenerateMap(node.floorIndex);
+        //mapManager.GenerateMap(node.floorIndex);
         Debug.Log("Boss Battle!");
         Debug.Log("node.floorIndex = "+ node.floorIndex + "!");
         sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
@@ -72,20 +72,20 @@ public class StageFlowManager : MonoBehaviour
     private void OnRecoveryNode(StageNode node)
     {
         Debug.Log("Recovered");
-        mapManager.StageMoving(enterTable[camp[1]].position);
-        sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
+        //mapManager.StageMoving(enterTable[camp[1]].position);
+        sceneTransition.PlayFullTransition(() => mapManager.StageMoving(enterTable[camp[1]].position));
     }
     private void OnResourceNode(StageNode node)
     {
         Debug.Log("Resource Acquired");
-        mapManager.StageMoving(enterTable[camp[3]].position);
-        sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
+        //mapManager.StageMoving(enterTable[camp[3]].position);
+        sceneTransition.PlayFullTransition(() => mapManager.StageMoving(enterTable[camp[3]].position));
     }
     private void OnAltarNode(StageNode node)
     {
         Debug.Log("Altar Event");
-        mapManager.StageMoving(enterTable[camp[2]].position);
-        sceneTransition.PlayFullTransition(() => mapManager.GenerateMap(node.floorIndex));
+        //mapManager.StageMoving(enterTable[camp[2]].position);
+        sceneTransition.PlayFullTransition(() => mapManager.StageMoving(enterTable[camp[2]].position));
     }
     private void OnPortalEntered()
     {

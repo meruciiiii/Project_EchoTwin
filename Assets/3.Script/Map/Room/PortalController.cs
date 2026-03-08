@@ -18,6 +18,7 @@ public class PortalController : MonoBehaviour
     }
     private void OnPortalEntered()
     {
+        GameManager.instance.ChangeState(GameManager.GameState.Clear);
         onPortalEntered?.Invoke();
     }
 }

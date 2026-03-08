@@ -12,8 +12,9 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] private float height = 5f;
 
     [SerializeField] private bool isPickedUp = false;
+    private Action pickup;
 
-    private PlayerAction player;
+    [SerializeField] private PlayerAction player;
     private Camera cam;
 
     private void Awake()
