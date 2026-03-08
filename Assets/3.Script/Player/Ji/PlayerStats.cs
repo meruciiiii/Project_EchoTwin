@@ -28,7 +28,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float timeBetweenAttack = 0.5f;
 
     [Header("Player Physics")]
-    [SerializeField] private float invincibilityTime = 1f;
+    [SerializeField] public float invincibilityTime = 1f;
     [SerializeField] private float knockBackForce = 2f;
 
 
@@ -56,7 +56,6 @@ public class PlayerStats : MonoBehaviour
     public int FlashAmount => flashAmount;
     public float FlashDuration => flashDuration;
     public float TimeBetweenAttack => timeBetweenAttack;
-    public float InvincibilityTime => invincibilityTime;
     public float KnockBackForce => knockBackForce;
     public int Gold => gold;
     public int Cristal => cristal;

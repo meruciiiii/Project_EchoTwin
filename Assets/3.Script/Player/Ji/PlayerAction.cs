@@ -183,7 +183,7 @@ public class PlayerAction : MonoBehaviour
     private IEnumerator superArmor()
     {
         hasDamaged = true;
-        yield return new WaitForSeconds(stats.InvincibilityTime);
+        yield return new WaitForSeconds(stats.invincibilityTime);
         hasDamaged = false;
     }
 

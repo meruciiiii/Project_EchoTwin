@@ -9,6 +9,7 @@ public class SacrificeCamp : MonoBehaviour
     [SerializeField] private float height = 5f;
 
     private PlayerAction player;
+    private PlayerStats stats;
     private Camera cam;
 
     private void Awake()
@@ -37,6 +38,8 @@ public class SacrificeCamp : MonoBehaviour
 
             player = other.GetComponent<PlayerAction>();
             player.onInteraction.AddListener(sacrifice);
+            stats = other.GetComponent<PlayerStats>();
+            stats.invincibilityTime = 0f;
         }
     }
 
@@ -45,9 +48,11 @@ public class SacrificeCamp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             setImageAlpha(0f);
-
+            
             player.onInteraction.RemoveListener(sacrifice);
             player = null;
+            stats.invincibilityTime = 1f;
+            stats = null;
         }
     }
 
