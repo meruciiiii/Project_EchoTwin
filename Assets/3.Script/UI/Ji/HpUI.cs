@@ -39,8 +39,8 @@ public class HpUI : MonoBehaviour
 
     private void Start()
     {
-        whenMaxHPChanged(stats.MaxHP);
-        whenHPChanged(stats.CurrentHP, stats.MaxHP);
+        //whenMaxHPChanged(stats.MaxHP);
+        //whenHPChanged(stats.CurrentHP, stats.MaxHP);
     }
 
     private void whenMaxHPChanged(int maxHP)

@@ -49,6 +49,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     [SerializeField] public AnimatorOverrideController overrideController;
 
     public int resonanceCount = 0;
+    public int MaxResonance => weaponData.resonanceCount;
 
     protected float lastAttackTime;
     protected int comboCount = 0;
@@ -193,10 +194,33 @@ public abstract class WeaponAbstract : MonoBehaviour
     #endregion
 
     #region Echo°ü·Ã
+    //public void SetResonance(int count)
+    //{
+    //    resonanceCount = count;
+    //    Debug.Log(resonanceCount);
+    //}
+
     public void SetResonance(int count)
     {
-        resonanceCount = count;
+        resonanceCount = Mathf.Clamp(count, 0, weaponData.resonanceCount);
         Debug.Log(resonanceCount);
+
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.setResonance();
+        }
+    }
+
+    public bool CanGetResonance()
+    {
+        return resonanceCount < weaponData.resonanceCount;
+    }
+
+    public void GetResonance(int count)
+    {
+        if (count <= 0) return;
+
+        SetResonance(resonanceCount + count);
     }
 
     public bool canEcho()
