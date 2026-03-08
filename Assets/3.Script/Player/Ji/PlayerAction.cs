@@ -139,6 +139,63 @@ public class PlayerAction : MonoBehaviour
 
     }
 
+    public bool TryBuyShopItem(shopItem itemType, int price, int value)
+    {
+        if (stats == null) return false;
+        if (stats.Gold < price) return false;
+
+        switch (itemType)
+        {
+            case shopItem.Heart:
+                if (stats.CurrentHP >= stats.MaxHP) return false;
+                break;
+
+            case shopItem.Cristal:
+                break;
+
+            case shopItem.refillEcho:
+                if (Equipment == null) return false;
+                if (Equipment.SubWeapon == null) return false;
+                if (Equipment.SubWeapon.resonanceCount >= Equipment.SubWeapon.weaponData.resonanceCount) return false;
+                break;
+        }
+
+        if (!stats.TryUseGold(price)) return false;
+
+        switch (itemType)
+        {
+            case shopItem.Heart:
+                for (int i = 0; i < value; i++)
+                {
+                    stats.getHeart(value);
+                }
+                break;
+
+            case shopItem.Cristal:
+                stats.getCristal(value);
+                break;
+
+            case shopItem.refillEcho:
+                int maxCount = Equipment.SubWeapon.weaponData.resonanceCount;
+                int nextCount = Equipment.SubWeapon.resonanceCount + value;
+
+                if (nextCount > maxCount)
+                {
+                    nextCount = maxCount;
+                }
+
+                Equipment.SubWeapon.SetResonance(nextCount);
+
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.setResonance();
+                }
+                break;
+        }
+
+        return true;
+    }
+
     private IEnumerator superArmor()
     {
         hasDamaged = true;
@@ -170,6 +227,7 @@ public class PlayerAction : MonoBehaviour
 
     private void onDie()
     {
+        ani.SetTrigger("Die");
         dieUI.SetActive(true);
         Equipment.SubWeapon = null;
         Equipment.MainWeapon = null;
@@ -195,7 +253,7 @@ public class PlayerAction : MonoBehaviour
 
         rb.AddForce(finalDir * knockbackForce, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(0.2f); // ³Ë¹é ½Ã°£ (ÇÊ¿ä½Ã º¯¼ö·Î ´ëÃ¼)
+        yield return new WaitForSeconds(0.2f); // ï¿½Ë¹ï¿½ ï¿½Ã°ï¿½ (ï¿½Ê¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼)
 
         isKnockback = false;
     }
@@ -257,5 +315,4 @@ public class PlayerAction : MonoBehaviour
             command = new ComboAttackCommand(mainAttack, subEcho, this);
         }
     }
-
 }

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public bool isStop = false;
     public bool isDead = false;
     public bool isGetWeapon = false;
-    private GameState gameState = GameManager.GameState.Playing;
+    [SerializeField] private GameState gameState = GameManager.GameState.Playing;
     public GameState gamestate => gameState;
 
     //ÀúÀåµÉ Á¤º¸µé----------------
@@ -203,6 +203,7 @@ public class GameManager : MonoBehaviour
         }
         else if (gameState == GameState.Die)
         {
+            isStop = true;
             isDead = true;
             playerDie?.Invoke();
         }
@@ -217,8 +218,11 @@ public class GameManager : MonoBehaviour
         }
         else if (gamestate == GameState.Clear)
         {
+            isStop = true;
+
             whenNodeClear?.Invoke();
             GetCurrency.destroyAllHeart();
+            ClearItemList();
         }
         else if (gamestate == GameState.RoomClear)
         {

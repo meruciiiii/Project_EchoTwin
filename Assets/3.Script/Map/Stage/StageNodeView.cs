@@ -169,7 +169,7 @@ public class StageNodeView : MonoBehaviour
     private void ExecuteNodeEvent(StageNode node)
     {
         onNodeEntered?.Invoke(node);
-        StageNodeMapClose();
+        //StageNodeMapClose();
     }
     private void StageNodeMapClose()
     {

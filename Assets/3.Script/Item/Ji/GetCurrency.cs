@@ -109,13 +109,14 @@ public class GetCurrency : MonoBehaviour
             if (player.CurrentHP == player.MaxHP) return;
             if (item == Item.heart)
             {
-                SoundManager.SendEvent(SoundType.SFX_Heart);
-                player.getHeart();
-                if (GameManager.instance != null)
-                {
-                    GameManager.instance.RemoveItemFromList(gameObject);
-                }
-                Destroy(gameObject);
+            SoundManager.SendEvent(SoundType.SFX_Heart);
+
+            player.getHeart(1);
+            if (GameManager.instance != null)
+            {
+            GameManager.instance.RemoveItemFromList(gameObject);
+            }
+            Destroy(gameObject);
             }
         }
     }
