@@ -58,6 +58,8 @@ public class Sentinel : EnemyStateAbstract
         meleeMobList = new List<RatForBoss>();
         warningList = new List<WarningGizmo>();
 
+        PoolsPos = Instantiate(PoolsPos);
+
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
             SentinelProjectile rock = Instantiate(projectilePrefab, PoolsPos.transform);

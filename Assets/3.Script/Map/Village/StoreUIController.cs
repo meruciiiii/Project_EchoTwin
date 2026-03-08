@@ -65,7 +65,7 @@ public class StoreUIController : MonoBehaviour
 
             set.slider = child.Find("Progress Slider")?.GetComponent<Slider>();
             set.value = child.Find("CurrentValue")?.GetComponent<Text>();
-            set.cost = child.Find("Text (TMP)")?.GetComponent<TMP_Text>();
+            set.cost = child.Find("Button/Text (TMP)")?.GetComponent<TMP_Text>();
             set.button = child.Find("Button")?.GetComponent<Button>();
 
             if (set.slider == null || set.value == null || set.cost == null || set.button == null)
@@ -85,6 +85,7 @@ public class StoreUIController : MonoBehaviour
     public void setPlayerStats(PlayerStats stats)
     {
         controller.setPlayerStats(stats);
+        RefreshUI();
     }
 
     public void clearPlayerStats()
@@ -108,6 +109,7 @@ public class StoreUIController : MonoBehaviour
     public void StoreOpen()
     {
         storeSpace.SetActive(true);
+        RefreshUI();
         // 상점 UI 켜기
     }
 
