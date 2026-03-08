@@ -40,6 +40,7 @@ public class StartRoom : MonoBehaviour
     }
     private void OnDisable()
     {
+        GameManager.instance.whenNodeClear -= OnItemPicked;
         foreach (Basket basket in items)
         {
             basket.OnAnyItemPicked -= OnItemPicked;
