@@ -114,6 +114,7 @@ public class StageNodeView : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        playerPin.transform.position = new Vector3(960, 170, 0);
     }
     private void OnNodeClicked(StageNode node)
     {

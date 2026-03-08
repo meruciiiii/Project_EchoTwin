@@ -3717,8 +3717,22 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7749808791364372614, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1410954692}
   m_SourcePrefab: {fileID: 100100000, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
+--- !u!114 &980979369 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3110920162170950492, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
+  m_PrefabInstance: {fileID: 980979368}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b228b98e6065bb145a92c276b71fca2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Basket
 --- !u!4 &986325477 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 524705594750380381, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
@@ -4923,6 +4937,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7536574127580286889, guid: ff9ac41541bb0ce4387bb007f88311c0, type: 3}
   m_PrefabInstance: {fileID: 980979368}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1410954692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898298256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdbe4ec6e950e374d8e8a8e0edbb447b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StartRoom
+  items:
+  - {fileID: 980979369}
 --- !u!4 &1412282996 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3330172161555134806, guid: 7f57544b978b7d64c965881130d5d976, type: 3}
@@ -6909,6 +6937,14 @@ PrefabInstance:
       propertyPath: startRoom
       value: 
       objectReference: {fileID: 1070425454}
+    - target: {fileID: 530066852025997875, guid: 3f7c913bc0088744189774574329b90e, type: 3}
+      propertyPath: 'startRoom.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1070425454}
+    - target: {fileID: 530066852025997875, guid: 3f7c913bc0088744189774574329b90e, type: 3}
+      propertyPath: 'startRoom.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1410954692}
     - target: {fileID: 1585629401124534040, guid: 3f7c913bc0088744189774574329b90e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.55251

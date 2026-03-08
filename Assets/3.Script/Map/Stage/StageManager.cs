@@ -13,7 +13,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] private PortalManager portalManager;
 
     public event Action<StageNode> onNodeEntered;
-    public event Action onPortalEntered;
+    public event Action<bool> onPortalEntered;
     private void Awake()
     {
         if(!TryGetComponent(out stageCreater))
@@ -37,9 +37,9 @@ public class StageManager : MonoBehaviour
     {
         onNodeEntered?.Invoke(node);
     }
-    private void OnPortalEntered()
+    private void OnPortalEntered(bool isBoss)
     {
-        onPortalEntered?.Invoke();
+        onPortalEntered?.Invoke(isBoss);
     }
     public void SetNodeUI(bool active)
 {

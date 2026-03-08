@@ -6,15 +6,14 @@ using UnityEngine;
 
 public class BossRoomCheck : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private PortalController portalController;
+    public void BossIsDead()
     {
-        
+        Debug.Log("portal set");
+        PortalActive();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void PortalActive()
     {
-        
+        portalController.gameObject.SetActive(true);
     }
 }

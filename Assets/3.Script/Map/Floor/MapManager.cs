@@ -21,6 +21,9 @@ public class MapManager : MonoBehaviour
     [SerializeField] private StartRoom[] startRoom = new StartRoom[2];
 
     private bool isEventSubscribed = false;
+    private bool isBoss = false;
+    private bool currentCoordisBoss = false;
+    [SerializeField] private BossRoomCheck bossRoomCheck;
 
     //오브젝트 연결 필요(맵 순서에 맞춰서, 노드들에 입히는것 중복 없게 만들기)
     private void Awake()
@@ -72,7 +75,6 @@ public class MapManager : MonoBehaviour
     public void GenerateMap(int floorIndex)
     {
         int safety = 100;
-        bool isBoss = false;
         if (floorIndex.Equals(5))
             isBoss = true;
         do
@@ -142,6 +144,10 @@ public class MapManager : MonoBehaviour
             return;
         Debug.Log("RoomClear is Start");
         roomView.BridgeisMove(floor);
+        if (currentCoordisBoss)
+        {
+            bossRoomCheck.BossIsDead();
+        }
     }
     private void GetWeapon()
     {
@@ -189,6 +195,14 @@ public class MapManager : MonoBehaviour
         microMap[currentCoord].SetVisit();
         Vector3 targetPosition = playerSpawnPosition + 4 * direction.x * Vector3.right + 4 * direction.y * Vector3.forward;
         GameManager.instance.whenMapChange(targetPosition, currentCoord);
+        if (isBoss)
+        {
+            if (microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Boss))
+            {
+                Debug.Log("boss position set");
+                currentCoordisBoss = true;
+            }
+        }
         mapDrawer.EnterDraw(GetMap(), currentCoord);
         mapMoving.MovePlayer(playerSpawnPosition);
         //mapMoving.PlayerPush(direction);
@@ -278,5 +292,6 @@ public class MapManager : MonoBehaviour
         }
         roomObject.Clear();
         enemyPool.Clear();
+        GameManager.instance.lastStage = 0;
     }   
 }

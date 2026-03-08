@@ -23880,7 +23880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feea63350cff2104cb894b4d927cd3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalController
-  roomTag: 
+  bossCheck: 1
 --- !u!65 &3203137497736574332
 BoxCollider:
   m_ObjectHideFlags: 0

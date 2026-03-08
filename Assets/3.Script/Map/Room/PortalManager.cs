@@ -7,7 +7,7 @@ using UnityEngine;
 public class PortalManager : MonoBehaviour
 {
     [SerializeField] private List<PortalController> portalControllers;
-    public event Action onPortalEntered;
+    public event Action<bool> onPortalEntered;
     private void Awake()
     {
         foreach(PortalController potal in portalControllers)
@@ -15,8 +15,8 @@ public class PortalManager : MonoBehaviour
             potal.onPortalEntered += OnPortalEntered;
         }
     }
-    private void OnPortalEntered()
+    private void OnPortalEntered(bool isBoss)
     {
-        onPortalEntered?.Invoke();
+        onPortalEntered?.Invoke(isBoss);
     }
 }

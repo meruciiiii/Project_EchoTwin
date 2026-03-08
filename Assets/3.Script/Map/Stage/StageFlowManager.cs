@@ -97,11 +97,18 @@ public class StageFlowManager : MonoBehaviour
         stageManager.SetNodeUI(false); 
         });
     }
-    private void OnPortalEntered()
+    private void OnPortalEntered(bool isBoss)
     {
-        sceneTransition.PlayFullTransition(() => {
-        mapManager.MapClear();       
-        stageManager.SetNodeUI(true); 
+        sceneTransition.PlayFullTransition(() =>
+        {
+            mapManager.MapClear();
+            if (isBoss)
+            {
+                StartStage();
+                GameManager.instance.lastStage++;
+            }
+            else
+                stageManager.SetNodeUI(true);
         });
     }
     public void PlayerisDie()

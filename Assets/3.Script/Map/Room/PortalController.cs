@@ -7,18 +7,31 @@ using UnityEngine;
 public class PortalController : MonoBehaviour
 {
     [SerializeField] private bool bossCheck = true;
-    public event Action onPortalEntered;
+
+    public event Action<bool> onPortalEntered;
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
         SoundManager.SendEvent(SoundType.SFX_Portal);
 
         Debug.Log("Portal Triger is started");
-        OnPortalEntered();
+        if (bossCheck)
+        {
+            BossPortalEntered();
+        }
+        else
+        {
+            OnPortalEntered();
+        }
     }
     private void OnPortalEntered()
     {
         GameManager.instance.ChangeState(GameManager.GameState.Clear);
-        onPortalEntered?.Invoke();
+        onPortalEntered?.Invoke(false);
+    }
+    private void BossPortalEntered()
+    {
+        GameManager.instance.ChangeState(GameManager.GameState.Clear);
+        onPortalEntered?.Invoke(true);
     }
 }
