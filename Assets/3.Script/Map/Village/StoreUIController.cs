@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class StoreUIController : MonoBehaviour
 {
     public enum UpgradeType
@@ -10,7 +11,7 @@ public class StoreUIController : MonoBehaviour
         MaxHP,
         BaseDamage,
         MoveSpeed,
-        EchoDamage,
+        EchoDamageRatio,
         AttackRange,
         AttackSpeed,
         Count
@@ -33,7 +34,7 @@ public class StoreUIController : MonoBehaviour
         //    return;
         //}
 
-        if (TryGetComponent(out controller))
+        if (!TryGetComponent(out controller))
         {
             Debug.Log("controller null");
             return;
@@ -53,6 +54,7 @@ public class StoreUIController : MonoBehaviour
             if (!child.CompareTag("Upgrade")) continue;
 
             string upgradeName = child.name.Replace("space", "");
+
             if (!Enum.TryParse(upgradeName, out UpgradeType type))
             {
                 Debug.LogWarning($"UpgradeType not found for {child.name}");
@@ -61,9 +63,9 @@ public class StoreUIController : MonoBehaviour
 
             UpgradeUISet set = new UpgradeUISet();
 
-            set.slider = child.Find("Slider")?.GetComponent<Slider>();
+            set.slider = child.Find("Progress Slider")?.GetComponent<Slider>();
             set.value = child.Find("CurrentValue")?.GetComponent<Text>();
-            set.cost = child.Find("Cost")?.GetComponent<Text>();
+            set.cost = child.Find("Text (TMP)")?.GetComponent<TMP_Text>();
             set.button = child.Find("Button")?.GetComponent<Button>();
 
             if (set.slider == null || set.value == null || set.cost == null || set.button == null)
@@ -156,6 +158,6 @@ class UpgradeUISet
 {
     public Slider slider;
     public Text value;
-    public Text cost;
+    public TMP_Text cost;
     public Button button;
 }
