@@ -93,6 +93,7 @@ public class PlayerStats : MonoBehaviour
         {
             currentHP = maxHP;
         }
+        onHpChanged?.Invoke(currentHP, maxHP);
     }
 
     public void takeDamage(int damage)
