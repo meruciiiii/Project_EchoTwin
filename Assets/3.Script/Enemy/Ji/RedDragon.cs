@@ -70,7 +70,28 @@ public class RedDragon : EnemyStateAbstract
 
     protected override void Awake()
     {
-        base.Awake();
+        currentHP = enemyData.maxHP;
+        player = FindAnyObjectByType<PlayerAction>();
+        TryGetComponent(out effect);
+        TryGetComponent(out gizmo);
+        //TryGetComponent(out boxCol);
+        TryGetComponent(out spriteRenderer);
+        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        gizmo.enemy = this;
+        //setMoveSpeed();
+        boxCol.isTrigger = true;
+
+        ani = GetComponentInChildren<Animator>();
+        TryGetComponent(out rb);
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        player = FindAnyObjectByType<PlayerAction>();
+        stats = player.GetComponent<PlayerStats>();
+
+        state = EnemyState.idle;
+
         if (ani == null) TryGetComponent(out ani);
         attackRange = enemyData.attackRange;
         attackSpeed = enemyData.attackSpeed;

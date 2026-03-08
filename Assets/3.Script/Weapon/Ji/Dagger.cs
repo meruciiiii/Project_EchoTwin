@@ -126,7 +126,14 @@ public class Dagger : WeaponAbstract
         foreach (Collider target in context.hitTargets)
         {
             GameObject dagger = Instantiate(daggerPrefab, spawnPos, Quaternion.identity);
-            dagger.GetComponent<ThrowDagger>().Init(target.transform, calcEchoDamage());
+            ThrowDagger throwDagger = dagger.GetComponent<ThrowDagger>();
+            if (throwDagger == null)
+            {
+                Destroy(dagger);
+                continue;
+            }
+
+            throwDagger.Init(target.transform, calcEchoDamage());
         }
     }
 }

@@ -23,7 +23,7 @@ public class GetCurrency : MonoBehaviour
 
     private int groundLayer = 8;
     private int structure = 9;
-    [SerializeField] private bool isOnGround = false;
+    [SerializeField] public bool isOnGround = false;
 
     private ItemFloating floating;
     private Rigidbody rb;

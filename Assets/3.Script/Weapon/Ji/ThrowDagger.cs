@@ -11,6 +11,12 @@ public class ThrowDagger : MonoBehaviour
 
     private void Update()
     {
+        if (target == null || !target.gameObject.activeInHierarchy)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Vector3 targetPosFlat = new Vector3(target.position.x, transform.position.y, target.position.z);
 
         Vector3 dir = (targetPosFlat - transform.position).normalized;
@@ -37,8 +43,15 @@ public class ThrowDagger : MonoBehaviour
 
     private void HitTarget()
     {
-        //target.getcomponent<enemy>().takeDamage(damage); ¥¿≥¶¿∏∑Œ µ•πÃ¡ˆ∏¶ ¡‹
-        target.GetComponent<EnemyStateAbstract>().takeDamage(damage);
+        if (target != null && target.gameObject.activeInHierarchy)
+        {
+            EnemyStateAbstract enemy = target.GetComponent<EnemyStateAbstract>();
+            if (enemy != null)
+            {
+                enemy.takeDamage(damage);
+            }
+        }
+
         Destroy(gameObject);
     }
 }
