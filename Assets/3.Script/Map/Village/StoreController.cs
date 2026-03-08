@@ -51,7 +51,7 @@ public class StoreController : MonoBehaviour
                 stats.getMoveSpeed(data.valuePerLv);
                 break;
 
-            case StoreUIController.UpgradeType.EchoDamage:
+            case StoreUIController.UpgradeType.EchoDamageRatio:
                 stats.getEchoDamage(data.valuePerLv);
                 break;
 
@@ -80,7 +80,7 @@ public class StoreController : MonoBehaviour
             case StoreUIController.UpgradeType.MoveSpeed:
                 return stats.MoveSpeed;
 
-            case StoreUIController.UpgradeType.EchoDamage:
+            case StoreUIController.UpgradeType.EchoDamageRatio:
                 return stats.EchoDamage;
 
             case StoreUIController.UpgradeType.AttackRange:

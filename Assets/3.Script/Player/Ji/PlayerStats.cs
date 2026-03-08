@@ -87,6 +87,14 @@ public class PlayerStats : MonoBehaviour
 
     }
 
+    public void setCurrentHP()
+    {
+        if(currentHP == 0)
+        {
+            currentHP = maxHP;
+        }
+    }
+
     public void takeDamage(int damage)
     {
         if (isDash) return;
