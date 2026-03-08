@@ -11,6 +11,15 @@ public class Rat : EnemyStateAbstract
         Move();
     }
 
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            player.takeDamage(enemyData.damage, transform.position, 1);
+            Attack();
+        }
+    }
+
     public override void Attack()
     {
         SoundManager.SendEvent(SoundType.SFX_Rat);

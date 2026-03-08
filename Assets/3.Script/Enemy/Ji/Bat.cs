@@ -20,7 +20,7 @@ public class Bat : EnemyStateAbstract
 
     public override void Attack()
     {
-        if (state == EnemyState.attack) return;
+        if (state != EnemyState.chase) return;
 
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
