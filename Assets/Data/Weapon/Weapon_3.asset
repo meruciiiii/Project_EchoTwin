@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 3
   name: "\uD76C\uC0DD\uC758 \uCC3D"
   baseDamage: 10
-  attackSpeed: 1.6
+  attackSpeed: 1.4
   attackRange: 4
   knockback: 3
   echoDMGRatio: 0.6
