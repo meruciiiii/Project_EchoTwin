@@ -6712,7 +6712,7 @@ GameObject:
   - component: {fileID: 6887119023045404864}
   m_Layer: 0
   m_Name: Room_104_Reward
-  m_TagString: R_104
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

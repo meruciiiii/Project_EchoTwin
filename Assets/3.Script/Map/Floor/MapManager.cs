@@ -137,6 +137,7 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetValue roomPrefab is Error");
             return;
         }
+        Debug.Log("GetWeapon is started");
         roomView.BridgeisMove(floor);
     }
     public void PlayerTryMove(Vector2Int direction)

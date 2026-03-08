@@ -22,7 +22,7 @@ MonoBehaviour:
   - monsterPackID: 2
     monsterDataList:
     - monsterPrefab: {fileID: 8801808766398310614, guid: 43ba11d44c8ad714ba5b9328e08b4341, type: 3}
-      count: 3
+      count: 5
   - monsterPackID: 3
     monsterDataList:
     - monsterPrefab: {fileID: 1692023956345576517, guid: 880b50225e9b11e489e369be6e358fc7, type: 3}
