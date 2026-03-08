@@ -6920,6 +6920,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5e784ac5e87b34291aa69cce9609a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+--- !u!114 &1954394420 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6946189258489899875, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
+  m_PrefabInstance: {fileID: 3843605166634481573}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6ce47c191268144970d8671b420eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAction
 --- !u!4 &1959281526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8552715132559501065, guid: 2154f38a313a6894fb7b15630a51f401, type: 3}
@@ -7350,10 +7361,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
@@ -7361,7 +7376,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1965001920}
     - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1954394420}
+    - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
@@ -7369,11 +7392,23 @@ PrefabInstance:
       value: PlayerisDie
       objectReference: {fileID: 0}
     - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CloseDieUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: StageFlowManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerAction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497867594757696338, guid: aaa62fa72baba774da653c017654e293, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5642665964753201928, guid: aaa62fa72baba774da653c017654e293, type: 3}

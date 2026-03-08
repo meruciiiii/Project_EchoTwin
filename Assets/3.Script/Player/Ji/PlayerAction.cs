@@ -258,6 +258,23 @@ public class PlayerAction : MonoBehaviour
         Equipment.MainWeapon = null;
         stats.resetGold();
     }
+    public void CloseDieUI()
+    {
+        if (dieUI != null)
+        {
+            // 1. UI 비활성화
+            dieUI.SetActive(false);
+
+            // 2. 다음번 사망 페이드 인을 위해 알파값 초기화
+            if (dieUI.TryGetComponent(out CanvasGroup canvasGroup))
+            {
+                canvasGroup.alpha = 0f;
+            }
+
+            GameManager.instance.ChangeState(GameManager.GameState.Playing);
+        }
+        
+    }
     private void knockback(Vector3 dir, float knockbackForce)
     {
         //if (Equipment.MainWeapon.IsCharging) return;
