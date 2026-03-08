@@ -132,9 +132,9 @@ AnimatorStateMachine:
     m_StateMachine: {fileID: 4775272345801130940}
     m_Position: {x: -10, y: 280, z: 0}
   m_AnyStateTransitions:
-  - {fileID: 2362400343262274311}
   - {fileID: -4163837399501440215}
   - {fileID: 4737314514735656708}
+  - {fileID: 2362400343262274311}
   - {fileID: 3307826088223748946}
   m_EntryTransitions: []
   m_StateMachineTransitions:
