@@ -213,6 +213,7 @@ public class MapManager : MonoBehaviour
     }
     public void MapClear()
     {
+        mapDrawer.RemoveMapNode();
         UnsubscribeEvents();
         foreach (KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
         {
@@ -263,5 +264,18 @@ public class MapManager : MonoBehaviour
     {
         mapMoving.MoveBaseCamp(enterPosition);
         mapDrawer.RemoveMapNode();
+        UnsubscribeEvents();
+        foreach (KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
+        {
+            if (enemyList.Value != null)
+            {
+                foreach (GameObject enemy in enemyList.Value)
+                {
+                    Destroy(enemy);
+                }
+            }
+        }
+        roomObject.Clear();
+        enemyPool.Clear();
     }   
 }
