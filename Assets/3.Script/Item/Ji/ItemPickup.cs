@@ -38,10 +38,7 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (image == null) return;
-            Color c = image.color;
-            c.a = 1f;
-            image.color = c;
+            setImageAlpha(1f);
 
             player = other.GetComponent<PlayerAction>();
             player.onInteraction.AddListener(GetNewWeapon);
@@ -52,10 +49,7 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (image == null) return;
-            Color c = image.color;
-            c.a = 0f;
-            image.color = c;
+            setImageAlpha(0f);
 
             player.onInteraction.RemoveListener(GetNewWeapon);
             player = null;
@@ -97,6 +91,16 @@ public class ItemPickup : MonoBehaviour
     {
         return weaponID;
     }
+
+    private void setImageAlpha(float alpha)
+    {
+        if (image == null) return;
+
+        Color c = image.color;
+        c.a = alpha;
+        image.color = c;
+    }
+
     //private void AttachToPlayer(WeaponAbstract weapon, PlayerAction player)
     //{
     //    Transform rightHand = player.RightHand;
