@@ -252,10 +252,10 @@ public class PlayerAction : MonoBehaviour
             canvasGroup.alpha = 1f; // 확실하게 1로 고정
         }
 
+        if(Equipment.SubWeapon != null) Equipment.SubWeapon.gameObject.SetActive(false);
+        Equipment.MainWeapon.gameObject.SetActive(false);
         Equipment.SubWeapon = null;
         Equipment.MainWeapon = null;
-        Equipment.SubWeapon.gameObject.SetActive(false);
-        Equipment.MainWeapon.gameObject.SetActive(false);
         stats.resetGold();
         stats.setCurrentHP();
     }

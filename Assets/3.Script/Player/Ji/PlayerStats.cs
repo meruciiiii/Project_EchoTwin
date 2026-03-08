@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private int maxHP = 6; //ÇÑÄ­ÀÌ Ã¼·Â 1·Î ±âÁØÀ» ¼³Á¤
+    [SerializeField] private int maxHP = 6; //ï¿½ï¿½Ä­ï¿½ï¿½ Ã¼ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private int currentHP = 0;
     public bool isDead => (currentHP <= 0);
     [SerializeField] private float playerDMG = 1f;
@@ -21,8 +21,8 @@ public class PlayerStats : MonoBehaviour
     public bool isDash = false;
 
     [Header("Take Damage")]
-    [SerializeField] private int flashAmount = 3;//±ôºýÀÌ´Â È½¼ö
-    [SerializeField] private float flashDuration = 0.1f;//1È¸ ±ôºýÀÏ ¶§ °É¸®´Â ½Ã°£
+    [SerializeField] private int flashAmount = 3;//ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ È½ï¿½ï¿½
+    [SerializeField] private float flashDuration = 0.1f;//1È¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
     [Header("Delay to Echo")]
     [SerializeField] private float timeBetweenAttack = 0.5f;
@@ -93,6 +93,7 @@ public class PlayerStats : MonoBehaviour
         {
             currentHP = maxHP;
         }
+        onHpChanged?.Invoke(currentHP, maxHP);
     }
 
     public void takeDamage(int damage)
@@ -181,4 +182,6 @@ public class PlayerStats : MonoBehaviour
     {
         attackSpeed += amount;
     }
+
+
 }
