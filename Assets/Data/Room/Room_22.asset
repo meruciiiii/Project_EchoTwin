@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomData
   id: 22
   roomType: Boss
-  monsterPackID: 0
+  monsterPackID: 13

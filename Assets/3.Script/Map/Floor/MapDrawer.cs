@@ -14,7 +14,7 @@ public class MapDrawer : MonoBehaviour
         RemoveMapNode();
         DrawMap(microMap, currentCoord);
     }
-    private void RemoveMapNode()
+    public void RemoveMapNode()
     {
         if (plateList == null) return;
         //Debug.Log("plateList : " + plateList.Count);
@@ -118,23 +118,4 @@ public class MapDrawer : MonoBehaviour
             Debug.LogWarning($"{playerFootprint} 위치의 발판을 찾을 수 없습니다.");
         }
     }// 지나간 plate가 되면 회색으로 변환
-    public void playerStanding(Vector2Int playerPosition)
-    {
-        // ui 변수를 선언함과 동시에 TryGetValue의 결과가 true일 때만 로직 실행
-        if (plateMappings != null && plateMappings.TryGetValue(playerPosition, out GameObject ui))
-        {
-            // ui가 확실히 존재할 때만 컴포넌트를 가져옴
-            Image[] images = ui.GetComponentsInChildren<Image>();
-
-            if (images != null && images.Length > 0)
-            {
-                // 새로운 plate가 되면 노랑으로 변환
-                images[0].color = Color.yellow;
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"{playerPosition} 위치의 발판을 찾을 수 없습니다.");
-        }
-    }// 새로운 plate가 되면 노랑으로 변환
 }

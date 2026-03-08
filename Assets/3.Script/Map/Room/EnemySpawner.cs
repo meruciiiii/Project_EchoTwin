@@ -7,6 +7,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private MonsterPackList monsterPackList;
+    [SerializeField] private GameObject[] bossList = new GameObject[2]; 
     [SerializeField] private Transform enemyPool;
     private void Awake()
     {

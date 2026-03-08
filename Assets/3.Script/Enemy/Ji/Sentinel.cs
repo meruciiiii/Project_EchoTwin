@@ -57,7 +57,7 @@ public class Sentinel : EnemyStateAbstract
         rangeMobList = new List<PebbleForBoss>();
         meleeMobList = new List<RatForBoss>();
         warningList = new List<WarningGizmo>();
-
+        PoolsPos = Instantiate(PoolsPos);
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
             SentinelProjectile rock = Instantiate(projectilePrefab, PoolsPos.transform);
@@ -136,7 +136,7 @@ public class Sentinel : EnemyStateAbstract
 
     protected override void OnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
-
+        Destroy(PoolsPos);
         StopAllCoroutines();
         state = EnemyState.dead;
         returnAllToPool();

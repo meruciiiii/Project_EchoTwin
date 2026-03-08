@@ -262,5 +262,6 @@ public class MapManager : MonoBehaviour
     public void PlayerisDie(Vector3 enterPosition)
     {
         mapMoving.MoveBaseCamp(enterPosition);
-    }
+        mapDrawer.RemoveMapNode();
+    }   
 }

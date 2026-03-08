@@ -85,3 +85,11 @@ MonoBehaviour:
       count: 1
     - monsterPrefab: {fileID: 7863740108398017675, guid: 8933ddfe59a44ee4897c99767e4b20a8, type: 3}
       count: 2
+  - monsterPackID: 12
+    monsterDataList:
+    - monsterPrefab: {fileID: 1438169871030806, guid: ad5b7a2d0acb2574e95254ee9007fa50, type: 3}
+      count: 1
+  - monsterPackID: 12
+    monsterDataList:
+    - monsterPrefab: {fileID: 139696, guid: 646c69e6b3e6d0c41a0523052589204a, type: 3}
+      count: 1
