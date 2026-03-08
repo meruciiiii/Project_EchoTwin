@@ -77,7 +77,7 @@ MonoBehaviour:
     volume: 0.562
   - type: 8
     clip: {fileID: 8300000, guid: 8ff2a2d7e79f81c40ac447512f879374, type: 3}
-    volume: 0.347
+    volume: 0.943
   - type: 9
     clip: {fileID: 8300000, guid: e00d04bab80ddb34086d2252a49ef53c, type: 3}
     volume: 0.562
@@ -163,7 +163,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5174415e9879415498f7b0dd794d19c5, type: 3}
     volume: 0.664
   - type: 43
-    clip: {fileID: 8300000, guid: 1f9f8d790d6da4a42991e0d8812cb6ed, type: 3}
+    clip: {fileID: 8300000, guid: acbcb75601b0082458fda8807f67c813, type: 3}
     volume: 0.664
 --- !u!82 &520629654041924723
 AudioSource:
@@ -180,7 +180,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.036
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -185,6 +185,11 @@ public class PlayerStats : MonoBehaviour
     {
         attackSpeed += amount;
     }
-
+    public void Developer()
+    {
+        currentHP = 10000;
+        playerDMG = 10000;
+        cristal = 10000;
+    }
 
 }
