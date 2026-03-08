@@ -3,7 +3,7 @@ using UnityEngine;
 public class StartRoom : MonoBehaviour
 {
     [SerializeField] private Basket[] items = new Basket[2];
-    private void OnEnable()
+    private void Start()
     {
         GameManager.instance.whenNodeClear += OnItemPicked;
         foreach (Basket basket in items)
@@ -17,7 +17,7 @@ public class StartRoom : MonoBehaviour
         foreach (Basket basket in items)
         {
             if (basket == null) continue;
-            int safety = 100; // ¹«ÇÑ·çÇÁ ¹æÁö
+            int safety = 100; // ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             while (safety-- > 0)
             {
                 basket.ActivateRandomItem();

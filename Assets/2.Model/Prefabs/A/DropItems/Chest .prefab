@@ -340,7 +340,7 @@ MonoBehaviour:
   crystalPrefab: {fileID: 1591381487688778, guid: da6e8bbd483d22c449e703a7e40afde4, type: 3}
   coinCount: 5
   heartCount: 1
-  crystalCount: 1
+  crystalCount: 3
   jumpForce: 5
 --- !u!65 &6864927810452130077
 BoxCollider:
@@ -357,9 +357,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.3735197, y: 0.79624057, z: 1.7869536}
-  m_Center: {x: 0.002988815, y: 0.35274202, z: 0.0059204395}
+  m_Size: {x: 23.84752, y: 4.9, z: 24.07922}
+  m_Center: {x: 0.002989088, y: 0.352742, z: 1.100889}
