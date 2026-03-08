@@ -93,6 +93,7 @@ public class MapManager : MonoBehaviour
         GameManager.instance.setDic(enemyPool);
         SetStartCoord();
         mapMoving.MoveStartRooom();
+        GameManager.instance.ChangeState(GameManager.GameState.Playing);
         startRoom.SetStartRoom();
         if (!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
         {
@@ -131,8 +132,11 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetValue roomPrefab is Error");
             return;
         }
-        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+        RoomType type = microMap[currentCoord].GetRoomData().GetRoomType();
+        if (type != RoomType.Battle && type != RoomType.Elite && type != RoomType.Boss)
+        {
             return;
+        }
         if (floor.GetClear())
             return;
         Debug.Log("RoomClear is Start");
@@ -241,8 +245,11 @@ public class MapManager : MonoBehaviour
         //    if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
         //        return;
         //}
-        if (!microMap[currentCoord].GetRoomData().GetRoomType().Equals(RoomType.Battle))
+        RoomType type = microMap[currentCoord].GetRoomData().GetRoomType();
+        if (type != RoomType.Battle && type != RoomType.Elite && type != RoomType.Boss)
+        {
             return;
+        }
         if (floor.GetClear())
             return;
         Debug.Log("PlayerInBattle is Start");

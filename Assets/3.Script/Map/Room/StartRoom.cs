@@ -17,7 +17,7 @@ public class StartRoom : MonoBehaviour
         foreach (Basket basket in items)
         {
             if (basket == null) continue;
-            int safety = 20; // 公茄风橇 规瘤
+            int safety = 100; // 公茄风橇 规瘤
             while (safety-- > 0)
             {
                 basket.ActivateRandomItem();
