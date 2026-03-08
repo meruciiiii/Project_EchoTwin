@@ -273,6 +273,11 @@ public class Sentinel : EnemyStateAbstract
 
         yield return new WaitForSeconds(rangeAttackSpeed);
 
+        if (state == EnemyState.dead || PoolsPos == null) 
+        {
+            coroutine = null;
+            yield break;
+        }
 
         if (ani != null) ani.SetTrigger("Attack02");
 
@@ -294,6 +299,11 @@ public class Sentinel : EnemyStateAbstract
 
         for (int i = 0; i < rangeAttackCount; i++)
         {
+            if (state == EnemyState.dead || rockPool.Count == 0)
+            {
+                break;
+            }
+
             Vector3 randomPos = new Vector3(Random.Range(-4f, 4f), 0, Random.Range(-4f, 4f));
             Vector3 targetPos = player.transform.position + randomPos + Vector3.up * 10f;
 
@@ -395,12 +405,17 @@ public class Sentinel : EnemyStateAbstract
 
     public void returnRock(SentinelProjectile rock)
     {
-        if (isClearPool || state == EnemyState.dead || rock == null) return;
+        if (rock == null) return;
 
-        if (PoolsPos != null) rock.transform.SetParent(PoolsPos.transform);
+        if (PoolsPos != null) 
+        {
+            rock.transform.SetParent(PoolsPos.transform);
+        }
 
         rock.transform.localPosition = Vector3.zero;
         rock.gameObject.SetActive(false);
+
+        if (isClearPool || state == EnemyState.dead) return; 
         rockPool.Enqueue(rock);
     }
 
