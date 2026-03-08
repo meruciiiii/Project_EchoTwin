@@ -278,13 +278,14 @@ GameObject:
   - component: {fileID: 7258104554962846934}
   - component: {fileID: 697173508724463060}
   - component: {fileID: 7888730201628171551}
+  - component: {fileID: 4534407243012815689}
   m_Layer: 0
   m_Name: 0. Sword_Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7258104554962846934
 Transform:
   m_ObjectHideFlags: 0
@@ -315,8 +316,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   weaponID: 0
   image: {fileID: 4294754652833363036}
-  height: 1
+  height: 3
   isPickedUp: 0
+  player: {fileID: 0}
 --- !u!65 &7888730201628171551
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -336,5 +338,20 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 1.7830844, z: 2}
-  m_Center: {x: -0.12455344, y: 0.6778408, z: -0.1343748}
+  m_Size: {x: 1.3, y: 1.9435971, z: 1.3}
+  m_Center: {x: 2.7476955e-16, y: 0.1417985, z: 1.1003658e-16}
+--- !u!114 &4534407243012815689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6128330471668340996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796093b23f8d4d5459ec1f8bf75edceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemFloating
+  rotateSpeed: 30
+  floatHeight: 0.1
+  floatSpeed: 1

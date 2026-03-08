@@ -91,7 +91,10 @@ public class ItemPickup : MonoBehaviour
 
         this.enabled = false;
     }
-
+    public WeaponID GetSelectedWeaponID()
+    {
+        return weaponID;
+    }
     //private void AttachToPlayer(WeaponAbstract weapon, PlayerAction player)
     //{
     //    Transform rightHand = player.RightHand;

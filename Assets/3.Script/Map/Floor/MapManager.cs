@@ -18,6 +18,7 @@ public class MapManager : MonoBehaviour
     //private MapTrace mapTrace;
     [SerializeField] private RoomObjects roomObjects;
     [SerializeField] private Vector2Int currentCoord;
+    [SerializeField] private StartRoom startRoom;
 
     private bool isEventSubscribed = false;
 
@@ -92,6 +93,7 @@ public class MapManager : MonoBehaviour
         GameManager.instance.setDic(enemyPool);
         SetStartCoord();
         mapMoving.MoveStartRooom();
+        startRoom.SetStartRoom();
         if (!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
         {
             Debug.Log("TryGetValue roomPrefab is Error");

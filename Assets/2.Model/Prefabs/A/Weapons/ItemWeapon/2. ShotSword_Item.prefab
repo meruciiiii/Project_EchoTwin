@@ -366,6 +366,7 @@ GameObject:
   - component: {fileID: 4185508418640723415}
   - component: {fileID: 7480063942484443618}
   - component: {fileID: 5469492958429283443}
+  - component: {fileID: 3430699053290537302}
   m_Layer: 0
   m_Name: 2. ShotSword_Item
   m_TagString: Untagged
@@ -407,6 +408,7 @@ MonoBehaviour:
   image: {fileID: 4538663527152619727}
   height: 3
   isPickedUp: 0
+  player: {fileID: 0}
 --- !u!65 &5469492958429283443
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -428,3 +430,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 1.6363631, z: 2}
   m_Center: {x: 0, y: 0.31818157, z: 0}
+--- !u!114 &3430699053290537302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8032965799224716317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796093b23f8d4d5459ec1f8bf75edceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemFloating
+  rotateSpeed: 30
+  floatHeight: 0.1
+  floatSpeed: 1
