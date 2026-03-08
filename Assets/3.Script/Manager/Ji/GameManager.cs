@@ -223,7 +223,6 @@ public class GameManager : MonoBehaviour
         else if (gamestate == GameState.Clear)
         {
             isStop = true;
-
             whenNodeClear?.Invoke();
             GetCurrency.destroyAllHeart();
             ClearItemList();

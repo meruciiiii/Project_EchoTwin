@@ -18,7 +18,7 @@ public class MapManager : MonoBehaviour
     //private MapTrace mapTrace;
     [SerializeField] private RoomObjects roomObjects;
     [SerializeField] private Vector2Int currentCoord;
-    [SerializeField] private StartRoom startRoom;
+    [SerializeField] private StartRoom[] startRoom = new StartRoom[2];
 
     private bool isEventSubscribed = false;
 
@@ -94,7 +94,8 @@ public class MapManager : MonoBehaviour
         SetStartCoord();
         mapMoving.MoveStartRooom();
         GameManager.instance.ChangeState(GameManager.GameState.Playing);
-        startRoom.SetStartRoom();
+        startRoom[0].SetStartRoom();
+        startRoom[1].SetStartRoom();
         if (!roomObject.TryGetValue(currentCoord, out GameObject roomPrefab))
         {
             Debug.Log("TryGetValue roomPrefab is Error");
@@ -213,6 +214,7 @@ public class MapManager : MonoBehaviour
     }
     public void MapClear()
     {
+        mapDrawer.RemoveMapNode();
         UnsubscribeEvents();
         foreach (KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
         {
@@ -263,5 +265,18 @@ public class MapManager : MonoBehaviour
     {
         mapMoving.MoveBaseCamp(enterPosition);
         mapDrawer.RemoveMapNode();
+        UnsubscribeEvents();
+        foreach (KeyValuePair<Vector2Int, List<GameObject>> enemyList in enemyPool)
+        {
+            if (enemyList.Value != null)
+            {
+                foreach (GameObject enemy in enemyList.Value)
+                {
+                    Destroy(enemy);
+                }
+            }
+        }
+        roomObject.Clear();
+        enemyPool.Clear();
     }   
 }
