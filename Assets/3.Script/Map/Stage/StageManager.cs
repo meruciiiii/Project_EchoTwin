@@ -40,6 +40,12 @@ public class StageManager : MonoBehaviour
     private void OnPortalEntered()
     {
         onPortalEntered?.Invoke();
-        stageNodeView.gameObject.SetActive(true);
     }
+    public void SetNodeUI(bool active)
+{
+    if (stageNodeView != null)
+    {
+        stageNodeView.gameObject.SetActive(active);
+    }
+}
 } 
