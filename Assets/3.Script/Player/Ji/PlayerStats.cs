@@ -44,6 +44,7 @@ public class PlayerStats : MonoBehaviour
     public event Action<int> onMaxHpChanged;
 
     public event Action<int> onCoinChanged;
+    public event Action<int> onCristalChanged;
 
     public int MaxHP => maxHP;
     public int CurrentHP => currentHP;
@@ -80,6 +81,7 @@ public class PlayerStats : MonoBehaviour
         onMaxHpChanged?.Invoke(maxHP);
         onHpChanged?.Invoke(currentHP, maxHP);
         onCoinChanged?.Invoke(gold);
+        onCristalChanged?.Invoke(cristal);
     }
 
     private void OnEnable()
@@ -131,7 +133,7 @@ public class PlayerStats : MonoBehaviour
     public void getCristal(int amount)
     {
         cristal += amount;
-        //Debug.Log($"{cristal} cristal");
+        onCristalChanged?.Invoke(cristal);
     }
 
     public bool TryUseCristal(int amount)
@@ -139,6 +141,7 @@ public class PlayerStats : MonoBehaviour
         if (cristal < amount) return false;
 
         cristal -= amount;
+        onCristalChanged?.Invoke(cristal);
         return true;
     }
 
