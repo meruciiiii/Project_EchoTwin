@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Crab : EnemyStateAbstract
 {
-    [SerializeField] private int shieldCount = 10;
+    [SerializeField] private int shieldCount = 5;
     [SerializeField] private float reduceRatio = 0.9f;
 
     protected override void Update()
@@ -28,7 +28,7 @@ public class Crab : EnemyStateAbstract
         }
         else
         {
-            // ²®µ¥±â°¡ ±úÁø ÈÄ¿¡´Â ÀÏ¹ÝÀûÀÎ ÇÇ°Ý ¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇà
+            // ï¿½ï¿½ï¿½ï¿½ï¿½â°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
             currentHP -= damage;
             if (currentHP <= 0) OnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
             if (ani != null && state != EnemyState.dead) ani.SetTrigger("Hit");

@@ -181,6 +181,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7488515414838918403, guid: cbf88a3e50d202542b3d431a711e84bf, type: 3}
   m_PrefabInstance: {fileID: 2109642209}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &40591569 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2284624599656826701, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+  m_PrefabInstance: {fileID: 1747022935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &40591570 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8099819673610182843, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+  m_PrefabInstance: {fileID: 1747022935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &58393976 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7494961653495372047, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
@@ -1789,6 +1799,95 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df5a6ee87dac5fc4fb24433b025a6aab, type: 3}
+--- !u!1 &446396435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 446396436}
+  - component: {fileID: 446396439}
+  - component: {fileID: 446396438}
+  - component: {fileID: 446396437}
+  m_Layer: 5
+  m_Name: CrossHair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &446396436
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446396435}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 40591570}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &446396437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446396435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 365c6d96d6a18ab4b9f68129f86bdfac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrosshairController
+  parentCanvas: {fileID: 40591569}
+--- !u!114 &446396438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446396435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 56f433345b1faa64eb50cdb197d34f71, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &446396439
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446396435}
+  m_CullTransparentMesh: 1
 --- !u!1 &447567326
 GameObject:
   m_ObjectHideFlags: 0
@@ -5296,6 +5395,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 494837832189302284, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
+      propertyPath: soundList.Array.data[37].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: acbcb75601b0082458fda8807f67c813, type: 3}
+    - target: {fileID: 494837832189302284, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
       propertyPath: soundList.Array.data[8].volume
       value: 0.943
       objectReference: {fileID: 0}
@@ -6139,6 +6242,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8099819673610182843, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 446396436}
     - targetCorrespondingSourceObject: {fileID: 3471007142404933119, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1191105251}
@@ -7709,7 +7815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4541788095088085409, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: playerDMG
-      value: 20000
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4541788095088085409, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: dashLength
@@ -7849,7 +7955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6877147711757421696, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: weaponType
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6946189258489899875, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: dieUI

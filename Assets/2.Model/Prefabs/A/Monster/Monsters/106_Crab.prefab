@@ -267,5 +267,5 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 256
-  shieldCount: 10
+  shieldCount: 5
   reduceRatio: 0.9
