@@ -168,6 +168,7 @@ public class StageNodeView : MonoBehaviour
     }
     private void ExecuteNodeEvent(StageNode node)
     {
+        GameManager.instance.ChangeState(GameManager.GameState.Playing);
         onNodeEntered?.Invoke(node);
         //StageNodeMapClose();
     }
