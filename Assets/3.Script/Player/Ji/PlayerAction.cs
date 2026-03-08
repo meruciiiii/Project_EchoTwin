@@ -152,10 +152,7 @@ public class PlayerAction : MonoBehaviour
         switch (itemType)
         {
             case shopItem.Heart:
-                for (int i = 0; i < value; i++)
-                {
-                    stats.getHeart(value);
-                }
+                stats.getHeart(value); 
                 break;
 
             case shopItem.Cristal:
