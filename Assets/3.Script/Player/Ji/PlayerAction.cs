@@ -241,6 +241,7 @@ public class PlayerAction : MonoBehaviour
 
             float fadeDuration = 1.5f; // 페이드 속도 (1.5초 동안 켜짐)
             float elapsed = 0f;
+            SoundManager.SendEvent(SoundType.SFX_PlayerDie);
 
             while (elapsed < fadeDuration)
             {
@@ -261,18 +262,40 @@ public class PlayerAction : MonoBehaviour
     }
     public void CloseDieUI()
     {
-        if (dieUI != null)
-        {
-            dieUI.SetActive(false);
+        StartCoroutine(FadeOutDieUI_Co());
+    }
 
-            if (dieUI.TryGetComponent(out CanvasGroup canvasGroup))
+    private IEnumerator FadeOutDieUI_Co()
+    {
+        if (dieUI != null && dieUI.TryGetComponent(out CanvasGroup canvasGroup))
+        {
+            float fadeDuration = 1.0f; // 페이드 아웃 속도 (1초 동안 사라짐)
+            float elapsed = 0f;
+            float startAlpha = canvasGroup.alpha;
+
+            while (elapsed < fadeDuration)
             {
-                canvasGroup.alpha = 0f;
+                elapsed += Time.unscaledDeltaTime; // 게임 정지 상태일 수 있으므로 unscaled 사용
+                canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / fadeDuration);
+                yield return null;
             }
+
+            canvasGroup.alpha = 0f;
+            
+            dieUI.SetActive(false);
+        }
+
+        if (ani != null)
+        {
             ani.SetBool("Die", false);
+            ani.updateMode = AnimatorUpdateMode.Normal; // 다시 정상 속도로 복구
+        }
+
+        if (GameManager.instance != null)
+        {
             GameManager.instance.ChangeState(GameManager.GameState.Playing);
         }
-        
+
     }
     private void knockback(Vector3 dir, float knockbackForce)
     {
