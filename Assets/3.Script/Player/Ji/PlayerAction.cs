@@ -221,12 +221,10 @@ public class PlayerAction : MonoBehaviour
     }
     private IEnumerator DieSequence_Co()
     {
-        Debug.Log("ondie");
 
         if (ani != null)
         {
-            ani.updateMode = AnimatorUpdateMode.UnscaledTime;
-            ani.SetTrigger("Die");
+            ani.SetBool("Die", true);
         }
 
         yield return new WaitForSecondsRealtime(3f);
@@ -262,15 +260,13 @@ public class PlayerAction : MonoBehaviour
     {
         if (dieUI != null)
         {
-            // 1. UI 비활성화
             dieUI.SetActive(false);
 
-            // 2. 다음번 사망 페이드 인을 위해 알파값 초기화
             if (dieUI.TryGetComponent(out CanvasGroup canvasGroup))
             {
                 canvasGroup.alpha = 0f;
             }
-
+            ani.SetBool("Die", false);
             GameManager.instance.ChangeState(GameManager.GameState.Playing);
         }
         
