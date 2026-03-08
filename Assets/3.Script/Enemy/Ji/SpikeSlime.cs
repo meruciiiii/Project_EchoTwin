@@ -23,7 +23,7 @@ public class SpikeSlime : EnemyStateAbstract
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
 
-        coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
+        attackCoroutine = StartCoroutine(Attack_Co(targetPos, startPos));
     }
 
     private IEnumerator Attack_Co(Vector3 destPos, Vector3 startPos)
@@ -68,7 +68,7 @@ public class SpikeSlime : EnemyStateAbstract
         SoundManager.SendEvent(SoundType.SFX_Slime);
         transform.position = destPos;
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -80,7 +80,7 @@ public class SpikeSlime : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         //BodyAttack(standardRange);
 

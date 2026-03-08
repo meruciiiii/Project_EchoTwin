@@ -173,7 +173,7 @@ public class RedDragon : EnemyStateAbstract
     public override void Attack()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
         if (!canAttack()) return;
 
         AttackPattern pattern;
@@ -184,19 +184,19 @@ public class RedDragon : EnemyStateAbstract
         switch (pattern)
         {
             case AttackPattern.melee:
-                coroutine = StartCoroutine(meleeAttack_Co());
+                attackCoroutine = StartCoroutine(meleeAttack_Co());
                 break;
 
             case AttackPattern.breath:
-                coroutine = StartCoroutine(fireBreath_Co());
+                attackCoroutine = StartCoroutine(fireBreath_Co());
                 break;
 
             case AttackPattern.reflect:
-                coroutine = StartCoroutine(reflection_Co());
+                attackCoroutine = StartCoroutine(reflection_Co());
                 break;
 
             case AttackPattern.range:
-                coroutine = StartCoroutine(rangeAttack_Co());
+                attackCoroutine = StartCoroutine(rangeAttack_Co());
                 break;
         }
     }
@@ -314,7 +314,7 @@ public class RedDragon : EnemyStateAbstract
         if (leftWarning != null) leftWarning.Hide();
         if (rightWarning != null) rightWarning.Hide();
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -350,7 +350,7 @@ public class RedDragon : EnemyStateAbstract
                 if (baseWarning != null) baseWarning.Hide();
                 if (fillWwarning != null) fillWwarning.Hide();
 
-                coroutine = null;
+                attackCoroutine = null;
 
                 if (state != EnemyState.dead) state = EnemyState.idle;
                 yield break;
@@ -437,7 +437,7 @@ public class RedDragon : EnemyStateAbstract
         if (baseWarning != null) baseWarning.Hide();
         if (fillWwarning != null) fillWwarning.Hide();
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -457,7 +457,7 @@ public class RedDragon : EnemyStateAbstract
 
         isReflect = false;
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -505,7 +505,7 @@ public class RedDragon : EnemyStateAbstract
         }
 
         isFlying = false;
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {

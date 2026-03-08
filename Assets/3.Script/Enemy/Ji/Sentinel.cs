@@ -138,7 +138,7 @@ public class Sentinel : EnemyStateAbstract
     {
         StopAllCoroutines();
         state = EnemyState.dead;
-        coroutine = null;
+        attackCoroutine = null;
 
         returnAllToPool();
 
@@ -187,7 +187,7 @@ public class Sentinel : EnemyStateAbstract
     public override void Attack()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
         if (!canAttack())
         {
             Move();
@@ -201,31 +201,31 @@ public class Sentinel : EnemyStateAbstract
 
         if (distance < enemyData.attackRange - 0.5f)
         {
-            if (coroutine != null) return;
-            coroutine = StartCoroutine(Attack_Co());
+            if (attackCoroutine != null) return;
+            attackCoroutine = StartCoroutine(Attack_Co());
         }
         else
         {
-            if (coroutine != null) return;
+            if (attackCoroutine != null) return;
             int temp = Random.Range(0, 2);
 
             if (temp == 0)
             {
-                coroutine = StartCoroutine(RangeAttack_Co());
+                attackCoroutine = StartCoroutine(RangeAttack_Co());
             }
             else if (temp == 1)
             {
                 if (!isPhase2nd && (rangeMobPool.Count != rangeCount || meleeMobPool.Count != meleeCount))
                 {
-                    coroutine = StartCoroutine(RangeAttack_Co());
+                    attackCoroutine = StartCoroutine(RangeAttack_Co());
                 }
                 else if (!isPhase2nd && rangeMobPool.Count == rangeCount && meleeMobPool.Count == meleeCount)
                 {
-                    coroutine = StartCoroutine(MobSpawn_Co());
+                    attackCoroutine = StartCoroutine(MobSpawn_Co());
                 }
                 else
                 {
-                    coroutine = StartCoroutine(MobSpawn_Co());
+                    attackCoroutine = StartCoroutine(MobSpawn_Co());
                 }
             }
         }
@@ -256,7 +256,7 @@ public class Sentinel : EnemyStateAbstract
 
         AreaAttack(enemyData.attackRange, 270f);
         warning.Hide();
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -275,7 +275,7 @@ public class Sentinel : EnemyStateAbstract
 
         if (state == EnemyState.dead || PoolsPos == null) 
         {
-            coroutine = null;
+            attackCoroutine = null;
             yield break;
         }
 
@@ -317,7 +317,7 @@ public class Sentinel : EnemyStateAbstract
             yield return new WaitForSeconds(0.3f);
         }
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -394,7 +394,7 @@ public class Sentinel : EnemyStateAbstract
             }
         }
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -506,7 +506,7 @@ public class Sentinel : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         setPlayerPos();
     }
