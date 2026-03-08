@@ -139,6 +139,63 @@ public class PlayerAction : MonoBehaviour
 
     }
 
+    public bool TryBuyShopItem(shopItem itemType, int price, int value)
+    {
+        if (stats == null) return false;
+        if (stats.Gold < price) return false;
+
+        switch (itemType)
+        {
+            case shopItem.Heart:
+                if (stats.CurrentHP >= stats.MaxHP) return false;
+                break;
+
+            case shopItem.Cristal:
+                break;
+
+            case shopItem.refillEcho:
+                if (Equipment == null) return false;
+                if (Equipment.SubWeapon == null) return false;
+                if (Equipment.SubWeapon.resonanceCount >= Equipment.SubWeapon.weaponData.resonanceCount) return false;
+                break;
+        }
+
+        if (!stats.TryUseGold(price)) return false;
+
+        switch (itemType)
+        {
+            case shopItem.Heart:
+                for (int i = 0; i < value; i++)
+                {
+                    stats.getHeart(value);
+                }
+                break;
+
+            case shopItem.Cristal:
+                stats.getCristal(value);
+                break;
+
+            case shopItem.refillEcho:
+                int maxCount = Equipment.SubWeapon.weaponData.resonanceCount;
+                int nextCount = Equipment.SubWeapon.resonanceCount + value;
+
+                if (nextCount > maxCount)
+                {
+                    nextCount = maxCount;
+                }
+
+                Equipment.SubWeapon.SetResonance(nextCount);
+
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.setResonance();
+                }
+                break;
+        }
+
+        return true;
+    }
+
     private IEnumerator superArmor()
     {
         hasDamaged = true;
@@ -257,5 +314,4 @@ public class PlayerAction : MonoBehaviour
             command = new ComboAttackCommand(mainAttack, subEcho, this);
         }
     }
-
 }

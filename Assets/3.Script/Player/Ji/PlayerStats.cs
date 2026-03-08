@@ -77,7 +77,9 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-
+        onMaxHpChanged?.Invoke(maxHP);
+        onHpChanged?.Invoke(currentHP, maxHP);
+        onCoinChanged?.Invoke(gold);
     }
 
     private void OnEnable()
@@ -96,6 +98,8 @@ public class PlayerStats : MonoBehaviour
     public void resetGold()
     {
         gold = 0;
+
+        onCoinChanged?.Invoke(gold);
     }
 
     public void getGold(int amount)
@@ -106,18 +110,19 @@ public class PlayerStats : MonoBehaviour
         //Debug.Log($"{gold} gold");
     }
 
+    public bool TryUseGold(int amount)
+    {
+        if (gold < amount) return false;
+
+        gold -= amount;
+        onCoinChanged?.Invoke(gold);
+        return true;
+    }
+
     public void getCristal(int amount)
     {
         cristal += amount;
         //Debug.Log($"{cristal} cristal");
-    }
-
-    public void getHeart()
-    {
-        currentHP += 1;
-        onHpChanged?.Invoke(currentHP, maxHP);
-
-        Debug.Log($"{currentHP} after HP");
     }
 
     public bool TryUseCristal(int amount)
@@ -128,6 +133,14 @@ public class PlayerStats : MonoBehaviour
         return true;
     }
 
+    public void getHeart(int value)
+    {
+        if (currentHP >= maxHP) return;
+        if (value <= 0) return;
+
+        currentHP = Mathf.Min(currentHP + value, maxHP);
+        onHpChanged?.Invoke(currentHP, maxHP);
+    }
     public void getMaxHP(int amount)
     {
         maxHP += amount;

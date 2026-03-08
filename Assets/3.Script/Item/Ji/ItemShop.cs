@@ -25,6 +25,8 @@ public class ItemShop : MonoBehaviour
     private PlayerAction player;
     private Camera cam;
 
+    private Vector3 uiPos;
+
     private void Awake()
     {
         cam = Camera.main;
@@ -36,8 +38,7 @@ public class ItemShop : MonoBehaviour
     {
         if (image == null || cam == null) return;
 
-        //Vector3 worldPos = transform.position + Vector3.up * height;
-        Vector3 worldPos = this.transform.position + cam.transform.up * height;
+        Vector3 worldPos = uiPos + cam.transform.up * height;
         Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
 
         image.rectTransform.position = screenPos;
@@ -45,6 +46,7 @@ public class ItemShop : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isPickedUp) return;
         if (other.CompareTag("Player"))
         {
             setImageAlpha(1f);
@@ -66,8 +68,23 @@ public class ItemShop : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        uiPos = transform.position;
+
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.AddItemToList(gameObject);
+        }
+    }
+
     private void OnDisable()
     {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.RemoveItemFromList(gameObject);
+        }
+
         if (player != null)
         {
             player.onInteraction.RemoveListener(buyItem);
@@ -81,7 +98,7 @@ public class ItemShop : MonoBehaviour
     {
         if (player == null) return;
 
-        //if (!player.TryBuyShopItem(itemType, price, value)) return;
+        if (!player.TryBuyShopItem(itemType, price, value)) return;
 
         isPickedUp = true;
 
