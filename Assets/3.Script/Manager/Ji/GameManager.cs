@@ -208,6 +208,8 @@ public class GameManager : MonoBehaviour
             isStop = true;
             isDead = true;
             playerDie?.Invoke();
+            GetCurrency.destroyAllHeart();
+            ClearItemList();
         }
         else if (gameState == GameState.Playing)
         {

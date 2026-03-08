@@ -254,6 +254,7 @@ public class PlayerAction : MonoBehaviour
         Equipment.MainWeapon.gameObject.SetActive(false);
         Equipment.SubWeapon = null;
         Equipment.MainWeapon = null;
+        if (Equipment.MainWeapon.DualWeapon.activeSelf) Equipment.MainWeapon.DualWeapon.SetActive(false);
         checkWeapon();
         if (GameManager.instance != null)
         {
