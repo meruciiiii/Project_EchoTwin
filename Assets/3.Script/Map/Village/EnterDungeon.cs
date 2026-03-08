@@ -12,6 +12,7 @@ public class EnterDungeon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+        GameManager.instance.ChangeState(GameManager.GameState.Loading);
         SoundManager.SendEvent(SoundType.SFX_Portal);
             sceneTransition.PlayFullTransition(() => {
                 stageFlowManager.StartStage();

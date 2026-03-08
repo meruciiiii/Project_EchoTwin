@@ -13,7 +13,10 @@ public class Basket : MonoBehaviour
         ItemPickup selectedItem = items[index];
         if (selectedItem == null) return;
         // 선택된 아이템 활성화
-        selectedItem.gameObject.SetActive(true);
+        foreach (ItemPickup weapon in items)
+        {
+            weapon.gameObject.SetActive(weapon == selectedItem);
+        }
         selectedItem.OnAnyItemPicked += OnItemPicked;
     }
     public WeaponID GetSelectedWeaponID()

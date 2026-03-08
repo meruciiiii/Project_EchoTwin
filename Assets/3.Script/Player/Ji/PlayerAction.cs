@@ -221,12 +221,10 @@ public class PlayerAction : MonoBehaviour
     }
     private IEnumerator DieSequence_Co()
     {
-        Debug.Log("ondie");
 
         if (ani != null)
         {
-            ani.updateMode = AnimatorUpdateMode.UnscaledTime;
-            ani.SetTrigger("Die");
+            ani.SetBool("Die", true);
         }
 
         yield return new WaitForSecondsRealtime(3f);
@@ -257,6 +255,21 @@ public class PlayerAction : MonoBehaviour
         Equipment.SubWeapon = null;
         Equipment.MainWeapon = null;
         stats.resetGold();
+    }
+    public void CloseDieUI()
+    {
+        if (dieUI != null)
+        {
+            dieUI.SetActive(false);
+
+            if (dieUI.TryGetComponent(out CanvasGroup canvasGroup))
+            {
+                canvasGroup.alpha = 0f;
+            }
+            ani.SetBool("Die", false);
+            GameManager.instance.ChangeState(GameManager.GameState.Playing);
+        }
+        
     }
     private void knockback(Vector3 dir, float knockbackForce)
     {
