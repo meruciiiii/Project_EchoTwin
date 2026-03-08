@@ -73,7 +73,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     private void Awake()
     {
         action = stats.GetComponent<PlayerAction>();
-        SetResonance(weaponData.resonanceCount);
+        ResetResonance();
         SetAttackTime();
     }
 
@@ -199,6 +199,19 @@ public abstract class WeaponAbstract : MonoBehaviour
     //    resonanceCount = count;
     //    Debug.Log(resonanceCount);
     //}
+
+    public void SetDualWeaponActive(bool value)
+    {
+        if (weaponID != WeaponID.Dagger) return;
+        if (DualWeapon == null) return;
+
+        DualWeapon.SetActive(value);
+    }
+
+    public void ResetResonance()
+    {
+        SetResonance(weaponData.resonanceCount);
+    }
 
     public void SetResonance(int count)
     {

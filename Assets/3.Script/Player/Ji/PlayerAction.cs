@@ -250,11 +250,19 @@ public class PlayerAction : MonoBehaviour
             canvasGroup.alpha = 1f; // 확실하게 1로 고정
         }
 
-        if(Equipment.SubWeapon != null) Equipment.SubWeapon.gameObject.SetActive(false);
-        Equipment.MainWeapon.gameObject.SetActive(false);
-        Equipment.SubWeapon = null;
-        Equipment.MainWeapon = null;
-        if (Equipment.MainWeapon.DualWeapon.activeSelf) Equipment.MainWeapon.DualWeapon.SetActive(false);
+        if (Equipment.SubWeapon != null) 
+        {
+            Equipment.SubWeapon.SetDualWeaponActive(false); 
+            Equipment.SubWeapon.gameObject.SetActive(false);
+            Equipment.SubWeapon = null; 
+        }
+
+        if (Equipment.MainWeapon != null) 
+        {
+            Equipment.MainWeapon.SetDualWeaponActive(false);
+            Equipment.MainWeapon.gameObject.SetActive(false); 
+            Equipment.MainWeapon = null; 
+        }
         checkWeapon();
         if (GameManager.instance != null)
         {
