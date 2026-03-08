@@ -133,8 +133,10 @@ public class GameManager : MonoBehaviour
         MainWeapon = mainWeapon;
         SubWeapon = subWeapon;
 
+        isGetWeapon = (mainWeapon != null);
+
         turnWeaponUI?.Invoke(mainWeapon, subWeapon);
-        GetWeapon?.Invoke();
+        if(mainWeapon != null) GetWeapon?.Invoke();
     }
 
     public void setResonance()

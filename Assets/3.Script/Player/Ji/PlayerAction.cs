@@ -254,6 +254,16 @@ public class PlayerAction : MonoBehaviour
         Equipment.MainWeapon.gameObject.SetActive(false);
         Equipment.SubWeapon = null;
         Equipment.MainWeapon = null;
+        checkWeapon();
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.TurnWeaponUI(null, null);
+            GameManager.instance.setResonance();
+        }
+        if (ani != null)
+        {
+            ani.SetInteger("WeaponGroup", 0);
+        }
         stats.resetGold();
         stats.setCurrentHP();
     }
