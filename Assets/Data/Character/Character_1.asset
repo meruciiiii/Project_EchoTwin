@@ -18,5 +18,5 @@ MonoBehaviour:
   maxLv: 10
   cost: 150
   costIncrease: 1.6
-  valuePerLv: 2
+  valuePerLv: 5
   description: "\uAE30\uBCF8 \uACF5\uACA9\uB825\uC744 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
