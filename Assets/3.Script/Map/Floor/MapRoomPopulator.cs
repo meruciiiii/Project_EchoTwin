@@ -41,7 +41,9 @@ public class MapRoomPopulator : MonoBehaviour
             if (!bossConnected.Count.Equals(0))
             {
                 keyForReward = bossConnected[0];
+                roomObject.Remove(keyForReward);
                 SetBossRoom(microMap[keyForReward]);
+                roomObject.Add(keyForReward, MappingRoom(microMap[keyForReward].GetRoomData()));
                 Debug.Log("Boss and Reward success");
             }
         }
@@ -134,23 +136,26 @@ public class MapRoomPopulator : MonoBehaviour
         }
         if (choice.Equals(4))
         {
-            if (eliteRoomCount > 0)
+            if (this.floor <= 1)
+            {
                 choice = 1;
+            }
+            else if (eliteRoomCount > 0)
+            {
+                choice = 1;
+            }
             else
             {
-                if (this.floor > 1)
+                if (this.floor > 3)
                 {
-                    if (this.floor > 3)
-                    {
+                    eliteRoomCount++;
+                }
+                else
+                {
+                    if (UnityEngine.Random.value * 100 < eliteRoomProbability)
                         eliteRoomCount++;
-                    }
                     else
-                    {
-                        if (UnityEngine.Random.value * 100 < eliteRoomProbability)
-                            eliteRoomCount++;
-                        else
-                            choice = 1;
-                    }
+                        choice = 1;
                 }
             }
         }

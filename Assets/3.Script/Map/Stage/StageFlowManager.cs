@@ -104,4 +104,8 @@ public class StageFlowManager : MonoBehaviour
         stageManager.SetNodeUI(true); 
         });
     }
+    private void PlayerisDie()
+    {
+        mapManager.PlayerisDie();
+    }
 }
