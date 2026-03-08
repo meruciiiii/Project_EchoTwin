@@ -254,7 +254,10 @@ public class PlayerAction : MonoBehaviour
 
         Equipment.SubWeapon = null;
         Equipment.MainWeapon = null;
+        Equipment.SubWeapon.gameObject.SetActive(false);
+        Equipment.MainWeapon.gameObject.SetActive(false);
         stats.resetGold();
+        stats.setCurrentHP();
     }
     public void CloseDieUI()
     {
