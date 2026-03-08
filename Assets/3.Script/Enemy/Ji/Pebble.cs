@@ -43,7 +43,7 @@ public class Pebble : EnemyStateAbstract
 
     public override void Attack()
     {
-        if (state == EnemyState.attack) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
         float distance = Vector3.Distance(player.transform.position, transform.position);
 

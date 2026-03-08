@@ -45,7 +45,7 @@ public class HpUI : MonoBehaviour
 
     private void whenMaxHPChanged(int maxHP)
     {
-        for(int i=0;i<buttons.Count;i++)
+        for (int i=0;i<buttons.Count;i++)
         {
             bool isItActive = (i < maxHP);
             buttons[i].gameObject.SetActive(isItActive);

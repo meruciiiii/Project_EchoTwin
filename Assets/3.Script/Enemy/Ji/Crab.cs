@@ -42,7 +42,7 @@ public class Crab : EnemyStateAbstract
     public override void Attack()
     {
         if (!canAttack()) return;
-        if (state == EnemyState.attack) return;
+        if (state != EnemyState.chase) return;
 
         coroutine = StartCoroutine(Attack_Co());
     }

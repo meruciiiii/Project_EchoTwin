@@ -102,7 +102,8 @@ public class Sentinel : EnemyStateAbstract
 
     protected override void OnEnable()
     {
-        state = EnemyState.chase;
+        //state = EnemyState.chase;
+        state = EnemyState.idle;
     }
 
     protected override void Update()
@@ -178,7 +179,7 @@ public class Sentinel : EnemyStateAbstract
 
     public override void Attack()
     {
-        if (state == EnemyState.attack) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
         if (!canAttack())
         {
