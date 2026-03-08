@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class RewardChest : MonoBehaviour
 {
-    [Header("»óÀÚ ¼³Á¤")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private Transform chestLid;
     [SerializeField] private ParticleSystem coinEffect;
     [SerializeField] private float openSpeed = 2f;
 
-    [Header("µå·Ó ¾ÆÀÌÅÛ")]
+    [Header("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject heartPrefab;
     [SerializeField] private GameObject crystalPrefab; 
@@ -22,23 +22,35 @@ public class RewardChest : MonoBehaviour
     private Quaternion openedRotation;
     private bool isOpened = false;
 
-    // »ý¼ºµÈ ¸ðµç ¾ÆÀÌÅÛÀÇ ÄÝ¶óÀÌ´õ¸¦ ´ã¾ÆµÑ ¸®½ºÆ®
     private List<Collider> spawnedColliders = new List<Collider>();
-
-    //private void Awake()
-    //{
-    //    if (chestLid != null)
-    //    {
-    //        closedRotation = chestLid.localRotation;
-    //        openedRotation = Quaternion.Euler(-130f, 0f, 0f);
-    //    }
-    //}
-
-    private void Start()
+    private List<GameObject> spawnedItems = new List<GameObject>();
+    private void Awake()
     {
-        OnPlayerEnterRoom();
+        if (chestLid != null)
+        {
+            closedRotation = chestLid.localRotation;
+            openedRotation = Quaternion.Euler(-130f, 0f, 0f);
+        }
+    }
+private void Start()
+    {
+        StartCoroutine(SubscribeEvent_Co());
+    }
+    private IEnumerator SubscribeEvent_Co()
+    {
+        while (GameManager.instance == null) yield return null;
+        
+        GameManager.instance.whenNodeClear -= ResetChest;
+        GameManager.instance.whenNodeClear += ResetChest;
     }
 
+    private void OnDisable()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.whenNodeClear -= ResetChest;
+        }
+    }
     public void OnPlayerEnterRoom()
     {
         if (!isOpened)
@@ -49,10 +61,30 @@ public class RewardChest : MonoBehaviour
 
     public void ResetChest()
     {
-        isOpened = false;
-        if (chestLid != null) chestLid.localRotation = closedRotation;
-    }
+        if (isOpened)
+        {
+            isOpened = false;
+            if (chestLid != null) chestLid.localRotation = closedRotation;
 
+            foreach (GameObject item in spawnedItems)
+            {
+                if (item != null) Destroy(item);
+            }
+            spawnedItems.Clear();
+
+        }
+    }
+    private void ClearSpawnedItems()
+    {
+        foreach (GameObject item in spawnedItems)
+        {
+            if (item != null)
+            {
+                Destroy(item);
+            }
+        }
+        spawnedItems.Clear(); // ë¦¬ìŠ¤íŠ¸ ë¹„ìš°ê¸°
+    }
     private IEnumerator OpenChestRoutine()
     {
         isOpened = true;
@@ -69,7 +101,6 @@ public class RewardChest : MonoBehaviour
 
         if (coinEffect != null) coinEffect.Play();
 
-        // »õ·Î »Ñ¸± ¶§ ¸®½ºÆ® ÃÊ±âÈ­
         spawnedColliders.Clear();
 
         DropItems(coinPrefab, coinCount);
@@ -83,16 +114,14 @@ public class RewardChest : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            // ½ºÆù À§Ä¡ ºÐ»ê
             Vector3 randomOffset = new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
             Vector3 spawnPos = transform.position + Vector3.up * 1.8f + randomOffset;
 
             GameObject item = Instantiate(prefab, spawnPos, Quaternion.identity);
-
+            spawnedItems.Add(item);
             Rigidbody rb = item.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                // °øÁß¿¡¼­ ¸ØÃßÁö ¾Êµµ·Ï ¹«ÀÛÀ§ ÈûÀ» °­ÇÏ°Ô ÁÜ
                 Vector3 jumpDir = new Vector3(
                     Random.Range(-1f, 1f),
                     1.5f,
@@ -103,5 +132,19 @@ public class RewardChest : MonoBehaviour
 
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isOpened) return;
+
+        if (other.CompareTag("Player"))
+        {
+            if (GameManager.instance.gamestate == GameManager.GameState.Playing)
+            {
+                OnPlayerEnterRoom();
+            }
+        }
+    }
+
 
 }

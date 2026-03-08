@@ -17,7 +17,7 @@ public class StartRoom : MonoBehaviour
         foreach (Basket basket in items)
         {
             if (basket == null) continue;
-            int safety = 100; // ¹«ÇÑ·çÇÁ ¹æÁö
+            int safety = 100; // ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             while (safety-- > 0)
             {
                 basket.ActivateRandomItem();

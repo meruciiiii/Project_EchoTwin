@@ -13,33 +13,39 @@ public class PlayerEquipment
 
     public void EquipWeapon(WeaponAbstract newWeapon)
     {
-        if(MainWeapon == null)
+        if (MainWeapon == null)
         {
             MainWeapon = newWeapon;
             MainWeapon.gameObject.SetActive(true);
-            if (MainWeapon.weaponID == WeaponID.Dagger) MainWeapon.DualWeapon.SetActive(true);
+            MainWeapon.SetDualWeaponActive(true); 
+            MainWeapon.ResetResonance();           
         }
-        else if(SubWeapon == null)
+        else if (SubWeapon == null)
         {
             SubWeapon = MainWeapon;
-            //SubWeapon.SetResonance(SubWeapon.GetComponent<WeaponData>().echoAmount);
             SubWeapon.gameObject.SetActive(false);
-            if (SubWeapon.weaponID == WeaponID.Dagger) SubWeapon.DualWeapon.SetActive(false);
+            SubWeapon.SetDualWeaponActive(false);
+            SubWeapon.ResetResonance();          
 
             MainWeapon = newWeapon;
             MainWeapon.gameObject.SetActive(true);
-            if (MainWeapon.weaponID == WeaponID.Dagger) MainWeapon.DualWeapon.SetActive(true);
+            MainWeapon.SetDualWeaponActive(true); 
+            MainWeapon.ResetResonance();         
         }
         else
         {
+            SubWeapon.SetDualWeaponActive(false); 
             SubWeapon.gameObject.SetActive(false);
-            if (SubWeapon.weaponID == WeaponID.Dagger) SubWeapon.DualWeapon.SetActive(false);
-            
+
             SubWeapon = MainWeapon;
             SubWeapon.gameObject.SetActive(false);
+            SubWeapon.SetDualWeaponActive(false); 
+            SubWeapon.ResetResonance();           
 
             MainWeapon = newWeapon;
             MainWeapon.gameObject.SetActive(true);
+            MainWeapon.SetDualWeaponActive(true);  
+            MainWeapon.ResetResonance();            
         }
     }
 }

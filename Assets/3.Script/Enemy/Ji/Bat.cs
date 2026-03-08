@@ -25,7 +25,7 @@ public class Bat : EnemyStateAbstract
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = transform.position;
 
-        coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
+        attackCoroutine = StartCoroutine(Attack_Co(targetPos, startPos));
     }
 
     private IEnumerator Attack_Co(Vector3 destPos, Vector3 startPos)
@@ -68,7 +68,7 @@ public class Bat : EnemyStateAbstract
         yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
         transform.position = targetPos;
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -80,7 +80,7 @@ public class Bat : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         //BodyAttack(enemyData.attackRange);
 

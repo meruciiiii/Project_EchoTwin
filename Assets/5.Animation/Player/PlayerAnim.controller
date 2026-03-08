@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
   unlockRotationTime: 0.6
-  unlockMoveTime: 0.8
+  unlockMoveTime: 0.668
   lastAttackRotationTime: 0.95
 --- !u!1102 &-2125509911183930182
 AnimatorState:
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
   unlockRotationTime: 0.6
-  unlockMoveTime: 0.8
+  unlockMoveTime: 0.582
   lastAttackRotationTime: 0.95
 --- !u!206 &1323689861665328247
 BlendTree:
@@ -910,7 +910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
   unlockRotationTime: 0.6
-  unlockMoveTime: 0.8
+  unlockMoveTime: 0.668
   lastAttackRotationTime: 0.95
 --- !u!1101 &6394414240563188995
 AnimatorStateTransition:
@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackStateForAnimator
   unlockRotationTime: 0.6
-  unlockMoveTime: 0.8
+  unlockMoveTime: 0.627
   lastAttackRotationTime: 0.95
 --- !u!1102 &8395308048049882297
 AnimatorState:

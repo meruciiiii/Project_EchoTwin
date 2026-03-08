@@ -23,7 +23,7 @@ public class Golem : EnemyStateAbstract
     public override void Attack()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
         if (!canAttack())
         {
             Move();
@@ -37,11 +37,11 @@ public class Golem : EnemyStateAbstract
 
         if (distance > enemyData.attackRange)
         {
-            coroutine = StartCoroutine(ProjectileAttack_Co(targetPos, startPos));
+            attackCoroutine = StartCoroutine(ProjectileAttack_Co(targetPos, startPos));
         }
         else if(distance < enemyData.attackRange)
         {
-            coroutine = StartCoroutine(DashAttack_Co(targetPos, startPos));
+            attackCoroutine = StartCoroutine(DashAttack_Co(targetPos, startPos));
         }
 
         // 플레이어와의 거리가 멀다면 원거리 공격 가까우면 근거리 공격
@@ -83,7 +83,7 @@ public class Golem : EnemyStateAbstract
                 projectile.transform.position = startPos;
                 projectile.SetActive(false);
 
-                coroutine = null;
+                attackCoroutine = null;
 
                 if (state != EnemyState.dead)
                 {
@@ -102,7 +102,7 @@ public class Golem : EnemyStateAbstract
         projectile.transform.position = startPos;
         projectile.SetActive(false);
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -138,7 +138,7 @@ public class Golem : EnemyStateAbstract
             yield return null;
         }
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -150,7 +150,7 @@ public class Golem : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         setPlayerPos();
     }

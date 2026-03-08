@@ -75,14 +75,14 @@ public class PebbleForBoss : EnemyStateAbstract
     public override void Attack()
     {
         if (state == EnemyState.attack) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
         if (!canAttack())
         {
             Move();
             return;
         }
 
-        coroutine = StartCoroutine(Attack_Co());
+        attackCoroutine = StartCoroutine(Attack_Co());
     }
 
     private IEnumerator Attack_Co()
@@ -129,7 +129,7 @@ public class PebbleForBoss : EnemyStateAbstract
                 projectile.transform.position = startPos;
                 projectile.SetActive(false);
 
-                coroutine = null;
+                attackCoroutine = null;
 
                 if (state != EnemyState.dead)
                 {
@@ -148,7 +148,7 @@ public class PebbleForBoss : EnemyStateAbstract
         projectile.transform.position = startPos;
         projectile.SetActive(false);
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -160,7 +160,7 @@ public class PebbleForBoss : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         //BodyAttack(standardRange);
 

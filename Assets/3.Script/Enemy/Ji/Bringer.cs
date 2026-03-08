@@ -46,7 +46,7 @@ public class Bringer : EnemyStateAbstract
     public override void Attack()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
         if (!canAttack())
         {
             Move();
@@ -60,13 +60,13 @@ public class Bringer : EnemyStateAbstract
 
         if (distance > enemyData.attackRange - 0.5f)
         {
-            if (coroutine != null) return;
-            coroutine = StartCoroutine(ProjectileATK(targetPos));
+            if (attackCoroutine != null) return;
+            attackCoroutine = StartCoroutine(ProjectileATK(targetPos));
         }
         else
         {
-            if (coroutine != null) return;
-            coroutine = StartCoroutine(Attack_Co());
+            if (attackCoroutine != null) return;
+            attackCoroutine = StartCoroutine(Attack_Co());
         }
     }
 
@@ -88,7 +88,7 @@ public class Bringer : EnemyStateAbstract
         yield return new WaitForSeconds(1.6f);
         projectile.SetActive(false);
 
-        coroutine = null;
+        attackCoroutine = null;
         if (state != EnemyState.dead)
         {
             state = EnemyState.chase;
@@ -111,7 +111,7 @@ public class Bringer : EnemyStateAbstract
         SoundManager.SendEvent(SoundType.SFX_Bringer1);
         AreaAttack(enemyData.attackRange, 270f);
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -123,7 +123,7 @@ public class Bringer : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         setPlayerPos();
     }

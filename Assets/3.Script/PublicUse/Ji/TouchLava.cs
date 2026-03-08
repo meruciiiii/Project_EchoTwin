@@ -13,8 +13,8 @@ public class TouchLava : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerAction player;
-            if (!other.TryGetComponent<PlayerAction>(out player)) return;
+            //PlayerAction player;
+            //if (!other.TryGetComponent<PlayerAction>(out player)) return;
 
             Vector3 destPos;
             if (takePlayerOnGround(other.transform.position, out destPos))
@@ -24,7 +24,7 @@ public class TouchLava : MonoBehaviour
                 Rigidbody rb = other.attachedRigidbody;
                 if (rb != null) rb.linearVelocity = Vector3.zero;
             }
-            player.takeDamage(1, transform.position, 0);
+            other.GetComponent<PlayerAction>().takeDamage(1, transform.position, 0);
 
             return;
         }
