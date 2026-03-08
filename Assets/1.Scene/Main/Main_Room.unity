@@ -2480,30 +2480,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 198144725363815678, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
-      propertyPath: m_Volume
-      value: 0.359
-      objectReference: {fileID: 0}
-    - target: {fileID: 494837832189302284, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
-      propertyPath: bgmVolume
-      value: 0.036
-      objectReference: {fileID: 0}
-    - target: {fileID: 494837832189302284, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
-      propertyPath: sfxVolume
-      value: 0.359
-      objectReference: {fileID: 0}
-    - target: {fileID: 494837832189302284, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
-      propertyPath: soundList.Array.data[8].volume
-      value: 0.347
-      objectReference: {fileID: 0}
-    - target: {fileID: 494837832189302284, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
-      propertyPath: soundList.Array.data[11].volume
-      value: 0.335
-      objectReference: {fileID: 0}
-    - target: {fileID: 520629654041924723, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
-      propertyPath: m_Volume
-      value: 0.036
-      objectReference: {fileID: 0}
     - target: {fileID: 6108379170398785442, guid: d167430e137b32a4d9894f3d9b1f7b05, type: 3}
       propertyPath: m_LocalPosition.x
       value: 787.106
@@ -2690,6 +2666,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 201708072080044061, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 351129257049080482, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -3332,14 +3312,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4541788095088085409, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
-      propertyPath: maxHP
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4541788095088085409, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
-      propertyPath: playerDMG
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5099401203491571330, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 796

@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8540af1a3812ee24a9925ce779e3f5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
-  bgmVolume: 0.038
-  sfxVolume: 0.634
+  bgmVolume: 0.036
+  sfxVolume: 0.359
   bgmSource: {fileID: 520629654041924723}
   sfxSource: {fileID: 198144725363815678}
   soundList:
@@ -77,7 +77,7 @@ MonoBehaviour:
     volume: 0.562
   - type: 8
     clip: {fileID: 8300000, guid: 8ff2a2d7e79f81c40ac447512f879374, type: 3}
-    volume: 0.562
+    volume: 0.347
   - type: 9
     clip: {fileID: 8300000, guid: e00d04bab80ddb34086d2252a49ef53c, type: 3}
     volume: 0.562
@@ -86,7 +86,7 @@ MonoBehaviour:
     volume: 0.562
   - type: 11
     clip: {fileID: 8300000, guid: 1eb7cbaf61d23a64bbd36c0a38b5cb0c, type: 3}
-    volume: 0.562
+    volume: 0.335
   - type: 12
     clip: {fileID: 8300000, guid: 0f234a22bc6ee9841bf1de9032c47288, type: 3}
     volume: 0.562
@@ -178,7 +178,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.038
+  m_Volume: 0.036
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -275,7 +275,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.634
+  m_Volume: 0.359
   m_Pitch: 1
   Loop: 0
   Mute: 0

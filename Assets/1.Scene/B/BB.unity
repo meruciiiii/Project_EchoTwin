@@ -904,6 +904,7 @@ MonoBehaviour:
   maxHP: 0
   currentHP: 0
   monsterCount: 0
+  ItemList: []
 --- !u!4 &435573433
 Transform:
   m_ObjectHideFlags: 0
@@ -2180,7 +2181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8367904428848939616, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8367904428848939616, guid: 691102c639df8f545bd45bc0b6ea0415, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2802,6 +2803,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 201708072080044061, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 303284663450262500, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_IsActive
       value: 1

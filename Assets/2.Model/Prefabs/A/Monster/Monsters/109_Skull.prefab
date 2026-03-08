@@ -424,6 +424,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 109_Skul_Death
       objectReference: {fileID: 0}
+    - target: {fileID: 5685665014904394245, guid: c9bebeaca453b3c47a3acf851d53288a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6108878899316037209, guid: c9bebeaca453b3c47a3acf851d53288a, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.8

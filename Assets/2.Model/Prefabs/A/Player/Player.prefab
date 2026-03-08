@@ -1053,8 +1053,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5e784ac5e87b34291aa69cce9609a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  maxHP: 20000
-  playerDMG: 20000
+  maxHP: 4
+  playerDMG: 1
   moveSpeed: 10
   attackSpeed: 1
   dashLength: 5
