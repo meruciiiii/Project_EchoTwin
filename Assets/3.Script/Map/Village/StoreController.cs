@@ -156,12 +156,12 @@ public class StoreController : MonoBehaviour
         cost = CalculateCost();
         if (!CanUpgrade())
             return false;
-        if(stats.TryUseCristal(cost))
+        if(!stats.TryUseCristal(cost))
             return false;
         //playerMaterial -= cost;
         state++;
         //playerValue += data.valuePerLv;
-        //playerUpgradesState[id] = state;
+        playerUpgradesState[id] = state;
         applyUpgradePlayer(id);
         return true;
     }
