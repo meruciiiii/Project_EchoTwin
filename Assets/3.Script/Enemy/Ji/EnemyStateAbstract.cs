@@ -185,14 +185,14 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
                 Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.5f, Random.Range(-2f, 2f));
                 Vector3 spawnPos = floorPos + randomOffset;
 
-                GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity);
+                GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity,GameManager.instance.transform);
                 GetCurrency gold = goldObj.GetComponent<GetCurrency>();
                 gold.amount = 50;
             }
         }
 
 
-        int cristalAmount = 0;
+        int cristalAmount;
 
         int random = Random.Range(0, 100);
         if (random < minWeight)
@@ -219,7 +219,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
                 Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.5f, Random.Range(-2f, 2f));
                 Vector3 spawnPos = floorPos + randomOffset;
 
-                GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity);
+                GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity, GameManager.instance.transform);
                 GetCurrency cristal = cristalObj.GetComponent<GetCurrency>();
                 cristal.amount = 3;
             }
@@ -233,7 +233,12 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
             int temp = Random.Range(0, 10);
             if (temp == 0)
             {
-                Instantiate(db.heartPrefab, spawnPos, Quaternion.identity);
+                GameObject heartObj = Instantiate(db.heartPrefab, spawnPos, Quaternion.identity, GameManager.instance.transform);
+
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.AddItemToList(heartObj);
+                }
             }
         }
     }

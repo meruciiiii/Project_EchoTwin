@@ -15,17 +15,32 @@ public class StoreUIController : MonoBehaviour
         AttackSpeed,
         Count
     }
-    GameObject storeSpace;
+    //GameObject storeSpace;
+    //ui 기본이 active false라서 찾지 tag로 찾지 못해 직렬화함
+    [SerializeField] private GameObject storeSpace;
+    private StoreController controller;
+
     private Transform[] upgradeSpace;
     Dictionary<UpgradeType, UpgradeUISet> uiSet;
 
 
     private void Awake()
     {
-        storeSpace = GameObject.FindGameObjectWithTag("Store");
+        //storeSpace = GameObject.FindGameObjectWithTag("Store");
+        //if (storeSpace == null)
+        //{
+        //    Debug.LogError("storeSpace object not found");
+        //    return;
+        //}
+
+        if (TryGetComponent(out controller))
+        {
+            Debug.Log("controller null");
+            return;
+        }
         if (storeSpace == null)
         {
-            Debug.LogError("storeSpace object not found");
+            Debug.Log("storeSpace null");
             return;
         }
 
@@ -58,9 +73,32 @@ public class StoreUIController : MonoBehaviour
             }
 
             uiSet[type] = set;
+
+            UpgradeType copyType = type;
+            set.button.onClick.AddListener(() => onClickUpgrade(copyType));
         }
         //upgradeSliders[type].maxValue = maxUpgrade; 12200
     }
+
+    public void setPlayerStats(PlayerStats stats)
+    {
+        controller.setPlayerStats(stats);
+    }
+
+    public void clearPlayerStats()
+    {
+        controller.clearPlayerStats();
+    }
+
+    private void onClickUpgrade(UpgradeType type)
+    {
+        if(controller.TryUpgrade((int)type))
+        {
+            RefreshUI();
+        }
+    }
+
+
     public void SetSliderValue(UpgradeType type, float grade)
     {
         uiSet[type].slider.value = grade;
@@ -70,6 +108,12 @@ public class StoreUIController : MonoBehaviour
         storeSpace.SetActive(true);
         // 상점 UI 켜기
     }
+
+    public void RefreshUI()
+    {
+        RefreshUI(controller.getAllUpgradeState());
+    }
+
     public void RefreshUI(Dictionary<UpgradeType, UpgradeState> states)
     {
         foreach (var pair in states)

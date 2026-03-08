@@ -14,7 +14,7 @@ public class Dagger : WeaponAbstract
         GameObject player = stats.gameObject;
         Vector3 forward = player.transform.forward;
         Vector3 centerPos = player.transform.position;
-        float range = weaponData.attackRange;
+        float range = calcAttackRange(weaponData.attackRange);
 
         Collider[] hits = Physics.OverlapSphere(centerPos, range);
 
@@ -71,12 +71,12 @@ public class Dagger : WeaponAbstract
     //    return hits;
     //}
 
-    private float getDamage()
-    {
-        float totalDamage = stats.PlayerDMG + calcDamage();
+    //private float getDamage()
+    //{
+    //    float totalDamage = stats.PlayerDMG + calcDamage();
 
-        return totalDamage;
-    }
+    //    return totalDamage;
+    //}
 
     public override void Attack(AttackContext context)
     {
@@ -126,7 +126,7 @@ public class Dagger : WeaponAbstract
         foreach (Collider target in context.hitTargets)
         {
             GameObject dagger = Instantiate(daggerPrefab, spawnPos, Quaternion.identity);
-            dagger.GetComponent<ThrowDagger>().Init(target.transform, calcDamage() * weaponData.echoDMGRatio);
+            dagger.GetComponent<ThrowDagger>().Init(target.transform, calcEchoDamage());
         }
     }
 }

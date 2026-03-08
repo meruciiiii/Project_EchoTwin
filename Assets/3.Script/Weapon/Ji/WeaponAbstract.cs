@@ -84,10 +84,26 @@ public abstract class WeaponAbstract : MonoBehaviour
         animator.SetFloat("WeaponGroup", groupValue);
 
         animator.SetInteger("WeaponType", weaponData.ID);
-        animator.SetFloat("AttackSpeed", weaponData.attackSpeed);
+        animator.SetFloat("AttackSpeed", calcAttackSpeed());
     }
 
     #region Combo°ü·Ã
+
+    protected virtual float calcAttackSpeed()
+    {
+        return Mathf.Max(0.05f, weaponData.attackSpeed + stats.AttackSpeed);
+    }
+
+    protected virtual float calcEchoDamage()
+    {
+        return (calcDamage() * weaponData.echoDMGRatio) + stats.EchoDamage;
+    }
+    
+    protected virtual float calcAttackRange(float range)
+    {
+        return range + stats.AttackRange;
+    }
+
     public bool CanAttack()
     {
         if (isComboCooltime) return false;
@@ -128,7 +144,7 @@ public abstract class WeaponAbstract : MonoBehaviour
 
     protected void AttackTimeChecker()
     {
-        if (Time.time > lastAttackTime + 2f / weaponData.attackSpeed)
+        if (Time.time > lastAttackTime + 2f / calcAttackSpeed())
         {
             comboCount = 0;
         }
@@ -139,7 +155,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     {
         if (isCancelled) yield break;
         isComboCooltime = true;
-        yield return new WaitForSeconds(weaponData.comboCooltime);
+        yield return new WaitForSeconds(weaponData.comboCooltime/calcAttackSpeed());
         isComboCooltime = false;
     }
 
@@ -150,6 +166,7 @@ public abstract class WeaponAbstract : MonoBehaviour
         //{
         //    animator.SetTrigger("Attack");
         //}
+        animator.SetFloat("AttackSpeed", calcAttackSpeed());
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 

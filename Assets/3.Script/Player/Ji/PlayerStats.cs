@@ -12,6 +12,7 @@ public class PlayerStats : MonoBehaviour
     public bool isDead => (currentHP <= 0);
     [SerializeField] private float playerDMG = 1f;
     [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float attackSpeed = 1f;
 
     [Header("Dash Info")]
     [SerializeField] private float dashLength = 1f;
@@ -35,6 +36,10 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int gold = 0;
     [SerializeField] private int cristal = 0;
 
+    [Header("Upgrade Stats")]
+    [SerializeField] private float echoDamage = 0f;
+    [SerializeField] private float attackRange = 0f;
+
     public event Action<int, int> onHpChanged;
     public event Action<int> onMaxHpChanged;
 
@@ -54,6 +59,9 @@ public class PlayerStats : MonoBehaviour
     public float KnockBackForce => knockBackForce;
     public int Gold => gold;
     public int Cristal => cristal;
+    public float EchoDamage => echoDamage; 
+    public float AttackRange => attackRange;
+    public float AttackSpeed => attackSpeed;
 
     private void Awake()
     {
@@ -76,18 +84,6 @@ public class PlayerStats : MonoBehaviour
     {
 
     }
-
-    //private void setHP()
-    //{
-    //    currentHP = maxHP;
-    //    onMaxHpChanged?.Invoke(maxHP);
-    //    onHpChanged?.Invoke(currentHP, maxHP);
-    //}
-
-    //private void setGold()
-    //{
-    //    onCoinChanged?.Invoke(gold);
-    //}
 
     public void takeDamage(int damage)
     {
@@ -124,9 +120,44 @@ public class PlayerStats : MonoBehaviour
         Debug.Log($"{currentHP} after HP");
     }
 
-    public void getMaxHP()
+    public bool TryUseCristal(int amount)
     {
-        maxHP += 1;
+        if (cristal < amount) return false;
+
+        cristal -= amount;
+        return true;
+    }
+
+    public void getMaxHP(int amount)
+    {
+        maxHP += amount;
+        currentHP += amount;
         onMaxHpChanged?.Invoke(maxHP);
+        onHpChanged?.Invoke(currentHP, maxHP);
+    }
+
+    public void getPlayerDMG(float amount)
+    {
+        playerDMG += amount;
+    }
+
+    public void getMoveSpeed(float amount)
+    {
+        moveSpeed += amount;
+    }
+
+    public void getEchoDamage(float amount)
+    {
+        echoDamage += amount;
+    }
+
+    public void getAttackRange(float amount)
+    {
+        attackRange += amount;
+    }
+
+    public void getAttackSpeed(float amount)
+    {
+        attackSpeed += amount;
     }
 }
