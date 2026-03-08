@@ -55,7 +55,7 @@ public class MapManager : MonoBehaviour
         GameManager.instance.roomClearCheck += RoomClear;
 
         isEventSubscribed = true;
-        Debug.Log("[MapManager] 이벤트 구독 완료");
+        //Debug.Log("[MapManager] 이벤트 구독 완료");
     }
     private void UnsubscribeEvents()
     {
@@ -67,7 +67,7 @@ public class MapManager : MonoBehaviour
         GameManager.instance.roomClearCheck -= RoomClear;
 
         isEventSubscribed = false;
-        Debug.Log("[MapManager] 이벤트 구독 해제 완료");
+        //Debug.Log("[MapManager] 이벤트 구독 해제 완료");
     }
     public void GenerateMap(int floorIndex)
     {
@@ -111,6 +111,14 @@ public class MapManager : MonoBehaviour
         if (GameManager.instance.mainWeapon == null)
             roomView.EnterStartRoomFirst(floor);
         SubscribeEvents();
+        //WriteDebug();
+    }
+    private void WriteDebug()
+    {
+        foreach(KeyValuePair<Vector2Int, FloorData> data in microMap)
+        {
+            Debug.LogWarning(data.Key+" : Key, "+data.Value.GetRoomData().GetRoomType()+" : Value.Type");
+        }
     }
     public IReadOnlyDictionary<Vector2Int, FloorData> GetMap()
     {
@@ -139,7 +147,7 @@ public class MapManager : MonoBehaviour
             Debug.Log("TryGetValue roomPrefab is Error");
             return;
         }
-        Debug.Log("GetWeapon is started");
+        //Debug.Log("GetWeapon is started");
         roomView.BridgeisMove(floor);
     }
     public void PlayerTryMove(Vector2Int direction)

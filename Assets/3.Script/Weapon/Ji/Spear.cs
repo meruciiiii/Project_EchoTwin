@@ -93,7 +93,7 @@ public class Spear : WeaponAbstract
         {
             SoundManager.SendEvent(SoundType.SFX_SpearAttack1);
         }
-        Debug.Log($"combo count = {comboCount}");
+        //Debug.Log($"combo count = {comboCount}");
 
         if (comboCount != 0)
         {

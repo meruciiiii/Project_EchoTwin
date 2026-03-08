@@ -5,6 +5,7 @@ public class StartRoom : MonoBehaviour
     [SerializeField] private Basket[] items = new Basket[2];
     private void OnEnable()
     {
+        GameManager.instance.whenNodeClear += OnItemPicked;
         foreach (Basket basket in items)
         {
             basket.OnAnyItemPicked += OnItemPicked;
@@ -29,7 +30,7 @@ public class StartRoom : MonoBehaviour
             }
         }
     }
-    private void OnItemPicked(ItemPickup picked)
+    private void OnItemPicked()
     {
         foreach (Basket basket in items)
         {

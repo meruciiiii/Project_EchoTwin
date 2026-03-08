@@ -69,15 +69,15 @@ public class StageFlowManager : MonoBehaviour
         Debug.Log("Boss Battle!");
         Debug.Log("node.floorIndex = "+ node.floorIndex + "!");
         sceneTransition.PlayFullTransition(() => {
-        mapManager.StageMoving(enterTable[camp[1]].position); 
-        stageManager.SetNodeUI(false); 
+            mapManager.GenerateMap(node.floorIndex);
+            stageManager.SetNodeUI(false);
         });
     }
     private void OnRecoveryNode(StageNode node)
     {
         Debug.Log("Recovered");
         sceneTransition.PlayFullTransition(() => {
-        mapManager.StageMoving(enterTable[camp[3]].position); 
+        mapManager.StageMoving(enterTable[camp[1]].position); 
         stageManager.SetNodeUI(false); 
         });
     }

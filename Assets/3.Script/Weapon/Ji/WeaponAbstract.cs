@@ -203,7 +203,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     public void SetResonance(int count)
     {
         resonanceCount = Mathf.Clamp(count, 0, weaponData.resonanceCount);
-        Debug.Log(resonanceCount);
+        //Debug.Log(resonanceCount);
 
         if (GameManager.instance != null)
         {

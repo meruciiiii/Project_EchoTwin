@@ -15,7 +15,7 @@ public class ItemPickup : MonoBehaviour
     private Action pickup;
 
     [SerializeField] private PlayerAction player;
-    public Action<ItemPickup> OnAnyItemPicked;
+    public Action OnAnyItemPicked;
     private Camera cam;
 
     private void Awake()
@@ -73,7 +73,7 @@ public class ItemPickup : MonoBehaviour
 
         gameObject.SetActive(false);
 
-        OnAnyItemPicked?.Invoke(this);
+        OnAnyItemPicked?.Invoke();
         //AttachToPlayer(weapon, player);
         //CleanupItemComponents();
     }

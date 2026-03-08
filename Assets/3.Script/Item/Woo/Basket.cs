@@ -5,7 +5,7 @@ public class Basket : MonoBehaviour
 {
     [SerializeField] private ItemPickup[] items = new ItemPickup[5];
     private int index;
-    public Action<ItemPickup> OnAnyItemPicked;
+    public Action OnAnyItemPicked;
     public void ActivateRandomItem()
     {
         if (items == null || items.Length == 0) return;
@@ -38,8 +38,8 @@ public class Basket : MonoBehaviour
         items[index].OnAnyItemPicked -= OnItemPicked;
         items[index].gameObject.SetActive(false);
     }
-    private void OnItemPicked(ItemPickup itemPickup)
+    private void OnItemPicked()
     {
-        OnAnyItemPicked?.Invoke(itemPickup);
+        OnAnyItemPicked?.Invoke();
     }
 }

@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
             // 몬스터 팩 넘버에 해당하는 몬스터 리스트 가져오기
             if (monsterPackID <= 0 || monsterPackID > monsterPackList.monsterPacks.Length)
             {
-                Debug.Log($"잘못된 MonsterPackID: {monsterPackID}");
+                //Debug.Log($"잘못된 MonsterPackID: {monsterPackID}");
                 continue;
             }
             List<MonsterData> monsterDatas = monsterPackList.monsterPacks[monsterPackID - 1].monsterDataList;

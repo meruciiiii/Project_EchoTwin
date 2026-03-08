@@ -12,6 +12,7 @@ public class MapRoomPopulator : MonoBehaviour
     private int nextRoomIDNum;
     private int stage;
     private int floor;
+    private Vector2Int keyForBoss;
     private RoomType roomType;
     private RoomObjects roomObjects;
     [SerializeField] private FloorScriptableObject floorScriptable;
@@ -29,17 +30,33 @@ public class MapRoomPopulator : MonoBehaviour
         Dictionary<Vector2Int, GameObject> roomObject = new Dictionary<Vector2Int, GameObject>(); ;
         foreach (KeyValuePair<Vector2Int, FloorData> room in microMap)
         {
-            CreateRoom(room.Value);
+            CreateRoom(room);
             nextRoomIDNum++;
             roomObject.Add(room.Key, MappingRoom(room.Value.GetRoomData()));
         }
+        if(floor > 4)
+        {
+            List<Vector2Int> bossConnected = microMap[keyForBoss].GetConnectedRoom();
+            Vector2Int keyForReward = Vector2Int.zero;
+            if (!bossConnected.Count.Equals(0))
+            {
+                keyForReward = bossConnected[0];
+                SetBossRoom(microMap[keyForReward]);
+                Debug.Log("Boss and Reward success");
+            }
+        }
         //¿¬°á
+        Debug.Log("eliteRoomCount : " + eliteRoomCount);
         return roomObject;
     }
-    private void CreateRoom(FloorData floor)
+    private void SetBossRoom(FloorData floor)
     {
-        DecisionType(floor);
-        floor.GetRoomData().SetRoom(roomID = DecisionRoomID(), this.floor, DecisionMonsterPackID(), roomType) ;
+        floor.GetRoomData().SetRoom(104, this.floor, floorScriptable.rooms[104 - 79].monsterPackID,RoomType.Reward);
+    }
+    private void CreateRoom(KeyValuePair<Vector2Int, FloorData> room)
+    {
+        DecisionType(room);
+        room.Value.GetRoomData().SetRoom(roomID = DecisionRoomID(), this.floor, DecisionMonsterPackID(), roomType) ;
     }
     private int DecisionRoomID()
     {
@@ -62,7 +79,7 @@ public class MapRoomPopulator : MonoBehaviour
         }
         else if (roomType.Equals(RoomType.Elite))
         {
-            choice = UnityEngine.Random.Range(19, 20);
+            choice = UnityEngine.Random.Range(19, 21);
         }
         else if (roomType.Equals(RoomType.Reward))
         {
@@ -102,9 +119,10 @@ public class MapRoomPopulator : MonoBehaviour
         else
             return floorScriptable.rooms[roomID - 79].monsterPackID;
     }
-    private void DecisionType(FloorData floor)
+    private void DecisionType(KeyValuePair<Vector2Int, FloorData> room)
     {
-        int choice = UnityEngine.Random.Range(1, ((int)RoomType.count) - 3);
+        FloorData floor = room.Value;
+        int choice = UnityEngine.Random.Range(1, ((int)RoomType.count) - 2);
         if (choice.Equals(2) || choice.Equals(3))
         {
             if (eventRoomCount > 0)
@@ -124,7 +142,7 @@ public class MapRoomPopulator : MonoBehaviour
                 {
                     if (this.floor > 3)
                     {
-                        choice = 1;
+                        eliteRoomCount++;
                     }
                     else
                     {
@@ -138,8 +156,17 @@ public class MapRoomPopulator : MonoBehaviour
         }
         if (floor.getBoolStartRoom())
             choice = 0;
+
         if (floor.getBoolEndRoom())
             choice = 5;
+        if (this.floor > 4)
+        {
+            if (floor.getBoolEndRoom())
+            {
+                choice = 6;
+                keyForBoss = room.Key;
+            }
+        }
         roomType = (RoomType)choice;
     }//Start, Battle, Shop, Forge, Elite, Reward, Boss, count
     private void RoomCondition()
