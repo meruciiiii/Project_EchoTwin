@@ -28,10 +28,11 @@ public class MapMoving : MonoBehaviour
         //Debug.Log("Entered StartRoom");
         player.position = new Vector3(0, 0.5f, -193);
     }
-    public void MoveBaseCamp()
+    public void MoveBaseCamp(Vector3 enterPosition)
     {
-        //Debug.Log("Entered StartRoom");
-        player.position = new Vector3(0, 1.8f, 0.8f);
+        Debug.Log("Entered MoveBaseCamp");
+        player.position = enterPosition;
+        Debug.Log(player.position);
     }
     public void MovePlayer(Vector3 position)
     {

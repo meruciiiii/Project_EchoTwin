@@ -106,6 +106,6 @@ public class StageFlowManager : MonoBehaviour
     }
     public void PlayerisDie()
     {
-        mapManager.PlayerisDie();
+        mapManager.PlayerisDie(enterTable[camp[0]].position);
     }
 }

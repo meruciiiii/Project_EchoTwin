@@ -259,8 +259,8 @@ public class MapManager : MonoBehaviour
     {
         UnsubscribeEvents();
     }
-    public void PlayerisDie()
+    public void PlayerisDie(Vector3 enterPosition)
     {
-        mapMoving.MoveBaseCamp();
+        mapMoving.MoveBaseCamp(enterPosition);
     }
 }
