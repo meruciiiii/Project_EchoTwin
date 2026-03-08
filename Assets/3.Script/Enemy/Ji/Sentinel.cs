@@ -136,15 +136,22 @@ public class Sentinel : EnemyStateAbstract
 
     protected override void OnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
-        Destroy(PoolsPos);
         StopAllCoroutines();
         state = EnemyState.dead;
-        returnAllToPool();
-        reportDeadToManager();
+        coroutine = null;
 
+        returnAllToPool();
+
+        reportDeadToManager();
         TurnOffNavmesh();
         rb.isKinematic = true;
         boxCol.enabled = false;
+
+        if(PoolsPos != null)
+        {
+            Destroy(PoolsPos);
+            PoolsPos = null;
+        }
 
         //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
         StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
@@ -280,6 +287,8 @@ public class Sentinel : EnemyStateAbstract
                 rock.transform.localPosition = Vector3.zero;
                 rock.gameObject.SetActive(false);
                 rockPool.Enqueue(rock);
+
+                rockList.Add(rock);
             }
         }
 
@@ -386,6 +395,10 @@ public class Sentinel : EnemyStateAbstract
 
     public void returnRock(SentinelProjectile rock)
     {
+        if (isClearPool || state == EnemyState.dead || rock == null) return;
+
+        if (PoolsPos != null) rock.transform.SetParent(PoolsPos.transform);
+
         rock.transform.localPosition = Vector3.zero;
         rock.gameObject.SetActive(false);
         rockPool.Enqueue(rock);
