@@ -9,7 +9,6 @@ public class SacrificeCamp : MonoBehaviour
     [SerializeField] private float height = 5f;
 
     private PlayerAction player;
-    private PlayerStats stats;
     private Camera cam;
 
     private void Awake()
@@ -37,7 +36,6 @@ public class SacrificeCamp : MonoBehaviour
             setImageAlpha(1f);
 
             player = other.GetComponent<PlayerAction>();
-            stats = other.GetComponent<PlayerStats>();
             player.onInteraction.AddListener(sacrifice);
         }
     }
@@ -50,7 +48,6 @@ public class SacrificeCamp : MonoBehaviour
 
             player.onInteraction.RemoveListener(sacrifice);
             player = null;
-            stats = null;
         }
     }
 
@@ -58,7 +55,7 @@ public class SacrificeCamp : MonoBehaviour
     {
         if (player == null) return;
 
-        stats.takeDamage(1);
+        player.takeDamage(1,transform.position,0);
 
         ItemDataBase db = ItemDataBase.Instance;
         Vector3 floorPos = transform.position;
@@ -72,12 +69,13 @@ public class SacrificeCamp : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.5f, Random.Range(-2f, 2f));
+                Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0.8f, Random.Range(-2f, 2f));
                 Vector3 spawnPos = floorPos + randomOffset;
 
                 GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity, GameManager.instance.transform);
                 GetCurrency cristal = cristalObj.GetComponent<GetCurrency>();
                 cristal.amount = 3;
+                cristal.isOnGround = true;
 
                 if (GameManager.instance != null)
                 {
