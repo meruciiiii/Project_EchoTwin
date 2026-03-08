@@ -21,8 +21,19 @@ public static class CharacterImport
         //웹에 게시(csv) 후 주소 복사
         string url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSBVM5OLYnSDKKMQonPh0Jopw5olheEDc6xjxfBdEPc1LnQ8zKaHv8GE059V5HHo_AsBqXSvNtlGjm/pub?gid=0&single=true&output=csv";
         string localPath = "Assets/Data/UpgradeTable.csv";
+        string runtimePath = Path.Combine(Application.streamingAssetsPath, "Data/UpgradeTable.csv");
 
         ConnectGoogle.DownloaCSV(url, localPath);
+
+        string runtimeDir = Path.GetDirectoryName(runtimePath);
+        if (!Directory.Exists(runtimeDir))
+        {
+            Directory.CreateDirectory(runtimeDir);
+        }
+
+        File.Copy(localPath, runtimePath, true);
+
+        AssetDatabase.Refresh();
 
         Import();
     }
