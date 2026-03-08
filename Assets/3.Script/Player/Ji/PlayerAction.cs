@@ -32,8 +32,8 @@ public class PlayerAction : MonoBehaviour
 
     [SerializeField] private GameObject dieUI;
 
-    //private Coroutine forSubscribe_Co;
-    //private bool isSubscribed = false;
+    private Coroutine forSubscribe_Co;
+    private bool isSubscribed = false;
 
     private void Awake()
     {
@@ -51,33 +51,43 @@ public class PlayerAction : MonoBehaviour
 
     private void OnEnable()
     {
-        if (GameManager.instance == null) return;
-        GameManager.instance.playerDie += onDie;
-
-        //if (forSubscribe_Co != null)
-        //{
-        //    StopCoroutine(forSubscribe_Co);
-        //    forSubscribe_Co = null;
-        //}
-        //forSubscribe_Co = StartCoroutine(subscribe_Co());
+        if (forSubscribe_Co != null)
+        {
+            StopCoroutine(forSubscribe_Co);
+            forSubscribe_Co = null;
+        }
+        forSubscribe_Co = StartCoroutine(subscribe_Co());
     }
 
     private void OnDisable()
     {
-        if (GameManager.instance == null) return;
-        GameManager.instance.playerDie -= onDie;
+        if (forSubscribe_Co != null)
+        {
+            StopCoroutine(forSubscribe_Co);
+            forSubscribe_Co = null;
+        }
 
-        //if (forSubscribe_Co != null)
-        //{
-        //    StopCoroutine(forSubscribe_Co);
-        //    forSubscribe_Co = null;
-        //}
+        if (isSubscribed && GameManager.instance != null)
+        {
+            GameManager.instance.playerDie -= onDie;
+        }
+        isSubscribed = false;
+    }
 
-        //if (isSubscribed && GameManager.instance != null)
-        //{
-        //    GameManager.instance.playerDie -= onDie;
-        //}
-        //isSubscribed = false;
+    private IEnumerator subscribe_Co()
+    {
+        while (GameManager.instance == null)
+        {
+            yield return null;
+        }
+
+        if (!isSubscribed)
+        {
+            GameManager.instance.playerDie += onDie;
+            isSubscribed = true;
+        }
+
+        forSubscribe_Co = null;
     }
 
     private void Update()
@@ -93,22 +103,6 @@ public class PlayerAction : MonoBehaviour
             }
         }
     }
-
-    //private IEnumerator subscribe_Co()
-    //{
-    //    while (GameManager.instance == null)
-    //    {
-    //        yield return null;
-    //    }
-
-    //    if (!isSubscribed)
-    //    {
-    //        GameManager.instance.playerDie += onDie;
-    //        isSubscribed = true;
-    //    }
-
-    //    forSubscribe_Co = null;
-    //}
 
     public void checkWeapon()
     {
@@ -227,6 +221,7 @@ public class PlayerAction : MonoBehaviour
 
     private void onDie()
     {
+        Debug.Log("ondie");
         ani.SetTrigger("Die");
         dieUI.SetActive(true);
         Equipment.SubWeapon = null;
