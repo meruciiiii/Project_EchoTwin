@@ -76,6 +76,15 @@ public class AttackDebugGizmo : MonoBehaviour
 
     private void DrawAttack(AttackDebugInfo info)
     {
+        if (info.shape == AttackShape.box &&
+        info.rotation.x == 0f &&
+        info.rotation.y == 0f &&
+        info.rotation.z == 0f &&
+        info.rotation.w == 0f)
+        {
+            return;
+        }
+
         Gizmos.color = info.color;
         Matrix4x4 old = Gizmos.matrix;
 
