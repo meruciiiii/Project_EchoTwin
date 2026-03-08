@@ -40,9 +40,9 @@ public class Goblin : EnemyStateAbstract
     public override void Attack()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
-        coroutine = StartCoroutine(Attack_Co(attackSpeed));
+        attackCoroutine = StartCoroutine(Attack_Co(attackSpeed));
     }
 
     private IEnumerator Attack_Co(float attackSpeed)
@@ -94,7 +94,7 @@ public class Goblin : EnemyStateAbstract
             yield return null;
         }
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -106,7 +106,7 @@ public class Goblin : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         //BodyAttack(standardRange);
 

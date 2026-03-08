@@ -44,7 +44,7 @@ public class Pebble : EnemyStateAbstract
     public override void Attack()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
         float distance = Vector3.Distance(player.transform.position, transform.position);
 
         if (!canAttack() || distance > enemyData.attackRange + buffer)
@@ -53,7 +53,7 @@ public class Pebble : EnemyStateAbstract
             return;
         }
 
-        coroutine = StartCoroutine(Attack_Co());
+        attackCoroutine = StartCoroutine(Attack_Co());
     }
 
     private IEnumerator Attack_Co()
@@ -106,7 +106,7 @@ public class Pebble : EnemyStateAbstract
                 projectile.transform.position = startPos;
                 projectile.SetActive(false);
 
-                coroutine = null;
+                attackCoroutine = null;
 
                 if (state != EnemyState.dead)
                 {
@@ -125,7 +125,7 @@ public class Pebble : EnemyStateAbstract
         projectile.transform.position = startPos;
         projectile.SetActive(false);
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -137,7 +137,7 @@ public class Pebble : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         //BodyAttack(standardRange);
 

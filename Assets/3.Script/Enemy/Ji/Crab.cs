@@ -44,7 +44,7 @@ public class Crab : EnemyStateAbstract
         if (!canAttack()) return;
         if (state != EnemyState.chase) return;
 
-        coroutine = StartCoroutine(Attack_Co());
+        attackCoroutine = StartCoroutine(Attack_Co());
     }
 
     private IEnumerator Attack_Co()
@@ -62,7 +62,7 @@ public class Crab : EnemyStateAbstract
 
         AreaAttack(enemyData.attackRange, 180f);
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -74,7 +74,7 @@ public class Crab : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         //BodyAttack(standardRange);
 

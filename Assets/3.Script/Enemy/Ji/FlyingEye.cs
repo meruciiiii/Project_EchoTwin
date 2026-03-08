@@ -21,7 +21,7 @@ public class FlyingEye : EnemyStateAbstract
         Vector3 startPos = transform.position;
         targetPos.y = startPos.y;
 
-        coroutine = StartCoroutine(Attack_Co(targetPos, startPos));
+        attackCoroutine = StartCoroutine(Attack_Co(targetPos, startPos));
     }
 
     private IEnumerator Attack_Co(Vector3 destPos, Vector3 startPos)
@@ -63,7 +63,7 @@ public class FlyingEye : EnemyStateAbstract
         yield return new WaitForSeconds(0.2f);//애니메이션을 위한 여유시간
         transform.position = destPos;
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -75,7 +75,7 @@ public class FlyingEye : EnemyStateAbstract
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         //BodyAttack(enemyData.attackRange);
 

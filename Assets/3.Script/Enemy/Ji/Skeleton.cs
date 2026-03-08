@@ -88,7 +88,7 @@ public class Skeleton : EnemyStateAbstract
 
         AreaAttack(enemyData.attackRange, 180f);
 
-        coroutine = null;
+        attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
@@ -100,15 +100,15 @@ public class Skeleton : EnemyStateAbstract
     public override void Attack()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
-        coroutine = StartCoroutine(Attack_Co());
+        attackCoroutine = StartCoroutine(Attack_Co());
     }
 
     public override void Move()
     {
         if (state != EnemyState.chase) return;
-        if (coroutine != null) return;
+        if (attackCoroutine != null) return;
 
         //BodyAttack(standardRange);
 

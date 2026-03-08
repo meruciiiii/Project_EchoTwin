@@ -42,7 +42,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     [SerializeField] protected float knockbackTime = 0.2f;
     [SerializeField] protected LayerMask ground;
 
-    protected Coroutine coroutine;
+    protected Coroutine attackCoroutine;
+    protected Coroutine dieCoroutine;
 
     private bool reportToGamemanager = false;
 
@@ -138,7 +139,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         boxCol.enabled = false;
 
         //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
-        StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
+        dieCoroutine = StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));
     }
     protected virtual IEnumerator DeathRoutine(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
     {
@@ -148,6 +149,8 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         yield return new WaitForSeconds(1.5f);
 
         makeDropItem(goldAmount, minCristal, maxCristal, minWeight, maxWeight);
+
+        dieCoroutine = null;
 
         Destroy(gameObject);
     }
