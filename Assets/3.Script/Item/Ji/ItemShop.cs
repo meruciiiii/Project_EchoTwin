@@ -63,11 +63,22 @@ public class ItemShop : MonoBehaviour
         {
             setImageAlpha(0f);
 
-            player.onInteraction.RemoveListener(buyItem);
-            player = null;
+            if (player != null)
+            {
+                player.onInteraction.RemoveListener(buyItem);
+                player = null;
+            }
         }
     }
-
+    private void Start()
+    {
+        // OnEnable 외에 Start에서도 다시 한번 체크하여 인스턴스가 생성된 후 확실히 구독함
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.whenNodeClear -= ResetItem; // 중복 방지
+            GameManager.instance.whenNodeClear += ResetItem;
+        }
+    }
     private void OnEnable()
     {
         uiPos = transform.position;
@@ -106,7 +117,7 @@ public class ItemShop : MonoBehaviour
         player = null;
 
         setImageAlpha(0f);
-        gameObject.SetActive(false);
+        SetChildrenActive(false);
     }
 
     private void setImageAlpha(float alpha)
@@ -116,5 +127,21 @@ public class ItemShop : MonoBehaviour
         Color c = image.color;
         c.a = alpha;
         image.color = c;
+    }
+    public void ResetItem()
+    {
+        if (isPickedUp)
+        {
+                isPickedUp = false;
+                setImageAlpha(1f);
+                SetChildrenActive(true);
+        }
+    }
+    private void SetChildrenActive(bool active)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(active);
+        }
     }
 }
