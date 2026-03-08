@@ -16,7 +16,7 @@ MonoBehaviour:
   name: "\uD6C4\uD68C\uC5C6\uB294 \uC804\uC9C4"
   targetStat: MoveSpeed
   maxLv: 5
-  cost: 200
-  costIncrease: 1.8
+  cost: 75
+  costIncrease: 1.6
   valuePerLv: 0.5
   description: "\uC774\uB3D9 \uC18D\uB3C4\uB97C \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."

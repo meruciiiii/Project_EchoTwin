@@ -17,7 +17,7 @@ MonoBehaviour:
   targetStat: AttackSpeed
   maxLv: 10
   cost: 120
-  costIncrease: 1.5
+  costIncrease: 1.4
   valuePerLv: 0.2
   description: "\uACF5\uACA9 \uC18D\uB3C4\uB97C \uC62C\uB824 \uB354 \uB9CE\uC740
     \uD0C0\uACA9\uC744 \uAC00\uD569\uB2C8\uB2E4"

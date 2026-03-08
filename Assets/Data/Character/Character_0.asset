@@ -15,8 +15,8 @@ MonoBehaviour:
   id: 0
   name: "\uBB34\uB38C\uC9C4 \uACE0\uD1B5"
   targetStat: MaxHP
-  maxLv: 10
-  cost: 100
-  costIncrease: 1.5
-  valuePerLv: 20
+  maxLv: 5
+  cost: 50
+  costIncrease: 1.2
+  valuePerLv: 1
   description: "\uCD5C\uB300 \uCCB4\uB825\uC744 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
