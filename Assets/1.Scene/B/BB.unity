@@ -890,6 +890,7 @@ MonoBehaviour:
   isStop: 0
   isDead: 0
   isGetWeapon: 0
+  gameState: 0
   lastStage: 0
   playerGold: 0
   playerCristal: 0
@@ -2574,6 +2575,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92b27038efbd4e4988111b79d501da9, type: 3}
+--- !u!1 &1517315257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2314201388753394865, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+  m_PrefabInstance: {fileID: 1747022935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1527177801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2766112134232008238, guid: 411ecaf639406f141a42d1f8f6384de0, type: 3}
@@ -2826,6 +2832,10 @@ PrefabInstance:
     - target: {fileID: 1853042470295095390, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2083849654647248419, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2227034294813805108, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3679,7 +3689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4541788095088085409, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: maxHP
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4541788095088085409, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: dashSpeed
@@ -3829,6 +3839,10 @@ PrefabInstance:
       propertyPath: weaponType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6946189258489899875, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
+      propertyPath: dieUI
+      value: 
+      objectReference: {fileID: 1517315257}
     - target: {fileID: 7006349566145919834, guid: ef9d724cdf6ffbf4e97ac5b351b8036c, type: 3}
       propertyPath: m_Layer
       value: 6

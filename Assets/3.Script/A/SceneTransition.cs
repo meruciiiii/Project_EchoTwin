@@ -12,11 +12,11 @@ public class SceneTransition : MonoBehaviour
     public float duration = 1.0f;
     public AnimationCurve transitionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    // ¿À¸¥ÂÊ ±¸¸§ ÁÂÇ¥
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
     private const float RightClosedX = 725f;
     private const float RightOpenX = 2630f;
 
-    // ¿ÞÂÊ ±¸¸§ ÁÂÇ¥
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
     private const float LeftClosedX = -783f;
     private const float LeftOpenX = -2590f;
 
@@ -55,17 +55,33 @@ public class SceneTransition : MonoBehaviour
         transitionCoroutine = StartCoroutine(Transition(false));
     }
 
+
+
+    public void PlayFullTransition(Action mapChangeAction)
+    {
+        if (transitionCoroutine != null) StopCoroutine(transitionCoroutine);
+        transitionCoroutine = StartCoroutine(FullTransition_Co(mapChangeAction));
+    }
+
+    private IEnumerator FullTransition_Co(Action mapChangeAction)
+    {
+        yield return StartCoroutine(Transition(true));
+
+        mapChangeAction?.Invoke();
+
+        yield return new WaitForSeconds(0.2f);
+
+        yield return StartCoroutine(Transition(false));
+    }
+
     private IEnumerator Transition(bool isClosing)
     {
         if (rightCloud == null || leftCloud == null) yield break;
 
         float elapsed = 0f;
-
-        // ½ÃÀÛ À§Ä¡ ÀúÀå
         Vector2 rStart = rightCloud.anchoredPosition;
         Vector2 lStart = leftCloud.anchoredPosition;
 
-        // ¸ñÇ¥ À§Ä¡ °áÁ¤
         float rTargetX = isClosing ? RightClosedX : RightOpenX;
         float lTargetX = isClosing ? LeftClosedX : LeftOpenX;
 
@@ -75,46 +91,15 @@ public class SceneTransition : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
 
-            // ÁøÇàµµ¸¦ 0~1 »çÀÌ °ªÀ¸·Î Á¤±ÔÈ­
-            float normalizedTime = elapsed / duration;
-
-            // AnimationCurve¿¡¼­ ÇØ´ç ½ÃÁ¡ÀÇ ºÎµå·¯¿î t°ªÀ» °¡Á®¿É´Ï´Ù.
-            float t = transitionCurve.Evaluate(normalizedTime);
-
-            // Lerp¿¡ Ä¿ºê°¡ Àû¿ëµÈ t°ªÀ» ³Ö¾î¼­ ÀÌµ¿ÇÕ´Ï´Ù.
             rightCloud.anchoredPosition = Vector2.Lerp(rStart, rTarget, t);
             leftCloud.anchoredPosition = Vector2.Lerp(lStart, lTarget, t);
 
             yield return null;
         }
 
-        // ¸¶Áö¸· À§Ä¡ È®Á¤
         rightCloud.anchoredPosition = rTarget;
         leftCloud.anchoredPosition = lTarget;
-        transitionCoroutine = null;
     }
-
-    public void PlayFullTransition(Action mapChangeAction)
-    {
-        StartCoroutine(TransitionSequence(mapChangeAction));
-    }
-
-    private IEnumerator TransitionSequence(Action mapChangeAction)
-    {
-        // 1. ±¸¸§ ´Ý±â
-        Close();
-        // ±¸¸§ÀÌ ´ÝÈ÷´Â ½Ã°£(duration) µ¿¾È ´ë±â
-        yield return new WaitForSeconds(duration);
-
-        // 2. ±¸¸§ÀÌ ´Ù ´ÝÈ÷¸é Àü´Þ¹ÞÀº ¸Ê º¯°æ ·ÎÁ÷ ½ÇÇà
-        mapChangeAction?.Invoke();
-
-        // 3. ¹Î¼· ´ÔÀÌ ¿äÃ»ÇÏ½Å 0.2ÃÊ ´ë±â
-        yield return new WaitForSeconds(0.2f);
-
-        // 4. ±¸¸§ ¿­±â
-        Open();
-    }
-
 }

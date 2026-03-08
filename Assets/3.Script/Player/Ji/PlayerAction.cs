@@ -227,6 +227,7 @@ public class PlayerAction : MonoBehaviour
 
     private void onDie()
     {
+        ani.SetTrigger("Die");
         dieUI.SetActive(true);
         Equipment.SubWeapon = null;
         Equipment.MainWeapon = null;
@@ -252,7 +253,7 @@ public class PlayerAction : MonoBehaviour
 
         rb.AddForce(finalDir * knockbackForce, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(0.2f); // ³Ë¹é ½Ã°£ (ÇÊ¿ä½Ã º¯¼ö·Î ´ëÃ¼)
+        yield return new WaitForSeconds(0.2f); // ï¿½Ë¹ï¿½ ï¿½Ã°ï¿½ (ï¿½Ê¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼)
 
         isKnockback = false;
     }
