@@ -61,7 +61,7 @@ public class StageNodeView : MonoBehaviour
     }
     private void Draw(List<List<StageNode>> floors)
     {
-        nodeViews.Clear();
+        ClearTargetNode();
 
         for (int i = 0; i < floors.Count; i++)
         {
@@ -115,6 +115,18 @@ public class StageNodeView : MonoBehaviour
             Destroy(child.gameObject);
         }
         playerPin.transform.position = new Vector3(960, 170, 0);
+    }
+    private void ClearTargetNode()
+    {
+        if(nodeViews!=null)
+        foreach (GameObject nodeObj in nodeViews.Values)
+        {
+            if (nodeObj != null)
+            {
+                Destroy(nodeObj);
+            }
+        }
+        nodeViews.Clear();
     }
     private void OnNodeClicked(StageNode node)
     {

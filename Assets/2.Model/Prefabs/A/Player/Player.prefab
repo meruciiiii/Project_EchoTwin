@@ -995,8 +995,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5e784ac5e87b34291aa69cce9609a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  maxHP: 5
-  playerDMG: 1
+  maxHP: 1000
+  playerDMG: 1000
   moveSpeed: 10
   attackSpeed: 1
   dashLength: 5
@@ -1721,7 +1721,7 @@ PrefabInstance:
       objectReference: {fileID: 9004888474224783869}
     - target: {fileID: 5560303928278231072, guid: 33d5998c05266e54cbfc95d61fe9ba9e, type: 3}
       propertyPath: weaponType
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
