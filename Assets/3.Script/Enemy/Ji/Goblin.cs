@@ -39,7 +39,7 @@ public class Goblin : EnemyStateAbstract
 
     public override void Attack()
     {
-        if (state == EnemyState.attack) return;
+        if (state != EnemyState.chase) return;
         if (coroutine != null) return;
 
         coroutine = StartCoroutine(Attack_Co(attackSpeed));

@@ -16,7 +16,7 @@ public class SpikeSlime : EnemyStateAbstract
 
     public override void Attack()
     {
-        if (state == EnemyState.attack) return;
+        if (state != EnemyState.chase) return;
 
         state = EnemyState.attack;
 
