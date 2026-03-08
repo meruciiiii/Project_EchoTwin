@@ -3,10 +3,17 @@ using UnityEngine;
 public class StartRoom : MonoBehaviour
 {
     [SerializeField] private Basket[] items = new Basket[2];
+    private void OnEnable()
+    {
+        foreach (Basket basket in items)
+        {
+            basket.OnAnyItemPicked += OnItemPicked;
+        }
+    }
     public void SetStartRoom()
     {
         HashSet<WeaponID> usedWeapons = new HashSet<WeaponID>();
-        foreach (var basket in items)
+        foreach (Basket basket in items)
         {
             if (basket == null) continue;
             int safety = 20; // 무한루프 방지
@@ -20,6 +27,21 @@ public class StartRoom : MonoBehaviour
                     break;
                 }
             }
+        }
+    }
+    private void OnItemPicked(ItemPickup picked)
+    {
+        foreach (Basket basket in items)
+        {
+            if (basket == null) continue;
+            basket.DisableBasket();
+        }
+    }
+    private void OnDisable()
+    {
+        foreach (Basket basket in items)
+        {
+            basket.OnAnyItemPicked -= OnItemPicked;
         }
     }
 }

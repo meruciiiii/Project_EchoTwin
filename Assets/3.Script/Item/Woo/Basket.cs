@@ -1,16 +1,20 @@
+using System;
 using UnityEngine;
 
 public class Basket : MonoBehaviour
 {
     [SerializeField] private ItemPickup[] items = new ItemPickup[5];
+    private int index;
+    public Action<ItemPickup> OnAnyItemPicked;
     public void ActivateRandomItem()
     {
         if (items == null || items.Length == 0) return;
-        int index = Random.Range(0, items.Length);
+        index = UnityEngine.Random.Range(0, items.Length);
         ItemPickup selectedItem = items[index];
         if (selectedItem == null) return;
         // 선택된 아이템 활성화
         selectedItem.gameObject.SetActive(true);
+        selectedItem.OnAnyItemPicked += OnItemPicked;
     }
     public WeaponID GetSelectedWeaponID()
     {
@@ -28,5 +32,14 @@ public class Basket : MonoBehaviour
                 return item;
         }
         return null;
+    }
+    public void DisableBasket()
+    {
+        items[index].OnAnyItemPicked -= OnItemPicked;
+        items[index].gameObject.SetActive(false);
+    }
+    private void OnItemPicked(ItemPickup itemPickup)
+    {
+        OnAnyItemPicked?.Invoke(itemPickup);
     }
 }

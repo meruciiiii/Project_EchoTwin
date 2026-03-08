@@ -26,7 +26,7 @@ public class MapMoving : MonoBehaviour
     public void MoveStartRooom()
     {
         //Debug.Log("Entered StartRoom");
-        player.position = new Vector3(0, 0.5f, -190);
+        player.position = new Vector3(0, 0.5f, -193);
     }
     public void MovePlayer(Vector3 position)
     {
