@@ -11,9 +11,7 @@ public class TouchLava : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") || !other.CompareTag("Enemy")) return;
-
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             PlayerAction player;
             if (!other.TryGetComponent<PlayerAction>(out player)) return;

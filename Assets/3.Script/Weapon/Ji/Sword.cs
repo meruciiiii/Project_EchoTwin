@@ -133,7 +133,6 @@ public class Sword : WeaponAbstract
                 direction = forward,
                 ratio = 1f
             });
-            hasDebugInfo = true;
         }
     }
 }

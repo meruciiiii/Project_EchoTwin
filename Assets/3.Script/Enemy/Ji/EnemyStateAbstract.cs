@@ -188,6 +188,11 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
                 GameObject goldObj = Instantiate(db.goldPrefab, spawnPos, Quaternion.identity,GameManager.instance.transform);
                 GetCurrency gold = goldObj.GetComponent<GetCurrency>();
                 gold.amount = 50;
+
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.AddItemToList(goldObj);
+                }
             }
         }
 
@@ -222,6 +227,11 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
                 GameObject cristalObj = Instantiate(db.cristalPrefab, spawnPos, Quaternion.identity, GameManager.instance.transform);
                 GetCurrency cristal = cristalObj.GetComponent<GetCurrency>();
                 cristal.amount = 3;
+
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.AddItemToList(cristalObj);
+                }
             }
         }
 

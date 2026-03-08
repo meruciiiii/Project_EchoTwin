@@ -197,6 +197,7 @@ public class PlayerAction : MonoBehaviour
         if (GameManager.instance.gamestate != GameManager.GameState.Playing) return;
 
         if (ani != null) ani.SetTrigger("TakeDamage");
+        
         SoundManager.SendEvent(SoundType.SFX_PlayerHit);
 
         stats.takeDamage(damage);
