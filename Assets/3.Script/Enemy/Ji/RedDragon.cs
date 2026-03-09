@@ -76,12 +76,12 @@ public class RedDragon : EnemyStateAbstract
         player = FindAnyObjectByType<PlayerAction>();
         TryGetComponent(out effect);
         TryGetComponent(out gizmo);
-        //TryGetComponent(out boxCol);
+        TryGetComponent(out boxCol);
         //TryGetComponent(out spriteRenderer);
         //if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         gizmo.enemy = this;
         //setMoveSpeed();
-        //boxCol.isTrigger = true;
+        boxCol.isTrigger = true;
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
@@ -94,7 +94,8 @@ public class RedDragon : EnemyStateAbstract
         player = FindAnyObjectByType<PlayerAction>();
         stats = player.GetComponent<PlayerStats>();
 
-        state = EnemyState.idle;
+        //state = EnemyState.idle;
+        state = EnemyState.chase;
 
         if (ani == null) TryGetComponent(out ani);
         attackRange = enemyData.attackRange;
@@ -345,7 +346,7 @@ public class RedDragon : EnemyStateAbstract
 
         if (state != EnemyState.dead)
         {
-            state = EnemyState.idle;
+            state = EnemyState.chase;
         }
     }
 
@@ -468,7 +469,7 @@ public class RedDragon : EnemyStateAbstract
 
         if (state != EnemyState.dead)
         {
-            state = EnemyState.idle;
+            state = EnemyState.chase;
         }
     }
 
@@ -488,7 +489,7 @@ public class RedDragon : EnemyStateAbstract
 
         if (state != EnemyState.dead)
         {
-            state = EnemyState.idle;
+            state = EnemyState.chase;
         }
     }
 
@@ -536,7 +537,7 @@ public class RedDragon : EnemyStateAbstract
 
         if (state != EnemyState.dead)
         {
-            state = EnemyState.idle;
+            state = EnemyState.chase;
         }
     }
 
@@ -594,7 +595,10 @@ public class RedDragon : EnemyStateAbstract
     { }
 
     protected override IEnumerator knockback_Co(Vector3 dir, float power)
-    { yield return null; }
+    {
+        state = EnemyState.chase;
+        yield return null; 
+    }
 
     protected override void setPlayerPos()
     { }
