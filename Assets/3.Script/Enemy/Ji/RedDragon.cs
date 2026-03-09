@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RedDragon : EnemyStateAbstract
 {
+    private MeshRenderer meshRenderer;
+
     [SerializeField] LayerMask playerLayer;
 
     [Header("MeleeAttack")]
@@ -75,17 +77,19 @@ public class RedDragon : EnemyStateAbstract
         TryGetComponent(out effect);
         TryGetComponent(out gizmo);
         //TryGetComponent(out boxCol);
-        TryGetComponent(out spriteRenderer);
-        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        //TryGetComponent(out spriteRenderer);
+        //if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         gizmo.enemy = this;
         //setMoveSpeed();
-        boxCol.isTrigger = true;
+        //boxCol.isTrigger = true;
+
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
 
         ani = GetComponentInChildren<Animator>();
-        TryGetComponent(out rb);
-        rb.isKinematic = true;
-        rb.useGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        //TryGetComponent(out rb);
+        //rb.isKinematic = true;
+        //rb.useGravity = false;
+        //rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         player = FindAnyObjectByType<PlayerAction>();
         stats = player.GetComponent<PlayerStats>();
@@ -100,6 +104,8 @@ public class RedDragon : EnemyStateAbstract
         rockPool = new Queue<DragonProjectile>();
         areaPool = new Queue<DragonFireArea>();
         warningPool = new Queue<WarningGizmo>();
+
+        PoolsPos = Instantiate(PoolsPos);
 
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
@@ -131,7 +137,7 @@ public class RedDragon : EnemyStateAbstract
     {
         base.OnEnable();
 
-        boxCol.isTrigger = false;
+        //boxCol.isTrigger = false;
         isReflect = false;
         isFlying = false;
         isPhase2 = false;
