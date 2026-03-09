@@ -6072,6 +6072,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 303284663450262500, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 855758183624610768, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -6104,6 +6108,10 @@ PrefabInstance:
       propertyPath: playerStats
       value: 
       objectReference: {fileID: 1954394417}
+    - target: {fileID: 4807301606731961796, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4963628697465328019, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: stats
       value: 
