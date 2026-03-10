@@ -9,7 +9,7 @@ public class RedDragon : EnemyStateAbstract
     private BoxCollider[] cols;
 
     [SerializeField] LayerMask playerLayer;
-
+    [SerializeField] private GameObject breathFx;
     [Header("MeleeAttack")]
     [SerializeField] private GameObject leftArm;
     [SerializeField] private GameObject rightArm;
@@ -107,7 +107,7 @@ public class RedDragon : EnemyStateAbstract
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
-        breathOrigin.gameObject.SetActive(false);
+        breathFx.gameObject.SetActive(false);
 
         ani = GetComponentInChildren<Animator>();
         //TryGetComponent(out rb);
@@ -372,10 +372,10 @@ public class RedDragon : EnemyStateAbstract
             rightWarning.playCircle(rightArm.transform.position, attackRange, attackSpeed, warningColor);
         }
 
+        if (ani != null) ani.SetTrigger("Attack01");
         yield return new WaitForSeconds(attackSpeed);
 
         checkAttackTime();
-        if (ani != null) ani.SetTrigger("Attack01");
         Collider[] lefthits = Physics.OverlapSphere(leftArm.transform.position, attackRange, playerLayer);
         Collider[] righthits = Physics.OverlapSphere(rightArm.transform.position, attackRange, playerLayer);
 
@@ -472,6 +472,13 @@ public class RedDragon : EnemyStateAbstract
         player.takeDamage(enemyData.damage, transform.position, 1f);
     }
 
+    private Vector3 getBreathFlatDir() 
+    {
+        if (breathOrigin != null) return getFlatForward(breathOrigin.forward); 
+        if (head != null) return getFlatForward(head.transform.forward); 
+        return getFlatForward(transform.forward);
+    }
+
     private IEnumerator fireBreath_Co()
     {
         state = EnemyState.attack;
@@ -479,9 +486,9 @@ public class RedDragon : EnemyStateAbstract
         WarningGizmo baseWarning = getWarning();
         WarningGizmo fillWwarning = getWarning();
 
-        Vector3 fixedWarningPos = getBreathGroundPos();
-        Vector3 baseDir = getFlatForward(transform.forward);
-        Vector3 centerDir = getFlatForward(head != null ? head.transform.forward : transform.forward);
+        Vector3 fixedWarningPos = getBreathGroundPos(); 
+        Vector3 baseDir = getBreathFlatDir();
+        Vector3 centerDir = getBreathFlatDir(); 
 
         if (baseWarning != null)
         {
@@ -520,6 +527,10 @@ public class RedDragon : EnemyStateAbstract
 
         checkAttackTime();
         lastBreathHitTime = -Mathf.Infinity;
+        fixedWarningPos = getBreathGroundPos();
+        baseDir = getBreathFlatDir(); 
+        centerDir = getBreathFlatDir(); 
+        if (breathFx != null) breathFx.SetActive(true); 
 
         while (true)
         {
@@ -529,9 +540,7 @@ public class RedDragon : EnemyStateAbstract
 
             if (!info.IsTag("Breath")) break;
 
-            breathOrigin.gameObject.SetActive(true);
-
-            centerDir = getFlatForward(head != null ? head.transform.forward : transform.forward);
+            centerDir = getBreathFlatDir();
 
             if (baseWarning != null)
             {
@@ -555,7 +564,7 @@ public class RedDragon : EnemyStateAbstract
 
             if (time > 0.95f)
             {
-                breathOrigin.gameObject.SetActive(false);
+                if (breathFx != null) breathFx.SetActive(false); 
                 break;
             }
 
