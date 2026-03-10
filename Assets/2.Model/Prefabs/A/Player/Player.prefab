@@ -853,9 +853,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   rotationSpeed: 10
   moveSpeed: 25
-  groundLayer:
+  monsterLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
 --- !u!114 &3690637346300873848
 MonoBehaviour:
   m_ObjectHideFlags: 0
