@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine forSubscribe_Co;
     private bool isSubscribed = false;
 
+    [SerializeField] private LayerMask monsterLayer;
+
     private void Awake()
     {
         TryGetComponent(out Input);
@@ -188,7 +190,10 @@ public class PlayerMovement : MonoBehaviour
 
         mousePosition = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(Input.MousePos);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
+
+        int rayMask = ~monsterLayer;
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f, rayMask, QueryTriggerInteraction.Ignore))
         {
             //if(hit.transform.CompareTag("Ground") || hit.transform.CompareTag("Rava"))
             mousePosition = hit.point;

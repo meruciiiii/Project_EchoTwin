@@ -120,7 +120,7 @@ public class Hammer : WeaponAbstract
         foreach (Collider target in targets)
         {
             context.hitTargets.Add(target);
-            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+            target.GetComponentInParent<EnemyStateAbstract>().takeDamage(calcDamage());
             enemyKnockback(target);
         }
 
@@ -189,7 +189,7 @@ public class Hammer : WeaponAbstract
             {
                 if (!hit.CompareTag("Enemy")) continue;
                 stats.StartCoroutine(EnemyGatherng(centerPos, hit));
-                hit.GetComponent<EnemyStateAbstract>().takeDamage(calcEchoDamage());
+                hit.GetComponentInParent<EnemyStateAbstract>().takeDamage(calcEchoDamage());
             }
 
             echoAttackInfos.Add(new AttackDebugInfo

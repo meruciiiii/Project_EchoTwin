@@ -38,7 +38,7 @@ public class OrbitAxe : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<EnemyStateAbstract>().takeDamage(damage);
+            other.GetComponentInParent<EnemyStateAbstract>().takeDamage(damage);
 
             SoundManager.SendEvent(SoundType.SFX_AxeAttack1);
 

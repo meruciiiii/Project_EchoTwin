@@ -853,6 +853,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   rotationSpeed: 10
   moveSpeed: 25
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &3690637346300873848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,8 +998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5e784ac5e87b34291aa69cce9609a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  maxHP: 1000
-  playerDMG: 1000
+  maxHP: 5
+  playerDMG: 1
   moveSpeed: 10
   attackSpeed: 1
   dashLength: 5

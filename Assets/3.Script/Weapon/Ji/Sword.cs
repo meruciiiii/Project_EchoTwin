@@ -74,7 +74,7 @@ public class Sword : WeaponAbstract
         foreach (Collider target in targets)
         {
             context.hitTargets.Add(target);
-            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+            target.GetComponentInParent<EnemyStateAbstract>().takeDamage(calcDamage());
 
             enemyKnockback(target);
         }
@@ -118,7 +118,7 @@ public class Sword : WeaponAbstract
 
                 if (Vector3.Angle(forward, dirToTarget) < attackAngle * 0.5f)
                 {
-                    hit.GetComponent<EnemyStateAbstract>().takeDamage(calcEchoDamage());
+                    hit.GetComponentInParent<EnemyStateAbstract>().takeDamage(calcEchoDamage());
                 }
             }
 

@@ -70,6 +70,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         gizmo.enemy = this;
         setMoveSpeed();
+
         boxCol.isTrigger = true;
 
         ani = GetComponentInChildren<Animator>();
@@ -135,8 +136,18 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
         SoundManager.SendEvent(SoundType.SFX_MonsterDie);
 
         TurnOffNavmesh();
-        rb.isKinematic = true;
-        boxCol.enabled = false;
+
+        if(rb != null) rb.isKinematic = true;
+        if(boxCol != null) boxCol.enabled = false;
+        else
+        {
+            BoxCollider[] cols = GetComponentsInChildren<BoxCollider>(true);
+            foreach(BoxCollider col in cols)
+            {
+                if (col == null) continue;
+                col.enabled = false;
+            }
+        }
 
         //사망 애니메이션은 별도 루틴으로 실행 (애니메이션 시간 확보)
         dieCoroutine = StartCoroutine(DeathRoutine(goldAmount, minCristal, maxCristal, minWeight, maxWeight));

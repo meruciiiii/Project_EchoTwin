@@ -104,7 +104,7 @@ public class Spear : WeaponAbstract
                 if (!target.CompareTag("Enemy")) continue;
 
                 context.hitTargets.Add(target);
-                target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+                target.GetComponentInParent<EnemyStateAbstract>().takeDamage(calcDamage());
 
                 enemyKnockback(target);
             }
@@ -116,7 +116,7 @@ public class Spear : WeaponAbstract
             foreach(Collider target in targets)
             {
                 context.hitTargets.Add(target);
-                target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+                target.GetComponentInParent<EnemyStateAbstract>().takeDamage(calcDamage());
 
                 enemyKnockback(target);
             }
@@ -173,7 +173,7 @@ public class Spear : WeaponAbstract
         {
             if (!hit.CompareTag("Enemy")) continue;
 
-            hit.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+            hit.GetComponentInParent<EnemyStateAbstract>().takeDamage(calcDamage());
         }
     }
 }
