@@ -45,7 +45,7 @@ public class ThrowDagger : MonoBehaviour
     {
         if (target != null && target.gameObject.activeInHierarchy)
         {
-            EnemyStateAbstract enemy = target.GetComponent<EnemyStateAbstract>();
+            EnemyStateAbstract enemy = target.GetComponentInParent<EnemyStateAbstract>();
             if (enemy != null)
             {
                 enemy.takeDamage(damage);

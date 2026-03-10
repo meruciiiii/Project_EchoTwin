@@ -106,7 +106,7 @@ public class Dagger : WeaponAbstract
             if (!target.CompareTag("Enemy")) continue;
 
             context.hitTargets.Add(target);
-            target.GetComponent<EnemyStateAbstract>().takeDamage(calcDamage());
+            target.GetComponentInParent<EnemyStateAbstract>().takeDamage(calcDamage());
 
             enemyKnockback(target);
         }

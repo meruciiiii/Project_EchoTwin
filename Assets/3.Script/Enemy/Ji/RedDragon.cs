@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class RedDragon : EnemyStateAbstract
 {
+    private MeshRenderer meshRenderer;
+    private BoxCollider[] cols;
+
     [SerializeField] LayerMask playerLayer;
 
     [Header("MeleeAttack")]
@@ -14,7 +17,6 @@ public class RedDragon : EnemyStateAbstract
 
     [Header("Breath")]
     [SerializeField] private GameObject head;
-    [SerializeField] private float breathRadius = 1f;
     [SerializeField] private float breathDistance;
     [SerializeField] private float breathAngle;
     [SerializeField]
@@ -25,10 +27,20 @@ public class RedDragon : EnemyStateAbstract
     [SerializeField] private Color breathBaseColor = new Color(1f, 0f, 0f, 0.2f);
     [SerializeField] private Color breathFillColor = new Color(1f, 0f, 0f, 0.45f);
 
+    [SerializeField] private Transform breathOrigin;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float groundCheckHeight = 10f;
+    [SerializeField] private float groundCheckDistance = 30f;
+    [SerializeField] private float breathHitInterval = 0.15f;
+
+    private float lastBreathHitTime = -Mathf.Infinity;
+
     [Header("Reflection")]
     [SerializeField] private float reflectionTime = 1f;
     [SerializeField] private float reflectKnockbackForce = 3f;
     private bool isReflect = false;
+    [Range(0f, 1f)] [SerializeField] private float stopRate = 0.5f;
+    private bool reflectResumeRequested = false;
 
     [Header("RangeAttack")]
     [SerializeField] private float rangeAttackSpeed = 1f;
@@ -74,23 +86,40 @@ public class RedDragon : EnemyStateAbstract
         player = FindAnyObjectByType<PlayerAction>();
         TryGetComponent(out effect);
         TryGetComponent(out gizmo);
-        //TryGetComponent(out boxCol);
-        TryGetComponent(out spriteRenderer);
-        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        TryGetComponent(out boxCol);
+
+        cols = GetComponentsInChildren<BoxCollider>(true);
+        foreach (BoxCollider col in cols)
+        {
+            if (col == null) continue;
+            col.isTrigger = true;
+        }
+        if(boxCol != null)
+        {
+            boxCol.isTrigger = true;
+            boxCol.enabled = false;
+        }
+        //TryGetComponent(out spriteRenderer);
+        //if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         gizmo.enemy = this;
         //setMoveSpeed();
-        boxCol.isTrigger = true;
+        //boxCol.isTrigger = true;
+
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+
+        breathOrigin.gameObject.SetActive(false);
 
         ani = GetComponentInChildren<Animator>();
-        TryGetComponent(out rb);
-        rb.isKinematic = true;
-        rb.useGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        //TryGetComponent(out rb);
+        //rb.isKinematic = true;
+        //rb.useGravity = false;
+        //rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         player = FindAnyObjectByType<PlayerAction>();
         stats = player.GetComponent<PlayerStats>();
 
-        state = EnemyState.idle;
+        //state = EnemyState.idle;
+        state = EnemyState.chase;
 
         if (ani == null) TryGetComponent(out ani);
         attackRange = enemyData.attackRange;
@@ -100,6 +129,8 @@ public class RedDragon : EnemyStateAbstract
         rockPool = new Queue<DragonProjectile>();
         areaPool = new Queue<DragonFireArea>();
         warningPool = new Queue<WarningGizmo>();
+
+        PoolsPos = Instantiate(PoolsPos);
 
         for (int i = 0; i < rangeAttackCount * 2; i++)
         {
@@ -117,7 +148,7 @@ public class RedDragon : EnemyStateAbstract
             area.gameObject.SetActive(false);
             areaPool.Enqueue(area);
         }
-        for(int i=0; i< (rangeAttackCount+2)*4; i++)
+        for (int i = 0; i < (rangeAttackCount + 2) * 4; i++)
         {
             WarningGizmo warning = Instantiate(warningPrefab, PoolsPos.transform);
             warning.init(returnWarning);
@@ -131,11 +162,28 @@ public class RedDragon : EnemyStateAbstract
     {
         base.OnEnable();
 
-        boxCol.isTrigger = false;
+        if (cols != null)
+        {
+            foreach (BoxCollider col in cols)
+            {
+                if (col == null) continue;
+                if (col == boxCol) continue;
+                col.enabled = true;
+            }
+        }
+
+        if(boxCol != null)
+        {
+            boxCol.enabled = false;
+        }
+
         isReflect = false;
+        reflectResumeRequested = false;
         isFlying = false;
         isPhase2 = false;
         lastPattern = AttackPattern.none;
+
+        if (ani != null) ani.speed = 1f;
     }
 
     public override void takeDamage(float damage)
@@ -145,6 +193,7 @@ public class RedDragon : EnemyStateAbstract
 
         if (isReflect)
         {
+            reflectResumeRequested = true;
             player.takeDamage(enemyData.damage, transform.position, reflectKnockbackForce);
             return;
         }
@@ -154,6 +203,21 @@ public class RedDragon : EnemyStateAbstract
         if (currentHP <= 0) OnDie(enemyData.dropGold, enemyData.minCristal, enemyData.maxCristal, enemyData.minWeight, enemyData.maxWeight);
         //if (ani != null) 
         if (state != EnemyState.dead) ani.SetTrigger("Hit");
+    }
+
+    protected override void OnDie(int goldAmount, int minCristal, int maxCristal, int minWeight, int maxWeight)
+    {
+        if (boxCol != null) boxCol.enabled = false;
+        if(cols != null)
+        {
+            foreach(BoxCollider col in cols)
+            {
+                if (col == null) continue;
+                col.enabled = false;
+            }
+        }
+
+        base.OnDie(goldAmount, minCristal, maxCristal, minWeight, maxWeight);
     }
 
     private void checkPhaseTransition()
@@ -298,12 +362,12 @@ public class RedDragon : EnemyStateAbstract
         WarningGizmo leftWarning = getWarning();
         WarningGizmo rightWarning = getWarning();
 
-        if(leftWarning != null)
+        if (leftWarning != null)
         {
             leftWarning.playCircle(leftArm.transform.position, attackRange, attackSpeed, warningColor);
         }
 
-        if(rightWarning != null)
+        if (rightWarning != null)
         {
             rightWarning.playCircle(rightArm.transform.position, attackRange, attackSpeed, warningColor);
         }
@@ -339,8 +403,73 @@ public class RedDragon : EnemyStateAbstract
 
         if (state != EnemyState.dead)
         {
-            state = EnemyState.idle;
+            state = EnemyState.chase;
         }
+    }
+
+    private Vector3 getBreathWorldPos()
+    {
+        if (breathOrigin != null) return breathOrigin.position;
+        if (head != null) return head.transform.position;
+        return transform.position;
+    }
+
+    private Vector3 getBreathGroundPos()
+    {
+        Vector3 worldPos = getBreathWorldPos();
+        Vector3 rayStart = worldPos + Vector3.up * groundCheckHeight;
+
+        if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundCheckHeight + groundCheckDistance, groundLayer))
+        {
+            return hit.point;
+        }
+        return new Vector3(worldPos.x, transform.position.y, worldPos.z);
+    }
+
+    private Vector3 getFlatForward(Vector3 forward)
+    {
+        forward.y = 0f;
+
+        if (forward.sqrMagnitude < 0.001f)
+        {
+            Vector3 fallback = transform.forward;
+            fallback.y = 0f;
+
+            if (fallback.sqrMagnitude < 0.001f)
+            {
+                fallback = Vector3.forward;
+            }
+
+            return fallback.normalized;
+        }
+
+        return forward.normalized;
+    }
+
+    private bool isPlayerInBreath(Vector3 origin, Vector3 centerDir)
+    {
+        if (player == null) return false;
+
+        Vector3 toPlayer = player.transform.position - origin;
+        toPlayer.y = 0f;
+
+        float sqrDistance = toPlayer.sqrMagnitude;
+        if (sqrDistance > breathDistance * breathDistance) return false;
+
+        if (sqrDistance < 0.0001f) return true;
+
+        float angle = Vector3.Angle(centerDir, toPlayer.normalized);
+        return angle <= breathAngle;
+    }
+
+    private void tryBreathDamage(Vector3 origin, Vector3 centerDir)
+    {
+        if (player == null) return;
+        if (Time.time < lastBreathHitTime + breathHitInterval) return;
+        if (!isPlayerInBreath(origin, centerDir)) return;
+
+        lastBreathHitTime = Time.time;
+        player.takeDamage(enemyData.damage, transform.position, 1f);
     }
 
     private IEnumerator fireBreath_Co()
@@ -350,19 +479,25 @@ public class RedDragon : EnemyStateAbstract
         WarningGizmo baseWarning = getWarning();
         WarningGizmo fillWwarning = getWarning();
 
-        if(baseWarning != null)
+        Vector3 fixedWarningPos = getBreathGroundPos();
+        Vector3 baseDir = getFlatForward(transform.forward);
+        Vector3 centerDir = getFlatForward(head != null ? head.transform.forward : transform.forward);
+
+        if (baseWarning != null)
         {
-            baseWarning.playSector(head.transform.position, transform.forward, breathDistance, breathTotalAngle, attackSpeed, breathBaseColor);
+            baseWarning.playSector(fixedWarningPos, baseDir, breathDistance, breathTotalAngle, attackSpeed, breathBaseColor);
         }
 
-        if(fillWwarning != null)
+        if (fillWwarning != null)
         {
-            fillWwarning.playSector(head.transform.position, head.transform.forward, breathDistance, breathAngle * 2f, attackSpeed, breathFillColor);
+            fillWwarning.playSector(fixedWarningPos, centerDir, breathDistance, breathAngle * 2f, attackSpeed, breathFillColor);
         }
 
         yield return new WaitForSeconds(attackSpeed);
+
         if (ani != null) ani.SetTrigger("Attack02");
-        yield return null;
+        yield return new WaitForSeconds(1f);
+
 
         while (true)
         {
@@ -373,7 +508,7 @@ public class RedDragon : EnemyStateAbstract
 
                 attackCoroutine = null;
 
-                if (state != EnemyState.dead) state = EnemyState.idle;
+                if (state != EnemyState.dead) state = EnemyState.chase;
                 yield break;
             }
 
@@ -384,6 +519,7 @@ public class RedDragon : EnemyStateAbstract
         }
 
         checkAttackTime();
+        lastBreathHitTime = -Mathf.Infinity;
 
         while (true)
         {
@@ -393,24 +529,18 @@ public class RedDragon : EnemyStateAbstract
 
             if (!info.IsTag("Breath")) break;
 
-            bool isHit = false;
+            breathOrigin.gameObject.SetActive(true);
 
-            Vector3 headPos = head.transform.position;
-            Vector3 centerDir = head.transform.forward;
-            centerDir.y = 0f;
-            if (centerDir.sqrMagnitude < 0.001f) centerDir = transform.forward;
+            centerDir = getFlatForward(head != null ? head.transform.forward : transform.forward);
 
-            Vector3 leftDir = Quaternion.AngleAxis(-breathAngle, Vector3.up) * centerDir;
-            Vector3 rightDir = Quaternion.AngleAxis(breathAngle, Vector3.up) * centerDir;
-
-            if(baseWarning != null)
+            if (baseWarning != null)
             {
-                baseWarning.showSector(headPos, transform.forward, breathDistance, breathTotalAngle, breathBaseColor);
+                baseWarning.showSector(fixedWarningPos, baseDir, breathDistance, breathTotalAngle, breathBaseColor);
             }
 
-            if(fillWwarning != null)
+            if (fillWwarning != null)
             {
-                fillWwarning.showSector(headPos, centerDir, breathDistance, breathAngle * 2f, breathFillColor);
+                fillWwarning.showSector(fixedWarningPos, centerDir, breathDistance, breathAngle * 2f, breathFillColor);
             }
 
             float time = info.normalizedTime;
@@ -420,40 +550,18 @@ public class RedDragon : EnemyStateAbstract
 
             if (canDamage)
             {
-                if (Physics.SphereCast(headPos, breathRadius, centerDir, out RaycastHit centerHit, breathDistance, playerLayer))
-                {
-                    PlayerAction target = centerHit.collider.GetComponentInParent<PlayerAction>();
-                    if (target != null)
-                    {
-                        target.takeDamage(enemyData.damage, transform.position, 1);
-                        isHit = true;
-                    }
-                }
-                if (!isHit && Physics.SphereCast(headPos, breathRadius, leftDir, out RaycastHit leftHit, breathDistance, playerLayer))
-                {
-                    PlayerAction target = leftHit.collider.GetComponentInParent<PlayerAction>();
-                    if (target != null)
-                    {
-                        target.takeDamage(enemyData.damage, transform.position, 1);
-                        isHit = true;
-                    }
-                }
-                if (!isHit && Physics.SphereCast(headPos, breathRadius, rightDir, out RaycastHit rightHit, breathDistance, playerLayer))
-                {
-                    PlayerAction target = rightHit.collider.GetComponentInParent<PlayerAction>();
-                    if (target != null)
-                    {
-                        target.takeDamage(enemyData.damage, transform.position, 1);
-                        isHit = true;
-                    }
-                }
+                tryBreathDamage(fixedWarningPos, centerDir);
             }
+
             if (time > 0.95f)
             {
+                breathOrigin.gameObject.SetActive(false);
                 break;
             }
-            yield return new WaitForSeconds(0.05f);
+
+            yield return null;
         }
+
 
         if (baseWarning != null) baseWarning.Hide();
         if (fillWwarning != null) fillWwarning.Hide();
@@ -462,27 +570,131 @@ public class RedDragon : EnemyStateAbstract
 
         if (state != EnemyState.dead)
         {
-            state = EnemyState.idle;
+            state = EnemyState.chase;
         }
     }
 
-    private IEnumerator reflection_Co()
+    private IEnumerator reflection_Co() 
     {
         state = EnemyState.attack;
-        isReflect = true;
+        isReflect = false; 
+        reflectResumeRequested = false;
 
-        if (ani != null) ani.SetTrigger("Attack03");
+        if (boxCol != null) boxCol.enabled = false;
+
+        if (ani != null)
+        {
+            ani.speed = 1f;
+            ani.SetTrigger("Attack03");
+        }
+
         checkAttackTime();
 
-        yield return new WaitForSeconds(reflectionTime);
+        if (ani != null)
+        {
+            yield return null;
 
-        isReflect = false;
+            while (true)
+            {
+                if (ani == null)
+                {
+                    if (boxCol != null) boxCol.enabled = false;
+                    isReflect = false; 
+                    reflectResumeRequested = false; 
+                    attackCoroutine = null;
+
+                    if (state != EnemyState.dead)
+                    {
+                        state = EnemyState.chase;
+                    }
+                    yield break;
+                }
+
+                AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+
+                if (info.IsTag("Reflect")) break;
+                yield return null;
+            }
+
+            while (true)
+            {
+                if (ani == null)
+                {
+                    isReflect = false;
+                    reflectResumeRequested = false;
+                    attackCoroutine = null;
+
+                    if (state != EnemyState.dead)
+                    {
+                        state = EnemyState.chase;
+                    }
+                    yield break;
+                }
+
+                AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+
+                if (!info.IsTag("Reflect")) break;
+
+                float time = info.normalizedTime;
+                time = time - Mathf.Floor(time);
+
+                if (time >= stopRate) break;
+                yield return null;
+            }
+
+            isReflect = true;
+
+            if (boxCol != null) boxCol.enabled = true;
+
+            ani.speed = 0f;
+
+            float elapsed = 0f;
+
+            while (elapsed < reflectionTime)
+            {
+                if (reflectResumeRequested) break;
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            if (boxCol != null) boxCol.enabled = false;
+
+            ani.speed = 1f;
+            isReflect = false;
+            reflectResumeRequested = false;
+
+            while (true)
+            {
+                if (ani == null) break;
+
+                AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+
+                if (!info.IsTag("Reflect")) break;
+                yield return null;
+            }
+        }
+        else
+        {
+            isReflect = true;
+
+            if (boxCol != null) boxCol.enabled = true;
+
+            yield return new WaitForSeconds(reflectionTime);
+
+            if (boxCol != null) boxCol.enabled = false;
+
+            isReflect = false; 
+            reflectResumeRequested = false;
+        }
+
+        if (boxCol != null) boxCol.enabled = false;
 
         attackCoroutine = null;
 
         if (state != EnemyState.dead)
         {
-            state = EnemyState.idle;
+            state = EnemyState.chase;
         }
     }
 
@@ -530,7 +742,7 @@ public class RedDragon : EnemyStateAbstract
 
         if (state != EnemyState.dead)
         {
-            state = EnemyState.idle;
+            state = EnemyState.chase;
         }
     }
 
@@ -588,7 +800,10 @@ public class RedDragon : EnemyStateAbstract
     { }
 
     protected override IEnumerator knockback_Co(Vector3 dir, float power)
-    { yield return null; }
+    {
+        state = EnemyState.chase;
+        yield return null;
+    }
 
     protected override void setPlayerPos()
     { }
