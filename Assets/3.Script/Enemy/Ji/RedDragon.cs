@@ -111,7 +111,8 @@ public class RedDragon : EnemyStateAbstract
 
         if (player != null) stats = player.GetComponent<PlayerStats>();
 
-        state = EnemyState.chase;
+        //state = EnemyState.chase;
+        state = EnemyState.idle;
 
         if (ani == null) TryGetComponent(out ani);
 
