@@ -266,29 +266,30 @@ public class RedDragon : EnemyStateAbstract
         if (attackCoroutine != null) return;
         if (!canAttack()) return;
 
-        AttackPattern pattern;
-        if (!selectPattern(out pattern)) return;
+        attackCoroutine = StartCoroutine(rangeAttack_Co());
+        //AttackPattern pattern;
+        //if (!selectPattern(out pattern)) return;
 
-        lastPattern = pattern;
+        //lastPattern = pattern;
 
-        switch (pattern)
-        {
-            case AttackPattern.melee:
-                attackCoroutine = StartCoroutine(meleeAttack_Co());
-                break;
+        //switch (pattern)
+        //{
+        //    case AttackPattern.melee:
+        //        attackCoroutine = StartCoroutine(meleeAttack_Co());
+        //        break;
 
-            case AttackPattern.breath:
-                attackCoroutine = StartCoroutine(fireBreath_Co());
-                break;
+        //    case AttackPattern.breath:
+        //        attackCoroutine = StartCoroutine(fireBreath_Co());
+        //        break;
 
-            case AttackPattern.reflect:
-                attackCoroutine = StartCoroutine(reflection_Co());
-                break;
+        //    case AttackPattern.reflect:
+        //        attackCoroutine = StartCoroutine(reflection_Co());
+        //        break;
 
-            case AttackPattern.range:
-                attackCoroutine = StartCoroutine(rangeAttack_Co());
-                break;
-        }
+        //    case AttackPattern.range:
+        //        attackCoroutine = StartCoroutine(rangeAttack_Co());
+        //        break;
+        //}
     }
 
     private bool selectPattern(out AttackPattern pattern)
