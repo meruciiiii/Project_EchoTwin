@@ -271,7 +271,7 @@ public class PlayerAction : MonoBehaviour
         }
         if (ani != null)
         {
-            ani.SetInteger("WeaponGroup", 0);
+            ani.SetFloat("WeaponGroup", 0f);
         }
         stats.resetGold();
         stats.setCurrentHP();

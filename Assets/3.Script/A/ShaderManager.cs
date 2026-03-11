@@ -61,7 +61,6 @@ public class ShaderManager : MonoBehaviour
         {
             screenMaterial.SetFloat("_PixelResolution", 300f);
             screenMaterial.SetFloat("_ColorSwitch", 0f);
-            Debug.Log("쉐이더 수치가 초기값으로 리셋되었습니다.");
         }
     }
 }
