@@ -32,7 +32,10 @@ public class RedDragon : EnemyStateAbstract
     [SerializeField] private float groundCheckHeight = 10f;
     [SerializeField] private float groundCheckDistance = 30f;
     [SerializeField] private float breathHitInterval = 0.15f;
-
+    private ParticleSystem[] breathFxParticles;
+    [SerializeField] private float breathFxStopDelay = 2.5f; 
+    private Coroutine breathFxStopCoroutine;
+    [SerializeField] private Transform breathFxOrigin;
     private float lastBreathHitTime = -Mathf.Infinity;
 
     [Header("Reflection")]
@@ -105,7 +108,15 @@ public class RedDragon : EnemyStateAbstract
         gizmo.enemy = this;
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
-        if (breathFx != null) breathFx.SetActive(false);
+        if (breathFx != null)
+        {
+            if (breathFx != null)
+            {
+                breathFxParticles = breathFx.GetComponentsInChildren<ParticleSystem>(true); 
+                breathFx.SetActive(true); 
+                stopBreathFxImmediate(); 
+            }
+        }
 
         ani = GetComponentInChildren<Animator>();
 
@@ -267,29 +278,31 @@ public class RedDragon : EnemyStateAbstract
         if (attackCoroutine != null) return;
         if (!canAttack()) return;
 
-        AttackPattern pattern;
-        if (!selectPattern(out pattern)) return;
+        attackCoroutine = StartCoroutine(fireBreath_Co());
 
-        lastPattern = pattern;
+        //AttackPattern pattern;
+        //if (!selectPattern(out pattern)) return;
 
-        switch (pattern)
-        {
-            case AttackPattern.melee:
-                attackCoroutine = StartCoroutine(meleeAttack_Co());
-                break;
+        //lastPattern = pattern;
 
-            case AttackPattern.breath:
-                attackCoroutine = StartCoroutine(fireBreath_Co());
-                break;
+        //switch (pattern)
+        //{
+        //    case AttackPattern.melee:
+        //        attackCoroutine = StartCoroutine(meleeAttack_Co());
+        //        break;
 
-            case AttackPattern.reflect:
-                attackCoroutine = StartCoroutine(reflection_Co());
-                break;
+        //    case AttackPattern.breath:
+        //        attackCoroutine = StartCoroutine(fireBreath_Co());
+        //        break;
 
-            case AttackPattern.range:
-                attackCoroutine = StartCoroutine(rangeAttack_Co());
-                break;
-        }
+        //    case AttackPattern.reflect:
+        //        attackCoroutine = StartCoroutine(reflection_Co());
+        //        break;
+
+        //    case AttackPattern.range:
+        //        attackCoroutine = StartCoroutine(rangeAttack_Co());
+        //        break;
+        //}
     }
 
     private bool selectPattern(out AttackPattern pattern)
@@ -416,17 +429,20 @@ public class RedDragon : EnemyStateAbstract
         }
     }
 
-    private Transform getBreathAnchor() 
+    private Vector3 getBreathGroundPos() 
     {
-        if (breathOrigin != null) return breathOrigin;
-        if (head != null) return head.transform;
-        return transform;
-    }
+        Transform origin = null;
 
-    private Vector3 getBreathGroundPos()
-    {
-        Transform anchor = getBreathAnchor();
-        Vector3 worldPos = anchor.position;
+        if (breathOrigin != null)
+        {
+            origin = breathOrigin; 
+        }
+        else
+        {
+            origin = transform; 
+        }
+
+        Vector3 worldPos = origin.position;
         Vector3 rayStart = worldPos + Vector3.up * groundCheckHeight;
 
         if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundCheckHeight + groundCheckDistance, groundLayer))
@@ -457,32 +473,117 @@ public class RedDragon : EnemyStateAbstract
         return forward.normalized;
     }
 
-    private Vector3 getBreathFlatDir()
+    private Vector3 getBreathFlatDir() 
     {
-        Transform anchor = getBreathAnchor();
-        return getFlatForward(-anchor.right);
+        if (breathFxOrigin != null) 
+        {
+            return getFlatForward(breathFxOrigin.forward);
+        }
+
+        if (breathOrigin != null) 
+        {
+            return getFlatForward(breathFxOrigin.forward); 
+        }
+
+        return getFlatForward(transform.forward);
     }
 
-    private void syncBreathFxTransform() 
+    private void syncBreathFxTransform()
     {
         if (breathFx == null) return;
 
-        Transform anchor = getBreathAnchor();
-        breathFx.transform.SetPositionAndRotation(anchor.position, anchor.rotation);
+        Transform origin = null; 
+
+        if (breathFxOrigin != null) 
+        {
+            origin = breathFxOrigin; 
+        }
+        else if (breathOrigin != null) 
+        {
+            origin = breathOrigin;
+        }
+        else
+        {
+            origin = transform;
+        }
+
+        breathFx.transform.SetPositionAndRotation(origin.position, origin.rotation); 
+    }
+
+    private void stopBreathFxImmediate()
+    {
+        if (breathFx == null) return; 
+
+        if (breathFxParticles == null || breathFxParticles.Length == 0)
+        {
+            breathFxParticles = breathFx.GetComponentsInChildren<ParticleSystem>(true);
+        }
+
+        if (breathFxStopCoroutine != null)
+        {
+            StopCoroutine(breathFxStopCoroutine);
+            breathFxStopCoroutine = null;
+        }
+
+        foreach (ParticleSystem particle in breathFxParticles) 
+        {
+            if (particle == null) continue;
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+    }
+
+    private IEnumerator stopBreathFxDelayed_Co()
+    {
+        yield return new WaitForSeconds(breathFxStopDelay);
+
+        if (breathFxParticles == null || breathFxParticles.Length == 0)
+        {
+            breathFxParticles = breathFx.GetComponentsInChildren<ParticleSystem>(true);
+        }
+
+        foreach (ParticleSystem particle in breathFxParticles)
+        {
+            if (particle == null) continue;
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+
+        breathFxStopCoroutine = null;
     }
 
     private void setBreathFxActive(bool value) 
     {
         if (breathFx == null) return;
 
-        if (value)
+        if (breathFxParticles == null || breathFxParticles.Length == 0)
         {
-            syncBreathFxTransform();
+            breathFxParticles = breathFx.GetComponentsInChildren<ParticleSystem>(true);
         }
 
-        if (breathFx.activeSelf != value)
+        if (value)
         {
-            breathFx.SetActive(value);
+            if (breathFxStopCoroutine != null) 
+            {
+                StopCoroutine(breathFxStopCoroutine);
+                breathFxStopCoroutine = null;
+            }
+
+            syncBreathFxTransform();
+
+            foreach (ParticleSystem particle in breathFxParticles)
+            {
+                if (particle == null) continue;
+
+                particle.Play(true); 
+            }
+        }
+        else
+        {
+            if (breathFxStopCoroutine != null)
+            {
+                StopCoroutine(breathFxStopCoroutine);
+            }
+
+            breathFxStopCoroutine = StartCoroutine(stopBreathFxDelayed_Co());
         }
     }
 
@@ -596,6 +697,7 @@ public class RedDragon : EnemyStateAbstract
 
         checkAttackTime();
         lastBreathHitTime = -Mathf.Infinity;
+        syncBreathFxTransform();
         setBreathFxActive(true);
 
         while (true)
