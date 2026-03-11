@@ -5579,6 +5579,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: 302_RedDragon_Flame
       objectReference: {fileID: 0}
+    - target: {fileID: 6544367606719369411, guid: bf20e103b2f19bb46955723bd7fc54be, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544367606719369411, guid: bf20e103b2f19bb46955723bd7fc54be, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 9096053312489667173, guid: bf20e103b2f19bb46955723bd7fc54be, type: 3}
       propertyPath: m_LocalPosition.x
       value: -155
