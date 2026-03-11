@@ -163,6 +163,14 @@ public class StoreController : MonoBehaviour
         //playerValue += data.valuePerLv;
         playerUpgradesState[id] = state;
         applyUpgradePlayer(id);
+
+        float progress = GetTotalUpgradeProgress();
+        Debug.Log($"<color=orange>현재 전체 업그레이드 진행도: {progress * 100}%</color>");
+        if (ShaderManager.instance != null)
+        {
+            ShaderManager.instance.UpdateShaderByProgress(progress);
+        }
+
         return true;
     }
     private bool CanUpgrade()
@@ -177,6 +185,21 @@ public class StoreController : MonoBehaviour
     public void PlayerControl()
     {
         // Player 움직임 제한 
+    }
+    private float GetTotalUpgradeProgress()
+    {
+        int currentTotalLv = 0;
+        int maxTotalLv = 0;
+
+        // 현재 딕셔너리에 담긴 모든 업그레이드 상태를 확인합니다.
+        foreach (var id in upgradeTable.Keys)
+        {
+            currentTotalLv += playerUpgradesState[id]; // 내가 찍은 레벨 합
+            maxTotalLv += upgradeTable[id].maxLv;      // 게임상 최대 레벨 합
+        }
+
+        if (maxTotalLv <= 0) return 0f;
+        return (float)currentTotalLv / maxTotalLv; // 0.0 ~ 1.0 사이 값 반환
     }
 }
 

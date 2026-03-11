@@ -1730,6 +1730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 435573433}
   - component: {fileID: 435573432}
+  - component: {fileID: 435573434}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1775,6 +1776,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &435573434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435573431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaddbdd1f5f314a4b8c008d4ecddd31d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShaderManager
+  screenMaterial: {fileID: 2100000, guid: 5f8b282701e7ede40b810e342250b285, type: 2}
 --- !u!1001 &442616117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7358,6 +7372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 855758183624610768, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1262591523100971886, guid: b71b1dd816487234789fc8de30a04e6b, type: 3}
       propertyPath: player
       value: 
@@ -9442,6 +9460,10 @@ PrefabInstance:
       propertyPath: startRoom
       value: 
       objectReference: {fileID: 1070425454}
+    - target: {fileID: 530066852025997875, guid: 3f7c913bc0088744189774574329b90e, type: 3}
+      propertyPath: roomObjects
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 530066852025997875, guid: 3f7c913bc0088744189774574329b90e, type: 3}
       propertyPath: bossRoomCheck
       value: 
