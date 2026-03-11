@@ -189,6 +189,7 @@ public class PlayerStats : MonoBehaviour
         currentHP = 10000;
         playerDMG = 10000;
         cristal = 10000;
+        attackSpeed = 100;
     }
 
 }

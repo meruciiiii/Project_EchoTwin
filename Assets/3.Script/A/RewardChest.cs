@@ -17,7 +17,8 @@ public class RewardChest : MonoBehaviour
     [SerializeField] private int heartCount = 1;
     [SerializeField] private int crystalCount = 3;     
     [SerializeField] private float jumpForce = 7f;
-
+    [SerializeField] private PortalController portalController;
+    [SerializeField] private int floor = 0;
     private Quaternion closedRotation;
     private Quaternion openedRotation;
     private bool isOpened = false;
@@ -71,7 +72,7 @@ private void Start()
                 if (item != null) Destroy(item);
             }
             spawnedItems.Clear();
-
+            portalController.gameObject.SetActive(false);
         }
     }
     private void ClearSpawnedItems()
@@ -139,11 +140,19 @@ private void Start()
 
         if (other.CompareTag("Player"))
         {
-            if (GameManager.instance.gamestate == GameManager.GameState.Playing)
+            if (GameManager.instance.gamestate == GameManager.GameState.Playing|| GameManager.instance.gamestate == GameManager.GameState.RoomClear)
             {
                 OnPlayerEnterRoom();
             }
         }
+        floor++;
+        if(floor > 5)
+        {
+            floor = 0;
+            return;
+        }
+        portalController.gameObject.SetActive(true);
+
     }
 
 
