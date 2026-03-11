@@ -4599,6 +4599,7 @@ GameObject:
   - component: {fileID: 1979819332999611973}
   - component: {fileID: 3893724562298373970}
   - component: {fileID: -1119336568008231330}
+  - component: {fileID: 5423565595576580245}
   m_Layer: 0
   m_Name: 302_RedDragon_FireJangpan
   m_TagString: Untagged
@@ -9192,3 +9193,24 @@ MonoBehaviour:
   existTime: 3
   timePerDMG: 1
   minTimeForDMG: 0.5
+--- !u!65 &5423565595576580245
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9033785013911281325}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9462795, y: 2.9956858, z: 1.9411745}
+  m_Center: {x: -0.033554554, y: 0.93278253, z: 0.02178669}
