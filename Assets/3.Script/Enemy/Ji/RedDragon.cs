@@ -769,9 +769,13 @@ public class RedDragon : EnemyStateAbstract
         state = EnemyState.attack;
         isFlying = true;
 
+        if (ani != null) ani.SetTrigger("Attack04");
+
+        GameManager.instance.CameraResetEvent();
+
         yield return new WaitForSeconds(rangeAttackSpeed);
 
-        if (ani != null) ani.SetTrigger("Attack04");
+
 
         checkAttackTime();
 
@@ -804,6 +808,8 @@ public class RedDragon : EnemyStateAbstract
 
         isFlying = false;
         attackCoroutine = null;
+
+        GameManager.instance.CameraResetEvent();
 
         if (state != EnemyState.dead)
         {

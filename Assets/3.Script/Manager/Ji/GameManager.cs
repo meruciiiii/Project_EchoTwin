@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
     public WeaponAbstract mainWeapon => MainWeapon;
     public WeaponAbstract subWeapon => SubWeapon;
 
+    public event Action CameraZoomOut;
+    public event Action CameraReset;
+
     public static GameManager instance = null;
 
     private void Awake()
@@ -62,6 +65,16 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void ZoomOutEvent()
+    {
+        CameraZoomOut?.Invoke();
+    }
+
+    public void CameraResetEvent()
+    {
+        CameraReset?.Invoke();
     }
 
     public void AddItemToList(GameObject obj)
