@@ -155,7 +155,7 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 256
-  projectile: {fileID: 2879538220908575655}
+  projectile: {fileID: 5685665014904394245, guid: c9bebeaca453b3c47a3acf851d53288a, type: 3}
   buffer: 0.5
   projectileDuration: 2
   projectileSpeed: 10

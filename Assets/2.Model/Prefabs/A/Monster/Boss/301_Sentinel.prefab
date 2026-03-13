@@ -421,7 +421,7 @@ MonoBehaviour:
   rangeAttackCount: 5
   projectilePrefab: {fileID: 5582182970674763002, guid: e5f0f3a7e255e3743ba9a6a283d95f54, type: 3}
   spawnSpeed: 1
-  rangeMobPrefab: {fileID: -7166901915518952276, guid: 781662e9efe398c41bc8c55e81248ebd, type: 3}
+  rangeMobPrefab: {fileID: -2202533894622476555, guid: a773913715917a745b171ce03167cc27, type: 3}
   rangeCount: 3
   meleeMobPrefab: {fileID: -8663169181080948165, guid: 95d7b10eb61641543b99493e98dee176, type: 3}
   meleeCount: 10
