@@ -19,8 +19,8 @@ public class SimpleCameraFollow : MonoBehaviour
         if (_camera == null)
             _camera = Camera.main;
         transform.rotation = Quaternion.Euler(45f, 0f, 0f);
-        //GameManager.instance.bossSkillStart += StartBossSkill;
-        //GameManager.instance.bossSkillEnd += EndBossSkill;
+        GameManager.instance.CameraZoomOut += StartBossSkill;
+        GameManager.instance.CameraReset += EndBossSkill;
     }
     private void LateUpdate()
     {
