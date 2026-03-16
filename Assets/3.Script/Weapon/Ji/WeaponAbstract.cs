@@ -245,7 +245,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     {
         if (resonanceCount <= 0) return;
         resonanceCount--;
-        Debug.Log(resonanceCount);
+        //Debug.Log(resonanceCount);
 
         if (GameManager.instance != null)
         {

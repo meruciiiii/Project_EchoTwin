@@ -7063,15 +7063,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6864927810452130077, guid: 4d16333e734648d4dba7c15d5489ecde, type: 3}
       propertyPath: m_Size.x
-      value: 23.84752
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6864927810452130077, guid: 4d16333e734648d4dba7c15d5489ecde, type: 3}
       propertyPath: m_Size.y
-      value: 4.9
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6864927810452130077, guid: 4d16333e734648d4dba7c15d5489ecde, type: 3}
       propertyPath: m_Size.z
-      value: 24.07922
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6864927810452130077, guid: 4d16333e734648d4dba7c15d5489ecde, type: 3}
       propertyPath: m_Center.x

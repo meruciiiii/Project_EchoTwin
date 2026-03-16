@@ -145,6 +145,7 @@ private void Start()
                 OnPlayerEnterRoom();
             }
         }
+        Debug.Log("Floor is " + floor);
         if(floor > 4)
         {
             return;
