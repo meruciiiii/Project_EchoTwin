@@ -97,7 +97,7 @@ public class Dagger : WeaponAbstract
         {
             SoundManager.SendEvent(SoundType.SFX_DaggerAttack1);
         }
-        Debug.Log($"combo count = {comboCount}");
+        //Debug.Log($"combo count = {comboCount}");
 
         List<Collider> targets = getTargetInSector();
 

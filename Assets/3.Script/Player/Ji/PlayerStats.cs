@@ -187,7 +187,7 @@ public class PlayerStats : MonoBehaviour
     public void Developer()
     {
         currentHP = 10000;
-        playerDMG = 10000;
+        playerDMG = 100;
         cristal = 10000;
         attackSpeed = 100;
     }

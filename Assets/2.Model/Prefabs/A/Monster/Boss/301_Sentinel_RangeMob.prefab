@@ -151,6 +151,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: ac4c6a0cbbc5c5a4da806f14dd888d87, type: 2}
   navMesh: {fileID: 7398599536974779931}
   state: 0
+  currentHP: 0
   knockbackTime: 0.2
   ground:
     serializedVersion: 2

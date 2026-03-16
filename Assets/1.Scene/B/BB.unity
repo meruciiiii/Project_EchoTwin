@@ -3315,6 +3315,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1775322376128830987, guid: 863869e3f4e9e384f86c367e5ddf132b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1775322376128830987, guid: 863869e3f4e9e384f86c367e5ddf132b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1775322376128830987, guid: 863869e3f4e9e384f86c367e5ddf132b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -180
+      objectReference: {fileID: 0}
     - target: {fileID: 2233148910005554392, guid: 863869e3f4e9e384f86c367e5ddf132b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 443.4
@@ -3745,6 +3757,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 524705594750380381, guid: 9f8dcec6048cd154aa436eeb98026fed, type: 3}
   m_PrefabInstance: {fileID: 1267587992}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1003801026 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 522614571198526838, guid: c3b8faca361f272478e1a16fa3313271, type: 3}
+  m_PrefabInstance: {fileID: 1473871621}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef771c9d1c63354c922d3245d9e36b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewardChest
 --- !u!4 &1026030136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1437402425186157972, guid: a8946af62d189a344a473b6130b0eb06, type: 3}
@@ -5729,7 +5752,7 @@ Transform:
   m_GameObject: {fileID: 1598462087}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.291, y: 0, z: -12.319}
+  m_LocalPosition: {x: 2.291, y: 1.25, z: -12.319}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7954,6 +7977,10 @@ PrefabInstance:
       propertyPath: startRoom
       value: 
       objectReference: {fileID: 1070425454}
+    - target: {fileID: 530066852025997875, guid: 3f7c913bc0088744189774574329b90e, type: 3}
+      propertyPath: rewardChest
+      value: 
+      objectReference: {fileID: 1003801026}
     - target: {fileID: 530066852025997875, guid: 3f7c913bc0088744189774574329b90e, type: 3}
       propertyPath: roomObjects
       value: 

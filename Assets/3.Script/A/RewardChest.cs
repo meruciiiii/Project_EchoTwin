@@ -18,7 +18,7 @@ public class RewardChest : MonoBehaviour
     [SerializeField] private int crystalCount = 3;     
     [SerializeField] private float jumpForce = 7f;
     [SerializeField] private PortalController portalController;
-    [SerializeField] private int floor = 0;
+    [SerializeField] public int floor = 0;
     private Quaternion closedRotation;
     private Quaternion openedRotation;
     private bool isOpened = false;
@@ -145,10 +145,8 @@ private void Start()
                 OnPlayerEnterRoom();
             }
         }
-        floor++;
-        if(floor > 5)
+        if(floor > 4)
         {
-            floor = 0;
             return;
         }
         portalController.gameObject.SetActive(true);

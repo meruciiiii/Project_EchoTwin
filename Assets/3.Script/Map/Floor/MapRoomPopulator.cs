@@ -44,11 +44,11 @@ public class MapRoomPopulator : MonoBehaviour
                 roomObject.Remove(keyForReward);
                 SetBossRoom(microMap[keyForReward]);
                 roomObject.Add(keyForReward, MappingRoom(microMap[keyForReward].GetRoomData()));
-                Debug.Log("Boss and Reward success");
+                //Debug.Log("Boss and Reward success");
             }
         }
         //¿¬°á
-        Debug.Log("eliteRoomCount : " + eliteRoomCount);
+        //Debug.Log("eliteRoomCount : " + eliteRoomCount);
         return roomObject;
     }
     private void SetBossRoom(FloorData floor)
