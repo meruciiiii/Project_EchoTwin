@@ -33,7 +33,7 @@ public abstract class EnemyStateAbstract : MonoBehaviour, Iknockback
     public EnemyState state;
 
     protected float lastAttackTime;
-    protected float currentHP;
+    [SerializeField] protected float currentHP;
     protected Vector3 lookDir = Vector3.zero;
 
     protected float standardRange = 0.2f;

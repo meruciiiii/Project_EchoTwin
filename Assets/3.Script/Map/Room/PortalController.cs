@@ -14,8 +14,8 @@ public class PortalController : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         SoundManager.SendEvent(SoundType.SFX_Portal);
 
-        Debug.Log("Portal Triger is started");
-        Debug.Log(bossCheck);
+        //Debug.Log("Portal Triger is started");
+        //Debug.Log(bossCheck);
         if (bossCheck)
         {
             BossPortalEntered();

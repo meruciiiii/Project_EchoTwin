@@ -31,7 +31,7 @@ public class StageFlowManager : MonoBehaviour
     }
     public void StartStage()
     {
-        mapManager.GenerateMap(1);
+        mapManager.GenerateMap(0);
         stageManager.GenerateStage();
     }
     public Transform FindChildWithTag(GameObject parent)
@@ -58,7 +58,7 @@ public class StageFlowManager : MonoBehaviour
     }
     private void OnBattleNode(StageNode node)
     {
-        Debug.Log("Battle Start!");
+        //Debug.Log("Battle Start!");
         sceneTransition.PlayFullTransition(() => {
             mapManager.GenerateMap(node.floorIndex); 
             stageManager.SetNodeUI(false);           
@@ -66,8 +66,8 @@ public class StageFlowManager : MonoBehaviour
     }
     private void OnBossNode(StageNode node)
     {
-        Debug.Log("Boss Battle!");
-        Debug.Log("node.floorIndex = "+ node.floorIndex + "!");
+        //Debug.Log("Boss Battle!");
+        //Debug.Log("node.floorIndex = "+ node.floorIndex + "!");
         sceneTransition.PlayFullTransition(() => {
             mapManager.GenerateMap(node.floorIndex);
             stageManager.SetNodeUI(false);
@@ -75,7 +75,7 @@ public class StageFlowManager : MonoBehaviour
     }
     private void OnRecoveryNode(StageNode node)
     {
-        Debug.Log("Recovered");
+        //Debug.Log("Recovered");
         sceneTransition.PlayFullTransition(() => {
         mapManager.StageMoving(enterTable[camp[1]].position); 
         stageManager.SetNodeUI(false); 
@@ -83,7 +83,7 @@ public class StageFlowManager : MonoBehaviour
     }
     private void OnResourceNode(StageNode node)
     {
-        Debug.Log("Resource Acquired");
+        //Debug.Log("Resource Acquired");
         sceneTransition.PlayFullTransition(() => {
         mapManager.StageMoving(enterTable[camp[3]].position); 
         stageManager.SetNodeUI(false); 
@@ -91,7 +91,7 @@ public class StageFlowManager : MonoBehaviour
     }
     private void OnAltarNode(StageNode node)
     {
-        Debug.Log("Altar Event");
+        //Debug.Log("Altar Event");
         sceneTransition.PlayFullTransition(() => {
         mapManager.StageMoving(enterTable[camp[2]].position); 
         stageManager.SetNodeUI(false); 

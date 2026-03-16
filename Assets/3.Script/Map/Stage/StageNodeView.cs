@@ -154,7 +154,7 @@ public class StageNodeView : MonoBehaviour
     private IEnumerator MoveRoutine(StageNode targetNode)
     {
         StageNode startNode = currentNode;
-        Debug.Log("next floor is " + targetNode.floorIndex);
+        //Debug.Log("next floor is " + targetNode.floorIndex);
         currentNode = targetNode;
 
         Vector3 startPos = nodeViews[startNode].transform.position - 20 * Vector3.down;

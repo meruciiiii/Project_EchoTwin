@@ -92,7 +92,7 @@ public class Axe : WeaponAbstract
         {
             SoundManager.SendEvent(SoundType.SFX_AxeAttack2);
         }
-        Debug.Log($"combo count = {comboCount}");
+        //Debug.Log($"combo count = {comboCount}");
 
         List<Collider> targets = getTargetInSector();
 
