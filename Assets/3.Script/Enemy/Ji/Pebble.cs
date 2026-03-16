@@ -74,10 +74,10 @@ public class Pebble : EnemyStateAbstract
         checkAttackTime();
 
         Vector3 startPos = transform.position;
-        startPos.y -= 0.5f; // 몬스터의 피벗이 발밑이라면 0.5f 정도 올려서 가슴 위치로 잡음
+        startPos.y += 1.5f; // 몬스터의 피벗이 발밑이라면 0.5f 정도 올려서 가슴 위치로 잡음
 
         Vector3 targetPos = player.transform.position;
-        targetPos.y -= 0.5f; // 플레이어도 발밑이 아닌 몸 중심을 조준하도록 수정
+        //targetPos.y -= 0.5f; // 플레이어도 발밑이 아닌 몸 중심을 조준하도록 수정
 
         Vector3 dir = (targetPos - startPos).normalized;
 

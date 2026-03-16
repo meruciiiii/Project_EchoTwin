@@ -199,6 +199,8 @@ public class Sentinel : EnemyStateAbstract
 
         float distance = Vector3.Distance(targetPos, startPos);
 
+        //attackCoroutine = StartCoroutine(MobSpawn_Co());
+
         if (distance < enemyData.attackRange - 0.5f)
         {
             if (attackCoroutine != null) return;

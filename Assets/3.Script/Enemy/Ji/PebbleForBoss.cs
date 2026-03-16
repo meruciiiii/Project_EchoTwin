@@ -99,23 +99,23 @@ public class PebbleForBoss : EnemyStateAbstract
         checkAttackTime();
 
         Vector3 targetPos = player.transform.position;
-        targetPos.y = 0f;
+        //targetPos.y -= 0.5f;
         Vector3 startPos = transform.position;
-        startPos.y = 0f;
+        startPos.y += 1.5f;
         Vector3 dir = (targetPos - startPos).normalized;
 
         float timer = 0f;
 
         projectile.transform.position = startPos;
         projectile.SetActive(true);
-        if (spriteRenderer.flipX)
-        {
-            projectile.GetComponentInChildren<SpriteRenderer>().flipX = true;
-        }
-        if (!spriteRenderer.flipX)
-        {
-            projectile.GetComponentInChildren<SpriteRenderer>().flipX = false;
-        }
+        //if (spriteRenderer.flipX)
+        //{
+        //    projectile.GetComponentInChildren<SpriteRenderer>().flipX = true;
+        //}
+        //if (!spriteRenderer.flipX)
+        //{
+        //    projectile.GetComponentInChildren<SpriteRenderer>().flipX = false;
+        //}
 
         while (timer < projectileDuration)
         {
