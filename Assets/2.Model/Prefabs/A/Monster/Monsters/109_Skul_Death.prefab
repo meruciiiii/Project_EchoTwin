@@ -9823,6 +9823,7 @@ GameObject:
   - component: {fileID: 4913376384644253753}
   - component: {fileID: 6108878899316037209}
   - component: {fileID: 1947721219235066680}
+  - component: {fileID: 4357279562961512053}
   m_Layer: 1
   m_Name: 109_Skul_Death
   m_TagString: Untagged
@@ -9839,9 +9840,9 @@ Transform:
   m_GameObject: {fileID: 5685665014904394245}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 339.54944, y: -1.470872, z: -13.669732}
+  m_LocalPosition: {x: 449.10477, y: 0, z: -187.32797}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3335086158671907634}
   - {fileID: 2484704334616115179}
@@ -10067,7 +10068,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       scalar: 0.8
-      minScalar: 0.8
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14658,6 +14659,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4357279562961512053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5685665014904394245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a86b7c64b0e744ab17901ee65142d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PebbleProjectile
 --- !u!1 &8251725363729871113
 GameObject:
   m_ObjectHideFlags: 0
