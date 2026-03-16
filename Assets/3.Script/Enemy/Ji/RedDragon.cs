@@ -247,10 +247,10 @@ public class RedDragon : EnemyStateAbstract
     private void start2ndPhase()
     {
         isPhase2 = true;
-        attackSpeed *= 0.5f;
-        attackRange *= 1.5f;
-        coolTime *= 0.5f;
-        rangeAttackSpeed *= 0.5f;
+        attackSpeed *= 0.8f;
+        //attackRange *= 1.5f;
+        coolTime *= 0.8f;
+        //rangeAttackSpeed *= 0.8f;
         rangeAttackCount *= 2;
     }
 
@@ -378,8 +378,33 @@ public class RedDragon : EnemyStateAbstract
     {
         state = EnemyState.attack;
 
+        float meleeTiming = 0.5f;
+
+        if (ani != null) ani.SetTrigger("Attack01");
+
+        while (ani != null)
+        {
+            AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+            if (info.IsName("Attack01")) break;
+            yield return null;
+        }
+
         WarningGizmo leftWarning = getWarning();
         WarningGizmo rightWarning = getWarning();
+
+        float warningDuration = 0.01f;
+        if (ani != null) 
+        {
+            AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+            float time = info.normalizedTime - Mathf.Floor(info.normalizedTime);
+            float remain = Mathf.Max(0f, meleeTiming - time);
+            float speed = Mathf.Abs(info.speed * info.speedMultiplier * ani.speed);
+
+            if (speed > 0.0001f)
+            {
+                warningDuration = Mathf.Max(0.01f, (info.length * remain) / speed);
+            }
+        }
 
         if (leftWarning != null)
         {
@@ -391,31 +416,47 @@ public class RedDragon : EnemyStateAbstract
             rightWarning.playCircle(rightArm.transform.position, attackRange, attackSpeed, warningColor);
         }
 
-        if (ani != null) ani.SetTrigger("Attack01");
+        bool hasDamaged = false;
 
-        yield return new WaitForSeconds(attackSpeed);
-
-        checkAttackTime();
-
-        Collider[] lefthits = Physics.OverlapSphere(leftArm.transform.position, attackRange, playerLayer);
-        Collider[] righthits = Physics.OverlapSphere(rightArm.transform.position, attackRange, playerLayer);
-
-        foreach (Collider hit in lefthits)
+        while (ani != null)
         {
-            PlayerAction target = hit.GetComponentInParent<PlayerAction>();
-            if (target == null) continue;
+            AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+            if (!info.IsName("Attack01")) break;
 
-            target.takeDamage(enemyData.damage, leftArm.transform.position, 2);
-            break;
-        }
+            float time = info.normalizedTime - Mathf.Floor(info.normalizedTime);
 
-        foreach (Collider hit in righthits)
-        {
-            PlayerAction target = hit.GetComponentInParent<PlayerAction>();
-            if (target == null) continue;
+            if (!hasDamaged && time >= meleeTiming)
+            {
+                checkAttackTime();
 
-            target.takeDamage(enemyData.damage, rightArm.transform.position, 2);
-            break;
+                Collider[] lefthits = Physics.OverlapSphere(leftArm.transform.position, attackRange, playerLayer);
+                Collider[] righthits = Physics.OverlapSphere(rightArm.transform.position, attackRange, playerLayer);
+
+                foreach (Collider hit in lefthits)
+                {
+                    PlayerAction target = hit.GetComponentInParent<PlayerAction>();
+                    if (target == null) continue;
+
+                    target.takeDamage(enemyData.damage, leftArm.transform.position, 2);
+                    break;
+                }
+
+                foreach (Collider hit in righthits)
+                {
+                    PlayerAction target = hit.GetComponentInParent<PlayerAction>();
+                    if (target == null) continue;
+
+                    target.takeDamage(enemyData.damage, rightArm.transform.position, 2);
+                    break;
+                }
+
+                hasDamaged = true;
+
+                if (leftWarning != null) leftWarning.Hide();
+                if (rightWarning != null) rightWarning.Hide();
+            }
+
+            yield return null;
         }
 
         if (leftWarning != null) leftWarning.Hide();
@@ -429,6 +470,7 @@ public class RedDragon : EnemyStateAbstract
         }
     }
 
+    #region methods for breath
     private Vector3 getBreathGroundPos() 
     {
         Transform origin = null;
@@ -482,7 +524,7 @@ public class RedDragon : EnemyStateAbstract
 
         if (breathOrigin != null) 
         {
-            return getFlatForward(breathFxOrigin.forward); 
+            return getFlatForward(breathOrigin.forward); 
         }
 
         return getFlatForward(transform.forward);
@@ -631,10 +673,13 @@ public class RedDragon : EnemyStateAbstract
         lastBreathHitTime = Time.time;
         player.takeDamage(enemyData.damage, transform.position, 1f);
     }
-
-    private IEnumerator fireBreath_Co() 
+    #endregion
+    private IEnumerator fireBreath_Co()
     {
         state = EnemyState.attack;
+
+        const float breathStartTiming = 0.2f;
+        const float breathStopTiming = 0.8f;
 
         WarningGizmo baseWarning = getWarning();
         WarningGizmo fillWwarning = getWarning();
@@ -653,27 +698,17 @@ public class RedDragon : EnemyStateAbstract
             fillWwarning.playSector(fixedWarningPos, currentFillDir, breathDistance, breathAngle * 2f, attackSpeed, breathFillColor);
         }
 
-        setBreathFxActive(false);
+        stopBreathFxImmediate();
 
         yield return new WaitForSeconds(attackSpeed);
 
         if (ani != null) ani.SetTrigger("Attack02");
 
-        float startDelay = 1f;
-        while (startDelay > 0f)
-        {
-            currentFillDir = getBreathFlatDir();
-            showBreathWarnings(baseWarning, fillWwarning, fixedWarningPos, fixedBaseDir, currentFillDir);
-
-            startDelay -= Time.deltaTime;
-            yield return null;
-        }
-
-        while (true)
+        while (true) 
         {
             if (ani == null)
             {
-                setBreathFxActive(false);
+                stopBreathFxImmediate();
                 hideBreathWarnings(baseWarning, fillWwarning);
 
                 attackCoroutine = null;
@@ -691,7 +726,17 @@ public class RedDragon : EnemyStateAbstract
 
             AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
 
-            if (info.IsTag("Breath")) break;
+            if (info.IsTag("Breath"))
+            {
+                float time = info.normalizedTime;
+                time = time - Mathf.Floor(time);
+
+                if (time >= breathStartTiming)
+                {
+                    break;
+                }
+            }
+
             yield return null;
         }
 
@@ -723,16 +768,16 @@ public class RedDragon : EnemyStateAbstract
                 tryBreathDamage(fixedWarningPos, currentFillDir);
             }
 
-            if (time > 0.95f)
+            if (time >= breathStopTiming)
             {
-                setBreathFxActive(false);
+                stopBreathFxImmediate();
                 break;
             }
 
             yield return null;
         }
 
-        setBreathFxActive(false);
+        stopBreathFxImmediate();
         hideBreathWarnings(baseWarning, fillWwarning);
 
         attackCoroutine = null;
@@ -876,12 +921,6 @@ public class RedDragon : EnemyStateAbstract
 
         GameManager.instance.ZoomOutEvent();
 
-        yield return new WaitForSeconds(rangeAttackSpeed);
-
-
-
-        checkAttackTime();
-
         if (rangeAttackCount - rockPool.Count > 0)
         {
             for (int i = 0; i < rangeAttackCount - rockPool.Count; i++)
@@ -894,19 +933,50 @@ public class RedDragon : EnemyStateAbstract
             }
         }
 
-        for (int i = 0; i < rangeAttackCount; i++)
+        while (ani != null)
         {
-            Vector3 randomPos = new Vector3(Random.Range(-4f, 4f), 0, Random.Range(-4f, 4f));
-            Vector3 targetPos = player.transform.position + randomPos + Vector3.up * 10f;
+            AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+            if (info.IsName("Attack04")) break; 
+            yield return null;
+        }
 
-            DragonProjectile rock = rockPool.Dequeue();
-            WarningGizmo warning = getWarning();
+        int spawnedCount = 0; 
+        const float rangeStartTiming = 0.2f;
+        const float rangeEndTiming = 0.8f;
+        checkAttackTime();
 
-            rock.transform.position = targetPos;
-            rock.setWarning(warning);
-            rock.gameObject.SetActive(true);
+        while (ani != null)
+        {
+            AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+            if (!info.IsName("Attack04")) break;
 
-            yield return new WaitForSeconds(0.3f);
+            float time = info.normalizedTime - Mathf.Floor(info.normalizedTime);
+
+            while (spawnedCount < rangeAttackCount)
+            {
+                float spawnTiming = 0.5f;
+
+                if (rangeAttackCount > 1)
+                {
+                    spawnTiming = Mathf.Lerp(rangeStartTiming, rangeEndTiming, (float)spawnedCount / (rangeAttackCount - 1));
+                }
+
+                if (time < spawnTiming) break; 
+
+                Vector3 randomPos = new Vector3(Random.Range(-4f, 4f), 0, Random.Range(-4f, 4f));
+                Vector3 targetPos = player.transform.position + randomPos + Vector3.up * 10f;
+
+                DragonProjectile rock = rockPool.Dequeue();
+                WarningGizmo warning = getWarning();
+
+                rock.transform.position = targetPos;
+                rock.setWarning(warning);
+                rock.gameObject.SetActive(true);
+
+                spawnedCount++;
+            }
+
+            yield return null;
         }
 
         isFlying = false;
