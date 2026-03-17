@@ -237,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
             rb.MovePosition(after);
 
             Vector3 delta = after - before;
-            Vector3 moveDir = delta.sqrMagnitude > 0.01f ? delta.normalized : Vector3.zero;
+            Vector3 moveDir = delta.sqrMagnitude > 0.00001f ? delta.normalized : Vector3.zero;
 
             if (moveDir != Vector3.zero)
             {
