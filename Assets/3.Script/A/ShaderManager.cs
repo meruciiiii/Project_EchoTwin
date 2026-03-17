@@ -31,7 +31,7 @@ public class ShaderManager : MonoBehaviour
         if (screenMaterial == null) return;
 
         // 1. 도트 크기 조절 (진행될수록 해상도 증가: 150 -> 600)
-        float currentRes = Mathf.Lerp(150f, 600f, progress);
+        float currentRes = Mathf.Lerp(300f, 600f, progress);
         screenMaterial.SetFloat(pixelProperty, currentRes);
 
         // 2. 색상 복구 (진행될수록 흑백 0에서 원본 1로 가되, 최대 70%까지만 복구)
